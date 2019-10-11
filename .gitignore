@@ -1,6 +1,9 @@
 # Main executable
 doom-nukem
 
+# Visual Studio file
+.vscode
+
 # Prerequisites
 *.d
 
