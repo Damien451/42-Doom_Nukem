@@ -1,0 +1,15 @@
+#Key_Function	Key_Name	SDL_Scancode_Value	SDL_Keycode_Value
+"Move up"	"W"	SDL_SCANCODE_W	SDLK_w
+"Move left"	"A"	SDL_SCANCODE_A	SDLK_a
+"Move down"	"S"	SDL_SCANCODE_S	SDLK_s
+"Move right"	"D"	SDL_SCANCODE_D	SDLK_d
+"Pick obj"	"Q"	SDL_SCANCODE_Q	SDLK_q
+"Reload"	"R"	SDL_SCANCODE_R	SDLK_r
+"Sprint"	"Left Shift"	SDL_SCANCODE_LSHIFT	SDLK_LSHIFT
+"Zoom"	"Z"	SDL_SCANCODE_Z	SDLK_z
+"Couch"	"C"	SDL_SCANCODE_C	SDLK_c
+"Jump"	"Space"	SDL_SCANCODE_SPACE	SDLK_SPACE
+"Inventory"	"E"	SDL_SCANCODE_E	SDLK_e
+"Shoot"	"Mouse Left"	SDL_BUTTON_LEFT
+"Aim"	"Mouse Right"	SDL_BUTTON_RIGHT
+"Escape"	SDL_SCANCODE_ESCAPE	SDLK_ESCAPE
