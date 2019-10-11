@@ -5,8 +5,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include <stdio.h>
-
 static int	give_title_to_input(t_input *inputs)
 {
 	int		i;

@@ -11,7 +11,7 @@
 ** ====-* DEFINES *-====
 */
 
-# define NB_INPUTS 15
+# define NB_INPUTS 14
 # define LINES_DICT_FILE 225
 # define INPUTS_DICT_FILE 222
 

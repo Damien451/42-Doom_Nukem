@@ -57,7 +57,7 @@ static int	check_inputs_settings(t_doom *data, t_button *btab, int nbuttons)
 	const uint8_t	*input;
 
 	input = SDL_GetKeyboardState(NULL);
-	if (input[data->tabinputs.inputs[0].scancode]) /*|| input[SDL_SCANCODE_W])*/
+	if (input[SDL_SCANCODE_UP] || input[SDL_SCANCODE_W])
 		data->button = (data->button == -1 || data->button == 0)
 			? 0 : data->button - 1;
 	else if (input[SDL_SCANCODE_DOWN] || input[SDL_SCANCODE_S])
