@@ -24,6 +24,7 @@ static void	init_tab(t_doom *data)
 		data->tab[i++].color = (rand() % 256) << 16;
 	}
 	surface = SDL_LoadBMP("Untitled.bmp");
+	data->lib.start_bg = SDL_LoadBMP("start_bg.bmp");
 	i = 0;
 	tmp = NULL;
 	while (i < WIDTH * HEIGHT)

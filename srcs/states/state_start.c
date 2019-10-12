@@ -66,10 +66,10 @@ static void	draw_on_texture(t_doom *data, unsigned int *image)
 	int			i;
 	int			g;
 
-	i = 0;
-	while (i < WIDTH * HEIGHT)
-		image[i++] = 0x3E;
-//	ft_memset(image, 0, WIDTH * HEIGHT * 4);
+	printf("w = %d, h = %d, %d, %d\n", data->lib.start_bg->w, data->lib.start_bg->h, WIDTH, HEIGHT);
+	i = -1;
+	while (++i < WIDTH * HEIGHT)
+		image[i] = ((unsigned int*)data->lib.start_bg->pixels)[i];
 	print_autor(data, image);
 	i = 0;
 	g = WIDTH * (HEIGHT - 1) - 1;
