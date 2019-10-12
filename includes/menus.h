@@ -21,6 +21,8 @@
 # define SET_BUTTON_W (WIDTH / 5)
 # define SET_BUTTON_H (HEIGHT / 12)
 
+# define NB_BUBBLE		125
+
 /*
 ** ====-* TYPEDEFS *-====
 */
@@ -40,6 +42,7 @@ struct					s_start
 	int					pos;
 	int					speed;
 	int					size;
+	int					color;
 };
 
 struct					s_point

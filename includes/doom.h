@@ -30,16 +30,24 @@
 
 typedef struct s_doom			t_doom;
 typedef struct s_graphic_lib	t_graphic_lib;
+typedef struct s_bubble			t_bubble;
 
 /*
 ** ====-* STRUCTURES *-====
 */
 
+struct						s_bubble
+{
+	int						pos;
+	t_bubble				*next;
+};
+
 struct						s_doom
 {
 	t_graphic_lib			lib;
 	t_tabinputs				tabinputs;
-	t_start					tab[50];
+	t_start					tab[NB_BUBBLE];
+	t_bubble				*bubble_list;
 	long					button;
 	long					state;
 };

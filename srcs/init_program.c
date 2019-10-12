@@ -6,15 +6,46 @@
 static void	init_tab(t_doom *data)
 {
 	int			i;
-	int			g;
+	SDL_Surface	*surface;
+	t_bubble	*tmp;
 
 	i = 0;
-	g = WIDTH * (HEIGHT - 1) - 1;
-	while (i < 50)
+	while (i < NB_BUBBLE)
 	{
-		data->tab[i].pos = rand() % WIDTH + g;
+		data->tab[i].pos = rand() % WIDTH * HEIGHT;
+		if (rand() % 2)
+			rand();
 		data->tab[i].speed = rand() % 10 + 1;
-		data->tab[i++].size = rand() % 10 + 4;
+		if (rand() % 3)
+			rand();
+		data->tab[i].size = rand() % 10 + 4;
+		if (rand() % 4)
+			rand();
+		data->tab[i++].color = (rand() % 256) << 16;
+	}
+	surface = SDL_LoadBMP("Untitled.bmp");
+	i = 0;
+	tmp = NULL;
+	while (i < WIDTH * HEIGHT)
+	{
+		if (((int*)surface->pixels)[i] != -1)
+		{
+			if (!tmp)
+			{
+				tmp = malloc(sizeof(t_bubble));
+				tmp->pos = i;
+				tmp->next = NULL;
+				data->bubble_list = tmp;
+			}
+			else
+			{
+				tmp->next = malloc(sizeof(t_bubble));
+				tmp->next->pos = i;
+				tmp->next->next = NULL;
+				tmp = tmp->next;
+			}
+		}
+		i++;
 	}
 }
 
