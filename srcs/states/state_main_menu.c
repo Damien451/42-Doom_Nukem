@@ -4,28 +4,32 @@
 
 static void	check_inputs_menu(t_doom *data, t_button *btab, int nbuttons)
 {
-	const uint8_t	*input;
+	while (SDL_PollEvent(&data->lib.event))
+	{
+		if (data->lib.event.type == SDL_KEYDOWN)
+		{
+			if (data->lib.event.key.keysym.sym == SDLK_UP)
+			{
+				if (data->button == 0)
+					data->button = nbuttons - 1;
+				else
+					--data->button;
+			}
+			if (data->lib.event.key.keysym.sym == SDLK_DOWN)
+			{
+				if (data->button == nbuttons - 1)
+					data->button = 0;
+				else
+					++data->button;
+			}
+			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
+				switch_state(data, MAIN_MENU, btab[data->button].state);
 
-	input = SDL_GetKeyboardState(NULL);
-	if (input[SDL_SCANCODE_UP])
-	{
-		if (data->button == -1 || data->button == 0)
-			data->button = 0;
-		else
-			--data->button;
+		}
 	}
-	else if (input[SDL_SCANCODE_DOWN])
-	{
-		if (data->button == nbuttons - 1)
-			return ;
-		else
-			++data->button;
-	}
-	else if (input[SDL_SCANCODE_RETURN] || input[SDL_SCANCODE_RETURN2])
-		switch_state(data, MAIN_MENU, btab[data->button].state);
 }
 
-int			game_main_menu(t_doom *data)
+int			state_main_menu(t_doom *data)
 {
 	t_button	buttons[4];
 
@@ -47,5 +51,6 @@ int			game_main_menu(t_doom *data)
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8), label("DOOM", RED), data->lib.ptrfont[0]);
 	put_buttons_names(data, buttons, BLACK, 4);
 	check_inputs_menu(data, buttons, 4);
+	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }

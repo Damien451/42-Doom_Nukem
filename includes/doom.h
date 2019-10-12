@@ -3,10 +3,11 @@
 
 /*
 ** ====-* INCLUDES *-====
-*/ 
+*/
 
-#include "graphic_lib.h"
-#include "inputs.h"
+# include "graphic_lib.h"
+# include "inputs.h"
+# include "menus.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -38,6 +39,7 @@ struct						s_doom
 {
 	t_graphic_lib			lib;
 	t_tabinputs				tabinputs;
+	t_start					tab[50];
 	long					button;
 	long					state;
 };
@@ -74,10 +76,10 @@ int							frame_calculator(void);
 
 void						switch_state(t_doom *data, long actual_state, long new_state);
 
-int							game_start(t_doom *data);
+int							state_start(t_doom *data);
 
-int							game_main_menu(t_doom *data);
+int							state_main_menu(t_doom *data);
 
-int							settings_menu(t_doom *data);
+int							state_settings_menu(t_doom *data);
 
 #endif

@@ -4,11 +4,11 @@
 static int	game_state(t_doom *data)
 {
 	if (data->state & START)
-		game_start(data);
+		state_start(data);
 	else if (data->state & MAIN_MENU)
-		game_main_menu(data);
+		state_main_menu(data);
 	else if (data->state & SETTINGS)
-		settings_menu(data);
+		state_settings_menu(data);
 	else if (data->state & LEAVING)
 		data->state &= ~RUNNING;
 	return (0);
@@ -18,20 +18,16 @@ int			program(t_doom *data)
 {
 	int				pitch;
 
+	while (SDL_PollEvent(&data->lib.event))
+	{
+	}
 	while (data->state & RUNNING)
 	{
 		if (!SDL_LockTexture(data->lib.texture, NULL, (void**)&data->lib.image
 				, &pitch))
 		{
 			SDL_UnlockTexture(data->lib.texture);
-			while (SDL_PollEvent(&data->lib.event))
-			{
-				if (data->lib.event.type == SDL_KEYDOWN)
-					if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
-						data->state &= ~RUNNING;
-				game_state(data);
-			}
-			SDL_RenderPresent(data->lib.renderer);
+			game_state(data);
 			if ((pitch = frame_calculator()))
 			{
 				ft_putnbr(pitch);

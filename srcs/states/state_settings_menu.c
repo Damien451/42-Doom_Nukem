@@ -123,7 +123,7 @@ static void	create_buttons(t_doom *data, t_button *btab)
 	create_buttons2(data, btab, posx, posy);
 }
 
-int			settings_menu(t_doom *data)
+int			state_settings_menu(t_doom *data)
 {
 	t_button	buttons[16];
 
@@ -134,5 +134,6 @@ int			settings_menu(t_doom *data)
 	put_buttons_names(data, buttons, BLACK, 16);
 	if (check_inputs_settings(data, buttons, 16) != 0)
 		return (1);
+	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }

@@ -62,7 +62,7 @@ static int	parse_input_dict2(t_doom *data, int fd)
 int			parse_input_dict(t_doom *data, char *input_dict)
 {
 	int		fd;
-	
+
 	if ((fd = open(input_dict, O_RDONLY)) == -1)
 		return (1);
 	if ((parse_input_dict2(data, fd)) != 0)

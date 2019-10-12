@@ -1,89 +1,128 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Makefile2                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: roduquen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/07/11 00:37:10 by roduquen          #+#    #+#              #
-#    Updated: 2019/09/19 17:06:33 by dacuvill         ###   ########.fr        #
+#    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
+#    Updated: 2019/10/12 11:32:20 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = clang
-
 LOGIN = `whoami`
 
-CFLAGS = -Wall -Wextra -Werror -Ofast #-g3
+# **************************************************************************** #
+#                                   BINARIES                                   #
+# **************************************************************************** #
 
-NAME = doom-nukem
+NAME = Doom-Nukem
 
-SRCDIR = ./srcs/
+# **************************************************************************** #
+#                                  COMPILATION                                 #
+# **************************************************************************** #
 
-OBJDIR = ./obj/
+CC = clang
+CFLAGS = -Wall -Wextra -Werror
 
-INCLDIR = ./includes/
+FSAN = #-fsanitize=address
+DEBUG = #-g3
+OPTI = -O3
 
-LIBDIR = ./libft/
+# **************************************************************************** #
+#                                 DIRECTORIES                                  #
+# **************************************************************************** #
 
-LIB = $(LIBDIR)libft.a
+SRCDIR = srcs
+OBJDIR = .objs
+INCDIR = includes
+LIBDIR = libft
+BREWDIR = /Users/$(LOGIN)/.brew
 
-LIBSDL = -L /Users/$(LOGIN)/.brew/lib/ -lSDL2-2.0.0 -lSDL2_ttf-2.0.0 -lSDL2_image-2.0.0 `sdl2-config --cflags --libs`
+MATHS = maths
+STATES = states
 
-SRCS =	$(SRCDIR)add_points.c				\
-		$(SRCDIR)doom.c						\
-		$(SRCDIR)draw_rectangle.c			\
-		$(SRCDIR)frame_calculator.c			\
-		$(SRCDIR)game_main_menu.c			\
-		$(SRCDIR)game_start.c				\
-		$(SRCDIR)init_program.c				\
-		$(SRCDIR)leave_program.c			\
-		$(SRCDIR)parse_input_dict.c			\
-		$(SRCDIR)program.c					\
-		$(SRCDIR)put_buttons_names.c		\
-		$(SRCDIR)put_buttons_on_img.c		\
-		$(SRCDIR)put_string_on_renderer.c	\
-		$(SRCDIR)settings_menu.c			\
-		$(SRCDIR)utils.c					\
-		$(SRCDIR)vec3l_maths.c				\
-		$(SRCDIR)vec3d_maths.c				\
-		$(SRCDIR)vec3l_maths_2.c			\
-		$(SRCDIR)vec3d_maths_2.c			\
-		$(SRCDIR)free_tabinputs.c
+S_MATHDIR = ./$(SRCDIR)/$(MATHS)
+S_STATDIR = ./$(SRCDIR)/$(STATES)
 
-OBJ = $(notdir $(SRCS:.c=.o))
+O_MATHDIR = ./$(OBJDIR)/$(MATHS)
+O_STATDIR = ./$(OBJDIR)/$(STATES)
 
-OBJS = $(addprefix $(OBJDIR),$(OBJ))
+# **************************************************************************** #
+#                                 INCLUDES                                     #
+# **************************************************************************** #
 
-DPDCS = $(OBJS:.o=.d)
+LIBSDL = $(BREWDIR)/lib/ -lSDL2-2.0.0 -lSDL2_ttf-2.0.0 -lSDL2_image-2.0.0 `sdl2-config --cflags --libs`
+INCSDL = $(BREWDIR)/include/SDL2
+LIBFT = $(LIBDIR) -lft
 
-all :
-	@mkdir -p $(OBJDIR)
-	@make -j $(NAME)
+# **************************************************************************** #
+#                                  SOURCES                                     #
+# **************************************************************************** #
 
-$(NAME) : $(OBJS) $(LIB)
-	@$(CC) $(CFLAGS) -I $(INCLDIR) $(OBJS) -o $@ -L $(LIBDIR) -lft $(LIBSDL)
+SRCS =		$(STATES)/state_start.c					\
+			$(STATES)/state_main_menu.c				\
+			$(STATES)/state_settings_menu.c			\
+			$(MATHS)/vec3l_maths.c					\
+			$(MATHS)/vec3d_maths.c					\
+			$(MATHS)/vec3l_maths_2.c				\
+			$(MATHS)/vec3d_maths_2.c				\
+			add_points.c							\
+			doom.c									\
+			draw_rectangle.c						\
+			frame_calculator.c						\
+			free_tabinputs.c						\
+			init_program.c							\
+			leave_program.c							\
+			parse_input_dict.c						\
+			program.c								\
+			put_buttons_names.c						\
+			put_buttons_on_img.c					\
+			put_string_on_renderer.c				\
+			utils.c
+
+# **************************************************************************** #
+#                                   UTILS                                      #
+# **************************************************************************** #
+
+OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+
+DPDCS = $(OBJS:.o:.d)
+
+# **************************************************************************** #
+#                                   RULES                                      #
+# **************************************************************************** #
+
+all : $(NAME)
+
+$(NAME) : $(OBJS)
+	@make -C $(LIBDIR)
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -L $(LIBFT) -L $(LIBSDL) -o $@ $^
 	@echo "\n\033[36mCreation :\033[0m \033[35;4m$(NAME)\033[0m\n"
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
-	@$(CC) $(CFLAGS) -c $^ -I $(INCLDIR) -I /Users/$(LOGIN)/.brew/include/SDL2 -o $@
+-include $(DPDCS)
+
+$(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -I $(INCDIR) -I $(INCSDL) -I $(LIBDIR) -MMD -o $@ -c $<
 	@echo "\033[36mCompilation :\033[0m \033[32m$*\033[0m"
 
-$(LIB) :
-	@echo "\n\033[36mLibs Compilation :\033[0m \033[33m$(LIBDIR)\033[0m\n"
-	@make -C libft
+$(OBJDIR) :
+	@mkdir -p $@ 2> /dev/null || true
+	@mkdir -p $@/$(MATHS) 2> /dev/null || true
+	@mkdir -p $@/$(STATES) 2> /dev/null || true
 
 clean :
 	@rm -rf $(OBJDIR)
 	@echo "\n\033[36mDeletion :\033[0m \033[32mObjects\033[0m\n"
-
-cm : clean all
+	@make -C libft clean
 
 fclean : clean
 	@rm -rf $(NAME)
-	@make -C libft/ fclean
 	@echo "\033[36mDeletion :\033[0m \033[35;4m$(NAME)\033[0m\n"
+	@make -C libft fclean
+
+cm : clean all
 
 re : fclean all
 
-.PHONY : all clean fclean re cm
+.PHONY : all clean fclean cm re

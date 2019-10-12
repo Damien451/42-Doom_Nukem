@@ -1,6 +1,22 @@
 #include "graphic_lib.h"
 #include "doom.h"
 #include "inputs.h"
+#include <time.h>
+
+static void	init_tab(t_doom *data)
+{
+	int			i;
+	int			g;
+
+	i = 0;
+	g = WIDTH * (HEIGHT - 1) - 1;
+	while (i < 50)
+	{
+		data->tab[i].pos = rand() % WIDTH + g;
+		data->tab[i].speed = rand() % 10 + 1;
+		data->tab[i++].size = rand() % 10 + 4;
+	}
+}
 
 static int	init_fonts(t_doom *data)
 {
@@ -18,6 +34,7 @@ static int	init_fonts(t_doom *data)
 		return (1);
 	if (!(data->lib.ptrfont[5] = TTF_OpenFont("./font/SciFi_Movies.ttf", 200)))
 		return (1);
+	init_tab(data);
 	return (0);
 }
 

@@ -29,10 +29,18 @@ typedef struct s_doom	t_doom;
 typedef struct s_point	t_point;
 typedef struct s_button	t_button;
 typedef struct s_img	t_img;
+typedef struct s_start	t_start;
 
 /*
 ** ====-* STRUCTURES *-====
 */
+
+struct					s_start
+{
+	int					pos;
+	int					speed;
+	int					size;
+};
 
 struct					s_point
 {
