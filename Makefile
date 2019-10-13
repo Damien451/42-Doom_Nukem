@@ -16,7 +16,7 @@ LOGIN = `whoami`
 #                                   BINARIES                                   #
 # **************************************************************************** #
 
-NAME = Doom-Nukem
+NAME = doom-nukem
 
 # **************************************************************************** #
 #                                  COMPILATION                                 #
@@ -52,7 +52,8 @@ O_STATDIR = ./$(OBJDIR)/$(STATES)
 #                                 INCLUDES                                     #
 # **************************************************************************** #
 
-LIBSDL = $(BREWDIR)/lib/ -lSDL2-2.0.0 -lSDL2_ttf-2.0.0 -lSDL2_image-2.0.0 `sdl2-config --cflags --libs`
+LIBSDL = $(BREWDIR)/lib/ -lSDL2-2.0.0 -lSDL2_mixer-2.0.0 -lSDL2_ttf-2.0.0 \
+		-lSDL2_image-2.0.0 `sdl2-config --cflags --libs`
 INCSDL = $(BREWDIR)/include/SDL2
 LIBFT = $(LIBDIR) -lft
 
@@ -79,7 +80,11 @@ SRCS =		$(STATES)/state_start.c					\
 			put_buttons_names.c						\
 			put_buttons_on_img.c					\
 			put_string_on_renderer.c				\
-			utils.c
+			utils.c									\
+			mixer.c									\
+			load_textures.c							\
+			load_sounds.c							
+
 
 # **************************************************************************** #
 #                                   UTILS                                      #

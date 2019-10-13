@@ -8,6 +8,7 @@
 # include "graphic_lib.h"
 # include "inputs.h"
 # include "menus.h"
+# include "mixer.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -59,6 +60,7 @@ struct						s_doom
 int							init_program(t_doom *data);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
+int							load_textures(t_doom *data);
 
 /*
 ** ====-* GRAPHICS *-====

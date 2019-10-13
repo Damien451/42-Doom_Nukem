@@ -10,6 +10,7 @@ static void	init_tab(t_doom *data)
 	t_bubble	*tmp;
 
 	i = 0;
+
 	while (i < NB_BUBBLE)
 	{
 		data->tab[i].pos = rand() % WIDTH * HEIGHT;
@@ -23,8 +24,9 @@ static void	init_tab(t_doom *data)
 			rand();
 		data->tab[i++].color = (rand() % 256) << 16;
 	}
-	surface = SDL_LoadBMP("Untitled.bmp");
-	data->lib.start_bg = SDL_LoadBMP("start_bg.bmp");
+	load_textures(data);
+	surface = data->lib.surfaces[0];
+	data->lib.start_bg = data->lib.surfaces[1];
 	i = 0;
 	tmp = NULL;
 	while (i < WIDTH * HEIGHT)

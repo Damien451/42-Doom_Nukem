@@ -7,6 +7,7 @@
 
 # include <SDL.h>
 # include <SDL_ttf.h>
+# include "mixer.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -16,6 +17,8 @@
 # define HEIGHT					1080
 
 # define NBR_FONTS				6
+# define NB_IMG 				2
+# define NB_SOUND				2
 
 # define WHITE					(SDL_Color){255, 255, 255, 0}
 # define BLACK					(SDL_Color){0, 0, 0, 0}
@@ -62,10 +65,14 @@ struct							s_text
 struct							s_graphic_lib
 {
 	SDL_Texture					*texture;
-	SDL_Surface					*start_bg;
 	SDL_Window					*window;
 	SDL_Renderer				*renderer;
+	SDL_Surface					*start_bg;
 	SDL_Surface					*surface;
+	SDL_Surface					*surfaces[NB_IMG];
+	char						*texture_path[NB_IMG];
+	Mix_Chunk 					*sounds[NB_SOUND];
+	char						*sound_path[NB_SOUND];
 	SDL_Event					event;
 	t_format					format;
 	t_text						text;
