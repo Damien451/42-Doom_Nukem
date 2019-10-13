@@ -48,6 +48,7 @@ struct						s_doom
 	t_tabinputs				tabinputs;
 	t_start					tab[NB_BUBBLE];
 	t_bubble				*bubble_list;
+	t_bubble				*lightning_list;
 	long					button;
 	long					state;
 };

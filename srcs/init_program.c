@@ -3,6 +3,13 @@
 #include "inputs.h"
 #include <time.h>
 
+static void	ROBIN_init_texture(t_doom *data)
+{
+	data->lib.character = SDL_LoadBMP("/sgoinfre/goinfre/Perso/roduquen/character.bmp");
+	data->lib.menu_texture[0] = SDL_LoadBMP("gstvine1.bmp");
+	data->lib.menu_texture[1] = SDL_LoadBMP("gstvine2.bmp");
+}
+
 static void	init_tab(t_doom *data)
 {
 	int			i;
@@ -48,6 +55,33 @@ static void	init_tab(t_doom *data)
 		}
 		i++;
 	}
+	tmp = NULL;
+	SDL_FreeSurface(surface);
+	surface = SDL_LoadBMP("eclair.bmp");
+	i = 0;
+	while (i < WIDTH * HEIGHT)
+	{
+		if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)surface->pixels)[i] % 0x1000000 <= 0x888888)
+		{
+			if (!tmp)
+			{
+				tmp = malloc(sizeof(t_bubble));
+				tmp->pos = i;
+				tmp->next = NULL;
+				data->lightning_list = tmp;
+			}
+			else
+			{
+				tmp->next = malloc(sizeof(t_bubble));
+				tmp->next->pos = i;
+				tmp->next->next = NULL;
+				tmp = tmp->next;
+			}
+		}
+		i++;
+	}
+	SDL_FreeSurface(surface);
+	ROBIN_init_texture(data);
 }
 
 static int	init_fonts(t_doom *data)

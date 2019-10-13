@@ -61,6 +61,8 @@ struct							s_text
 
 struct							s_graphic_lib
 {
+	SDL_Surface					*character;
+	SDL_Surface					*menu_texture[2];
 	SDL_Texture					*texture;
 	SDL_Surface					*start_bg;
 	SDL_Window					*window;
