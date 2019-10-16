@@ -4,6 +4,9 @@ doom-nukem
 # Visual Studio file
 .vscode
 
+# Backup Directory
+backup_doom
+
 # Prerequisites
 *.d
 

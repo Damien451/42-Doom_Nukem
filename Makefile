@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile2                                          :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roduquen <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/12 20:56:18 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/14 20:58:49 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ LIBFT = $(LIBDIR) -lft
 
 SRCS =		$(STATES)/state_start.c					\
 			$(STATES)/state_main_menu.c				\
+			$(STATES)/state_scoreboard.c			\
 			$(STATES)/state_settings_menu.c			\
 			$(MATHS)/vec3l_maths.c					\
 			$(MATHS)/vec3d_maths.c					\
@@ -71,10 +72,10 @@ SRCS =		$(STATES)/state_start.c					\
 			doom.c									\
 			draw_rectangle.c						\
 			frame_calculator.c						\
-			free_tabinputs.c						\
+			get_default_inputs.c					\
 			init_program.c							\
 			leave_program.c							\
-			parse_input_dict.c						\
+			parse_input_file.c						\
 			program.c								\
 			put_buttons_names.c						\
 			put_buttons_on_img.c					\

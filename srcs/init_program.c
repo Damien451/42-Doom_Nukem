@@ -128,7 +128,7 @@ static void	init_program2(t_doom *data)
 	data->state |= RUNNING;
 	data->state |= START;
 	data->button = 0;
-	parse_input_dict(data, "./files/tmp_dictionnary");
+	parse_input_file(data, "./files/inputs");
 }
 
 int			init_program(t_doom *data)

@@ -89,6 +89,8 @@ int							state_start(t_doom *data);
 
 int							state_main_menu(t_doom *data);
 
+int							state_scoreboard(t_doom *data);
+
 int							state_settings_menu(t_doom *data);
 
 #endif
