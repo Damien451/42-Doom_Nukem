@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/14 20:58:49 by dacuvill         ###   ########.fr        #
+#    Updated: 2019/10/16 17:25:12 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ BREWDIR = /Users/$(LOGIN)/.brew
 
 MATHS = maths
 STATES = states
+SHAPES = shapes
 
 S_MATHDIR = ./$(SRCDIR)/$(MATHS)
 S_STATDIR = ./$(SRCDIR)/$(STATES)
@@ -65,12 +66,15 @@ SRCS =		$(STATES)/state_start.c					\
 			$(STATES)/state_scoreboard.c			\
 			$(STATES)/state_settings_menu.c			\
 			$(MATHS)/vec3l_maths.c					\
-			$(MATHS)/vec3d_maths.c					\
 			$(MATHS)/vec3l_maths_2.c				\
-			$(MATHS)/vec3d_maths_2.c				\
+			$(SHAPES)/draw_circle.c					\
+			$(SHAPES)/draw_rectangle.c				\
+			$(STATES)/state_editor.c				\
+			$(STATES)/state_main_menu.c				\
+			$(STATES)/state_settings_menu.c			\
+			$(STATES)/state_start.c					\
 			add_points.c							\
 			doom.c									\
-			draw_rectangle.c						\
 			frame_calculator.c						\
 			get_default_inputs.c					\
 			init_program.c							\
@@ -111,6 +115,7 @@ $(OBJDIR) :
 	@mkdir -p $@ 2> /dev/null || true
 	@mkdir -p $@/$(MATHS) 2> /dev/null || true
 	@mkdir -p $@/$(STATES) 2> /dev/null || true
+	@mkdir -p $@/$(SHAPES) 2> /dev/null || true
 
 clean :
 	@rm -rf $(OBJDIR)

@@ -49,6 +49,8 @@ struct						s_doom
 	t_start					tab[NB_BUBBLE];
 	t_bubble				*bubble_list;
 	t_bubble				*lightning_list;
+	t_bubble				*lightning_list2;
+	int						map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	long					button;
 	long					state;
 };
@@ -92,5 +94,7 @@ int							state_main_menu(t_doom *data);
 int							state_scoreboard(t_doom *data);
 
 int							state_settings_menu(t_doom *data);
+
+int							state_editor(t_doom *data);
 
 #endif

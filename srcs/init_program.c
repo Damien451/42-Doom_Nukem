@@ -5,9 +5,9 @@
 
 static void	ROBIN_init_texture(t_doom *data)
 {
-	data->lib.character = SDL_LoadBMP("/sgoinfre/goinfre/Perso/roduquen/character.bmp");
-	data->lib.menu_texture[0] = SDL_LoadBMP("gstvine1.bmp");
-	data->lib.menu_texture[1] = SDL_LoadBMP("gstvine2.bmp");
+	data->lib.character = SDL_LoadBMP("textures/character.bmp");
+	data->lib.menu_texture[0] = SDL_LoadBMP("textures/gstvine1.bmp");
+	data->lib.menu_texture[1] = SDL_LoadBMP("textures/gstvine2.bmp");
 }
 
 static void	init_tab(t_doom *data)
@@ -15,6 +15,7 @@ static void	init_tab(t_doom *data)
 	int			i;
 	SDL_Surface	*surface;
 	t_bubble	*tmp;
+	t_bubble	*tmp2;
 
 	i = 0;
 	while (i < NB_BUBBLE)
@@ -30,8 +31,8 @@ static void	init_tab(t_doom *data)
 			rand();
 		data->tab[i++].color = (rand() % 256) << 16;
 	}
-	surface = SDL_LoadBMP("Untitled.bmp");
-	data->lib.start_bg = SDL_LoadBMP("start_bg.bmp");
+	surface = SDL_LoadBMP("textures/Untitled.bmp");
+	data->lib.start_bg = SDL_LoadBMP("textures/start_bg.bmp");
 	i = 0;
 	tmp = NULL;
 	while (i < WIDTH * HEIGHT)
@@ -57,8 +58,9 @@ static void	init_tab(t_doom *data)
 	}
 	tmp = NULL;
 	SDL_FreeSurface(surface);
-	surface = SDL_LoadBMP("eclair.bmp");
+	surface = SDL_LoadBMP("textures/eclair.bmp");
 	i = 0;
+	tmp2 = NULL;
 	while (i < WIDTH * HEIGHT)
 	{
 		if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)surface->pixels)[i] % 0x1000000 <= 0x888888)
@@ -76,6 +78,23 @@ static void	init_tab(t_doom *data)
 				tmp->next->pos = i;
 				tmp->next->next = NULL;
 				tmp = tmp->next;
+			}
+		}
+		else if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)surface->pixels)[i] % 0x1000000 <= 0x999999)
+		{
+			if (!tmp2)
+			{
+				tmp2 = malloc(sizeof(t_bubble));
+				tmp2->pos = i;
+				tmp2->next = NULL;
+				data->lightning_list2 = tmp2;
+			}
+			else
+			{
+				tmp2->next = malloc(sizeof(t_bubble));
+				tmp2->next->pos = i;
+				tmp2->next->next = NULL;
+				tmp2 = tmp2->next;
 			}
 		}
 		i++;
