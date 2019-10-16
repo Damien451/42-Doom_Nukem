@@ -14,6 +14,9 @@
 
 # define WIDTH					1920
 # define HEIGHT					1080
+# define SIZE_MAP				64
+# define SIZE_TEXTURE			64
+# define BLOCK_SIZE_EDITOR		((HEIGHT - 54) / 64)
 
 # define NBR_FONTS				6
 

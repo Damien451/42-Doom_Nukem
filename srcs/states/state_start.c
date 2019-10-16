@@ -1,47 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_start.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
+/*   Updated: 2019/10/16 17:10:05 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "graphic_lib.h"
 #include "libft.h"
 #include <time.h>
+#include "vec3.h"
 
-void	putpixel(unsigned int *image, int a, int b, int c)
-{
-	if (a + b * WIDTH >= 0 && a + b * WIDTH < WIDTH * HEIGHT)
-		image[a + b * WIDTH] = c;
-}
-
-void	drawCircle(unsigned int *image, int xc, int yc, int x, int y, int color)
-{
-	rand();
-    putpixel(image, xc+x, yc+y, color);
-    putpixel(image, xc-x, yc+y, color);
-    putpixel(image, xc+x, yc-y, color);
-    putpixel(image, xc-x, yc-y, color);
-    putpixel(image, xc+y, yc+x, color);
-    putpixel(image, xc-y, yc+x, color);
-    putpixel(image, xc+y, yc-x, color);
-    putpixel(image, xc-y, yc-x, color);
-}
-
-void	circleBres(unsigned int *image, int xc, int yc, int r, int color)
-{
-    int x = 0, y = r;
-    int d = 3 - 2 * r;
-    drawCircle(image, xc, yc, x, y, color);
-    while (y >= x)
-    {
-        x++;
-        if (d > 0)
-        {
-            y--;
-            d = d + 4 * (x - y) + 10;
-        }
-        else
-            d = d + 4 * x + 6;
-        drawCircle(image, xc, yc, x, y, color);
-    }
-}
-
-static void	print_autor(t_doom *data, unsigned int *image, int color)
+static inline void	print_autor(t_doom *data, unsigned int *image, int color)
 {
 	t_bubble			*tmp;
 
@@ -52,10 +27,8 @@ static void	print_autor(t_doom *data, unsigned int *image, int color)
 		tmp = tmp->next;
 	}
 }
-
-// 1174 445
-
-static int	color_percent(int color1, int color2, int percent)
+/*
+static inline int	color_percent(int color1, int color2, int percent)
 {
 	double		c1;
 
@@ -72,7 +45,7 @@ static int	color_percent(int color1, int color2, int percent)
 	return ((int)c1);
 }
 
-void	lightning_flash(unsigned int *image, int percent)
+static inline void	lightning_flash(unsigned int *image, int percent)
 {
 	unsigned int	ok[4];
 	int				i;
@@ -80,19 +53,20 @@ void	lightning_flash(unsigned int *image, int percent)
 	i = 0;
 	while (i < WIDTH * HEIGHT)
 	{
-		ok[0] = (image[i] >> 24) % 256;
-		ok[1] = (image[i] >> 16) % 256;
-		ok[2] = (image[i] >> 8) % 256;
-		ok[3] = image[i] % 256;
+		ok[0] = (image[i] >> 24) & 255;
+		ok[1] = (image[i] >> 16) & 255;
+		ok[2] = (image[i] >> 8) & 255;
+		ok[3] = image[i] & 255;
 		ok[0] = color_percent(ok[0], 255, percent);
 		ok[1] = color_percent(ok[1], 255, percent);
 		ok[2] = color_percent(ok[2], 255, percent);
 		ok[3] = color_percent(ok[3], 255, percent);
-		image[i++] = (ok[1] << 16) + (ok[2] << 8) + ok[3];
+		image[i++] = (ok[1] << 16) | (ok[2] << 8) | ok[3];
 	}
 }
-
-void	lightning(t_doom *data, unsigned int *image, int color)
+*/
+static inline void	lightning(t_doom *data, unsigned int *image, int color
+	, int frame)
 {
 	t_bubble *tmp;
 
@@ -102,9 +76,31 @@ void	lightning(t_doom *data, unsigned int *image, int color)
 		image[tmp->pos] = color;
 		tmp = tmp->next;
 	}
+	tmp = data->lightning_list2;
+	color = 0xFF;
+	while (tmp)
+	{
+		image[tmp->pos] = color;
+		tmp = tmp->next;
+	}
+	if (frame == 125)
+		ft_memset(image, 255, WIDTH * HEIGHT * 4);
+	else if (frame > 125 && frame <= 130)
+		ft_memset(image, 255 - frame + 125, WIDTH * HEIGHT * 4);
+	else if (frame > 120 && frame <= 125)
+		ft_memset(image, 255 - frame + 125, WIDTH * HEIGHT * 4);
 }
 
-static void	draw_on_texture(t_doom *data, unsigned int *image)
+static inline void	randomize_new_bubble(t_start *bubble)
+{
+	srand(time(NULL) + rand());
+	bubble->pos = rand() % WIDTH;
+	bubble->speed = rand() % 10 + 1;
+	bubble->size = rand() % 10 + 4;
+	bubble->color = (rand() % 256) << 16;
+}
+
+static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 {
 	int			i;
 	int			g;
@@ -120,52 +116,25 @@ static void	draw_on_texture(t_doom *data, unsigned int *image)
 	srand(time(NULL));
 	while (i < NB_BUBBLE)
 	{
-		circleBres(image, data->tab[i].pos % WIDTH, data->tab[i].pos / WIDTH, data->tab[i].size, data->tab[i].color);
-		if (data->tab[i].pos % WIDTH > 1174)
-		{
-			if (data->tab[i].pos / WIDTH > 445)
-				circleBres(image, data->tab[i].pos % WIDTH - data->tab[i].size / 4, data->tab[i].pos / WIDTH - data->tab[i].size / 4, data->tab[i].size / (i % 3 + 3), data->tab[i].color + (((data->tab[i].color >> 16) / 2) << 8) + ((data->tab[i].color >> 16) / 2));
-			else
-				circleBres(image, data->tab[i].pos % WIDTH - data->tab[i].size / 4, data->tab[i].pos / WIDTH + data->tab[i].size / 4, data->tab[i].size / (i % 3 + 3), data->tab[i].color + (((data->tab[i].color >> 16) / 2) << 8) + ((data->tab[i].color >> 16) / 2));
-		}
-		else
-		{
-			if (data->tab[i].pos / WIDTH > 445)
-				circleBres(image, data->tab[i].pos % WIDTH + data->tab[i].size / 4, data->tab[i].pos / WIDTH - data->tab[i].size / 4, data->tab[i].size / (i % 3 + 3), data->tab[i].color + (((data->tab[i].color >> 16) / 2) << 8) + ((data->tab[i].color >> 16) / 2));
-			else
-				circleBres(image, data->tab[i].pos % WIDTH + data->tab[i].size / 4, data->tab[i].pos / WIDTH + data->tab[i].size / 4, data->tab[i].size / (i % 3 + 3), data->tab[i].color + (((data->tab[i].color >> 16) / 2) << 8) + ((data->tab[i].color >> 16) / 2));
-		}
-		data->tab[i].pos += (data->tab[i].speed * WIDTH);
+		start_drawing_circle(data, i, image);
 		if (data->tab[i].pos >= WIDTH * HEIGHT)
-		{
-			srand(time(NULL) + rand());
-			data->tab[i].pos = rand() % WIDTH;
-			data->tab[i].speed = rand() % 10 + 1;
-			data->tab[i].size = rand() % 10 + 4;
-			data->tab[i].color = (rand() % 256) << 16;
-		}
+			randomize_new_bubble(&data->tab[i]);
 		i++;
 	}
 	if (type > 0 && frame >= 120 && frame <= 135)
-	{
-		lightning(data, image, ((frame + 75) << 16) | ((frame + 75) << 8));
-		if (frame == 125)
-			ft_memset(image, 255, WIDTH * HEIGHT * 4);
-		else if (frame > 125 && frame <= 130)
-			ft_memset(image, 255 - frame + 125, WIDTH * HEIGHT * 4);
-		else if (frame > 120 && frame <= 125)
-			ft_memset(image, 255 - frame + 125, WIDTH * HEIGHT * 4);
-	}
+		lightning(data, image, (((frame + 50) << 16) | ((frame + 50) << 8))
+			+ frame + 75, frame);
 	frame += type;
 	if (frame == 255 || frame == 0)
 		type *= -1;
 }
 
-static void	create_start_renderer(t_doom *data)
+static inline void	create_start_renderer(t_doom *data)
 {
 	int			test;
 
-	if (!SDL_LockTexture(data->lib.texture, NULL, (void**)&data->lib.image, &test))
+	if (!SDL_LockTexture(data->lib.texture, NULL, (void**)&data->lib.image
+		, &test))
 	{
 		SDL_UnlockTexture(data->lib.texture);
 		draw_on_texture(data, data->lib.image);
@@ -174,7 +143,7 @@ static void	create_start_renderer(t_doom *data)
 	}
 }
 
-int			state_start(t_doom *data)
+int					state_start(t_doom *data)
 {
 	while (SDL_PollEvent(&data->lib.event))
 		if (data->lib.event.type == SDL_KEYDOWN)

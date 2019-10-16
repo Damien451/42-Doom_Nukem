@@ -6,7 +6,7 @@
 #    By: roduquen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/12 20:56:18 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/16 16:45:47 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ BREWDIR = /Users/$(LOGIN)/.brew
 
 MATHS = maths
 STATES = states
+SHAPES = shapes
 
 S_MATHDIR = ./$(SRCDIR)/$(MATHS)
 S_STATDIR = ./$(SRCDIR)/$(STATES)
@@ -60,16 +61,18 @@ LIBFT = $(LIBDIR) -lft
 #                                  SOURCES                                     #
 # **************************************************************************** #
 
-SRCS =		$(STATES)/state_start.c					\
+SRCS =		$(MATHS)/vec3d_maths.c					\
+			$(MATHS)/vec3d_maths_2.c				\
+			$(MATHS)/vec3l_maths.c					\
+			$(MATHS)/vec3l_maths_2.c				\
+			$(SHAPES)/draw_circle.c					\
+			$(SHAPES)/draw_rectangle.c				\
+			$(STATES)/state_editor.c				\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_settings_menu.c			\
-			$(MATHS)/vec3l_maths.c					\
-			$(MATHS)/vec3d_maths.c					\
-			$(MATHS)/vec3l_maths_2.c				\
-			$(MATHS)/vec3d_maths_2.c				\
+			$(STATES)/state_start.c					\
 			add_points.c							\
 			doom.c									\
-			draw_rectangle.c						\
 			frame_calculator.c						\
 			free_tabinputs.c						\
 			init_program.c							\
@@ -110,6 +113,7 @@ $(OBJDIR) :
 	@mkdir -p $@ 2> /dev/null || true
 	@mkdir -p $@/$(MATHS) 2> /dev/null || true
 	@mkdir -p $@/$(STATES) 2> /dev/null || true
+	@mkdir -p $@/$(SHAPES) 2> /dev/null || true
 
 clean :
 	@rm -rf $(OBJDIR)

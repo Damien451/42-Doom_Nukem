@@ -6,7 +6,8 @@ static int	game_state(t_doom *data)
 	if (data->state & START)
 		state_start(data);
 	else if (data->state & MAIN_MENU)
-		state_main_menu(data);
+		state_editor(data);
+	//	state_main_menu(data);
 	else if (data->state & SETTINGS)
 		state_settings_menu(data);
 	else if (data->state & LEAVING)
@@ -18,9 +19,6 @@ int			program(t_doom *data)
 {
 	int				pitch;
 
-	while (SDL_PollEvent(&data->lib.event))
-	{
-	}
 	while (data->state & RUNNING)
 	{
 		if (!SDL_LockTexture(data->lib.texture, NULL, (void**)&data->lib.image
