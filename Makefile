@@ -6,7 +6,7 @@
 #    By: roduquen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/16 16:45:47 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/16 18:29:12 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRCS =		$(MATHS)/vec3d_maths.c					\
 			$(MATHS)/vec3d_maths_2.c				\
 			$(MATHS)/vec3l_maths.c					\
 			$(MATHS)/vec3l_maths_2.c				\
+			$(MATHS)/create_octree.c				\
 			$(SHAPES)/draw_circle.c					\
 			$(SHAPES)/draw_rectangle.c				\
 			$(STATES)/state_editor.c				\

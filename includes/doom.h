@@ -31,6 +31,7 @@
 typedef struct s_doom			t_doom;
 typedef struct s_graphic_lib	t_graphic_lib;
 typedef struct s_bubble			t_bubble;
+typedef struct s_octree			t_octree;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -50,9 +51,11 @@ struct						s_doom
 	t_bubble				*bubble_list;
 	t_bubble				*lightning_list;
 	t_bubble				*lightning_list2;
-	int						map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	long					button;
 	long					state;
+	t_octree				*octree;
+	int						load_page[2];
 };
 
 /*
@@ -68,6 +71,7 @@ int							leave_program(t_doom *data, int type);
 */
 
 int							frame_calculator(void);
+int							create_octree(t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====

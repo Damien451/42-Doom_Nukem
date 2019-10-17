@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/16 17:10:05 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/17 19:22:41 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,14 @@ static inline void	create_start_renderer(t_doom *data)
 		SDL_UnlockTexture(data->lib.texture);
 		draw_on_texture(data, data->lib.image);
 		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
+		if (!data->load_page[0])
+		{
+			ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 2 - data->load_page[1] * WIDTH);
+			ft_memset(data->lib.image + ((WIDTH * HEIGHT * 2 + data->load_page[1] * WIDTH) >> 2), 0, WIDTH * HEIGHT * 2 - (data->load_page[1] * (WIDTH)));
+			data->load_page[1] += 25;
+			if (data->load_page[1] >= HEIGHT * 2)
+				data->load_page[0] = 1;
+		}
 		SDL_RenderPresent(data->lib.renderer);
 	}
 }

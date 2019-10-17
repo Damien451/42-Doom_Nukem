@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue_new.c                                        :+:      :+:    :+:   */
+/*   octree.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julesqvgn <julesqvgn@student.42.fr>        +#+  +:+       +#+        */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/01 11:43:04 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/09 13:18:24 by roduquen         ###   ########.fr       */
+/*   Created: 2019/10/16 17:21:10 by roduquen          #+#    #+#             */
+/*   Updated: 2019/10/16 17:51:51 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#ifndef OCTREE_H
+# define OCTREE_H
 
-t_queue		*queue_new(void *ptr)
+# include "vec3.h"
+# define EMPTY	0
+# define INSIDE	1
+# define FULL	2
+
+typedef struct s_octree	t_octree;
+
+struct					s_octree
 {
-	t_queue	*new;
+	t_octree			*child[8];
+	t_vec3l				center;
+	int					size;
+	char				leaf;
+};
 
-	if (!(new = (t_queue*)malloc(sizeof(t_queue))))
-		return (NULL);
-	new->ptr = ptr;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
-}
+#endif

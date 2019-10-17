@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 11:42:53 by roduquen          #+#    #+#             */
-/*   Updated: 2019/04/02 13:44:53 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/07/21 15:02:41 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 
 void		queue_forward(t_queue **begin)
 {
-	t_queue		*next;
-
 	if (!begin)
 		return ;
 	if (!*begin)
 		return ;
-	next = (*begin)->next;
-	free(*begin);
-	*begin = next;
+	*begin = (*begin)->next;
 }

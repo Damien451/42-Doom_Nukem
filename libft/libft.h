@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jquivogn <jquivogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:17:26 by roduquen          #+#    #+#             */
-/*   Updated: 2019/08/22 18:32:44 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/10/09 19:21:24 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
-/*
-** DEFINE
-*/
-
-# define BUFF_SIZE 10
 
 /*
 ** INCLUDES
@@ -29,12 +23,7 @@
 ** STRUCTURES + TYPEDEF
 */
 
-typedef struct	s_lst
-{
-	int				file_d;
-	char			*content;
-	struct s_lst	*next;
-}				t_lst;
+# define BUFF 1025
 
 typedef struct	s_list
 {
@@ -53,8 +42,7 @@ typedef struct	s_btree
 typedef struct	s_queue
 {
 	void			*ptr;
-	int				size;
-	int				pos;
+	struct s_queue	*prev;
 	struct s_queue	*next;
 }				t_queue;
 
@@ -148,7 +136,7 @@ void			quick_sort_int(int *tab, size_t size);
 void			quick_sort_string(char **tab, size_t size);
 int				ft_strlendl(char *str);
 void			ft_lstadd_back(t_list **alst, t_list *new);
-t_queue			*queue_new(void *ptr, int current_level, int is_first);
+t_queue			*queue_new(void *ptr);
 void			queue_add(t_queue **last, t_queue *new);
 void			queue_forward(t_queue **begin);
 t_btree			*btree_create_node(void *item);
@@ -169,5 +157,6 @@ char			*infinity_mult(char *nbr1, char *nbr2);
 long			ft_strtol(char *str, char **endptr, int base);
 
 int				get_next_line(const int fd, char **line);
-char			*ft_strfreejoin(const char *s1, const char *s2, int c);
+char			*ft_strndup(const char *str, int n);
+
 #endif
