@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   editor.c                                           :+:      :+:    :+:   */
+/*   state_editor.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/17 19:08:34 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/17 20:27:27 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 	return (0);
 }
 
-static inline void	keydown_editor_commands(t_doom *data, char *str, int *map)
+static inline void	keydown_editor_commands(t_doom *data, char *str, int *map
+	, int *first)
 {
 	if (data->lib.event.key.keysym.sym == SDLK_UP)
 	{
@@ -141,9 +142,15 @@ static inline void	keydown_editor_commands(t_doom *data, char *str, int *map)
 			(*map)--;
 		}
 	}
+	if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+	{
+		switch_state(data, EDITOR, MAIN_MENU);
+		*first = 0;
+	}
 }
 
-static inline void	editor_commands(t_doom *data, char str[50], int *map)
+static inline void	editor_commands(t_doom *data, char str[50], int *map
+	, int *first)
 {
 	static int		ok = 0;
 
@@ -161,7 +168,7 @@ static inline void	editor_commands(t_doom *data, char str[50], int *map)
 				% BLOCK_SIZE_EDITOR, 0xFFFFFF}, *map);
 	}
 	else if (data->lib.event.type == SDL_KEYDOWN)
-		keydown_editor_commands(data, str, map);
+		keydown_editor_commands(data, str, map, first);
 }
 
 void		aff_octree(t_octree *node, t_doom *data, int *full, int *empty, int *inside)
@@ -206,7 +213,7 @@ int					state_editor(t_doom *data)
 	SDL_ShowCursor(SDL_TRUE);
 	set_quadrillage(data, map);
 	while (SDL_PollEvent(&data->lib.event))
-		editor_commands(data, str, &map);
+		editor_commands(data, str, &map, &first);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);

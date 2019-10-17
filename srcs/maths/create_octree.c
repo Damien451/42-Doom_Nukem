@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/17 18:45:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/17 21:35:25 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_octree	*create_node(int size, t_vec3l center)
 		new->child[i++] = NULL;
 	new->size = size;
 	new->center = center;
-	new->leaf = 0;
 	return (new);
 }
 
@@ -40,11 +39,10 @@ int		verify_inside_node(t_doom *data, t_octree *node)
 	int			nbr_node;
 
 	nbr_node = 0;
-	tester.x = (node->center.x - (node->size >> 1)) >> 1;
-	tester.y = (node->center.y - (node->size >> 1)) >> 1;
-	tester.z = (node->center.z - (node->size >> 1)) >> 1;
+	tester.x = (node->center.x >> 1) - (node->size >> 2);
+	tester.y = (node->center.y >> 1) - (node->size >> 2);
+	tester.z = (node->center.z >> 1) - (node->size >> 2);
 	count.x = -1;
-	printf("SIZE = %d\n", node->size);
 	while (++count.x < node->size >> 1)
 	{
 		count.y = -1;
@@ -56,52 +54,60 @@ int		verify_inside_node(t_doom *data, t_octree *node)
 				if (data->map_to_save[tester.x + count.x][tester.y + count.y][tester.z + count.z])
 					nbr_node++;
 				else if (nbr_node)
-					return (1);
+					return (-1);
 			}
 		}
 	}
 	return (nbr_node);
 }
 
-static int	create_child(t_octree *node)
+static int	create_child(t_octree *node, t_doom *data)
 {
-		node->child[0] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->center.x >> 1), node->center.y - (node->center.y >> 1), node->center.z - (node->center.z >> 1)});
-		node->child[1] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->center.x >> 1), node->center.y - (node->center.y >> 1), node->center.z - (node->center.z >> 1)});
-		node->child[2] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->center.x >> 1), node->center.y + (node->center.y >> 1), node->center.z - (node->center.z >> 1)});
-		node->child[3] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->center.x >> 1), node->center.y + (node->center.y >> 1), node->center.z - (node->center.z >> 1)});
-		node->child[4] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->center.x >> 1), node->center.y - (node->center.y >> 1), node->center.z + (node->center.z >> 1)});
-		node->child[5] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->center.x >> 1), node->center.y - (node->center.y >> 1), node->center.z + (node->center.z >> 1)});
-		node->child[6] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->center.x >> 1), node->center.y + (node->center.y >> 1), node->center.z + (node->center.z >> 1)});
-		node->child[7] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->center.x >> 1), node->center.y + (node->center.y >> 1), node->center.z + (node->center.z >> 1)});
-		return (0);
+	int			ret;
+	int			i;
+
+	node->child[0] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->size >> 2), node->center.y - (node->size >> 2), node->center.z - (node->size >> 2)});
+	node->child[1] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->size >> 2), node->center.y - (node->size >> 2), node->center.z - (node->size >> 2)});
+	node->child[2] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->size >> 2), node->center.y + (node->size >> 2), node->center.z - (node->size >> 2)});
+	node->child[3] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->size >> 2), node->center.y + (node->size >> 2), node->center.z - (node->size >> 2)});
+	node->child[4] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->size >> 2), node->center.y - (node->size >> 2), node->center.z + (node->size >> 2)});
+	node->child[5] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->size >> 2), node->center.y - (node->size >> 2), node->center.z + (node->size >> 2)});
+	node->child[6] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->size >> 2), node->center.y + (node->size >> 2), node->center.z + (node->size >> 2)});
+	node->child[7] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->size >> 2), node->center.y + (node->size >> 2), node->center.z + (node->size >> 2)});
+	i = -1;
+	while (++i < 8)
+	{
+		if ((ret = verify_inside_node(data, node->child[i])) == 0)
+			node->child[i]->leaf = EMPTY;
+		else if (ret == -1)
+			node->child[i]->leaf = INSIDE;
+		else
+			node->child[i]->leaf = FULL;
+	}
+	return (0);
 }
 
 static int	breadth_first_create_octree(t_doom *data, t_octree *actual)
 {
 	t_queue		*queue[2];
 	int			i;
-	int			ret;
 
 	queue[0] = queue_new(actual);
 	queue[1] = queue[0];
 	while (queue[0])
 	{
-		if (((t_octree*)queue[0]->ptr)->leaf == INSIDE)
+		actual = (t_octree*)queue[0]->ptr;
+		if (actual->leaf == INSIDE)
 		{
-			if (((t_octree*)queue[0]->ptr)->size > 1)
+			if (actual->size > 2)
 			{
+				create_child(actual, data);
 				i = -1;
-				create_child((t_octree*)queue[0]->ptr);
 				while (++i < 8)
 				{
-					if ((ret = verify_inside_node(data, ((t_octree*)queue[0]->ptr)->child[i])) == 0)
-						((t_octree*)queue[0]->ptr)->child[i]->leaf = EMPTY;
-					else if (ret == (((t_octree*)queue[0]->ptr)->child[i]->size * ((t_octree*)queue[0]->ptr)->child[i]->size * ((t_octree*)queue[0]->ptr)->child[i]->size) >> 3)
-						((t_octree*)queue[0]->ptr)->child[i]->leaf = FULL;
-					else
+					if (actual->child[i]->leaf == INSIDE)
 					{
-						((t_octree*)queue[0]->ptr)->child[i]->leaf = INSIDE;
-						queue[1]->next = queue_new(((t_octree*)queue[0]->ptr)->child[i]);
+						queue[1]->next = queue_new(actual->child[i]);
 						queue[1]->next->prev = queue[1];
 						queue[1] = queue[1]->next;
 					}
@@ -129,13 +135,12 @@ int		create_octree(t_doom *data)
 	actual = create_node(size << 1, (t_vec3l){size, size, size});
 	data->octree = actual;
 	ret = verify_inside_node(data, actual);
-	printf("ret = %d\n", ret);
-	if (ret == (size * size * size) >> 3)
-		actual->leaf = FULL;
+	if (ret == -1)
+		actual->leaf = INSIDE;
 	else if (!ret)
 		actual->leaf = EMPTY;
 	else
-		actual->leaf = INSIDE;
+		actual->leaf = FULL;
 	if (actual->leaf == INSIDE)
 		breadth_first_create_octree(data, actual);
 	return (0);

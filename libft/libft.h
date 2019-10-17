@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:17:26 by roduquen          #+#    #+#             */
-/*   Updated: 2019/08/22 18:32:44 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/10/17 20:13:42 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void			quick_sort_int(int *tab, size_t size);
 void			quick_sort_string(char **tab, size_t size);
 int				ft_strlendl(char *str);
 void			ft_lstadd_back(t_list **alst, t_list *new);
-t_queue			*queue_new(void *ptr, int current_level, int is_first);
+t_queue			*queue_new(void *ptr);
 void			queue_add(t_queue **last, t_queue *new);
 void			queue_forward(t_queue **begin);
 t_btree			*btree_create_node(void *item);
@@ -161,8 +161,6 @@ void			*btree_search_item(t_btree *root, void *data_ref
 	, int	(*cmpf)(void*, void*));
 int				btree_level_count(t_btree *root);
 int				btree_leaf_count(t_btree *root);
-void			btree_apply_by_level(t_btree *root, void (*applyf)(void *item
-		, int current_level, int is_first));
 int				free_ptr(void *ptr);
 char			*infinity_add_plus(char *nbr1, char *nbr2);
 char			*infinity_mult(char *nbr1, char *nbr2);
