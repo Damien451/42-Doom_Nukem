@@ -25,7 +25,6 @@ int			leave_program(t_doom *data, int type)
 	if (data->lib.window)
 		SDL_DestroyWindow(data->lib.window);
 	close_fonts(data);
-	free_tabinputs(data);
 	SDL_Quit();
 	return (type);
 }

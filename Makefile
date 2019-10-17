@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile2                                          :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roduquen <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/16 18:29:12 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/17 19:27:12 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,10 @@ LIBFT = $(LIBDIR) -lft
 #                                  SOURCES                                     #
 # **************************************************************************** #
 
-SRCS =		$(MATHS)/vec3d_maths.c					\
-			$(MATHS)/vec3d_maths_2.c				\
+SRCS =		$(STATES)/state_start.c					\
+			$(STATES)/state_main_menu.c				\
+			$(STATES)/state_scoreboard.c			\
+			$(STATES)/state_settings_menu.c			\
 			$(MATHS)/vec3l_maths.c					\
 			$(MATHS)/vec3l_maths_2.c				\
 			$(MATHS)/create_octree.c				\
@@ -75,10 +77,10 @@ SRCS =		$(MATHS)/vec3d_maths.c					\
 			add_points.c							\
 			doom.c									\
 			frame_calculator.c						\
-			free_tabinputs.c						\
+			get_default_inputs.c					\
 			init_program.c							\
 			leave_program.c							\
-			parse_input_dict.c						\
+			parse_input_file.c						\
 			program.c								\
 			put_buttons_names.c						\
 			put_buttons_on_img.c					\

@@ -8,6 +8,8 @@ static int	game_state(t_doom *data)
 	else if (data->state & MAIN_MENU)
 //		state_editor(data);
 		state_main_menu(data);
+	else if (data->state & SCORES)
+		state_scoreboard(data);
 	else if (data->state & SETTINGS)
 		state_settings_menu(data);
 	else if (data->state & LEAVING)

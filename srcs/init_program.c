@@ -149,7 +149,7 @@ static void	init_program2(t_doom *data)
 	data->button = 0;
 	data->load_page[0] = 0;
 	data->load_page[1] = 0;
-	parse_input_dict(data, "./files/tmp_dictionnary");
+	parse_input_file(data, "./files/inputs");
 }
 
 int			init_program(t_doom *data)
