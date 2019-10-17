@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/17 20:27:27 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/18 00:21:54 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ static inline void	set_quadrillage(t_doom *data, int step)
 		{
 			if (data->map_to_save[step][i][j])
 			{
-				color_rectangle(data, (t_vec3l){i * BLOCK_SIZE_EDITOR
-					, j * BLOCK_SIZE_EDITOR, 0xFFFFFF}, step);
+				color_rectangle(data, (t_vec3l){i * BLOCK_SIZE_EDITOR + 10
+					, j * BLOCK_SIZE_EDITOR + 10, 0xFFFFFF}, step);
 			}
 			else
 			{
-				color_rectangle(data, (t_vec3l){i * BLOCK_SIZE_EDITOR
-					, j * BLOCK_SIZE_EDITOR, 0}, step);
+				color_rectangle(data, (t_vec3l){i * BLOCK_SIZE_EDITOR + 10
+					, j * BLOCK_SIZE_EDITOR + 10, 0}, step);
 			}
 			j++;
 		}
@@ -74,17 +74,17 @@ static inline void	set_quadrillage(t_doom *data, int step)
 
 static inline void	mouse_editor_commands(t_doom *data, int *ok, int step)
 {
-	if (data->lib.event.button.x >= 1024)
+	if (data->lib.event.button.x >= 1034)
 	{
 	}
-	else if (data->lib.event.button.x >= 0 && data->lib.event.button.y < 1024
+	else if (data->lib.event.button.x >= 10 && data->lib.event.button.y < 1034
 		&& data->lib.event.button.y >= 0)
 	{
 		*ok = 1;
-		color_rectangle(data, (t_vec3l){data->lib.event.button.y
-			- data->lib.event.button.y % BLOCK_SIZE_EDITOR
-			, data->lib.event.button.x - data->lib.event.button.x
-			% BLOCK_SIZE_EDITOR, 0xFFFFFF}, step);
+		color_rectangle(data, (t_vec3l){(data->lib.event.button.y - 10)
+			- (data->lib.event.button.y - 10) % BLOCK_SIZE_EDITOR + 10
+			, (data->lib.event.button.x - 10) - (data->lib.event.button.x - 10)
+			% BLOCK_SIZE_EDITOR + 10, 0xFFFFFF}, step);
 	}
 }
 
@@ -160,12 +160,12 @@ static inline void	editor_commands(t_doom *data, char str[50], int *map
 		ok = 0;
 	if (ok == 1)
 	{
-		if (data->lib.event.button.y < 1024 && data->lib.event.button.x < 1024
-			&& data->lib.event.button.y >= 0 && data->lib.event.button.x >= 0)
-			color_rectangle(data, (t_vec3l){data->lib.event.button.y
-				- data->lib.event.button.y % BLOCK_SIZE_EDITOR
-				, data->lib.event.button.x - data->lib.event.button.x
-				% BLOCK_SIZE_EDITOR, 0xFFFFFF}, *map);
+		if (data->lib.event.button.y < 1034 && data->lib.event.button.x < 1034
+			&& data->lib.event.button.y >= 10 && data->lib.event.button.x >= 10)
+			color_rectangle(data, (t_vec3l){(data->lib.event.button.y - 10)
+				- (data->lib.event.button.y - 10) % BLOCK_SIZE_EDITOR + 10
+				, (data->lib.event.button.x - 10) - (data->lib.event.button.x
+				- 10) % BLOCK_SIZE_EDITOR + 10, 0xFFFFFF}, *map);
 	}
 	else if (data->lib.event.type == SDL_KEYDOWN)
 		keydown_editor_commands(data, str, map, first);
@@ -204,11 +204,12 @@ int					state_editor(t_doom *data)
 	{
 		ft_memset(data->lib.image, 0, HEIGHT * WIDTH * 4);
 		parse_file(data, str, map);
-		create_octree(data);
-		aff_octree(data->octree, data, &full, &empty, &inside);
-		printf("nbr_node full = %d, nbr_node empty = %d, nbr_node inside = %d\n", full, empty, inside);
+	//	create_octree(data);
+	//	aff_octree(data->octree, data, &full, &empty, &inside);
+	//	printf("empty = %d, full = %d, inside = %d, total = %d\n", empty, full, inside, empty + full + inside);
 		first++;
 	}
+	ft_memcpy(data->lib.image, data->lib.editor_texture->pixels, WIDTH * HEIGHT * 4);
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_ShowCursor(SDL_TRUE);
 	set_quadrillage(data, map);

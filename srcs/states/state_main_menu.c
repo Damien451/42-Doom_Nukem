@@ -53,9 +53,16 @@ int			state_main_menu(t_doom *data)
 	static int	total_frame = 0;
 	static int	frame = 0;
 
-	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	anim_main_menu(data, total_frame, frame);
 	buttons_main_menu(buttons);
+	if (!data->load_page[0])
+	{
+		ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 2 - data->load_page[1] * WIDTH);
+		ft_memset(data->lib.image + ((WIDTH * HEIGHT * 2 + data->load_page[1] * WIDTH) >> 2), 0, WIDTH * HEIGHT * 2 - (data->load_page[1] * (WIDTH)));
+		data->load_page[1] += 8;
+		if (data->load_page[1] >= HEIGHT * 2)
+			data->load_page[0] = 1;
+	}
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 5);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),

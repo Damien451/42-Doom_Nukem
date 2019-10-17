@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/17 19:29:18 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/18 00:13:06 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME = Doom-Nukem
 # **************************************************************************** #
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 FSAN = #-fsanitize=address
 DEBUG = #-g3

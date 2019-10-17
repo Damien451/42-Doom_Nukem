@@ -21,7 +21,7 @@
 # define SET_BUTTON_W (WIDTH / 5)
 # define SET_BUTTON_H (HEIGHT / 12)
 
-# define NB_BUBBLE		200
+# define NB_BUBBLE		125
 
 /*
 ** ====-* TYPEDEFS *-====

@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/17 19:22:41 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/18 00:14:38 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 	static int	type = 1;
 
 	i = -1;
-	while (++i < WIDTH * HEIGHT)
-		image[i] = ((unsigned int*)data->lib.start_bg->pixels)[i];
+	ft_memcpy(image, data->lib.start_bg->pixels, WIDTH * HEIGHT * 4);
 	print_autor(data, image, frame << 16);
 	i = 0;
 	g = WIDTH * (HEIGHT - 1) - 1;
@@ -138,24 +137,31 @@ static inline void	create_start_renderer(t_doom *data)
 	{
 		SDL_UnlockTexture(data->lib.texture);
 		draw_on_texture(data, data->lib.image);
-		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 		if (!data->load_page[0])
 		{
 			ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 2 - data->load_page[1] * WIDTH);
 			ft_memset(data->lib.image + ((WIDTH * HEIGHT * 2 + data->load_page[1] * WIDTH) >> 2), 0, WIDTH * HEIGHT * 2 - (data->load_page[1] * (WIDTH)));
-			data->load_page[1] += 25;
+			data->load_page[1] += 32;
 			if (data->load_page[1] >= HEIGHT * 2)
 				data->load_page[0] = 1;
 		}
+		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 		SDL_RenderPresent(data->lib.renderer);
 	}
 }
 
 int					state_start(t_doom *data)
 {
+	SDL_RenderClear(data->lib.renderer);
 	while (SDL_PollEvent(&data->lib.event))
+	{
 		if (data->lib.event.type == SDL_KEYDOWN)
+		{
+			data->load_page[0] = 0;
+			data->load_page[1] = 0;
 			switch_state(data, START, MAIN_MENU);
+		}
+	}
 	create_start_renderer(data);
 	return (0);
 }
