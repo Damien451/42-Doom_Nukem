@@ -20,9 +20,11 @@
 # define PLAYING	(1l << 1)
 # define PAUSE		(1l << 2)
 # define MAIN_MENU	(1l << 3)
-# define SCORES		(1l << 4)
-# define SETTINGS	(1l << 5)
-# define LEAVING	(1l << 6)
+# define PLAY_MENU	(1l << 4)
+# define EDITOR		(1l << 5)
+# define SCORES		(1l << 6)
+# define SETTINGS	(1l << 7)
+# define LEAVING	(1l << 8)
 
 /*
 ** ====-* TYPEDEFS *-====

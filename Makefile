@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/16 17:25:12 by dacuvill         ###   ########.fr        #
+#    Updated: 2019/10/17 19:18:23 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,13 +39,16 @@ INCDIR = includes
 LIBDIR = libft
 BREWDIR = /Users/$(LOGIN)/.brew
 
+ANIM = animations
 MATHS = maths
 STATES = states
 SHAPES = shapes
 
+S_ANIMDIR = ./$(SRCDIR)/$(ANIM)
 S_MATHDIR = ./$(SRCDIR)/$(MATHS)
 S_STATDIR = ./$(SRCDIR)/$(STATES)
 
+O_ANIMDIR = ./$(OBJDIR)/$(ANIM)
 O_MATHDIR = ./$(OBJDIR)/$(MATHS)
 O_STATDIR = ./$(OBJDIR)/$(STATES)
 
@@ -61,7 +64,8 @@ LIBFT = $(LIBDIR) -lft
 #                                  SOURCES                                     #
 # **************************************************************************** #
 
-SRCS =		$(STATES)/state_start.c					\
+SRCS =		$(ANIM)/anim_main_menu.c				\
+			$(STATES)/state_start.c					\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_scoreboard.c			\
 			$(STATES)/state_settings_menu.c			\
@@ -71,6 +75,7 @@ SRCS =		$(STATES)/state_start.c					\
 			$(SHAPES)/draw_rectangle.c				\
 			$(STATES)/state_editor.c				\
 			$(STATES)/state_main_menu.c				\
+			$(STATES)/state_play_menu.c				\
 			$(STATES)/state_settings_menu.c			\
 			$(STATES)/state_start.c					\
 			add_points.c							\
@@ -113,6 +118,7 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)
 
 $(OBJDIR) :
 	@mkdir -p $@ 2> /dev/null || true
+	@mkdir -p $@/$(ANIM) 2> /dev/null || true
 	@mkdir -p $@/$(MATHS) 2> /dev/null || true
 	@mkdir -p $@/$(STATES) 2> /dev/null || true
 	@mkdir -p $@/$(SHAPES) 2> /dev/null || true
