@@ -86,4 +86,6 @@ t_label		label(char *str, SDL_Color color);
 
 void		put_string_on_renderer(t_doom *data, t_point pos, t_label label, TTF_Font *font);
 
+void		anim_main_menu(t_doom *data, int total_frame, int frame);
+
 #endif

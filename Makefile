@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/17 19:27:12 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/17 19:29:18 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,13 +39,16 @@ INCDIR = includes
 LIBDIR = libft
 BREWDIR = /Users/$(LOGIN)/.brew
 
+ANIM = animations
 MATHS = maths
 STATES = states
 SHAPES = shapes
 
+S_ANIMDIR = ./$(SRCDIR)/$(ANIM)
 S_MATHDIR = ./$(SRCDIR)/$(MATHS)
 S_STATDIR = ./$(SRCDIR)/$(STATES)
 
+O_ANIMDIR = ./$(OBJDIR)/$(ANIM)
 O_MATHDIR = ./$(OBJDIR)/$(MATHS)
 O_STATDIR = ./$(OBJDIR)/$(STATES)
 
@@ -61,7 +64,8 @@ LIBFT = $(LIBDIR) -lft
 #                                  SOURCES                                     #
 # **************************************************************************** #
 
-SRCS =		$(STATES)/state_start.c					\
+SRCS =		$(ANIM)/anim_main_menu.c				\
+			$(STATES)/state_start.c					\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_scoreboard.c			\
 			$(STATES)/state_settings_menu.c			\
@@ -72,6 +76,7 @@ SRCS =		$(STATES)/state_start.c					\
 			$(SHAPES)/draw_rectangle.c				\
 			$(STATES)/state_editor.c				\
 			$(STATES)/state_main_menu.c				\
+			$(STATES)/state_play_menu.c				\
 			$(STATES)/state_settings_menu.c			\
 			$(STATES)/state_start.c					\
 			add_points.c							\
@@ -108,15 +113,16 @@ $(NAME) : $(OBJS)
 
 -include $(DPDCS)
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)
+$(OBJDIR)/%.o : $(SRCDIR)/%.c | directories
 	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -I $(INCDIR) -I $(INCSDL) -I $(LIBDIR) -MMD -o $@ -c $<
 	@echo "\033[36mCompilation :\033[0m \033[32m$*\033[0m"
 
-$(OBJDIR) :
-	@mkdir -p $@ 2> /dev/null || true
-	@mkdir -p $@/$(MATHS) 2> /dev/null || true
-	@mkdir -p $@/$(STATES) 2> /dev/null || true
-	@mkdir -p $@/$(SHAPES) 2> /dev/null || true
+directories :
+	@mkdir -p $(OBJDIR) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(ANIM) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(MATHS) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(STATES) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(SHAPES) 2> /dev/null || true
 
 clean :
 	@rm -rf $(OBJDIR)
