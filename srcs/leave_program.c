@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 #include <inputs.h>
 #include "libft.h"
+#include "octree.h"
 
 static void	close_fonts(t_doom *data)
 {
@@ -16,8 +17,22 @@ static void	close_fonts(t_doom *data)
 		TTF_Quit();
 }
 
+static inline void	free_octree(t_octree *node)
+{
+	int			i;
+
+	i = 0;
+	if (node)
+	{
+		while (i < 8)
+			free_octree(node->child[i]);
+		free(node);
+	}
+}
+
 int			leave_program(t_doom *data, int type)
 {
+	free_octree(data->octree);
 	if (data->lib.texture)
 		SDL_DestroyTexture(data->lib.texture);
 	if (data->lib.renderer)

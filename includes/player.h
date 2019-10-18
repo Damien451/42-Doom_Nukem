@@ -30,20 +30,23 @@ typedef struct s_inventory	t_inventory;
 
 struct						s_camera
 {
-	t_vec3d					position;
+	t_vec3d					origin;
 	t_vec3d					direction;
+	t_vec3d					rotation;
 	t_vec3d					up;
 	t_vec3d					right;
 };
 
 struct						s_inventory
 {
-
+	int						weapons;
+	int						keys;
 };
 
 struct						s_player
 {
-
+	t_camera				camera;
+	t_inventory				inventory;
 };
 
 #endif

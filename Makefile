@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/18 19:08:00 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/18 22:33:21 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ LIBFT = $(LIBDIR) -lft
 # **************************************************************************** #
 
 SRCS =		$(ANIM)/anim_main_menu.c				\
+			$(ANIM)/create_flame.c					\
 			$(STATES)/state_start.c					\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_scoreboard.c			\

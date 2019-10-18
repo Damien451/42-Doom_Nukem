@@ -55,6 +55,7 @@ int			state_main_menu(t_doom *data)
 
 	anim_main_menu(data, total_frame, frame);
 	buttons_main_menu(buttons);
+//	create_flame(data, data->lib.image);
 	if (!data->load_page[0])
 	{
 		ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 2 - data->load_page[1] * WIDTH);

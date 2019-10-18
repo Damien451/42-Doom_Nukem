@@ -5,7 +5,9 @@
 ** ====-* INCLUDES *-====
 */
 
-# include <phtread.h>
+# include <pthread.h>
+
+# define NBR_THREAD			8
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -22,7 +24,8 @@ typedef struct s_doom		t_doom;
 struct						s_thread
 {
 	pthread_t				thread;
-	int						id;
+	int						num;
+	unsigned int			*image;
 	t_doom					*data;
 };
 
