@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 00:21:54 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/18 01:08:11 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,21 +171,23 @@ static inline void	editor_commands(t_doom *data, char str[50], int *map
 		keydown_editor_commands(data, str, map, first);
 }
 
-void		aff_octree(t_octree *node, t_doom *data, int *full, int *empty, int *inside)
+void				aff_octree(t_octree *node, t_doom *data, int oct[3])
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	while (i < 8)
 	{
 		if (node->child[i])
-			aff_octree(node->child[i], data, full, empty, inside);
+			aff_octree(node->child[i], data, oct);
 		i++;
 	}
 	if (node->leaf == FULL)
-		(*full)++;
+		oct[0]++;
 	else if (node->leaf == EMPTY)
-		(*empty)++;
+		oct[1]++;
 	else
-		(*inside)++;
+		oct[2]++;
 }
 
 int					state_editor(t_doom *data)
@@ -193,23 +195,23 @@ int					state_editor(t_doom *data)
 	static int		first = 0;
 	static int		map = 0;
 	static char		*str = "MAP_CREATOR";
-	int				full;
-	int				empty;
-	int				inside;
+	int				oct[3];
 
-	empty = 0;
-	full = 0;
-	inside = 0;
+	oct[0] = 0;
+	oct[1] = 0;
+	oct[2] = 0;
 	if (!first)
 	{
 		ft_memset(data->lib.image, 0, HEIGHT * WIDTH * 4);
 		parse_file(data, str, map);
-	//	create_octree(data);
-	//	aff_octree(data->octree, data, &full, &empty, &inside);
-	//	printf("empty = %d, full = %d, inside = %d, total = %d\n", empty, full, inside, empty + full + inside);
+//		create_octree(data);
+//		aff_octree(data->octree, data, oct);
+//		printf("empty = %d, full = %d, inside = %d, total = %d\n"
+// 	, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[3]);
 		first++;
 	}
-	ft_memcpy(data->lib.image, data->lib.editor_texture->pixels, WIDTH * HEIGHT * 4);
+	ft_memcpy(data->lib.image, data->lib.editor_texture->pixels
+		, WIDTH * HEIGHT * 4);
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_ShowCursor(SDL_TRUE);
 	set_quadrillage(data, map);

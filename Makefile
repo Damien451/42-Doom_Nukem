@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/18 00:13:06 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/18 01:32:12 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME = Doom-Nukem
 # **************************************************************************** #
 
 CC = clang
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 FSAN = #-fsanitize=address
 DEBUG = #-g3
@@ -113,11 +113,11 @@ $(NAME) : $(OBJS)
 
 -include $(DPDCS)
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c | directories
+$(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)
 	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -I $(INCDIR) -I $(INCSDL) -I $(LIBDIR) -MMD -o $@ -c $<
 	@echo "\033[36mCompilation :\033[0m \033[32m$*\033[0m"
 
-directories :
+$(OBJDIR) :
 	@mkdir -p $(OBJDIR) 2> /dev/null || true
 	@mkdir -p $(OBJDIR)/$(ANIM) 2> /dev/null || true
 	@mkdir -p $(OBJDIR)/$(MATHS) 2> /dev/null || true

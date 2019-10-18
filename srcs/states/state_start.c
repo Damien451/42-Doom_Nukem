@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 00:14:38 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/18 01:31:57 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,7 @@
 #include <time.h>
 #include "vec3.h"
 
-static inline void	print_autor(t_doom *data, unsigned int *image, int color)
-{
-	t_bubble			*tmp;
-
-	tmp = data->bubble_list;
-	while (tmp)
-	{
-		image[tmp->pos] = color;
-		tmp = tmp->next;
-	}
-}
-/*
-static inline int	color_percent(int color1, int color2, int percent)
+int					color_percent(int color1, int color2, int percent)
 {
 	double		c1;
 
@@ -45,7 +33,7 @@ static inline int	color_percent(int color1, int color2, int percent)
 	return ((int)c1);
 }
 
-static inline void	lightning_flash(unsigned int *image, int percent)
+void				lightning_flash(unsigned int *image, int percent)
 {
 	unsigned int	ok[4];
 	int				i;
@@ -64,7 +52,19 @@ static inline void	lightning_flash(unsigned int *image, int percent)
 		image[i++] = (ok[1] << 16) | (ok[2] << 8) | ok[3];
 	}
 }
-*/
+
+static inline void	print_autor(t_doom *data, unsigned int *image, int color)
+{
+	t_bubble			*tmp;
+
+	tmp = data->bubble_list;
+	while (tmp)
+	{
+		image[tmp->pos] = color;
+		tmp = tmp->next;
+	}
+}
+
 static inline void	lightning(t_doom *data, unsigned int *image, int color
 	, int frame)
 {
@@ -84,11 +84,11 @@ static inline void	lightning(t_doom *data, unsigned int *image, int color
 		tmp = tmp->next;
 	}
 	if (frame == 125)
-		ft_memset(image, 255, WIDTH * HEIGHT * 4);
+		ft_memset(image, 255, (WIDTH * HEIGHT) << 2);
 	else if (frame > 125 && frame <= 130)
-		ft_memset(image, 255 - frame + 125, WIDTH * HEIGHT * 4);
+		ft_memset(image, 255 - frame + 125, (WIDTH * HEIGHT) << 2);
 	else if (frame > 120 && frame <= 125)
-		ft_memset(image, 255 - frame + 125, WIDTH * HEIGHT * 4);
+		ft_memset(image, 255 - frame + 125, (WIDTH * HEIGHT) << 2);
 }
 
 static inline void	randomize_new_bubble(t_start *bubble)
@@ -103,15 +103,13 @@ static inline void	randomize_new_bubble(t_start *bubble)
 static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 {
 	int			i;
-	int			g;
 	static int	frame = 0;
 	static int	type = 1;
 
 	i = -1;
-	ft_memcpy(image, data->lib.start_bg->pixels, WIDTH * HEIGHT * 4);
+	ft_memcpy(image, data->lib.start_bg->pixels, (WIDTH * HEIGHT) << 2);
 	print_autor(data, image, frame << 16);
 	i = 0;
-	g = WIDTH * (HEIGHT - 1) - 1;
 	srand(time(NULL));
 	while (i < NB_BUBBLE)
 	{
@@ -139,10 +137,13 @@ static inline void	create_start_renderer(t_doom *data)
 		draw_on_texture(data, data->lib.image);
 		if (!data->load_page[0])
 		{
-			ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 2 - data->load_page[1] * WIDTH);
-			ft_memset(data->lib.image + ((WIDTH * HEIGHT * 2 + data->load_page[1] * WIDTH) >> 2), 0, WIDTH * HEIGHT * 2 - (data->load_page[1] * (WIDTH)));
+			ft_memset(data->lib.image, 0, ((WIDTH * HEIGHT) << 1)
+				- data->load_page[1] * WIDTH);
+			ft_memset(data->lib.image + ((((WIDTH * HEIGHT) << 1)
+				+ data->load_page[1] * WIDTH) >> 2), 0, ((WIDTH * HEIGHT) << 1)
+				- (data->load_page[1] * (WIDTH)));
 			data->load_page[1] += 32;
-			if (data->load_page[1] >= HEIGHT * 2)
+			if (data->load_page[1] >= HEIGHT << 1)
 				data->load_page[0] = 1;
 		}
 		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
