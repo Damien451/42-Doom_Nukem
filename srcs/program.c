@@ -15,6 +15,8 @@ static int	game_state(t_doom *data)
 		state_settings_menu(data);
 	else if (data->state & LEAVING)
 		data->state &= ~RUNNING;
+	else if (data->state & PLAYING)
+		state_game(data);
 	return (0);
 }
 

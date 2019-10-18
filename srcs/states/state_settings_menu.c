@@ -39,7 +39,7 @@ static int	reset_inputs(t_doom *data)
 
 static int	check_inputs_settings2(t_doom *data, int nbuttons)
 {
-	if (data->lib.event.key.keysym.sym == SDLK_RIGHT || 
+	if (data->lib.event.key.keysym.sym == SDLK_RIGHT ||
 		data->lib.event.key.keysym.sym == SDLK_d)
 	{
 		if (data->button > 3)

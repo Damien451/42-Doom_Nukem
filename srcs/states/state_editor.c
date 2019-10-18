@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 01:08:11 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/18 17:21:50 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,10 +204,10 @@ int					state_editor(t_doom *data)
 	{
 		ft_memset(data->lib.image, 0, HEIGHT * WIDTH * 4);
 		parse_file(data, str, map);
-//		create_octree(data);
-//		aff_octree(data->octree, data, oct);
-//		printf("empty = %d, full = %d, inside = %d, total = %d\n"
-// 	, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[3]);
+		create_octree(data);
+		aff_octree(data->octree, data, oct);
+		printf("empty = %d, full = %d, inside = %d, total = %d\n"
+			, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[2]);
 		first++;
 	}
 	ft_memcpy(data->lib.image, data->lib.editor_texture->pixels

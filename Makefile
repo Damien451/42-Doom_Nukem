@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/18 01:32:12 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/18 19:08:00 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,12 +69,17 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_scoreboard.c			\
 			$(STATES)/state_settings_menu.c			\
+			$(MATHS)/quaternion.c					\
+			$(MATHS)/quaternion_2.c					\
 			$(MATHS)/vec3l_maths.c					\
 			$(MATHS)/vec3l_maths_2.c				\
+			$(MATHS)/vec3d_maths.c					\
+			$(MATHS)/vec3d_maths_2.c				\
 			$(MATHS)/create_octree.c				\
 			$(SHAPES)/draw_circle.c					\
 			$(SHAPES)/draw_rectangle.c				\
 			$(STATES)/state_editor.c				\
+			$(STATES)/state_game.c					\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_play_menu.c				\
 			$(STATES)/state_settings_menu.c			\

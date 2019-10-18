@@ -103,4 +103,6 @@ int							state_settings_menu(t_doom *data);
 
 int							state_editor(t_doom *data);
 
+int							state_game(t_doom *data);
+
 #endif

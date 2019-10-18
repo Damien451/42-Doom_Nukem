@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 01:31:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/18 18:37:56 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static inline void	randomize_new_bubble(t_start *bubble)
 	bubble->pos = rand() % WIDTH;
 	bubble->speed = rand() % 10 + 1;
 	bubble->size = rand() % 10 + 4;
-	bubble->color = (rand() % 256) << 16;
+	bubble->color = (rand() & 255) << 16;
 }
 
 static inline void	draw_on_texture(t_doom *data, unsigned int *image)
@@ -128,27 +128,20 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 
 static inline void	create_start_renderer(t_doom *data)
 {
-	int			test;
-
-	if (!SDL_LockTexture(data->lib.texture, NULL, (void**)&data->lib.image
-		, &test))
+	draw_on_texture(data, data->lib.image);
+	if (!data->load_page[0])
 	{
-		SDL_UnlockTexture(data->lib.texture);
-		draw_on_texture(data, data->lib.image);
-		if (!data->load_page[0])
-		{
-			ft_memset(data->lib.image, 0, ((WIDTH * HEIGHT) << 1)
+		ft_memset(data->lib.image, 0, ((WIDTH * HEIGHT) << 1)
 				- data->load_page[1] * WIDTH);
-			ft_memset(data->lib.image + ((((WIDTH * HEIGHT) << 1)
+		ft_memset(data->lib.image + ((((WIDTH * HEIGHT) << 1)
 				+ data->load_page[1] * WIDTH) >> 2), 0, ((WIDTH * HEIGHT) << 1)
 				- (data->load_page[1] * (WIDTH)));
-			data->load_page[1] += 32;
-			if (data->load_page[1] >= HEIGHT << 1)
-				data->load_page[0] = 1;
-		}
-		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-		SDL_RenderPresent(data->lib.renderer);
+		data->load_page[1] += 32;
+		if (data->load_page[1] >= HEIGHT << 1)
+			data->load_page[0] = 1;
 	}
+	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
+	SDL_RenderPresent(data->lib.renderer);
 }
 
 int					state_start(t_doom *data)

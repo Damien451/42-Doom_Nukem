@@ -9,6 +9,7 @@ static void	ROBIN_init_texture(t_doom *data)
 	data->lib.menu_texture[0] = SDL_LoadBMP("textures/gstvine1.bmp");
 	data->lib.menu_texture[1] = SDL_LoadBMP("textures/gstvine2.bmp");
 	data->lib.editor_texture = SDL_LoadBMP("textures/editor.bmp");
+	data->lib.hud_texture = SDL_LoadBMP("textures/hud.bmp");
 }
 
 static void	init_tab(t_doom *data)

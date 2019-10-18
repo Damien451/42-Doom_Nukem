@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/17 21:35:25 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/18 17:20:14 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <math.h>
 #include "libft.h"
 
-t_octree	*create_node(int size, t_vec3l center)
+static inline t_octree	*create_node(int size, t_vec3l center)
 {
 	t_octree	*new;
 	int			i;
@@ -32,7 +32,7 @@ t_octree	*create_node(int size, t_vec3l center)
 	return (new);
 }
 
-int		verify_inside_node(t_doom *data, t_octree *node)
+static inline int		verify_inside_node(t_doom *data, t_octree *node)
 {
 	t_vec3l		tester;
 	t_vec3l		count;
@@ -43,15 +43,14 @@ int		verify_inside_node(t_doom *data, t_octree *node)
 	tester.y = (node->center.y >> 1) - (node->size >> 2);
 	tester.z = (node->center.z >> 1) - (node->size >> 2);
 	count.x = -1;
-	while (++count.x < node->size >> 1)
+	while (++count.x < node->size >> 1 && (count.y = -1))
 	{
-		count.y = -1;
-		while (++count.y < node->size >> 1)
+		while (++count.y < node->size >> 1 && (count.z = -1))
 		{
-			count.z = -1;
 			while (++count.z < node->size >> 1)
 			{
-				if (data->map_to_save[tester.x + count.x][tester.y + count.y][tester.z + count.z])
+				if (data->map_to_save[tester.x + count.x][tester.y + count.y]
+					[tester.z + count.z])
 					nbr_node++;
 				else if (nbr_node)
 					return (-1);
@@ -61,21 +60,13 @@ int		verify_inside_node(t_doom *data, t_octree *node)
 	return (nbr_node);
 }
 
-static int	create_child(t_octree *node, t_doom *data)
+static inline void		check_if_child_is_leaf(t_doom *data, t_octree *node)
 {
-	int			ret;
 	int			i;
+	int			ret;
 
-	node->child[0] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->size >> 2), node->center.y - (node->size >> 2), node->center.z - (node->size >> 2)});
-	node->child[1] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->size >> 2), node->center.y - (node->size >> 2), node->center.z - (node->size >> 2)});
-	node->child[2] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->size >> 2), node->center.y + (node->size >> 2), node->center.z - (node->size >> 2)});
-	node->child[3] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->size >> 2), node->center.y + (node->size >> 2), node->center.z - (node->size >> 2)});
-	node->child[4] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->size >> 2), node->center.y - (node->size >> 2), node->center.z + (node->size >> 2)});
-	node->child[5] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->size >> 2), node->center.y - (node->size >> 2), node->center.z + (node->size >> 2)});
-	node->child[6] = create_node(node->size >> 1, (t_vec3l){node->center.x - (node->size >> 2), node->center.y + (node->size >> 2), node->center.z + (node->size >> 2)});
-	node->child[7] = create_node(node->size >> 1, (t_vec3l){node->center.x + (node->size >> 2), node->center.y + (node->size >> 2), node->center.z + (node->size >> 2)});
-	i = -1;
-	while (++i < 8)
+	i = 0;
+	while (i < 8)
 	{
 		if ((ret = verify_inside_node(data, node->child[i])) == 0)
 			node->child[i]->leaf = EMPTY;
@@ -83,14 +74,70 @@ static int	create_child(t_octree *node, t_doom *data)
 			node->child[i]->leaf = INSIDE;
 		else
 			node->child[i]->leaf = FULL;
+		i++;
+	}
+}
+
+static inline int		create_child(t_octree *node, t_doom *data)
+{
+	int			offset;
+	int			size;
+
+	offset = node->size >> 2;
+	size = node->size >> 1;
+	node->child[0] = create_node(size, (t_vec3l){node->center.x
+		- offset, node->center.y - offset, node->center.z - offset});
+	node->child[1] = create_node(size, (t_vec3l){node->center.x
+		+ offset, node->center.y - offset, node->center.z - offset});
+	node->child[2] = create_node(size, (t_vec3l){node->center.x
+		- offset, node->center.y + offset, node->center.z - offset});
+	node->child[3] = create_node(size, (t_vec3l){node->center.x
+		+ offset, node->center.y + offset, node->center.z - offset});
+	node->child[4] = create_node(size, (t_vec3l){node->center.x
+		- offset, node->center.y - offset, node->center.z + offset});
+	node->child[5] = create_node(size, (t_vec3l){node->center.x
+		+ offset, node->center.y - offset, node->center.z + offset});
+	node->child[6] = create_node(size, (t_vec3l){node->center.x
+		- offset, node->center.y + offset, node->center.z + offset});
+	node->child[7] = create_node(size, (t_vec3l){node->center.x
+		+ offset, node->center.y + offset, node->center.z + offset});
+	check_if_child_is_leaf(data, node);
+	return (0);
+}
+
+static inline int		free_queue(t_queue *queue[2])
+{
+	while (queue[1])
+	{
+		queue[0] = queue[1]->prev;
+		free(queue[1]);
+		queue[1] = queue[0];
 	}
 	return (0);
 }
 
-static int	breadth_first_create_octree(t_doom *data, t_octree *actual)
+static inline void		verify_and_add_to_queue(t_queue *queue[2]
+	, t_octree *actual)
+{
+	int			i;
+
+	i = 0;
+	while (i < 8)
+	{
+		if (actual->child[i]->leaf == INSIDE)
+		{
+			queue[1]->next = queue_new(actual->child[i]);
+			queue[1]->next->prev = queue[1];
+			queue[1] = queue[1]->next;
+		}
+		i++;
+	}
+}
+
+static inline int		breadth_first_create_octree(t_doom *data
+	, t_octree *actual)
 {
 	t_queue		*queue[2];
-	int			i;
 
 	queue[0] = queue_new(actual);
 	queue[1] = queue[0];
@@ -102,30 +149,15 @@ static int	breadth_first_create_octree(t_doom *data, t_octree *actual)
 			if (actual->size > 2)
 			{
 				create_child(actual, data);
-				i = -1;
-				while (++i < 8)
-				{
-					if (actual->child[i]->leaf == INSIDE)
-					{
-						queue[1]->next = queue_new(actual->child[i]);
-						queue[1]->next->prev = queue[1];
-						queue[1] = queue[1]->next;
-					}
-				}
+				verify_and_add_to_queue(queue, actual);
 			}
 		}
 		queue[0] = queue[0]->next;
 	}
-	while (queue[1])
-	{
-		queue[0] = queue[1]->prev;
-		free(queue[1]);
-		queue[1] = queue[0];
-	}
-	return (0);
+	return (free_queue(queue));
 }
 
-int		create_octree(t_doom *data)
+int						create_octree(t_doom *data)
 {
 	t_octree	*actual;
 	int			size;
