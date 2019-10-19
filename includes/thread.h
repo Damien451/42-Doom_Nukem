@@ -26,6 +26,8 @@ struct						s_thread
 	pthread_t				thread;
 	int						num;
 	unsigned int			*image;
+	int						total_frame;
+	int						frame;
 	t_doom					*data;
 };
 

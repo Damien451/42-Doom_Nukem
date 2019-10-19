@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 21:58:10 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 22:42:42 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/19 12:33:54 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static inline int	average(unsigned int *image, int i)
 {
 	int				average;
 
-	average = (image[i + WIDTH] & 255) + (image[i + WIDTH - 1] & 255);
-		average += (image[i + (WIDTH << 1)] & 255);
-		average += (image[i + WIDTH + 1] & 255);
-	average >>= 2;
-/*	average = image[i + WIDTH] + image[i + (WIDTH << 1)] + image[i + WIDTH - 1] + image[i + WIDTH + 1];
+/*	average = (image[i + WIDTH]) + (image[i + WIDTH - 1]);
+		average += (image[i + (WIDTH << 1)]);
+		average += (image[i + WIDTH + 1]);
 	average >>= 2;*/
-	return (average | (average << 8) | (average << 16));
+	average = image[i + WIDTH] + image[i + (WIDTH << 1)] + image[i + WIDTH - 1] + image[i + WIDTH + 1];
+	average >>= 2;
+	return (average);
 }
 
 static inline void	*create_thread(void *thread)
@@ -40,13 +40,13 @@ static inline void	*create_thread(void *thread)
 	while (i < WIDTH << 1)
 	{
 		randomizer = rand() & 255;
-		randomizer |= (randomizer << 16) | (randomizer << 8);
+//		randomizer |= (randomizer << 16) | (randomizer << 8);
 		image[HEIGHT * WIDTH - (WIDTH << 1) + i] = randomizer;
 	//	image[HEIGHT * WIDTH - (WIDTH << 4) + i] = rand() & 255;
 		i += NBR_THREAD;
 	}
 	i = HEIGHT * WIDTH - (WIDTH << 1) - 1 - ((t_thread*)thread)->num;
-	while (i > (HEIGHT * WIDTH) >> 1)
+	while (i > ((HEIGHT - 10) * WIDTH))
 	{
 		image[i] = average(image, i);
 		i -= NBR_THREAD;
