@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 21:58:10 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/19 12:33:54 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/19 15:16:18 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ static inline void	*create_thread(void *thread)
 	image = ((t_thread*)thread)->image;
 	while (i < WIDTH << 1)
 	{
-		randomizer = rand() & 255;
+		randomizer = (rand() & 127) + 128;
 //		randomizer |= (randomizer << 16) | (randomizer << 8);
 		image[HEIGHT * WIDTH - (WIDTH << 1) + i] = randomizer;
 	//	image[HEIGHT * WIDTH - (WIDTH << 4) + i] = rand() & 255;
 		i += NBR_THREAD;
 	}
 	i = HEIGHT * WIDTH - (WIDTH << 1) - 1 - ((t_thread*)thread)->num;
-	while (i > ((HEIGHT - 10) * WIDTH))
+	while (i > ((HEIGHT - 50) * WIDTH))
 	{
 		image[i] = average(image, i);
 		i -= NBR_THREAD;

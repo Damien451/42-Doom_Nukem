@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 17:21:50 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/19 15:19:13 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 	{
 		ret = read(fd, str_to_map, SIZE_MAP * SIZE_MAP * SIZE_MAP);
 		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
+		{
+			close(fd);
 			return (1);
+		}
 		ft_memcpy(data->map_to_save, str_to_map, SIZE_MAP * SIZE_MAP
 			* SIZE_MAP);
 		set_quadrillage(data, step);

@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/18 22:33:21 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/20 11:39:18 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ ANIM = animations
 MATHS = maths
 STATES = states
 SHAPES = shapes
+CAMERA = camera
 
 S_ANIMDIR = ./$(SRCDIR)/$(ANIM)
 S_MATHDIR = ./$(SRCDIR)/$(MATHS)
@@ -66,6 +67,8 @@ LIBFT = $(LIBDIR) -lft
 
 SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(ANIM)/create_flame.c					\
+			$(CAMERA)/camera.c						\
+			$(CAMERA)/camera_commands.c				\
 			$(STATES)/state_start.c					\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_scoreboard.c			\
@@ -129,6 +132,7 @@ $(OBJDIR) :
 	@mkdir -p $(OBJDIR)/$(MATHS) 2> /dev/null || true
 	@mkdir -p $(OBJDIR)/$(STATES) 2> /dev/null || true
 	@mkdir -p $(OBJDIR)/$(SHAPES) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(CAMERA) 2> /dev/null || true
 
 clean :
 	@rm -rf $(OBJDIR)

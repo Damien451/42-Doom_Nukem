@@ -65,7 +65,7 @@ struct							s_text
 struct							s_graphic_lib
 {
 	SDL_Surface					*character;
-	SDL_Surface					*menu_texture[2];
+	SDL_Surface					*menu_texture[4];
 	SDL_Surface					*editor_texture;
 	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
@@ -78,6 +78,7 @@ struct							s_graphic_lib
 	t_text						text;
 	TTF_Font					*ptrfont[NBR_FONTS];
 	unsigned int				*image;
+	unsigned int				cam_keys;
 };
 
 /*

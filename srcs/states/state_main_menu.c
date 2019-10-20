@@ -55,7 +55,7 @@ int			state_main_menu(t_doom *data)
 
 	anim_main_menu(data, total_frame, frame);
 	buttons_main_menu(buttons);
-	create_flame(data, data->lib.image);
+//	create_flame(data, data->lib.image);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 5);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),

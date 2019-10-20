@@ -8,6 +8,7 @@
 # include "graphic_lib.h"
 # include "inputs.h"
 # include "menus.h"
+# include "player.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -48,6 +49,7 @@ struct						s_bubble
 struct						s_doom
 {
 	t_graphic_lib			lib;
+	t_player				player;
 	t_tabinputs				tabinputs;
 	t_start					tab[NB_BUBBLE];
 	t_bubble				*bubble_list;
@@ -58,6 +60,7 @@ struct						s_doom
 	long					state;
 	t_octree				*octree;
 	int						load_page[2];
+	double					sensitivity;
 };
 
 /*

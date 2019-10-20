@@ -1,13 +1,24 @@
 #include "graphic_lib.h"
 #include "doom.h"
 #include "inputs.h"
+#include "player.h"
 #include <time.h>
+
+void		init_camera(t_doom *data)
+{
+	data->player.camera.direction = Z_AXIS;
+	data->player.sensitivity = SENSITIVITY;
+	data->player.camera.right = X_AXIS;
+	data->player.camera.up = Y_AXIS;
+}
 
 static void	ROBIN_init_texture(t_doom *data)
 {
 	data->lib.character = SDL_LoadBMP("textures/character.bmp");
 	data->lib.menu_texture[0] = SDL_LoadBMP("textures/gstvine1.bmp");
 	data->lib.menu_texture[1] = SDL_LoadBMP("textures/gstvine2.bmp");
+	data->lib.menu_texture[2] = SDL_LoadBMP("enemy_menu.bmp");
+	data->lib.menu_texture[3] = SDL_LoadBMP("energy_orb.bmp");
 	data->lib.editor_texture = SDL_LoadBMP("textures/editor.bmp");
 	data->lib.hud_texture = SDL_LoadBMP("textures/hud.bmp");
 }
@@ -151,7 +162,11 @@ static void	init_program2(t_doom *data)
 	data->button = 0;
 	data->load_page[0] = 0;
 	data->load_page[1] = 0;
+	data->sensitivity = 100;
+	data->player.speed = 0;
 	parse_input_file(data, "./files/inputs");
+	data->lib.cam_keys = 0;
+	init_camera(data);
 }
 
 int			init_program(t_doom *data)
@@ -164,7 +179,7 @@ int			init_program(t_doom *data)
 		return (1);
 	}
 	if (!(data->lib.window = SDL_CreateWindow("Doom Nukem"
-					, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH
+					, /*SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED*/ 0, 0, WIDTH
 					, HEIGHT, SDL_WINDOW_SHOWN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"
