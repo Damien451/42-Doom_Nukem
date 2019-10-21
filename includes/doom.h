@@ -25,7 +25,8 @@
 # define EDITOR		(1l << 5)
 # define SCORES		(1l << 6)
 # define SETTINGS	(1l << 7)
-# define LEAVING	(1l << 8)
+# define GET_INPUT	(1l << 8)
+# define LEAVING	(1l << 9)
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -100,9 +101,13 @@ int							state_start(t_doom *data);
 
 int							state_main_menu(t_doom *data);
 
+int							state_play_menu(t_doom *data);
+
 int							state_scoreboard(t_doom *data);
 
 int							state_settings_menu(t_doom *data);
+
+int							state_get_input(t_doom *data);
 
 int							state_editor(t_doom *data);
 

@@ -8,14 +8,18 @@ static void	check_inputs_menu(t_doom *data, t_button *btab, int nbuttons)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)
 		{
-			if (data->lib.event.key.keysym.sym == SDLK_UP)
+			if (data->lib.event.key.keysym.sym == SDLK_UP ||
+				(unsigned int)data->lib.event.key.keysym.sym ==
+				data->tabinputs.keycode[0])
 			{
 				if (data->button == 0)
 					data->button = nbuttons - 1;
 				else
 					--data->button;
 			}
-			if (data->lib.event.key.keysym.sym == SDLK_DOWN)
+			if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
+				(unsigned int)data->lib.event.key.keysym.sym ==
+				data->tabinputs.keycode[2])
 			{
 				if (data->button == nbuttons - 1)
 					data->button = 0;
@@ -32,7 +36,7 @@ static void	buttons_main_menu(t_button buttons[5])
 {
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAYING, "PLAY");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_MENU, "PLAY");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), EDITOR, "MAP EDITOR");
@@ -53,6 +57,7 @@ int			state_main_menu(t_doom *data)
 	static int	total_frame = 0;
 	static int	frame = 0;
 
+	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	anim_main_menu(data, total_frame, frame);
 	buttons_main_menu(buttons);
 //	create_flame(data, data->lib.image);

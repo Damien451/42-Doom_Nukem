@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/20 11:39:18 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/21 19:58:08 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,10 +69,11 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(ANIM)/create_flame.c					\
 			$(CAMERA)/camera.c						\
 			$(CAMERA)/camera_commands.c				\
-			$(STATES)/state_start.c					\
+			$(STATES)/state_get_input.c				\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_scoreboard.c			\
 			$(STATES)/state_settings_menu.c			\
+			$(STATES)/state_start.c					\
 			$(MATHS)/quaternion.c					\
 			$(MATHS)/quaternion_2.c					\
 			$(MATHS)/vec3l_maths.c					\
@@ -87,7 +88,6 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(STATES)/state_main_menu.c				\
 			$(STATES)/state_play_menu.c				\
 			$(STATES)/state_settings_menu.c			\
-			$(STATES)/state_start.c					\
 			add_points.c							\
 			doom.c									\
 			frame_calculator.c						\

@@ -7,18 +7,6 @@
 
 #include <stdio.h>
 
-static int	change_input(t_doom *data)
- {
-	while (SDL_PollEvent(&data->lib.event))
-	{
-		if (data->lib.event.type == SDL_KEYDOWN)
-		{
-			ft_putnbr(data->lib.event.key.keysym.sym);
-		}
-	}
-	return (0);
-}
-
 static int	save_inputs(t_doom *data)
 {
 	int			fd;
@@ -31,15 +19,9 @@ static int	save_inputs(t_doom *data)
 	return (0);
 }
 
-static int	reset_inputs(t_doom *data)
-{
-	get_default_inputs(data);
-	return (0);
-}
-
 static int	check_inputs_settings2(t_doom *data, int nbuttons)
 {
-	if (data->lib.event.key.keysym.sym == SDLK_RIGHT ||
+	if (data->lib.event.key.keysym.sym == SDLK_RIGHT || 
 		data->lib.event.key.keysym.sym == SDLK_d)
 	{
 		if (data->button > 3)
@@ -56,12 +38,9 @@ static int	check_inputs_settings2(t_doom *data, int nbuttons)
 				return (1);
 		}
 		else if (data->button == 13)
-		{
-			if (reset_inputs(data) != 0)
-				return (1);
-		}
+			get_default_inputs(data);
 		else
-			return (change_input(data));
+			switch_state(data, SETTINGS, GET_INPUT);
 	}
 	return (0);
 }
@@ -164,3 +143,4 @@ int			state_settings_menu(t_doom *data)
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }
+
