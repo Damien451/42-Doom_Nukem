@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/21 19:58:08 by dacuvill         ###   ########.fr        #
+#    Updated: 2019/10/22 11:51:04 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,10 @@ NAME = Doom-Nukem
 # **************************************************************************** #
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra #-Werror
 
 FSAN = #-fsanitize=address
-DEBUG = #-g3
+DEBUG = -g3
 OPTI = -O3
 
 # **************************************************************************** #
@@ -44,6 +44,7 @@ MATHS = maths
 STATES = states
 SHAPES = shapes
 CAMERA = camera
+RT = raytracing
 
 S_ANIMDIR = ./$(SRCDIR)/$(ANIM)
 S_MATHDIR = ./$(SRCDIR)/$(MATHS)
@@ -81,6 +82,7 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(MATHS)/vec3d_maths.c					\
 			$(MATHS)/vec3d_maths_2.c				\
 			$(MATHS)/create_octree.c				\
+			$(RT)/raytracing.c						\
 			$(SHAPES)/draw_circle.c					\
 			$(SHAPES)/draw_rectangle.c				\
 			$(STATES)/state_editor.c				\
@@ -133,6 +135,7 @@ $(OBJDIR) :
 	@mkdir -p $(OBJDIR)/$(STATES) 2> /dev/null || true
 	@mkdir -p $(OBJDIR)/$(SHAPES) 2> /dev/null || true
 	@mkdir -p $(OBJDIR)/$(CAMERA) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(RT) 2> /dev/null || true
 
 clean :
 	@rm -rf $(OBJDIR)

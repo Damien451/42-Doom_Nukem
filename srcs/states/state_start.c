@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 18:37:56 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/22 11:09:27 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ static inline void	create_start_renderer(t_doom *data)
 
 int					state_start(t_doom *data)
 {
-	SDL_RenderClear(data->lib.renderer);
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)

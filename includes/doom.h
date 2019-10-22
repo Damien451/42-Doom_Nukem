@@ -78,6 +78,7 @@ int							leave_program(t_doom *data, int type);
 
 int							frame_calculator(void);
 int							create_octree(t_doom *data);
+int							raytracing(t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====

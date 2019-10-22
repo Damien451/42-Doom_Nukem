@@ -34,14 +34,14 @@ static void	choose_animation_part2(t_doom *data, int frame)
 
 	if (frame >= 960)
 	{
-		if ((ret = (frame >> 5) & 1) == 0)
+		if ((ret = (frame >> 4) & 3) == 0)
 			create_charac_anim(data, data->lib.image, 350 + 125000);
 		else if (ret == 1 || ret == 3)
 			create_charac_anim(data, data->lib.image, 400 + 125000);
 		else
 			create_charac_anim(data, data->lib.image, 450 + 125000);
 	}
-	else if ((ret = (frame >> 5) & 1) == 0)
+	else if ((ret = (frame >> 4) & 3) == 0)
 		create_charac_anim(data, data->lib.image, 150);
 	else if (ret == 1 || ret == 3)
 		create_charac_anim(data, data->lib.image, 200);
@@ -55,7 +55,7 @@ static void	choose_animation_part1(t_doom *data, int frame)
 
 	if (frame >= 160 && frame <= 256)
 	{
-		if ((ret = (frame >> 5) & 1) == 0)
+		if ((ret = (frame >> 4) & 3) == 0)
 			create_charac_anim(data, data->lib.image, 150 + 25000);
 		else if (ret == 1 || ret == 3)
 			create_charac_anim(data, data->lib.image, 200 + 25000);
@@ -64,7 +64,7 @@ static void	choose_animation_part1(t_doom *data, int frame)
 	}
 	else if (frame >= 448 && frame <= 512)
 	{
-		if ((ret = (frame >> 5) & 1) == 0)
+		if ((ret = (frame >> 4) & 3) == 0)
 			create_charac_anim(data, data->lib.image, 100 + 100000);
 		else if (ret == 1)
 			create_charac_anim(data, data->lib.image, 150 + 100000);

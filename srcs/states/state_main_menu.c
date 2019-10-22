@@ -36,7 +36,7 @@ static void	buttons_main_menu(t_button buttons[5])
 {
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_MENU, "PLAY");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAYING, "PLAY");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), EDITOR, "MAP EDITOR");
@@ -60,7 +60,7 @@ int			state_main_menu(t_doom *data)
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	anim_main_menu(data, total_frame, frame);
 	buttons_main_menu(buttons);
-//	create_flame(data, data->lib.image);
+	create_flame(data, data->lib.image);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 5);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),

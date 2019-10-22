@@ -36,6 +36,7 @@ int			program(t_doom *data)
 				ft_putnbr(pitch);
 				ft_putchar('\n');
 			}
+			SDL_RenderClear(data->lib.renderer);
 		}
 	}
 	return (0);

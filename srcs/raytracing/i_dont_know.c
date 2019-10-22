@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   octree.h                                           :+:      :+:    :+:   */
+/*   i_dont_know.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 17:21:10 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/22 11:23:18 by roduquen         ###   ########.fr       */
+/*   Created: 2019/10/21 10:44:09 by roduquen          #+#    #+#             */
+/*   Updated: 2019/10/21 10:48:30 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OCTREE_H
-# define OCTREE_H
+#include "doom.h"
+#include "player.h"
+#include "graphic_lib.h"
 
-# include "vec3.h"
-# define EMPTY	0
-# define INSIDE	1
-# define FULL	2
-
-typedef struct s_octree	t_octree;
-
-struct					s_octree
+t_vec3d	intersect_with_octree(t_vec3d *direction, t_vec3d *origin
+	, t_octree *node)
 {
-	t_octree			*child[8];
-	t_vec3l				center;
-	int					size;
-	char				leaf;
-	t_octree			*parent;
-};
 
-#endif
+}

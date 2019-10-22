@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/20 21:00:45 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/22 10:53:24 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void		camera_event_translate(t_doom *data)
 		data->player.speed = 0.04;
 		data->player.camera.origin.y -= 0.5;
 	}
-	printf("vitesse = %f\n", data->player.speed);
+//	printf("vitesse = %f\n", data->player.speed);
 	if (stop)
 		data->player.speed = 0;
 }

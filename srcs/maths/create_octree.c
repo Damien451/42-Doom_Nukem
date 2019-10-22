@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 17:20:14 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/22 11:22:54 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <math.h>
 #include "libft.h"
 
-static inline t_octree	*create_node(int size, t_vec3l center)
+static inline t_octree	*create_node(int size, t_vec3l center, t_octree *parent)
 {
 	t_octree	*new;
 	int			i;
@@ -29,6 +29,7 @@ static inline t_octree	*create_node(int size, t_vec3l center)
 		new->child[i++] = NULL;
 	new->size = size;
 	new->center = center;
+	new->parent = parent;
 	return (new);
 }
 
@@ -86,21 +87,21 @@ static inline int		create_child(t_octree *node, t_doom *data)
 	offset = node->size >> 2;
 	size = node->size >> 1;
 	node->child[0] = create_node(size, (t_vec3l){node->center.x
-		- offset, node->center.y - offset, node->center.z - offset});
+		- offset, node->center.y - offset, node->center.z - offset}, node);
 	node->child[1] = create_node(size, (t_vec3l){node->center.x
-		+ offset, node->center.y - offset, node->center.z - offset});
+		+ offset, node->center.y - offset, node->center.z - offset}, node);
 	node->child[2] = create_node(size, (t_vec3l){node->center.x
-		- offset, node->center.y + offset, node->center.z - offset});
+		- offset, node->center.y + offset, node->center.z - offset}, node);
 	node->child[3] = create_node(size, (t_vec3l){node->center.x
-		+ offset, node->center.y + offset, node->center.z - offset});
+		+ offset, node->center.y + offset, node->center.z - offset}, node);
 	node->child[4] = create_node(size, (t_vec3l){node->center.x
-		- offset, node->center.y - offset, node->center.z + offset});
+		- offset, node->center.y - offset, node->center.z + offset}, node);
 	node->child[5] = create_node(size, (t_vec3l){node->center.x
-		+ offset, node->center.y - offset, node->center.z + offset});
+		+ offset, node->center.y - offset, node->center.z + offset}, node);
 	node->child[6] = create_node(size, (t_vec3l){node->center.x
-		- offset, node->center.y + offset, node->center.z + offset});
+		- offset, node->center.y + offset, node->center.z + offset}, node);
 	node->child[7] = create_node(size, (t_vec3l){node->center.x
-		+ offset, node->center.y + offset, node->center.z + offset});
+		+ offset, node->center.y + offset, node->center.z + offset}, node);
 	check_if_child_is_leaf(data, node);
 	return (0);
 }
@@ -164,7 +165,7 @@ int						create_octree(t_doom *data)
 	int			ret;
 
 	size = SIZE_MAP;
-	actual = create_node(size << 1, (t_vec3l){size, size, size});
+	actual = create_node(size << 1, (t_vec3l){size, size, size}, NULL);
 	data->octree = actual;
 	ret = verify_inside_node(data, actual);
 	if (ret == -1)
