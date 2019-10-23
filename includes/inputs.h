@@ -19,6 +19,7 @@
 ** ====-* TYPEDEFS *-====
 */
 
+typedef struct s_doom		t_doom;
 typedef struct s_input		t_input;
 typedef struct s_tabinputs	t_tabinputs;
 

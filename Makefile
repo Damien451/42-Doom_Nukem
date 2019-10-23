@@ -26,7 +26,7 @@ CC = clang
 CFLAGS = -Wall -Wextra -Werror
 
 FSAN = #-fsanitize=address
-DEBUG = #-g3
+DEBUG = -g3
 OPTI = -O3
 
 # **************************************************************************** #

@@ -116,6 +116,8 @@ int			init_program(t_doom *data)
 				, SDL_GetError());
 		return (1);
 	}
+	if (init_mixer(data))
+		return (1);
 	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1
 					, SDL_RENDERER_PRESENTVSYNC)))
 	{

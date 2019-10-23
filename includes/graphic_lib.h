@@ -18,7 +18,6 @@
 
 # define NBR_FONTS				6
 # define NB_IMG 				2
-# define NB_SOUND				2
 
 # define WHITE					(SDL_Color){255, 255, 255, 0}
 # define BLACK					(SDL_Color){0, 0, 0, 0}
@@ -37,6 +36,7 @@ typedef struct s_format			t_format;
 typedef struct s_text			t_text;
 typedef struct s_label			t_label;
 typedef struct s_point			t_point;
+typedef struct s_mixer			t_mixer;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -71,13 +71,12 @@ struct							s_graphic_lib
 	SDL_Surface					*surface;
 	SDL_Surface					*surfaces[NB_IMG];
 	char						*texture_path[NB_IMG];
-	Mix_Chunk 					*sounds[NB_SOUND];
-	char						*sound_path[NB_SOUND];
 	SDL_Event					event;
 	t_format					format;
 	t_text						text;
 	TTF_Font					*ptrfont[NBR_FONTS];
 	unsigned int				*image;
+	t_mixer						*mix;
 };
 
 /*
