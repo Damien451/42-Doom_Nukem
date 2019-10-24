@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/24 16:29:29 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/24 21:00:51 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CFLAGS = -Wall -Wextra #-Werror
 
 FSAN = #-fsanitize=address
 DEBUG = #-g3
-OPTI = -O3
+OPTI = -O2 -Ofast
 
 # **************************************************************************** #
 #                                 DIRECTORIES                                  #

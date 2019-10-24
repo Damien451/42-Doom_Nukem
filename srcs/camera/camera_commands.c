@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/24 19:01:11 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/24 19:39:11 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		camera_event_translate(t_doom *data)
 	double			diviseur;
 
 	data->player.gravity += 9.8 / 1000 / (data->lib.cam_keys & WATER ? 10 : 1);
-	diviseur = data->lib.cam_keys & WATER ? 2 : 1;
+	diviseur = data->lib.cam_keys & WATER ? 1 : 1;
 	diviseur *= data->lib.cam_keys & SQUAT ? 1.5 : 1;
 	if (y_max < data->player.camera.origin.y)
 	{

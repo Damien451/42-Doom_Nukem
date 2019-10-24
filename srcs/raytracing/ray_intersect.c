@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/24 18:49:44 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/24 21:14:25 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ unsigned int		add_skybox(t_vec3d intersect, SDL_Surface *skybox[6])
 		percent_b = intersect.z * 8.0;
 		a = percent_a;
 		b = percent_b;
-	//	return (0);
 		return (tabl[0][a * 512 + b]);
 	}
 	else if (intersect.x == 0.0)
@@ -151,7 +150,6 @@ unsigned int		add_skybox(t_vec3d intersect, SDL_Surface *skybox[6])
 		percent_b = (64.0 - intersect.z) * 8.0;
 		a = percent_a;
 		b = percent_b;
-	//	return (0xFFFFFF);
 		return (tabl[2][a * 512 + b]);
 	}
 	else if (intersect.y == 64.0)
@@ -160,7 +158,6 @@ unsigned int		add_skybox(t_vec3d intersect, SDL_Surface *skybox[6])
 		percent_b = intersect.z * 8.0;
 		a = percent_a;
 		b = percent_b;
-	//	return (0xFF);
 		return (tabl[4][a * 512 + b]);
 	}
 	else if (intersect.y == 0.0)
@@ -169,7 +166,6 @@ unsigned int		add_skybox(t_vec3d intersect, SDL_Surface *skybox[6])
 		percent_b = intersect.z * 8.0;
 		a = percent_a;
 		b = percent_b;
-	//	return (0x5555FF);
 		return (tabl[5][a * 512 + b]);
 	}
 	else if (intersect.z == 64.0)
@@ -178,21 +174,17 @@ unsigned int		add_skybox(t_vec3d intersect, SDL_Surface *skybox[6])
 		percent_b = (64.0 - intersect.x) * 8.0;
 		a = percent_a;
 		b = percent_b;
-	//	return (0xFF00);
 		return (tabl[1][a * 512 + b]);
 	}
 	percent_a = (64.0 - intersect.y) * 8.0;
 	percent_b = intersect.x * 8.0;
 	a = percent_a;
 	b = percent_b;
-//	return (0x55FF55);
 	return (tabl[3][a * 512 + b]);
-	return (16546);
 }
 
 unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data)
 {
-	int			ret;
 	t_vec3d		intersect;
 	double		distance;
 	int			size;
@@ -208,7 +200,6 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom 
 	}
 	intersect.y = origin.y + distance * ray.y;
 	intersect.z = origin.z + distance * ray.z;
-//	printf("X intersect = (%.2f|%.2f|%.2f)\n", intersect.x, intersect.y, intersect.z);
 	if (intersect.y >= ((node->center.y - (size / 2)) / 2) && intersect.y < ((node->center.y + (size / 2)) / 2)
 			&& intersect.z >= ((node->center.z - (size / 2)) / 2) && intersect.z < ((node->center.z + (size / 2)) / 2))
 	{
@@ -216,10 +207,7 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom 
 			return (add_skybox(intersect, data->lib.skybox));
 		node = find_node_to_go_parent(intersect, node, 1);
 		if (node->leaf == FULL)
-		{
-			printf("COLORED\n");
 			return (0x1234567);
-		}
 		return (ray_intersect(ray, origin, node, data));
 	}
 	intersect.y = (node->center.y - (size / 2)) / 2;
@@ -231,9 +219,6 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom 
 	}
 	intersect.x = origin.x + distance * ray.x;
 	intersect.z = origin.z + distance * ray.z;
-//	printf("Y intersect = (%.2f|%.2f|%.2f)\n", intersect.x, intersect.y, intersect.z);
-//	printf("min x = %ld, max x = %ld, min z = %ld, max z = %ld\n\n\n",  ((node->center.x - (size / 2)) / 2),  ((node->center.x + (size / 2)) / 2)
-//			, ((node->center.z - (size / 2)) / 2), ((node->center.z + (size / 2)) / 2));
 	if (intersect.x >= ((node->center.x - (size / 2)) / 2) && intersect.x < ((node->center.x + (size / 2)) / 2)
 			&& intersect.z >= ((node->center.z - (size / 2)) / 2) && intersect.z < ((node->center.z + (size / 2)) / 2))
 	{
@@ -241,10 +226,7 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom 
 			return (add_skybox(intersect, data->lib.skybox));
 		node = find_node_to_go_parent(intersect, node, 2);
 		if (node->leaf == FULL)
-		{
-			printf("COLORED\n");
 			return (0x12345678);
-		}
 		return (ray_intersect(ray, origin, node, data));
 	}
 	intersect.z = (node->center.z - (size / 2)) / 2;
@@ -256,7 +238,6 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom 
 	}
 	intersect.x = origin.x + distance * ray.x;
 	intersect.y = origin.y + distance * ray.y;
-//	printf("Z intersect = (%.2f|%.2f|%.2f)\n\n\n", intersect.x, intersect.y, intersect.z);
 	if (intersect.x >= ((node->center.x - (size / 2)) / 2) && intersect.x < ((node->center.x + (size / 2)) / 2)
 			&& intersect.y >= ((node->center.y - (size / 2)) / 2) && intersect.y < ((node->center.y + (size / 2)) / 2))
 	{
@@ -264,293 +245,8 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom 
 			return (add_skybox(intersect, data->lib.skybox));
 		node = find_node_to_go_parent(intersect, node, 3);
 		if (node->leaf == FULL)
-		{
-			printf("COLORED\n");
 			return (0x12345678);
-		}
 		return (ray_intersect(ray, origin, node, data));
 	}
 	return (0);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		/*
-		   while (1)
-		   {
-		   test = 0;
-		   if (ret == 1)
-		   {
-		   ret = 2;
-		   intersect.x = node->center.x - (size / 2);
-		   distance = intersect.x - origin.x;
-		   if (distance < 0)
-		   distance = -distance;
-		   intersect.y = origin.y + distance * ray.y;
-		   intersect.z = origin.z + distance * ray.z;
-		   if (intersect.y >= ((node->center.y - size) / 2) && intersect.y < ((node->center.y + size) / 2)
-		   && intersect.z >= ((node->center.z - size) / 2) && intersect.z < ((node->center.z - size) / 2))
-		   {
-		   if (!node->parent)
-		   return (add_skybox(intersect));
-		   else
-		   {
-		   if (node->parent->center.x == intersect.x)
-		   {
-		   node = find_node_to_go_neighboor(intersect, node);
-		   if (node->leaf == FULL)
-		   return (0x651654);
-		   origin = intersect;
-		   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-		   test = 1;
-		   }
-		   else
-		   {
-		   node = find_node_to_go_parent(intersect, node);
-		   if (node->leaf == FULL)
-		   return (0x98756416);
-		   origin = intersect;
-		   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-		   test = 1;
-		   }
-		   }
-		   }
-		   if (!test)
-		   {
-		   intersect.x = node->center.x + (size / 2);
-		   distance = intersect.x - origin.x;
-		   if (distance < 0)
-		   distance = -distance;
-		   intersect.y = origin.y + distance * ray.y;
-		   intersect.z = origin.z + distance * ray.z;
-		   if (intersect.y >= ((node->center.y - size) / 2) && intersect.y < ((node->center.y + size) / 2)
-		   && intersect.z >= ((node->center.z - size) / 2) && intersect.z < ((node->center.z - size) / 2))
-		   {
-		   if (!node->parent)
-		   return (add_skybox(intersect));
-		   else
-		   {
-		   if (node->parent->center.x == intersect.x)
-		   {
-		   node = find_node_to_go_neighboor(intersect, node);
-		   if (node->leaf == FULL)
-		   return (0x984561);
-		   origin = intersect;
-		   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-		   }
-		   else
-		   {
-		   node = find_node_to_go_parent(intersect, node);
-		   if (node->leaf == FULL)
-		   return (0x89745132164);
-		   origin = intersect;
-		   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-		   }
-	}
-	}
-	}
-	}
-		   else if (ret == 2)
-		   {
-			   ret = 3;
-			   intersect.y = node->center.y - (size / 2);
-			   distance = intersect.y - origin.y;
-			   if (distance < 0)
-				   distance = -distance;
-			   intersect.x = origin.x + distance * ray.x;
-			   intersect.z = origin.z + distance * ray.z;
-			   if (intersect.x >= ((node->center.x - size) / 2) && intersect.x < ((node->center.x + size) / 2)
-					   && intersect.z >= ((node->center.z - size) / 2) && intersect.z < ((node->center.z - size) / 2))
-			   {
-				   if (!node->parent)
-					   return (add_skybox(intersect));
-				   else
-				   {
-					   if (node->parent->center.y == intersect.y)
-					   {
-						   node = find_node_to_go_neighboor(intersect, node);
-						   if (node->leaf == FULL)
-							   return (0x466415164849);
-						   origin = intersect;
-						   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-						   test = 1;
-					   }
-					   else
-					   {
-						   node = find_node_to_go_parent(intersect, node);
-						   if (node->leaf == FULL)
-							   return (0x98465302);
-						   origin = intersect;
-						   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-						   test = 1;
-					   }
-				   }
-			   }
-			   if (!test)
-			   {
-				   intersect.y = node->center.y + (size / 2);
-				   distance = intersect.y - origin.y;
-				   if (distance < 0)
-					   distance = -distance;
-				   intersect.x = origin.x + distance * ray.x;
-				   intersect.z = origin.z + distance * ray.z;
-				   if (intersect.x >= ((node->center.x - size) / 2) && intersect.x < ((node->center.x + size) / 2)
-						   && intersect.z >= ((node->center.z - size) / 2) && intersect.z < ((node->center.z - size) / 2))
-				   {
-					   if (!node->parent)
-						   return (add_skybox(intersect));
-					   else
-					   {
-						   if (node->parent->center.y == intersect.y)
-						   {
-							   node = find_node_to_go_neighboor(intersect, node);
-							   if (node->leaf == FULL)
-								   return (0x98798456);
-							   origin = intersect;
-							   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-						   }
-						   else
-						   {
-							   node = find_node_to_go_parent(intersect, node);
-							   if (node->leaf == FULL)
-								   return (0x98465212302);
-							   origin = intersect;
-							   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-						   }
-					   }
-				   }
-			   }
-		   }
-		   else
-		   {
-			   ret = 1;
-			   intersect.z = node->center.z - (size / 2);
-			   distance = intersect.z - origin.z;
-			   if (distance < 0)
-				   distance = -distance;
-			   intersect.x = origin.x + distance * ray.x;
-			   intersect.y = origin.y + distance * ray.y;
-			   if (intersect.x >= ((node->center.x - size) / 2) && intersect.x < ((node->center.x + size) / 2)
-					   && intersect.y >= ((node->center.y - size) / 2) && intersect.y < ((node->center.y - size) / 2))
-			   {
-				   if (!node->parent)
-					   return (add_skybox(intersect));
-				   else
-				   {
-					   if (node->parent->center.z == intersect.z)
-					   {
-						   node = find_node_to_go_neighboor(intersect, node);
-						   if (node->leaf == FULL)
-							   return (0x7545646);
-						   origin = intersect;
-						   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-						   test = 1;
-					   }
-					   else
-					   {
-						   node = find_node_to_go_parent(intersect, node);
-						   if (node->leaf == FULL)
-							   return (0x98456115);
-						   origin = intersect;
-						   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-						   test = 1;
-					   }
-				   }
-			   }
-			   if (!test)
-			   {
-				   intersect.z = node->center.z + (size / 2);
-				   distance = intersect.z - origin.z;
-				   if (distance < 0)
-					   distance = -distance;
-				   intersect.x = origin.x + distance * ray.x;
-				   intersect.y = origin.y + distance * ray.y;
-				   if (intersect.x >= ((node->center.x - size) / 2) && intersect.x < ((node->center.x + size) / 2)
-						   && intersect.y >= ((node->center.y - size) / 2) && intersect.y < ((node->center.y - size) / 2))
-				   {
-					   if (!node->parent)
-						   return (add_skybox(intersect));
-					   else
-					   {
-						   if (node->parent->center.z == intersect.z)
-						   {
-							   node = find_node_to_go_neighboor(intersect, node);
-							   if (node->leaf == FULL)
-								   return (0x8945161212);
-							   origin = intersect;
-							   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-						   }
-						   else
-						   {
-							   node = find_node_to_go_parent(intersect, node);
-							   if (node->leaf == FULL)
-								   return (0x56126310231);
-							   origin = intersect;
-							   ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-						   }
-					   }
-				   }
-			   }
-		   }
-	}
-	*/
-	}
+}

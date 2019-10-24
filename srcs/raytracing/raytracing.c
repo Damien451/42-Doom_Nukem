@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/24 19:12:54 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/24 21:14:04 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_octree	*find_actual_position(t_vec3d *position, t_octree *node)
 	return (node);
 }
 
-t_vec3d		ray_create(t_vec3d *direction, int y, int x, t_doom *data)
+t_vec3d		ray_create(int y, int x, t_doom *data)
 {
 	double	pixel_x;
 	double	pixel_y;
@@ -84,32 +84,29 @@ void		*launch_rays(void *ptr)
 	int				j;
 	t_vec3d			ray;
 	t_octree		*position;
-	unsigned int	color;
 
 	data = ((t_thread*)ptr)->data;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
-//	printf("player pos = (%.2f|%.2f|%.2f)    octree center = (%ld|%ld|%ld, size = %d)\n", data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z, position->center.x >> 1, position->center.y >> 1, position->center.z >> 1, position->size / 2);
 	i = 51 + ((t_thread*)ptr)->num;
 	while (i < WIDTH - 51)
 	{
 		j = 51;
 		while (j < 829)
 		{
-			ray = ray_create(&data->player.camera.direction, j - 51, i - 51, data);
-			color = ray_intersect(ray, data->player.camera.origin, position, data);
-			data->lib.image[i + j * WIDTH] = color;
+			ray = ray_create(j - 51, i - 51, data);
+			data->lib.image[i + j * WIDTH] = ray_intersect(ray
+				, data->player.camera.origin, position, data);
 			j += 1;
 		}
 		i += NBR_THREAD;
 	}
-//	pthread_exit(0);
+	pthread_exit(0);
 }
 
 int			raytracing(t_doom *data)
 {
 	t_thread		thread[NBR_THREAD];
 	int				i;
-	t_octree		*node;
 
 	i = 0;
 	SDL_RenderClear(data->lib.renderer);
@@ -120,15 +117,13 @@ int			raytracing(t_doom *data)
 		thread[i].num = i;
 		thread[i].frame = i;
 		thread[i].total_frame = i;
-//		launch_rays(&thread[i]);
-		if (pthread_create(&thread[i].thread, NULL, (*launch_rays), &thread[i]) < 0)
+		if (pthread_create(&thread[i].thread, NULL, (*launch_rays)
+			, &thread[i]) < 0)
 			return (1);
 		i++;
 	}
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(thread[i++].thread, NULL);
-//	if ((node = find_actual_position(&data->player.camera.origin, data->octree)))
-//	printf("player pos = (%.2f|%.2f|%.2f)    octree center = (%ld|%ld|%ld)\n", data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z, node->center.x >> 1, node->center.y >> 1, node->center.z >> 1);
 	return (0);
 }
