@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/22 11:51:04 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/24 18:18:20 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,6 +96,7 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			get_default_inputs.c					\
 			init_program.c							\
 			leave_program.c							\
+			load_textures.c							\
 			parse_input_file.c						\
 			program.c								\
 			put_buttons_names.c						\

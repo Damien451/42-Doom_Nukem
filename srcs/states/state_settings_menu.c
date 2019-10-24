@@ -137,6 +137,7 @@ int			state_settings_menu(t_doom *data)
 	t_button	buttons[14];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[5]->pixels, (WIDTH * HEIGHT) << 2);
 	create_buttons(data, buttons);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 14);
