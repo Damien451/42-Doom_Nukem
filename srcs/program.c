@@ -13,6 +13,8 @@ static int	game_state(t_doom *data)
 		state_scoreboard(data);
 	else if (data->state & SETTINGS)
 		state_settings_menu(data);
+	else if (data->state & GET_INPUT)
+		state_get_input(data);
 	else if (data->state & LEAVING)
 		data->state &= ~RUNNING;
 	else if (data->state & PLAYING)

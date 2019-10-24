@@ -65,7 +65,7 @@ struct							s_text
 struct							s_graphic_lib
 {
 	SDL_Surface					*character;
-	SDL_Surface					*menu_texture[4];
+	SDL_Surface					*menu_texture[5];
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
 	SDL_Surface					*editor_texture;
