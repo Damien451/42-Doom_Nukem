@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/22 11:51:04 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/24 16:29:29 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LOGIN = `whoami`
 #                                   BINARIES                                   #
 # **************************************************************************** #
 
-NAME = Doom-Nukem
+NAME = doom-nukem
 
 # **************************************************************************** #
 #                                  COMPILATION                                 #
@@ -26,7 +26,7 @@ CC = clang
 CFLAGS = -Wall -Wextra #-Werror
 
 FSAN = #-fsanitize=address
-DEBUG = -g3
+DEBUG = #-g3
 OPTI = -O3
 
 # **************************************************************************** #
@@ -83,6 +83,7 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(MATHS)/vec3d_maths_2.c				\
 			$(MATHS)/create_octree.c				\
 			$(RT)/raytracing.c						\
+			$(RT)/ray_intersect.c					\
 			$(SHAPES)/draw_circle.c					\
 			$(SHAPES)/draw_rectangle.c				\
 			$(STATES)/state_editor.c				\

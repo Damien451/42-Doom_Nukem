@@ -9,12 +9,15 @@
 # include "inputs.h"
 # include "menus.h"
 # include "player.h"
+# include "vec3.h"
 
 /*
 ** ====-* DEFINES *-====
 */
 
 # define EPSILON	1e-20
+# define FOV		(60.0 * M_PI / 180.0)
+# define POV		(25.67 * M_PI / 180.0)
 
 # define RUNNING	(1l << 62)
 # define START		(1l)
@@ -79,6 +82,7 @@ int							leave_program(t_doom *data, int type);
 int							frame_calculator(void);
 int							create_octree(t_doom *data);
 int							raytracing(t_doom *data);
+unsigned int				ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====

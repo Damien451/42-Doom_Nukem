@@ -3,6 +3,8 @@
 #include "inputs.h"
 #include "player.h"
 #include <time.h>
+#include <SDL_image.h>
+#include <SDL.h>
 
 void		init_camera(t_doom *data)
 {
@@ -10,25 +12,28 @@ void		init_camera(t_doom *data)
 	data->player.sensitivity = SENSITIVITY;
 	data->player.camera.right = X_AXIS;
 	data->player.camera.up = Y_AXIS;
+	data->player.camera.origin.x = 32;
+	data->player.camera.origin.y = 32;
+	data->player.camera.origin.z = 32;
 }
 
 static void	ROBIN_init_texture(t_doom *data)
 {
 	int			i;
 
-	data->lib.character = SDL_LoadBMP("textures/character.bmp");
-	data->lib.menu_texture[0] = SDL_LoadBMP("textures/gstvine1.bmp");
-	data->lib.menu_texture[1] = SDL_LoadBMP("textures/gstvine2.bmp");
-	data->lib.menu_texture[2] = SDL_LoadBMP("enemy_menu.bmp");
-	data->lib.menu_texture[3] = SDL_LoadBMP("energy_orb.bmp");
-	data->lib.editor_texture = SDL_LoadBMP("textures/editor.bmp");
-	data->lib.hud_texture = SDL_LoadBMP("textures/hud.bmp");
-	data->lib.skybox[0] = SDL_LoadBMP("textures/hell_rt.bmp");
-	data->lib.skybox[1] = SDL_LoadBMP("textures/hell_ft.bmp");
-	data->lib.skybox[2] = SDL_LoadBMP("textures/hell_lf.bmp");
-	data->lib.skybox[3] = SDL_LoadBMP("textures/hell_bk.bmp");
-	data->lib.skybox[4] = SDL_LoadBMP("textures/hell_up.bmp");
-	data->lib.skybox[5] = SDL_LoadBMP("textures/hell_dn.bmp");
+	data->lib.character = IMG_Load("textures/character.bmp");
+	data->lib.menu_texture[0] = IMG_Load("textures/gstvine1.bmp");
+	data->lib.menu_texture[1] = IMG_Load("textures/gstvine2.bmp");
+	data->lib.menu_texture[2] = IMG_Load("enemy_menu.bmp");
+	data->lib.menu_texture[3] = IMG_Load("energy_orb.bmp");
+	data->lib.editor_texture = IMG_Load("textures/editor.bmp");
+	data->lib.hud_texture = IMG_Load("textures/hud.bmp");
+	data->lib.skybox[0] = IMG_Load("textures/hell_rt.tga");
+	data->lib.skybox[1] = IMG_Load("textures/hell_ft.tga");
+	data->lib.skybox[2] = IMG_Load("textures/hell_lf.tga");
+	data->lib.skybox[3] = IMG_Load("textures/hell_bk.tga");
+	data->lib.skybox[4] = IMG_Load("textures/hell_up.tga");
+	data->lib.skybox[5] = IMG_Load("textures/hell_dn.tga");
 	i = 0;
 	while (i < 6)
 	{
@@ -58,8 +63,8 @@ static void	init_tab(t_doom *data)
 			rand();
 		data->tab[i++].color = (rand() % 256) << 16;
 	}
-	surface = SDL_LoadBMP("textures/Untitled.bmp");
-	data->lib.start_bg = SDL_LoadBMP("textures/start_bg.bmp");
+	surface = IMG_Load("textures/Untitled.bmp");
+	data->lib.start_bg = IMG_Load("textures/start_bg.bmp");
 	i = 0;
 	tmp = NULL;
 	while (i < WIDTH * HEIGHT)
@@ -85,7 +90,7 @@ static void	init_tab(t_doom *data)
 	}
 	tmp = NULL;
 	SDL_FreeSurface(surface);
-	surface = SDL_LoadBMP("textures/eclair.bmp");
+	surface = IMG_Load("textures/eclair.bmp");
 	i = 0;
 	tmp2 = NULL;
 	while (i < WIDTH * HEIGHT)

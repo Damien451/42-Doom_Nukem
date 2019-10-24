@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/22 10:53:24 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/24 19:01:11 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ void		camera_event_translate(t_doom *data)
 	}
 	if (data->lib.cam_keys & WATER)
 	{
-		if (data->player.gravity > 0.0001)
-			data->player.gravity = 0.0001;
+		if (data->player.gravity > 0.01)
+			data->player.gravity = 0.01;
 	}
 	data->player.camera.origin.y -= data->player.gravity;
 	if (data->player.camera.origin.y < 1)

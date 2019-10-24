@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/22 11:09:27 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/22 13:03:42 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 
 	i = -1;
 	ft_memcpy(image, data->lib.start_bg->pixels, (WIDTH * HEIGHT) << 2);
-	print_autor(data, image, frame << 16);
+	print_autor(data, image, ((frame >> 1) << 16));
 	i = 0;
 	srand(time(NULL));
 	while (i < NB_BUBBLE)

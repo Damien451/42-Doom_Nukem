@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include "graphic_lib.h"
 #include "libft.h"
+#include <unistd.h>
+#include <fcntl.h>
 /*
 x = 0  z = 1
 x = 1  z = 0
@@ -35,18 +37,6 @@ else if (x == -1 && z == 0)
 M_PI / 6 = 30 degres;
 */
 
-int			max_absolute_between_three(double a, double b, double c)
-{
-	a = a < 0 ? -a : a;
-	b = b < 0 ? -b : b;
-	c = c < 0 ? -c : c;
-	if (a >= c && a >= b)
-		return (1);
-	else if (b >= a && b >= c)
-		return (2);
-	return (3);
-}
-
 /*void		skybox(t_doom *data)
 {
 	int			ret;
@@ -60,6 +50,56 @@ int			max_absolute_between_three(double a, double b, double c)
 	}
 }
 */
+
+void		skybox(t_doom *data)
+{
+	int			i;
+	int			j;
+	unsigned char	*test;
+	int			w;
+	int			h;
+	unsigned int			format;
+	unsigned char			tab[4];
+	static unsigned int			tabl[512 * 512];
+	static int				ok = 0;
+	int						fd;
+
+	tab[0] = 0;
+/*	if (!ok)
+	{
+	fd = open("test.binary", O_RDONLY);
+	read(fd, tabl, 512*512*4);
+	ok++;
+	}*/
+	SDL_QueryTexture(data->lib.skybox_t[0], &format, NULL, &w, &h);
+	printf("format = %u, w = %d, h = %d\n", format, w, h);
+	printf("test   = %u\n", SDL_PIXELFORMAT_ARGB8888);
+	SDL_LockTexture(data->lib.skybox_t[0], NULL, (void**)&test, &i);
+	i = 0;
+	while (i < 512)
+	{
+		j = 0;
+		while (j < 512)
+		{
+			tab[1] = ((unsigned char*)data->lib.skybox[5]->pixels)[i * data->lib.skybox[5]->pitch + j * 3 + 1];
+			tab[2] = ((unsigned char*)data->lib.skybox[5]->pixels)[i * data->lib.skybox[5]->pitch + j * 3 + 2];
+			tab[3] = ((unsigned char*)data->lib.skybox[5]->pixels)[i * data->lib.skybox[5]->pitch + j * 3];
+			tabl[i * 512 + j] = *((unsigned int *)&tab);
+//			data->lib.image[i * WIDTH + j] = *((unsigned int*)&tab);
+			data->lib.image[i * WIDTH + j] = tabl[i * 512 + j];
+			j++;
+		}
+		i++;
+	}
+	SDL_UnlockTexture(data->lib.skybox_t[0]);
+	if (!ok)
+	{
+		i = open("test6.binary", O_TRUNC | O_WRONLY | O_CREAT, 0777);
+		write(i, tabl, 512*512*4);
+		ok++;
+	}
+}
+
 int			state_game(t_doom *data)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -75,13 +115,13 @@ int			state_game(t_doom *data)
 	}
 	camera_event_translate(data);
 //	printf("Direction vector = (%.2f|%.2f|%.2f)\n    position = (%.2f|%.2f|%.2f)\n", data->player.camera.direction.x, data->player.camera.direction.y, data->player.camera.direction.z, data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z);
-/*	if (data->lib.cam_keys & WATER)
-		printf("water");
-	printf("\n");*/
+//	if (data->lib.cam_keys & WATER)
+//		printf("water");
+//	printf("\n");
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	raytracing(data);
+//	skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-	//skybox(data);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }
