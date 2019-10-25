@@ -121,6 +121,8 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 	if (type > 0 && frame >= 120 && frame <= 135)
 		lightning(data, image, (((frame + 50) << 16) | ((frame + 50) << 8))
 			+ frame + 75, frame);
+	if (type >0 && frame == 120)
+		play_sound(data->mix->sounds[3]);
 	frame += type;
 	if (frame == 255 || frame == 0)
 		type *= -1;
@@ -146,6 +148,13 @@ static inline void	create_start_renderer(t_doom *data)
 
 int					state_start(t_doom *data)
 {
+	static int flag = 0;
+
+	if (flag == 0)
+	{
+		loop_sound(data->mix->sounds[2]);
+		flag = 1;
+	}
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)

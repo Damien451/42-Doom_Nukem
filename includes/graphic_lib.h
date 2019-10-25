@@ -7,6 +7,7 @@
 
 # include <SDL.h>
 # include <SDL_ttf.h>
+# include "mixer.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -20,6 +21,7 @@
 
 # define NBR_TEXT_MENU			5
 # define NBR_FONTS				6
+# define NB_IMG 				2
 
 # define WHITE					(SDL_Color){255, 255, 255, 0}
 # define BLACK					(SDL_Color){0, 0, 0, 0}
@@ -38,6 +40,7 @@ typedef struct s_format			t_format;
 typedef struct s_text			t_text;
 typedef struct s_label			t_label;
 typedef struct s_point			t_point;
+typedef struct s_mixer			t_mixer;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -73,10 +76,12 @@ struct							s_graphic_lib
 	SDL_Surface					*picked_texture;
 	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
-	SDL_Surface					*start_bg;
 	SDL_Window					*window;
 	SDL_Renderer				*renderer;
+	SDL_Surface					*start_bg;
 	SDL_Surface					*surface;
+	SDL_Surface					*surfaces[NB_IMG];
+	char						*texture_path[NB_IMG];
 	SDL_Event					event;
 	t_format					format;
 	t_text						text;

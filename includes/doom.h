@@ -8,6 +8,7 @@
 # include "graphic_lib.h"
 # include "inputs.h"
 # include "menus.h"
+# include "mixer.h"
 # include "player.h"
 # include "vec3.h"
 
@@ -17,7 +18,7 @@
 
 # define EPSILON	1e-20
 # define FOV		(60.0 * M_PI / 180.0)
-# define POV		(25.67 * M_PI / 180.0)
+# define POV		(34 * M_PI / 180.0)
 
 # define RUNNING	(1l << 62)
 # define START		(1l)
@@ -65,6 +66,7 @@ struct						s_doom
 	t_octree				*octree;
 	int						load_page[2];
 	double					sensitivity;
+	t_mixer					*mix;
 	int						sampling;
 };
 
@@ -75,6 +77,8 @@ struct						s_doom
 int							init_program(t_doom *data);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
+void						load_textures(t_doom *data);
+int							load_sounds(t_doom *data);
 
 /*
 ** ====-* GRAPHICS *-====

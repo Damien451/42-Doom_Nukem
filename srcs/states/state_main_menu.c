@@ -56,7 +56,13 @@ int			state_main_menu(t_doom *data)
 	t_button	buttons[5];
 	static int	total_frame = 0;
 	static int	frame = 0;
+	static int flag = 0;
 
+	if (flag == 0)
+	{
+		loop_sound(data->mix->sounds[4]);
+		flag = 1;
+	}
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
 	anim_main_menu(data, total_frame, frame);
