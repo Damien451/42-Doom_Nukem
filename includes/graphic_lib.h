@@ -18,7 +18,7 @@
 # define SIZE_TEXTURE			64
 # define BLOCK_SIZE_EDITOR		((HEIGHT - 54) / 64)
 
-# define NBR_TEXT_MENU			6
+# define NBR_TEXT_MENU			5
 # define NBR_FONTS				6
 
 # define WHITE					(SDL_Color){255, 255, 255, 0}
@@ -70,6 +70,7 @@ struct							s_graphic_lib
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
 	SDL_Surface					*editor_texture;
+	SDL_Surface					*picked_texture;
 	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
 	SDL_Surface					*start_bg;

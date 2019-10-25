@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/24 18:18:20 by dacuvill         ###   ########.fr        #
+#    Updated: 2019/10/25 14:42:23 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,9 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(STATES)/state_play_menu.c				\
 			$(STATES)/state_settings_menu.c			\
 			add_points.c							\
+			color_rectangle.c						\
 			doom.c									\
+			editor_commands.c						\
 			frame_calculator.c						\
 			get_default_inputs.c					\
 			init_program.c							\

@@ -77,6 +77,7 @@ int							leave_program(t_doom *data, int type);
 */
 
 int							frame_calculator(void);
+void						color_rectangle(t_doom *data, t_vec3l rectangle, int step);
 int							create_octree(t_doom *data);
 int							raytracing(t_doom *data);
 
@@ -91,6 +92,8 @@ int							raytracing(t_doom *data);
 /*
 ** ====-* COMMANDS *-====
 */
+
+void						editor_commands(t_doom *data, char str[50], int *map, int *first);
 
 /*
 ** ====-* GAMESTATES *-====
