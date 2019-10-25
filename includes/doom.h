@@ -65,6 +65,7 @@ struct						s_doom
 	t_octree				*octree;
 	int						load_page[2];
 	double					sensitivity;
+	int						sampling;
 };
 
 /*

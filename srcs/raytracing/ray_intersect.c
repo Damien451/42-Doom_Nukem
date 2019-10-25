@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/24 21:14:25 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/25 14:41:37 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,79 +28,6 @@ int			max_absolute_between_three(double a, double b, double c)
 	else if (b >= a && b >= c)
 		return (2);
 	return (3);
-}
-
-t_octree	 *find_node_to_go_neighboor(t_vec3d position, t_octree *node)
-{
-	if (position.x < (double)(node->center.x / 2))
-	{
-		if (position.y < (double)(node->center.y / 2))
-		{
-			if (position.z < (double)(node->center.z / 2))
-				node = node->child[0];
-			else
-				node = node->child[4];
-		}
-		else
-		{
-			if (position.z < (double)(node->center.z / 2))
-				node = node->child[2];
-			else
-				node = node->child[6];
-		}
-	}
-	else
-	{
-		if (position.y < (double)(node->center.y / 2))
-		{
-			if (position.z < (double)(node->center.z / 2))
-				node = node->child[1];
-			else
-				node = node->child[3];
-		}
-		else
-		{
-			if (position.z < (double)(node->center.z / 2))
-				node = node->child[5];
-			else
-				node = node->child[7];
-		}
-	}
-	if (node->leaf == INSIDE)
-		return (find_node_to_go_neighboor(position, node));
-	return (node);
-}
-
-t_octree	 *find_node_to_go_parent(t_vec3d position, t_octree *node, int card)
-{
-	node = node->parent;
-	if (card == 1)
-	{
-		while (node->parent)
-		{
-			if (position.x == (node->center.x - (node->size / 2)) / 2 || position.x == (node->center.x + (node->size / 2)) / 2)
-				node = node->parent;
-		}
-	}
-	else if (card == 2)
-	{
-		while (node->parent)
-		{
-			if (position.y == (node->center.y - (node->size / 2)) / 2 || position.y == (node->center.y + (node->size / 2)) / 2)
-				node = node->parent;
-		}
-	}
-	else
-	{
-		while (node->parent)
-		{
-			if (position.z == (node->center.z - (node->size / 2)) / 2 || position.z == (node->center.z + (node->size / 2)) / 2)
-				node = node->parent;
-		}
-	}
-	if (node->parent)
-		return (find_node_to_go_neighboor(position, node));
-	return (node);
 }
 
 #include <fcntl.h>
@@ -183,6 +110,84 @@ unsigned int		add_skybox(t_vec3d intersect, SDL_Surface *skybox[6])
 	return (tabl[3][a * 512 + b]);
 }
 
+t_octree	 *find_node_to_go_neighboor(t_vec3d position, t_octree *node)
+{
+	if (position.x < (double)(node->center.x / 2))
+	{
+		if (position.y < (double)(node->center.y / 2))
+		{
+			if (position.z < (double)(node->center.z / 2))
+				node = node->child[0];
+			else
+				node = node->child[4];
+		}
+		else
+		{
+			if (position.z < (double)(node->center.z / 2))
+				node = node->child[2];
+			else
+				node = node->child[6];
+		}
+	}
+	else
+	{
+		if (position.y < (double)(node->center.y / 2))
+		{
+			if (position.z < (double)(node->center.z / 2))
+				node = node->child[1];
+			else
+				node = node->child[3];
+		}
+		else
+		{
+			if (position.z < (double)(node->center.z / 2))
+				node = node->child[5];
+			else
+				node = node->child[7];
+		}
+	}
+	if (node->leaf == INSIDE)
+		return (find_node_to_go_neighboor(position, node));
+	return (node);
+}
+
+t_octree	 *find_node_to_go_parent(t_vec3d position, t_octree *node, int card)
+{
+	if (card == 1)
+	{
+		while (node->parent)
+		{
+			if (position.x != node->center.x >> 1)
+				node = node->parent;
+			else
+				break ;
+		}
+	}
+	else if (card == 2)
+	{
+		while (node->parent)
+		{
+			if (position.y != node->center.y >> 1)
+				node = node->parent;
+			else
+				break ;
+		}
+	}
+	else
+	{
+		while (node->parent)
+		{
+			if (position.z != node->center.z >> 1)
+				node = node->parent;
+			else
+				break ;
+		}
+	}
+	if (node->parent)
+		return (find_node_to_go_neighboor(position, node));
+	return (node);
+}
+
 unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data)
 {
 	t_vec3d		intersect;
@@ -245,7 +250,7 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom 
 			return (add_skybox(intersect, data->lib.skybox));
 		node = find_node_to_go_parent(intersect, node, 3);
 		if (node->leaf == FULL)
-			return (0x12345678);
+			return (0x123456789);
 		return (ray_intersect(ray, origin, node, data));
 	}
 	return (0);

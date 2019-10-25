@@ -15,6 +15,7 @@ void		init_camera(t_doom *data)
 	data->player.camera.origin.x = 32;
 	data->player.camera.origin.y = 32;
 	data->player.camera.origin.z = 32;
+	data->sampling = 4;
 }
 
 static void	ROBIN_init_texture(t_doom *data)

@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/24 21:14:04 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/25 12:09:20 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void		*launch_rays(void *ptr)
 	int				j;
 	t_vec3d			ray;
 	t_octree		*position;
+	int				count[3];
+	int				color;
 
 	data = ((t_thread*)ptr)->data;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
@@ -94,11 +96,23 @@ void		*launch_rays(void *ptr)
 		while (j < 829)
 		{
 			ray = ray_create(j - 51, i - 51, data);
-			data->lib.image[i + j * WIDTH] = ray_intersect(ray
+			color = ray_intersect(ray
 				, data->player.camera.origin, position, data);
-			j += 1;
+			count[0] = 0;
+			while (count[0] < data->sampling)
+			{
+				count[1] = 0;
+				count[2] = i + count[0] + j * WIDTH;
+				while (count[1] < data->sampling)
+				{
+					data->lib.image[count[2] + count[1] * WIDTH] = color;
+					count[1]++;
+				}
+				count[0]++;
+			}
+			j += data->sampling;
 		}
-		i += NBR_THREAD;
+		i += NBR_THREAD * data->sampling;
 	}
 	pthread_exit(0);
 }
@@ -110,11 +124,13 @@ int			raytracing(t_doom *data)
 
 	i = 0;
 	SDL_RenderClear(data->lib.renderer);
+	if (!data->lib.cam_keys && data->sampling != 1)
+		data->sampling = 1;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;
 		thread[i].image = data->lib.image;
-		thread[i].num = i;
+		thread[i].num = data->sampling * i;
 		thread[i].frame = i;
 		thread[i].total_frame = i;
 		if (pthread_create(&thread[i].thread, NULL, (*launch_rays)
