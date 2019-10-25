@@ -66,11 +66,8 @@ struct						s_doom
 	t_octree				*octree;
 	int						load_page[2];
 	double					sensitivity;
-<<<<<<< HEAD
 	t_mixer					*mix;
-=======
 	int						sampling;
->>>>>>> 075bb67ed1cced6d0f63ad9893e0746f400a0e19
 };
 
 /*
@@ -80,7 +77,7 @@ struct						s_doom
 int							init_program(t_doom *data);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
-int							load_textures(t_doom *data);
+void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
 
 /*
