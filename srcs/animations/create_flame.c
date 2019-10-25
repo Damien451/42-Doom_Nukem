@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 21:58:10 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/20 22:22:17 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/25 11:10:42 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static inline void	*create_thread(void *thread)
 		i += NBR_THREAD;
 	}
 	i = HEIGHT * WIDTH - (WIDTH << 1) - 1 - ((t_thread*)thread)->num;
-	while (i > ((HEIGHT - 50) * WIDTH))
+	while (i > ((HEIGHT - 200) * WIDTH))
 	{
 		image[i] = average(image, i);
 		i -= NBR_THREAD;

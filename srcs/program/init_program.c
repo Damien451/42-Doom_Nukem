@@ -3,6 +3,8 @@
 #include "inputs.h"
 #include "player.h"
 #include <time.h>
+#include <SDL_image.h>
+#include <SDL.h>
 
 void		init_camera(t_doom *data)
 {
@@ -10,6 +12,10 @@ void		init_camera(t_doom *data)
 	data->player.sensitivity = SENSITIVITY;
 	data->player.camera.right = X_AXIS;
 	data->player.camera.up = Y_AXIS;
+	data->player.camera.origin.x = 32;
+	data->player.camera.origin.y = 32;
+	data->player.camera.origin.z = 32;
+	data->sampling = 4;
 }
 
 static void	init_tab(t_doom *data)
@@ -33,8 +39,8 @@ static void	init_tab(t_doom *data)
 			rand();
 		data->tab[i++].color = (rand() % 256) << 16;
 	}
-	surface = SDL_LoadBMP("textures/Untitled.bmp");
-	data->lib.start_bg = SDL_LoadBMP("textures/background_state_start.bmp");
+	surface = IMG_Load("textures/Untitled.bmp");
+	data->lib.start_bg = IMG_Load("textures/start_bg.bmp");
 	i = 0;
 	tmp = NULL;
 	while (i < WIDTH * HEIGHT)
@@ -60,7 +66,7 @@ static void	init_tab(t_doom *data)
 	}
 	tmp = NULL;
 	SDL_FreeSurface(surface);
-	surface = SDL_LoadBMP("textures/eclair.bmp");
+	surface = IMG_Load("textures/eclair.bmp");
 	i = 0;
 	tmp2 = NULL;
 	while (i < WIDTH * HEIGHT)

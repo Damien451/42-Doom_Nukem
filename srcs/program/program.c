@@ -31,13 +31,13 @@ int			program(t_doom *data)
 		if (!SDL_LockTexture(data->lib.texture, NULL, (void**)&data->lib.image
 				, &pitch))
 		{
-			SDL_UnlockTexture(data->lib.texture);
 			game_state(data);
 			if ((pitch = frame_calculator()))
 			{
 				ft_putnbr(pitch);
 				ft_putchar('\n');
 			}
+			SDL_UnlockTexture(data->lib.texture);
 			SDL_RenderClear(data->lib.renderer);
 		}
 	}

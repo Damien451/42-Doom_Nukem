@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/25 14:42:23 by dacuvill         ###   ########.fr        #
+#    Updated: 2019/10/25 19:40:50 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LOGIN = `whoami`
 #                                   BINARIES                                   #
 # **************************************************************************** #
 
-NAME = Doom-Nukem
+NAME = doom-nukem
 
 # **************************************************************************** #
 #                                  COMPILATION                                 #
@@ -26,8 +26,8 @@ CC = clang
 CFLAGS = -Wall -Wextra #-Werror
 
 FSAN = #-fsanitize=address
-DEBUG = -g3
-OPTI = -O3
+DEBUG = #-g3
+OPTI = -O2 -Ofast
 
 # **************************************************************************** #
 #                                 DIRECTORIES                                  #
@@ -45,6 +45,7 @@ STATES = states
 SHAPES = shapes
 CAMERA = camera
 RT = raytracing
+PROG = program
 
 S_ANIMDIR = ./$(SRCDIR)/$(ANIM)
 S_MATHDIR = ./$(SRCDIR)/$(MATHS)
@@ -82,7 +83,12 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(MATHS)/vec3d_maths.c					\
 			$(MATHS)/vec3d_maths_2.c				\
 			$(MATHS)/create_octree.c				\
+			$(PROG)/doom.c							\
+			$(PROG)/init_program.c					\
+			$(PROG)/leave_program.c					\
+			$(PROG)/program.c						\
 			$(RT)/raytracing.c						\
+			$(RT)/ray_intersect.c					\
 			$(SHAPES)/draw_circle.c					\
 			$(SHAPES)/draw_rectangle.c				\
 			$(STATES)/state_editor.c				\
@@ -92,15 +98,11 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(STATES)/state_settings_menu.c			\
 			add_points.c							\
 			color_rectangle.c						\
-			doom.c									\
 			editor_commands.c						\
 			frame_calculator.c						\
 			get_default_inputs.c					\
-			init_program.c							\
-			leave_program.c							\
 			load_textures.c							\
 			parse_input_file.c						\
-			program.c								\
 			put_buttons_names.c						\
 			put_buttons_on_img.c					\
 			put_string_on_renderer.c				\
@@ -139,6 +141,7 @@ $(OBJDIR) :
 	@mkdir -p $(OBJDIR)/$(SHAPES) 2> /dev/null || true
 	@mkdir -p $(OBJDIR)/$(CAMERA) 2> /dev/null || true
 	@mkdir -p $(OBJDIR)/$(RT) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(PROG) 2> /dev/null || true
 
 clean :
 	@rm -rf $(OBJDIR)

@@ -79,7 +79,7 @@ static inline void	mouse_editor_commands(t_doom *data, int *ok, int *map, char s
 	//printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
-		printf("yo\n");//pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
+		printf("yo");//pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
 	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
 		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030)
 	{

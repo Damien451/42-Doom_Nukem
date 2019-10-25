@@ -7,7 +7,7 @@
 
 # include <pthread.h>
 
-# define NBR_THREAD			8
+# define NBR_THREAD			4
 
 /*
 ** ====-* TYPEDEFS *-====

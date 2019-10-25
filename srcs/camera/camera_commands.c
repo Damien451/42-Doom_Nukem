@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/22 10:53:24 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/25 14:06:22 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,25 @@ void			camera_mouse_motion(t_camera *camera, int *x, int *y
 static void	check_clipping(t_doom *data, int type)
 {
 	type++;
-	if (data->player.camera.origin.x > 64)
-		data->player.camera.origin.x = 64;
-	if (data->player.camera.origin.y > 64)
-		data->player.camera.origin.y = 64;
-	if (data->player.camera.origin.z > 64)
-		data->player.camera.origin.z = 64;
-	if (data->player.camera.origin.x < 0)
-		data->player.camera.origin.x = 0;
-	if (data->player.camera.origin.y < 0)
-		data->player.camera.origin.y = 0;
-	if (data->player.camera.origin.z < 0)
-		data->player.camera.origin.z = 0;
+	if (data->player.camera.origin.x > 63.7)
+		data->player.camera.origin.x = 63.7;
+	else if (data->player.camera.origin.x < 0.3)
+		data->player.camera.origin.x = 0.3;
+	if (data->player.camera.origin.y > 63.7)
+		data->player.camera.origin.y = 63.7;
+	else if (data->player.camera.origin.y < 1.5)
+		data->player.camera.origin.y = 1.5;
+	if (data->player.camera.origin.z > 63.7)
+		data->player.camera.origin.z = 63.7;
+	else if (data->player.camera.origin.z < 0.3)
+		data->player.camera.origin.z = 0.3;
+}
+
+int		check_clip(t_vec3d position, char tab[64][64][64])
+{
+	if (tab[(int)position.y][(int)position.z][(int)position.x])
+		return (0);
+	return (1);
 }
 
 void		camera_event_translate(t_doom *data)
@@ -59,9 +66,10 @@ void		camera_event_translate(t_doom *data)
 	static int	frame = 0;
 	static double	y_max = 0;
 	double			diviseur;
+	t_vec3d			tmp;
 
 	data->player.gravity += 9.8 / 1000 / (data->lib.cam_keys & WATER ? 10 : 1);
-	diviseur = data->lib.cam_keys & WATER ? 2 : 1;
+	diviseur = data->lib.cam_keys & WATER ? 1 : 1;
 	diviseur *= data->lib.cam_keys & SQUAT ? 1.5 : 1;
 	if (y_max < data->player.camera.origin.y)
 	{
@@ -84,45 +92,49 @@ void		camera_event_translate(t_doom *data)
 	if (data->lib.cam_keys & CAMERA_TR_LEFT)
 	{
 		data->player.speed = speed_up;
-		data->player.camera.origin = vec3d_sub(data->player.camera.origin
+		tmp = vec3d_sub(data->player.camera.origin
 				, vec3d_scalar(data->player.camera.right, data->player.speed));
-		check_clipping(data, CAMERA_TR_LEFT);
+		if (check_clip(tmp, data->map_to_save))
+			data->player.camera.origin = tmp;
 		stop = 0;
 	}
 	if (data->lib.cam_keys & CAMERA_TR_RIGHT)
 	{
 		data->player.speed = speed_up;
-		data->player.camera.origin = vec3d_add(data->player.camera.origin
+		tmp = vec3d_add(data->player.camera.origin
 				, vec3d_scalar(data->player.camera.right, data->player.speed));
-		check_clipping(data, CAMERA_TR_RIGHT);
+		if (check_clip(tmp, data->map_to_save))
+			data->player.camera.origin = tmp;
 		stop = 0;
 	}
 	if (data->lib.cam_keys & CAMERA_TR_FRONT)
 	{
 		data->player.speed = speed_up;
-		data->player.camera.origin = vec3d_add(data->player.camera.origin
+		tmp = vec3d_add(data->player.camera.origin
 				, vec3d_scalar(data->player.camera.direction, data->player.speed));
-		check_clipping(data, CAMERA_TR_FRONT);
+		if (check_clip(tmp, data->map_to_save))
+			data->player.camera.origin = tmp;
 		stop = 0;
 	}
 	if (data->lib.cam_keys & CAMERA_TR_BACK)
 	{
 		data->player.speed = speed_up;
-		data->player.camera.origin = vec3d_sub(data->player.camera.origin
+		tmp = vec3d_sub(data->player.camera.origin
 				, vec3d_scalar(data->player.camera.direction, data->player.speed));
-		check_clipping(data, CAMERA_TR_BACK);
+		if (check_clip(tmp, data->map_to_save))
+			data->player.camera.origin = tmp;
 		stop = 0;
 	}
 	if (data->lib.cam_keys & WATER)
 	{
-		if (data->player.gravity > 0.0001)
-			data->player.gravity = 0.0001;
+		if (data->player.gravity > 0.01)
+			data->player.gravity = 0.01;
 	}
 	data->player.camera.origin.y -= data->player.gravity;
-	if (data->player.camera.origin.y < 1)
+	if (data->player.camera.origin.y < 1.5)
 	{
 		data->player.gravity = GRAVITY;
-		data->player.camera.origin.y = 1;
+		data->player.camera.origin.y = 1.5;
 	}
 //	printf("data->player.camera.origin.y = %.2f, data->player.gravity = %.2f\n"
 //		,data->player.camera.origin.y, data->player.gravity);
@@ -134,6 +146,7 @@ void		camera_event_translate(t_doom *data)
 //	printf("vitesse = %f\n", data->player.speed);
 	if (stop)
 		data->player.speed = 0;
+	check_clipping(data, CAMERA_TR_BACK);
 }
 
 static void	camera_release_key(SDL_Event *event, t_doom *data)
@@ -159,7 +172,6 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 {
 	if (event->key.type == SDL_KEYDOWN)
 	{
-
 		if (event->key.keysym.sym == SDLK_a)
 			data->lib.cam_keys |= CAMERA_TR_LEFT;
 		else if (event->key.keysym.sym == SDLK_d)
@@ -182,6 +194,7 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 		}
 		else if (event->key.keysym.sym == SDLK_LCTRL)
 			data->lib.cam_keys |= SQUAT;
+		data->sampling = 4;
 	}
 	camera_release_key(event, data);
 }
