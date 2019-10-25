@@ -12,7 +12,7 @@ static int		check_input(t_doom *data, SDL_Keycode input)
 	while (++i < NB_MODIF_INPUTS)
 		if ((unsigned int)input == data->tabinputs.keycode[i])
 			return (1);
-	if (input == SDLK_ESCAPE)
+	if (input == SDLK_ESCAPE || input == SDLK_RETURN)
 		return (1);
 	return (0);
 }

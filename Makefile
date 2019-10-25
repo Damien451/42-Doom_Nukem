@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/22 11:51:04 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/25 19:14:45 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,8 @@ CC = clang
 CFLAGS = -Wall -Wextra #-Werror
 
 FSAN = #-fsanitize=address
-DEBUG = -g3
-OPTI = -O3
+DEBUG = #-g3
+OPTI = -O2 -Ofast
 
 # **************************************************************************** #
 #                                 DIRECTORIES                                  #
@@ -84,6 +84,7 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			$(MATHS)/vec3d_maths_2.c				\
 			$(MATHS)/create_octree.c				\
 			$(RT)/raytracing.c						\
+			$(RT)/ray_intersect.c					\
 			$(SHAPES)/draw_circle.c					\
 			$(SHAPES)/draw_rectangle.c				\
 			$(STATES)/state_editor.c				\
@@ -97,6 +98,7 @@ SRCS =		$(ANIM)/anim_main_menu.c				\
 			get_default_inputs.c					\
 			init_program.c							\
 			leave_program.c							\
+			load_textures.c							\
 			parse_input_file.c						\
 			program.c								\
 			put_buttons_names.c						\

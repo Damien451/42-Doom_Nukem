@@ -36,6 +36,7 @@ int			state_scoreboard(t_doom *data)
 	buttons[0] = button(point(WIDTH_CENTER - (DEF_BUTTON_W / 2), HEIGHT - (DEF_BUTTON_H + BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W, DEF_BUTTON_H), 0, "Return");
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[5]->pixels, (WIDTH * HEIGHT) << 2);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 1);
 	//put_scores_on_renderer(data);

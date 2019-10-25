@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/22 11:54:41 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/25 12:09:20 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
 #include "thread.h"
 #include "octree.h"
 #include <pthread.h>
+#include <math.h>
 
 t_octree	*find_actual_position(t_vec3d *position, t_octree *node)
 {
-	while (node)
+	while (node->leaf != EMPTY)
 	{
-		if (node->leaf == EMPTY)
-			return (node);
-		else if (node->leaf == INSIDE)
+		if (node->leaf == INSIDE)
 		{
 			if (position->x < (double)(node->center.x >> 1))
 			{
@@ -61,27 +60,59 @@ t_octree	*find_actual_position(t_vec3d *position, t_octree *node)
 			}
 		}
 	}
-	return (NULL);
+	return (node);
 }
 
+t_vec3d		ray_create(int y, int x, t_doom *data)
+{
+	double	pixel_x;
+	double	pixel_y;
+	t_vec3d	dir;
+
+	pixel_x = (2 * (x + .5) / WIDTH - 1) * FOV;
+	pixel_y = (1 - (2 * (y + .5) / HEIGHT)) * FOV;
+	dir = vec3d_scalar(data->player.camera.right, pixel_x);
+	dir = vec3d_add(dir, vec3d_scalar(data->player.camera.up, pixel_y));
+	dir = vec3d_add(dir, data->player.camera.direction);
+	return (vec3d_unit(dir));
+}
 
 void		*launch_rays(void *ptr)
 {
-	t_doom		*data;
-	int			i;
-	int			j;
+	t_doom			*data;
+	int				i;
+	int				j;
+	t_vec3d			ray;
+	t_octree		*position;
+	int				count[3];
+	int				color;
 
 	data = ((t_thread*)ptr)->data;
+	position = find_actual_position(&data->player.camera.origin, data->octree);
 	i = 51 + ((t_thread*)ptr)->num;
 	while (i < WIDTH - 51)
 	{
 		j = 51;
 		while (j < 829)
 		{
-			data->lib.image[i + j * WIDTH] = j * i;
-			j++;
+			ray = ray_create(j - 51, i - 51, data);
+			color = ray_intersect(ray
+				, data->player.camera.origin, position, data);
+			count[0] = 0;
+			while (count[0] < data->sampling)
+			{
+				count[1] = 0;
+				count[2] = i + count[0] + j * WIDTH;
+				while (count[1] < data->sampling)
+				{
+					data->lib.image[count[2] + count[1] * WIDTH] = color;
+					count[1]++;
+				}
+				count[0]++;
+			}
+			j += data->sampling;
 		}
-		i += NBR_THREAD;
+		i += NBR_THREAD * data->sampling;
 	}
 	pthread_exit(0);
 }
@@ -90,24 +121,25 @@ int			raytracing(t_doom *data)
 {
 	t_thread		thread[NBR_THREAD];
 	int				i;
-	t_octree		*node;
 
 	i = 0;
+	SDL_RenderClear(data->lib.renderer);
+	if (!data->lib.cam_keys && data->sampling != 1)
+		data->sampling = 1;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;
 		thread[i].image = data->lib.image;
-		thread[i].num = i;
+		thread[i].num = data->sampling * i;
 		thread[i].frame = i;
 		thread[i].total_frame = i;
-		if (pthread_create(&thread[i].thread, NULL, (*launch_rays), &thread[i]) < 0)
+		if (pthread_create(&thread[i].thread, NULL, (*launch_rays)
+			, &thread[i]) < 0)
 			return (1);
 		i++;
 	}
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(thread[i++].thread, NULL);
-	if ((node = find_actual_position(&data->player.camera.origin, data->octree)))
-	printf("player pos = (%.2f|%.2f|%.2f)    octree center = (%ld|%ld|%ld)\n", data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z, node->center.x >> 1, node->center.y >> 1, node->center.z >> 1);
 	return (0);
 }

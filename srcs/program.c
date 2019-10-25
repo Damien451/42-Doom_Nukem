@@ -13,6 +13,8 @@ static int	game_state(t_doom *data)
 		state_scoreboard(data);
 	else if (data->state & SETTINGS)
 		state_settings_menu(data);
+	else if (data->state & GET_INPUT)
+		state_get_input(data);
 	else if (data->state & LEAVING)
 		data->state &= ~RUNNING;
 	else if (data->state & PLAYING)
@@ -29,13 +31,13 @@ int			program(t_doom *data)
 		if (!SDL_LockTexture(data->lib.texture, NULL, (void**)&data->lib.image
 				, &pitch))
 		{
-			SDL_UnlockTexture(data->lib.texture);
 			game_state(data);
 			if ((pitch = frame_calculator()))
 			{
 				ft_putnbr(pitch);
 				ft_putchar('\n');
 			}
+			SDL_UnlockTexture(data->lib.texture);
 			SDL_RenderClear(data->lib.renderer);
 		}
 	}
