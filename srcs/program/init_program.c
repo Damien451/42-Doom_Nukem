@@ -26,6 +26,7 @@ static void	init_tab(t_doom *data)
 	t_bubble	*tmp2;
 
 	i = 0;
+
 	while (i < NB_BUBBLE)
 	{
 		data->tab[i].pos = rand() % WIDTH * HEIGHT;
@@ -181,6 +182,8 @@ int			init_program(t_doom *data)
 				, SDL_GetError());
 		return (1);
 	}
+	if (init_mixer(data))
+		return (1);
 	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1
 					, SDL_RENDERER_PRESENTVSYNC)))
 	{
