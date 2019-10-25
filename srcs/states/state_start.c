@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/22 13:03:42 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/25 19:19:10 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 	static int	type = 1;
 
 	i = -1;
+	printf("%p\n", data->lib.start_bg);
 	ft_memcpy(image, data->lib.start_bg->pixels, (WIDTH * HEIGHT) << 2);
 	print_autor(data, image, ((frame >> 1) << 16));
 	i = 0;

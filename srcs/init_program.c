@@ -18,31 +18,6 @@ void		init_camera(t_doom *data)
 	data->sampling = 4;
 }
 
-static void	ROBIN_init_texture(t_doom *data)
-{
-	int			i;
-
-	data->lib.character = IMG_Load("textures/character.bmp");
-	data->lib.menu_texture[0] = IMG_Load("textures/gstvine1.bmp");
-	data->lib.menu_texture[1] = IMG_Load("textures/gstvine2.bmp");
-	data->lib.menu_texture[2] = IMG_Load("enemy_menu.bmp");
-	data->lib.menu_texture[3] = IMG_Load("energy_orb.bmp");
-	data->lib.editor_texture = IMG_Load("textures/editor.bmp");
-	data->lib.hud_texture = IMG_Load("textures/hud.bmp");
-	data->lib.skybox[0] = IMG_Load("textures/hell_rt.tga");
-	data->lib.skybox[1] = IMG_Load("textures/hell_ft.tga");
-	data->lib.skybox[2] = IMG_Load("textures/hell_lf.tga");
-	data->lib.skybox[3] = IMG_Load("textures/hell_bk.tga");
-	data->lib.skybox[4] = IMG_Load("textures/hell_up.tga");
-	data->lib.skybox[5] = IMG_Load("textures/hell_dn.tga");
-	i = 0;
-	while (i < 6)
-	{
-		data->lib.skybox_t[i] = SDL_CreateTextureFromSurface(data->lib.renderer, data->lib.skybox[i]);
-		i++;
-	}
-}
-
 static void	init_tab(t_doom *data)
 {
 	int			i;
@@ -133,7 +108,7 @@ static void	init_tab(t_doom *data)
 		i++;
 	}
 	SDL_FreeSurface(surface);
-	ROBIN_init_texture(data);
+	load_textures(data);
 }
 
 static int	init_fonts(t_doom *data)

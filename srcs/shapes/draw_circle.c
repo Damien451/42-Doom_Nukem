@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   circle.c                                           :+:      :+:    :+:   */
+/*   draw_circle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:39:37 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/18 02:28:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/22 16:38:05 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void				start_drawing_circle(t_doom *data, int i
 	circle.z = data->tab[i].size;
 	bresenheim(image, circle, data->tab[i].color);
 	circle.z = data->tab[i].size / (i % 3 + 3);
-	if (data->tab[i].pos / WIDTH > 445)
+	if (data->tab[i].pos / WIDTH > 273)
 		circle.y -= data->tab[i].size / 4;
 	else
 		circle.y += data->tab[i].size / 4;
-	if (data->tab[i].pos % WIDTH > 1174)
+	if (data->tab[i].pos % WIDTH > 1372)
 		circle.x -= data->tab[i].size / 4;
 	else
 		circle.x += data->tab[i].size / 4;

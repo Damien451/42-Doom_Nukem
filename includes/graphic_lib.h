@@ -18,6 +18,7 @@
 # define SIZE_TEXTURE			64
 # define BLOCK_SIZE_EDITOR		((HEIGHT - 54) / 64)
 
+# define NBR_TEXT_MENU			6
 # define NBR_FONTS				6
 
 # define WHITE					(SDL_Color){255, 255, 255, 0}
@@ -65,7 +66,7 @@ struct							s_text
 struct							s_graphic_lib
 {
 	SDL_Surface					*character;
-	SDL_Surface					*menu_texture[4];
+	SDL_Surface					*menu_texture[NBR_TEXT_MENU];
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
 	SDL_Surface					*editor_texture;
@@ -88,6 +89,8 @@ struct							s_graphic_lib
 */
 
 t_label		label(char *str, SDL_Color color);
+
+void		load_textures(t_doom *data);
 
 void		put_string_on_renderer(t_doom *data, t_point pos, t_label label, TTF_Font *font);
 

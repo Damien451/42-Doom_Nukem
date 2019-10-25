@@ -22,7 +22,8 @@ static int	save_inputs(t_doom *data)
 static int	check_inputs_settings2(t_doom *data, int nbuttons)
 {
 	if (data->lib.event.key.keysym.sym == SDLK_RIGHT || 
-		data->lib.event.key.keysym.sym == SDLK_d)
+		(unsigned int)data->lib.event.key.keysym.sym ==
+		data->tabinputs.keycode[3])
 	{
 		if (data->button > 3)
 			data->button = (data->button + 5 <= nbuttons - 1)
@@ -52,14 +53,17 @@ static int	check_inputs_settings(t_doom *data, int nbuttons)
 		if (data->lib.event.type == SDL_KEYDOWN)
 		{
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
-				data->lib.event.key.keysym.sym == SDLK_w)
+				(unsigned int)data->lib.event.key.keysym.sym == 
+				data->tabinputs.keycode[0])
 				data->button = data->button == 0 ? 0 : data->button - 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
-				data->lib.event.key.keysym.sym == SDLK_s)
+				(unsigned int)data->lib.event.key.keysym.sym ==
+				data->tabinputs.keycode[2])
 				data->button = (data->button == nbuttons - 1)
 				? nbuttons - 1 : data->button + 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_LEFT || 
-				data->lib.event.key.keysym.sym == SDLK_a)
+				(unsigned int)data->lib.event.key.keysym.sym ==
+				data->tabinputs.keycode[1])
 			{
 				if (data->button > 3)
 					data->button = ((data->button - 4) < 4)
@@ -133,6 +137,7 @@ int			state_settings_menu(t_doom *data)
 	t_button	buttons[14];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[5]->pixels, (WIDTH * HEIGHT) << 2);
 	create_buttons(data, buttons);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 14);
