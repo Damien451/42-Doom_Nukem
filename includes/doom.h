@@ -18,7 +18,7 @@
 
 # define EPSILON	1e-20
 # define FOV		(60.0 * M_PI / 180.0)
-# define POV		(25.67 * M_PI / 180.0)
+# define POV		(34 * M_PI / 180.0)
 
 # define RUNNING	(1l << 62)
 # define START		(1l)

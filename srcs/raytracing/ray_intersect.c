@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/25 14:41:37 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/25 19:58:56 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ unsigned int		add_skybox(t_vec3d intersect, SDL_Surface *skybox[6])
 	}
 	if (intersect.x == 64.0)
 	{
+		if (intersect.y >= 0 && intersect.y <= 1.0)
+		{
+			if (intersect.z >= 0 && intersect.z <= 1.0)
+				return (0);
+		}
 		percent_a = (64.0 - intersect.y) * 8.0;
 		percent_b = intersect.z * 8.0;
 		a = percent_a;

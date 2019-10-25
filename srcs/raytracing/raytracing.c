@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/25 12:09:20 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/25 20:00:29 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_vec3d		ray_create(int y, int x, t_doom *data)
 	t_vec3d	dir;
 
 	pixel_x = (2 * (x + .5) / WIDTH - 1) * FOV;
-	pixel_y = (1 - (2 * (y + .5) / HEIGHT)) * FOV;
+	pixel_y = (1 - (2 * (y + .5) / HEIGHT)) * POV;
 	dir = vec3d_scalar(data->player.camera.right, pixel_x);
 	dir = vec3d_add(dir, vec3d_scalar(data->player.camera.up, pixel_y));
 	dir = vec3d_add(dir, data->player.camera.direction);
