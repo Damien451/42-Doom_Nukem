@@ -9,6 +9,7 @@
 # include "inputs.h"
 # include "menus.h"
 # include "mixer.h"
+# include "player.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -21,9 +22,12 @@
 # define PLAYING	(1l << 1)
 # define PAUSE		(1l << 2)
 # define MAIN_MENU	(1l << 3)
-# define SCORES		(1l << 4)
-# define SETTINGS	(1l << 5)
-# define LEAVING	(1l << 6)
+# define PLAY_MENU	(1l << 4)
+# define EDITOR		(1l << 5)
+# define SCORES		(1l << 6)
+# define SETTINGS	(1l << 7)
+# define GET_INPUT	(1l << 8)
+# define LEAVING	(1l << 9)
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -32,6 +36,7 @@
 typedef struct s_doom			t_doom;
 typedef struct s_graphic_lib	t_graphic_lib;
 typedef struct s_bubble			t_bubble;
+typedef struct s_octree			t_octree;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -46,11 +51,19 @@ struct						s_bubble
 struct						s_doom
 {
 	t_graphic_lib			lib;
+	t_player				player;
 	t_tabinputs				tabinputs;
 	t_start					tab[NB_BUBBLE];
 	t_bubble				*bubble_list;
+	t_bubble				*lightning_list;
+	t_bubble				*lightning_list2;
+	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	long					button;
 	long					state;
+	t_octree				*octree;
+	int						load_page[2];
+	double					sensitivity;
+	t_mixer					*mix;
 };
 
 /*
@@ -68,6 +81,8 @@ int							load_sounds(t_doom *data);
 */
 
 int							frame_calculator(void);
+int							create_octree(t_doom *data);
+int							raytracing(t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====
@@ -91,6 +106,16 @@ int							state_start(t_doom *data);
 
 int							state_main_menu(t_doom *data);
 
+int							state_play_menu(t_doom *data);
+
+int							state_scoreboard(t_doom *data);
+
 int							state_settings_menu(t_doom *data);
+
+int							state_get_input(t_doom *data);
+
+int							state_editor(t_doom *data);
+
+int							state_game(t_doom *data);
 
 #endif

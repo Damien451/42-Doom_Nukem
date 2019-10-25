@@ -15,6 +15,9 @@
 
 # define WIDTH					1920
 # define HEIGHT					1080
+# define SIZE_MAP				64
+# define SIZE_TEXTURE			64
+# define BLOCK_SIZE_EDITOR		((HEIGHT - 54) / 64)
 
 # define NBR_FONTS				6
 # define NB_IMG 				2
@@ -64,6 +67,12 @@ struct							s_text
 
 struct							s_graphic_lib
 {
+	SDL_Surface					*character;
+	SDL_Surface					*menu_texture[4];
+	SDL_Surface					*skybox[6];
+	SDL_Texture					*skybox_t[6];
+	SDL_Surface					*editor_texture;
+	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
 	SDL_Window					*window;
 	SDL_Renderer				*renderer;
@@ -76,7 +85,7 @@ struct							s_graphic_lib
 	t_text						text;
 	TTF_Font					*ptrfont[NBR_FONTS];
 	unsigned int				*image;
-	t_mixer						*mix;
+	unsigned int				cam_keys;
 };
 
 /*
@@ -86,5 +95,7 @@ struct							s_graphic_lib
 t_label		label(char *str, SDL_Color color);
 
 void		put_string_on_renderer(t_doom *data, t_point pos, t_label label, TTF_Font *font);
+
+int			anim_main_menu(t_doom *data, int total_frame, int frame);
 
 #endif

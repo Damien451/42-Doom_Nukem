@@ -83,4 +83,9 @@ t_button				button(t_point pos, t_point dim, long state, char *title);
 
 t_point					point(int width, int height);
 
+void					start_drawing_circle(t_doom *data, int i
+	, unsigned int *image);
+
+int						create_flame(t_doom *data, unsigned int *image);
+
 #endif

@@ -82,7 +82,6 @@ SRCS = $(SRCDIR)ft_atoi.c \
 		$(SRCDIR)btree_leaf_count.c \
 		$(SRCDIR)btree_level_count.c \
 		$(SRCDIR)cocktail_sort_int.c \
-		$(SRCDIR)btree_apply_by_level.c \
 		$(SRCDIR)quick_sort_int.c \
 		$(SRCDIR)quick_sort_string.c \
 		$(SRCDIR)cocktail_sort_string.c \

@@ -1,13 +1,48 @@
 #include "graphic_lib.h"
 #include "doom.h"
 #include "inputs.h"
+#include "player.h"
 #include <time.h>
+
+void		init_camera(t_doom *data)
+{
+	data->player.camera.direction = Z_AXIS;
+	data->player.sensitivity = SENSITIVITY;
+	data->player.camera.right = X_AXIS;
+	data->player.camera.up = Y_AXIS;
+}
+
+static void	ROBIN_init_texture(t_doom *data)
+{
+	int			i;
+
+	data->lib.character = SDL_LoadBMP("textures/character.bmp");
+	data->lib.menu_texture[0] = SDL_LoadBMP("textures/gstvine1.bmp");
+	data->lib.menu_texture[1] = SDL_LoadBMP("textures/gstvine2.bmp");
+	data->lib.menu_texture[2] = SDL_LoadBMP("enemy_menu.bmp");
+	data->lib.menu_texture[3] = SDL_LoadBMP("energy_orb.bmp");
+	data->lib.editor_texture = SDL_LoadBMP("textures/editor.bmp");
+	data->lib.hud_texture = SDL_LoadBMP("textures/hud.bmp");
+	data->lib.skybox[0] = SDL_LoadBMP("textures/hell_rt.bmp");
+	data->lib.skybox[1] = SDL_LoadBMP("textures/hell_ft.bmp");
+	data->lib.skybox[2] = SDL_LoadBMP("textures/hell_lf.bmp");
+	data->lib.skybox[3] = SDL_LoadBMP("textures/hell_bk.bmp");
+	data->lib.skybox[4] = SDL_LoadBMP("textures/hell_up.bmp");
+	data->lib.skybox[5] = SDL_LoadBMP("textures/hell_dn.bmp");
+	i = 0;
+	while (i < 6)
+	{
+		data->lib.skybox_t[i] = SDL_CreateTextureFromSurface(data->lib.renderer, data->lib.skybox[i]);
+		i++;
+	}
+}
 
 static void	init_tab(t_doom *data)
 {
 	int			i;
 	SDL_Surface	*surface;
 	t_bubble	*tmp;
+	t_bubble	*tmp2;
 
 	i = 0;
 
@@ -50,6 +85,51 @@ static void	init_tab(t_doom *data)
 		}
 		i++;
 	}
+	tmp = NULL;
+	SDL_FreeSurface(surface);
+	surface = SDL_LoadBMP("textures/eclair.bmp");
+	i = 0;
+	tmp2 = NULL;
+	while (i < WIDTH * HEIGHT)
+	{
+		if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)surface->pixels)[i] % 0x1000000 <= 0x888888)
+		{
+			if (!tmp)
+			{
+				tmp = malloc(sizeof(t_bubble));
+				tmp->pos = i;
+				tmp->next = NULL;
+				data->lightning_list = tmp;
+			}
+			else
+			{
+				tmp->next = malloc(sizeof(t_bubble));
+				tmp->next->pos = i;
+				tmp->next->next = NULL;
+				tmp = tmp->next;
+			}
+		}
+		else if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)surface->pixels)[i] % 0x1000000 <= 0x999999)
+		{
+			if (!tmp2)
+			{
+				tmp2 = malloc(sizeof(t_bubble));
+				tmp2->pos = i;
+				tmp2->next = NULL;
+				data->lightning_list2 = tmp2;
+			}
+			else
+			{
+				tmp2->next = malloc(sizeof(t_bubble));
+				tmp2->next->pos = i;
+				tmp2->next->next = NULL;
+				tmp2 = tmp2->next;
+			}
+		}
+		i++;
+	}
+	SDL_FreeSurface(surface);
+	ROBIN_init_texture(data);
 }
 
 static int	init_fonts(t_doom *data)
@@ -96,7 +176,13 @@ static void	init_program2(t_doom *data)
 	data->state |= RUNNING;
 	data->state |= START;
 	data->button = 0;
-	parse_input_dict(data, "./files/tmp_dictionnary");
+	data->load_page[0] = 0;
+	data->load_page[1] = 0;
+	data->sensitivity = 100;
+	data->player.speed = 0;
+	parse_input_file(data, "./files/inputs");
+	data->lib.cam_keys = 0;
+	init_camera(data);
 }
 
 int			init_program(t_doom *data)
@@ -109,7 +195,7 @@ int			init_program(t_doom *data)
 		return (1);
 	}
 	if (!(data->lib.window = SDL_CreateWindow("Doom Nukem"
-					, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH
+					, /*SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED*/ 0, 0, WIDTH
 					, HEIGHT, SDL_WINDOW_SHOWN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"

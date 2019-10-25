@@ -38,6 +38,7 @@ void		switch_button(t_doom *data, long actual_button, long new_button)
 
 void		switch_state(t_doom *data, long actual_state, long new_state)
 {
+	data->button = 0;
 	data->state &= ~actual_state;
 	data->state |= new_state;
 }

@@ -6,13 +6,15 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 11:41:05 by roduquen          #+#    #+#             */
-/*   Updated: 2019/04/01 11:41:07 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/18 02:31:22 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "libft.h"
 
 void	ft_putendl(char const *s)
 {
-	ft_putendl_fd(s, 1);
+	write(1, s, ft_strlen(s));
+	write(1, "\n", 1);
 }

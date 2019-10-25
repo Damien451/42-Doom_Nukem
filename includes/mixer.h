@@ -3,7 +3,7 @@
 
 #include <SDL_mixer.h>
 
-# define NB_SOUND				4
+# define NB_SOUND				5
 
 
 typedef struct s_doom		t_doom;

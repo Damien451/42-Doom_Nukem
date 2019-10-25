@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile2                                          :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roduquen <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/12 20:56:18 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/22 11:51:04 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME = doom-nukem
 # **************************************************************************** #
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra #-Werror
 
 FSAN = #-fsanitize=address
 DEBUG = -g3
@@ -39,12 +39,18 @@ INCDIR = includes
 LIBDIR = libft
 BREWDIR = /Users/$(LOGIN)/.brew
 
+ANIM = animations
 MATHS = maths
 STATES = states
+SHAPES = shapes
+CAMERA = camera
+RT = raytracing
 
+S_ANIMDIR = ./$(SRCDIR)/$(ANIM)
 S_MATHDIR = ./$(SRCDIR)/$(MATHS)
 S_STATDIR = ./$(SRCDIR)/$(STATES)
 
+O_ANIMDIR = ./$(OBJDIR)/$(ANIM)
 O_MATHDIR = ./$(OBJDIR)/$(MATHS)
 O_STATDIR = ./$(OBJDIR)/$(STATES)
 
@@ -61,21 +67,37 @@ LIBFT = $(LIBDIR) -lft
 #                                  SOURCES                                     #
 # **************************************************************************** #
 
-SRCS =		$(STATES)/state_start.c					\
+SRCS =		$(ANIM)/anim_main_menu.c				\
+			$(ANIM)/create_flame.c					\
+			$(CAMERA)/camera.c						\
+			$(CAMERA)/camera_commands.c				\
+			$(STATES)/state_get_input.c				\
 			$(STATES)/state_main_menu.c				\
+			$(STATES)/state_scoreboard.c			\
 			$(STATES)/state_settings_menu.c			\
+			$(STATES)/state_start.c					\
+			$(MATHS)/quaternion.c					\
+			$(MATHS)/quaternion_2.c					\
 			$(MATHS)/vec3l_maths.c					\
-			$(MATHS)/vec3d_maths.c					\
 			$(MATHS)/vec3l_maths_2.c				\
+			$(MATHS)/vec3d_maths.c					\
 			$(MATHS)/vec3d_maths_2.c				\
+			$(MATHS)/create_octree.c				\
+			$(RT)/raytracing.c						\
+			$(SHAPES)/draw_circle.c					\
+			$(SHAPES)/draw_rectangle.c				\
+			$(STATES)/state_editor.c				\
+			$(STATES)/state_game.c					\
+			$(STATES)/state_main_menu.c				\
+			$(STATES)/state_play_menu.c				\
+			$(STATES)/state_settings_menu.c			\
 			add_points.c							\
 			doom.c									\
-			draw_rectangle.c						\
 			frame_calculator.c						\
-			free_tabinputs.c						\
+			get_default_inputs.c					\
 			init_program.c							\
 			leave_program.c							\
-			parse_input_dict.c						\
+			parse_input_file.c						\
 			program.c								\
 			put_buttons_names.c						\
 			put_buttons_on_img.c					\
@@ -112,9 +134,13 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)
 	@echo "\033[36mCompilation :\033[0m \033[32m$*\033[0m"
 
 $(OBJDIR) :
-	@mkdir -p $@ 2> /dev/null || true
-	@mkdir -p $@/$(MATHS) 2> /dev/null || true
-	@mkdir -p $@/$(STATES) 2> /dev/null || true
+	@mkdir -p $(OBJDIR) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(ANIM) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(MATHS) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(STATES) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(SHAPES) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(CAMERA) 2> /dev/null || true
+	@mkdir -p $(OBJDIR)/$(RT) 2> /dev/null || true
 
 clean :
 	@rm -rf $(OBJDIR)

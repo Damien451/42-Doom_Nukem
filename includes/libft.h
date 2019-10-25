@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jquivogn <jquivogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:17:26 by roduquen          #+#    #+#             */
-/*   Updated: 2019/08/31 16:45:06 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/10/09 19:21:24 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,16 @@
 # define LIBFT_H
 
 /*
-** DEFINE
-*/
-
-# define BUFF_SIZE 152
-
-/*
-** ====-* INCLUDES *-====
+** INCLUDES
 */
 
 # include <string.h>
 
 /*
-** ====-* STRUCTURES + TYPEDEF *-====
+** STRUCTURES + TYPEDEF
 */
 
-typedef struct	s_lst
-{
-	int				file_d;
-	char			*content;
-	struct s_lst	*next;
-}				t_lst;
+# define BUFF 1025
 
 typedef struct	s_list
 {
@@ -53,13 +42,12 @@ typedef struct	s_btree
 typedef struct	s_queue
 {
 	void			*ptr;
-	int				size;
-	int				pos;
+	struct s_queue	*prev;
 	struct s_queue	*next;
 }				t_queue;
 
 /*
-** ====-* PARTIE OBLIGATOIRE NUMERO 1 *-====
+** PARTIE OBLIGATOIRE NUMERO 1
 */
 
 int				ft_atoi(const char *str);
@@ -93,7 +81,7 @@ int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memmove(void *dest, const void *src, size_t n);
 
 /*
-** ====-* PARTIE OBLIGATOIRE NUMERO 2 *-====
+** PARTIE OBLIGATOIRE NUMERO 2
 */
 
 void			*ft_memalloc(size_t size);
@@ -122,7 +110,7 @@ void			ft_putendl_fd(char const *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 
 /*
-** ====-* PARTIE BONUS DEMANDE *-====
+** PARTIE BONUS DEMANDE
 */
 
 t_list			*ft_lstnew(void const *content, size_t content_size);
@@ -133,7 +121,7 @@ void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
 /*
-** ====-* PARTIE BONUS NON DEMANDE *-====
+** PARTIE BONUS NON DEMANDE
 */
 
 int				ft_isspace(int c);
@@ -148,7 +136,7 @@ void			quick_sort_int(int *tab, size_t size);
 void			quick_sort_string(char **tab, size_t size);
 int				ft_strlendl(char *str);
 void			ft_lstadd_back(t_list **alst, t_list *new);
-t_queue			*queue_new(void *ptr, int current_level, int is_first);
+t_queue			*queue_new(void *ptr);
 void			queue_add(t_queue **last, t_queue *new);
 void			queue_forward(t_queue **begin);
 t_btree			*btree_create_node(void *item);
@@ -169,5 +157,6 @@ char			*infinity_mult(char *nbr1, char *nbr2);
 long			ft_strtol(char *str, char **endptr, int base);
 
 int				get_next_line(const int fd, char **line);
-char			*ft_strfreejoin(const char *s1, const char *s2, int c);
+char			*ft_strndup(const char *str, int n);
+
 #endif
