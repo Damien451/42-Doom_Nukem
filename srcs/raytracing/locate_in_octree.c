@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:59:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 12:26:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 15:26:04 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static inline t_octree	*on_x_lower_than_middle(t_vec3d *position
 	}
 }
 
-t_octree	*find_actual_position(t_vec3d *position, t_octree *node)
+t_octree				*find_actual_position(t_vec3d *position, t_octree *node)
 {
 	while (node->leaf != EMPTY)
 	{

@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 12:26:59 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 15:44:03 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <pthread.h>
 #include <math.h>
 
-t_vec3d		ray_create(int y, int x, t_doom *data)
+static inline t_vec3d	ray_create(int y, int x, t_doom *data)
 {
 	double	pixel_x;
 	double	pixel_y;
@@ -32,15 +32,33 @@ t_vec3d		ray_create(int y, int x, t_doom *data)
 	return (vec3d_unit(dir));
 }
 
-void		*launch_rays(void *ptr)
+static inline void		apply_sampling(unsigned int *image, unsigned int color
+	, int sampling, int position)
+{
+	int				i;
+	int				j;
+	int				tmp;
+
+	i = 0;
+	while (i < sampling)
+	{
+		tmp = position + i;
+		j = 0;
+		while (j < sampling)
+		{
+			image[tmp + j * WIDTH] = color;
+			j++;
+		}
+		i++;
+	}
+}
+
+void					*launch_rays(void *ptr)
 {
 	t_doom			*data;
 	int				i;
 	int				j;
-	t_vec3d			ray;
 	t_octree		*position;
-	int				count[3];
-	int				color;
 
 	data = ((t_thread*)ptr)->data;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
@@ -50,21 +68,10 @@ void		*launch_rays(void *ptr)
 		j = 51;
 		while (j < 829)
 		{
-			ray = ray_create(j - 51, i - 51, data);
-			color = ray_intersect(ray
-				, data->player.camera.origin, position, data);
-			count[0] = 0;
-			while (count[0] < data->sampling)
-			{
-				count[1] = 0;
-				count[2] = i + count[0] + j * WIDTH;
-				while (count[1] < data->sampling)
-				{
-					data->lib.image[count[2] + count[1] * WIDTH] = color;
-					count[1]++;
-				}
-				count[0]++;
-			}
+			apply_sampling(data->lib.image
+				, ray_intersect(ray_create(j - 51, i - 51, data)
+				, data->player.camera.origin, position, data)
+				, data->sampling, i + j * WIDTH);
 			j += data->sampling;
 		}
 		i += NBR_THREAD * data->sampling;
@@ -72,7 +79,7 @@ void		*launch_rays(void *ptr)
 	pthread_exit(0);
 }
 
-int			raytracing(t_doom *data)
+int						raytracing(t_doom *data)
 {
 	t_thread		thread[NBR_THREAD];
 	int				i;
