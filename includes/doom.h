@@ -68,6 +68,8 @@ struct						s_doom
 	double					sensitivity;
 	t_mixer					*mix;
 	int						sampling;
+	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_vec3d
+								, t_octree **);
 };
 
 /*
@@ -88,6 +90,14 @@ int							frame_calculator(void);
 int							create_octree(t_doom *data);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data);
+int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+unsigned int				add_skybox(t_vec3d intersect);
+unsigned int				add_texture(t_vec3d intersect);
 
 /*
 ** ====-* PHYSICS *-====

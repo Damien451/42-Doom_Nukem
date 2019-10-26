@@ -165,9 +165,17 @@ static void	init_program2(t_doom *data)
 	init_camera(data);
 }
 
+static void	init_func_pointer(t_doom *data)
+{
+	data->check_intersect[0] = &check_x_intersect;
+	data->check_intersect[1] = &check_y_intersect;
+	data->check_intersect[2] = &check_z_intersect;
+}
+
 int			init_program(t_doom *data)
 {
 	init_program2(data);
+	init_func_pointer(data);
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s"

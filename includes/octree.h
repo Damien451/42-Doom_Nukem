@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:21:10 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 13:52:36 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 17:17:39 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,8 @@ void					check_if_child_is_leaf(t_doom *data, t_octree *node);
 
 t_octree				*find_actual_position(t_vec3d *position
 	, t_octree *node);
+
+t_octree				*find_node_to_go_parent(t_vec3d intersect
+	, t_octree *node, int type);
 
 #endif

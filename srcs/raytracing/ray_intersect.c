@@ -6,116 +6,54 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/25 19:58:56 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 20:50:01 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include "libft.h"
 #include "graphic_lib.h"
 #include "player.h"
 #include "thread.h"
 #include "octree.h"
 #include <pthread.h>
 #include <math.h>
-
-int			max_absolute_between_three(double a, double b, double c)
-{
-	a = a < 0 ? -a : a;
-	b = b < 0 ? -b : b;
-	c = c < 0 ? -c : c;
-	if (a >= c && a >= b)
-		return (1);
-	else if (b >= a && b >= c)
-		return (2);
-	return (3);
-}
-
 #include <fcntl.h>
 #include <unistd.h>
 
-unsigned int		add_skybox(t_vec3d intersect, SDL_Surface *skybox[6])
+void		max_absolute_between_three(double a, double b, double c, int tab[3])
 {
-	double		percent_a;
-	double		percent_b;
-	int			a;
-	int			b;
-	int			fd;
-	static unsigned int	tabl[6][512 * 512];
-
-	if (tabl[0][0] == 0)
+	if (a <= b && a <= c)
 	{
-		fd = open("test.binary", O_RDONLY);
-		read(fd, tabl[0], 512*512*4);
-		close(fd);
-		fd = open("test2.binary", O_RDONLY);
-		read(fd, tabl[1], 512*512*4);
-		close(fd);
-		fd = open("test3.binary", O_RDONLY);
-		read(fd, tabl[2], 512*512*4);
-		close(fd);
-		fd = open("test4.binary", O_RDONLY);
-		read(fd, tabl[3], 512*512*4);
-		close(fd);
-		fd = open("test5.binary", O_RDONLY);
-		read(fd, tabl[4], 512*512*4);
-		close(fd);
-		fd = open("test6.binary", O_RDONLY);
-		read(fd, tabl[5], 512*512*4);
-		close(fd);
-	}
-	if (intersect.x == 64.0)
-	{
-		if (intersect.y >= 0 && intersect.y <= 1.0)
+		if (c < b)
 		{
-			if (intersect.z >= 0 && intersect.z <= 1.0)
-				return (0);
+			tab[1] = 2;
+			tab[2] = 1;
 		}
-		percent_a = (64.0 - intersect.y) * 8.0;
-		percent_b = intersect.z * 8.0;
-		a = percent_a;
-		b = percent_b;
-		return (tabl[0][a * 512 + b]);
 	}
-	else if (intersect.x == 0.0)
+	else if (b <= a && b <= c)
 	{
-		percent_a = (64.0 - intersect.y) * 8.0;
-		percent_b = (64.0 - intersect.z) * 8.0;
-		a = percent_a;
-		b = percent_b;
-		return (tabl[2][a * 512 + b]);
+		tab[0] = 1;
+		tab[1] = 0;
+		if (c < a)
+		{
+			tab[1] = 2;
+			tab[2] = 0;
+		}
 	}
-	else if (intersect.y == 64.0)
+	else
 	{
-		percent_a = intersect.x * 8.0;
-		percent_b = intersect.z * 8.0;
-		a = percent_a;
-		b = percent_b;
-		return (tabl[4][a * 512 + b]);
+		tab[0] = 2;
+		tab[2] = 0;
+		if (a < b)
+		{
+			tab[1] = 0;
+			tab[2] = 1;
+		}
 	}
-	else if (intersect.y == 0.0)
-	{
-		percent_a = intersect.x * 8.0;
-		percent_b = intersect.z * 8.0;
-		a = percent_a;
-		b = percent_b;
-		return (tabl[5][a * 512 + b]);
-	}
-	else if (intersect.z == 64.0)
-	{
-		percent_a = (64.0 - intersect.y) * 8.0;
-		percent_b = (64.0 - intersect.x) * 8.0;
-		a = percent_a;
-		b = percent_b;
-		return (tabl[1][a * 512 + b]);
-	}
-	percent_a = (64.0 - intersect.y) * 8.0;
-	percent_b = intersect.x * 8.0;
-	a = percent_a;
-	b = percent_b;
-	return (tabl[3][a * 512 + b]);
 }
 
-t_octree	 *find_node_to_go_neighboor(t_vec3d position, t_octree *node)
+t_octree		*find_node_to_go_neighboor(t_vec3d position, t_octree *node)
 {
 	if (position.x < (double)(node->center.x / 2))
 	{
@@ -156,107 +94,51 @@ t_octree	 *find_node_to_go_neighboor(t_vec3d position, t_octree *node)
 	return (node);
 }
 
-t_octree	 *find_node_to_go_parent(t_vec3d position, t_octree *node, int card)
+t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card)
 {
 	if (card == 1)
 	{
-		while (node->parent)
-		{
-			if (position.x != node->center.x >> 1)
-				node = node->parent;
-			else
-				break ;
-		}
+		while (node->parent && position.x != node->center.x >> 1)
+			node = node->parent;
 	}
 	else if (card == 2)
 	{
-		while (node->parent)
-		{
-			if (position.y != node->center.y >> 1)
-				node = node->parent;
-			else
-				break ;
-		}
+		while (node->parent && position.y != node->center.y >> 1)
+			node = node->parent;
 	}
 	else
 	{
-		while (node->parent)
-		{
-			if (position.z != node->center.z >> 1)
-				node = node->parent;
-			else
-				break ;
-		}
+		while (node->parent && position.z != node->center.z >> 1)
+			node = node->parent;
 	}
 	if (node->parent)
 		return (find_node_to_go_neighboor(position, node));
 	return (node);
 }
 
-unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data)
+unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
+	, t_doom *data)
 {
-	t_vec3d		intersect;
-	double		distance;
-	int			size;
+	int		ret;
+	t_vec3d	intersect;
+	int		sorted[3];
+	int		i;
 
-	size = node->size;
-//	ret = max_absolute_between_three(ray.x, ray.y, ray.z);
-	intersect.x = (node->center.x - (size / 2)) / 2;
-	distance = (intersect.x - origin.x) / ray.x;
-	if (distance < 0)
+	sorted[0] = 0;
+	sorted[1] = 1;
+	sorted[2] = 2;
+	max_absolute_between_three(ray.x, ray.y, ray.z, sorted);
+	i = 0;
+	while (i < 3)
 	{
-		intersect.x = (node->center.x + (size / 2)) / 2;
-		distance = (intersect.x - origin.x) / ray.x;
-	}
-	intersect.y = origin.y + distance * ray.y;
-	intersect.z = origin.z + distance * ray.z;
-	if (intersect.y >= ((node->center.y - (size / 2)) / 2) && intersect.y < ((node->center.y + (size / 2)) / 2)
-			&& intersect.z >= ((node->center.z - (size / 2)) / 2) && intersect.z < ((node->center.z + (size / 2)) / 2))
-	{
-		if (!node->parent)
-			return (add_skybox(intersect, data->lib.skybox));
-		node = find_node_to_go_parent(intersect, node, 1);
-		if (node->leaf == FULL)
-			return (0x1234567);
-		return (ray_intersect(ray, origin, node, data));
-	}
-	intersect.y = (node->center.y - (size / 2)) / 2;
-	distance = (intersect.y - origin.y) / ray.y;
-	if (distance < 0)
-	{
-		intersect.y = (node->center.y + (size / 2)) / 2;
-		distance = (intersect.y - origin.y) / ray.y;
-	}
-	intersect.x = origin.x + distance * ray.x;
-	intersect.z = origin.z + distance * ray.z;
-	if (intersect.x >= ((node->center.x - (size / 2)) / 2) && intersect.x < ((node->center.x + (size / 2)) / 2)
-			&& intersect.z >= ((node->center.z - (size / 2)) / 2) && intersect.z < ((node->center.z + (size / 2)) / 2))
-	{
-		if (!node->parent)
-			return (add_skybox(intersect, data->lib.skybox));
-		node = find_node_to_go_parent(intersect, node, 2);
-		if (node->leaf == FULL)
-			return (0x12345678);
-		return (ray_intersect(ray, origin, node, data));
-	}
-	intersect.z = (node->center.z - (size / 2)) / 2;
-	distance = (intersect.z - origin.z) / ray.z;
-	if (distance < 0)
-	{
-		intersect.z = (node->center.z + (size / 2)) / 2;
-		distance = (intersect.z - origin.z) / ray.z;
-	}
-	intersect.x = origin.x + distance * ray.x;
-	intersect.y = origin.y + distance * ray.y;
-	if (intersect.x >= ((node->center.x - (size / 2)) / 2) && intersect.x < ((node->center.x + (size / 2)) / 2)
-			&& intersect.y >= ((node->center.y - (size / 2)) / 2) && intersect.y < ((node->center.y + (size / 2)) / 2))
-	{
-		if (!node->parent)
-			return (add_skybox(intersect, data->lib.skybox));
-		node = find_node_to_go_parent(intersect, node, 3);
-		if (node->leaf == FULL)
-			return (0x123456789);
-		return (ray_intersect(ray, origin, node, data));
+		if ((ret = data->check_intersect[sorted[i]](&intersect, origin, ray
+			, &node)) == 1)
+			return (add_skybox(intersect));
+		else if (ret == 2)
+			return (add_texture(intersect));
+		else if (ret == 3)
+			return (ray_intersect(ray, intersect, node, data));
+		i++;
 	}
 	return (0);
 }
