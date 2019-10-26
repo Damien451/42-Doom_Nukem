@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/22 11:22:54 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 11:43:23 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,6 @@
 #include "octree.h"
 #include <math.h>
 #include "libft.h"
-
-static inline t_octree	*create_node(int size, t_vec3l center, t_octree *parent)
-{
-	t_octree	*new;
-	int			i;
-
-	new = (t_octree*)malloc(sizeof(t_octree));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (i < 8)
-		new->child[i++] = NULL;
-	new->size = size;
-	new->center = center;
-	new->parent = parent;
-	return (new);
-}
 
 static inline int		verify_inside_node(t_doom *data, t_octree *node)
 {
@@ -59,62 +42,6 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 		}
 	}
 	return (nbr_node);
-}
-
-static inline void		check_if_child_is_leaf(t_doom *data, t_octree *node)
-{
-	int			i;
-	int			ret;
-
-	i = 0;
-	while (i < 8)
-	{
-		if ((ret = verify_inside_node(data, node->child[i])) == 0)
-			node->child[i]->leaf = EMPTY;
-		else if (ret == -1)
-			node->child[i]->leaf = INSIDE;
-		else
-			node->child[i]->leaf = FULL;
-		i++;
-	}
-}
-
-static inline int		create_child(t_octree *node, t_doom *data)
-{
-	int			offset;
-	int			size;
-
-	offset = node->size >> 2;
-	size = node->size >> 1;
-	node->child[0] = create_node(size, (t_vec3l){node->center.x
-		- offset, node->center.y - offset, node->center.z - offset}, node);
-	node->child[1] = create_node(size, (t_vec3l){node->center.x
-		+ offset, node->center.y - offset, node->center.z - offset}, node);
-	node->child[2] = create_node(size, (t_vec3l){node->center.x
-		- offset, node->center.y + offset, node->center.z - offset}, node);
-	node->child[3] = create_node(size, (t_vec3l){node->center.x
-		+ offset, node->center.y + offset, node->center.z - offset}, node);
-	node->child[4] = create_node(size, (t_vec3l){node->center.x
-		- offset, node->center.y - offset, node->center.z + offset}, node);
-	node->child[5] = create_node(size, (t_vec3l){node->center.x
-		+ offset, node->center.y - offset, node->center.z + offset}, node);
-	node->child[6] = create_node(size, (t_vec3l){node->center.x
-		- offset, node->center.y + offset, node->center.z + offset}, node);
-	node->child[7] = create_node(size, (t_vec3l){node->center.x
-		+ offset, node->center.y + offset, node->center.z + offset}, node);
-	check_if_child_is_leaf(data, node);
-	return (0);
-}
-
-static inline int		free_queue(t_queue *queue[2])
-{
-	while (queue[1])
-	{
-		queue[0] = queue[1]->prev;
-		free(queue[1]);
-		queue[1] = queue[0];
-	}
-	return (0);
 }
 
 static inline void		verify_and_add_to_queue(t_queue *queue[2]
@@ -156,6 +83,24 @@ static inline int		breadth_first_create_octree(t_doom *data
 		queue[0] = queue[0]->next;
 	}
 	return (free_queue(queue));
+}
+
+void					check_if_child_is_leaf(t_doom *data, t_octree *node)
+{
+	int			i;
+	int			ret;
+
+	i = 0;
+	while (i < 8)
+	{
+		if ((ret = verify_inside_node(data, node->child[i])) == 0)
+			node->child[i]->leaf = EMPTY;
+		else if (ret == -1)
+			node->child[i]->leaf = INSIDE;
+		else
+			node->child[i]->leaf = FULL;
+		i++;
+	}
 }
 
 int						create_octree(t_doom *data)

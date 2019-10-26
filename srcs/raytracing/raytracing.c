@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/25 20:00:29 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 12:26:59 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,6 @@
 #include "octree.h"
 #include <pthread.h>
 #include <math.h>
-
-t_octree	*find_actual_position(t_vec3d *position, t_octree *node)
-{
-	while (node->leaf != EMPTY)
-	{
-		if (node->leaf == INSIDE)
-		{
-			if (position->x < (double)(node->center.x >> 1))
-			{
-				if (position->y < (double)(node->center.y >> 1))
-				{
-					if (position->z < (double)(node->center.z >> 1))
-						node = node->child[0];
-					else
-						node = node->child[4];
-				}
-				else
-				{
-					if (position->z < (double)(node->center.z >> 1))
-						node = node->child[2];
-					else
-						node = node->child[6];
-				}
-			}
-			else
-			{
-				if (position->y < (double)(node->center.y >> 1))
-				{
-					if (position->z < (double)(node->center.z >> 1))
-						node = node->child[1];
-					else
-						node = node->child[3];
-				}
-				else
-				{
-					if (position->z < (double)(node->center.z >> 1))
-						node = node->child[5];
-					else
-						node = node->child[7];
-				}
-			}
-		}
-	}
-	return (node);
-}
 
 t_vec3d		ray_create(int y, int x, t_doom *data)
 {

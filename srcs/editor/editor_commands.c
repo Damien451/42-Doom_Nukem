@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-/*static inline void	put_textures_names(char *textures[4][10])
+static inline void	put_textures_names(char *textures[4][10])
 {
 	textures[0][0] = "./textures/blocks/granite_polished.bmp";
 	textures[0][1] = "./textures/blocks/granite.bmp";
@@ -33,12 +33,22 @@
 
 static inline void	pick_texture(t_doom *data, int x, int y)
 {
+	int		i;
+	int		j;
 	char	*textures[4][10];
 
-
+	i = -1;
+	j = -1;
+	x -= 1052;
+	y -= 16;
+	while ((++i + 1) * 85 < x)
+		;
+	while ((++j + 1) * 83 < y)
+		;
 	put_textures_names(textures);
-	SDL_LoadBMP(textures[]);
-}*/
+	ft_putendl(textures[j][i]);
+	//SDL_LoadBMP(textures[j][i]);
+}
 
 static inline void	reset_step(t_doom *data, int step)
 {
@@ -79,7 +89,7 @@ static inline void	mouse_editor_commands(t_doom *data, int *ok, int *map, char s
 	//printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
-		printf("yo");//pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
+		pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
 	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
 		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030)
 	{
