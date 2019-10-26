@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 20:50:01 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 22:26:19 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ void		max_absolute_between_three(double a, double b, double c, int tab[3])
 			tab[1] = 2;
 			tab[2] = 1;
 		}
+		return ;
 	}
-	else if (b <= a && b <= c)
+	if (b <= a && b <= c)
 	{
 		tab[0] = 1;
 		tab[1] = 0;
@@ -40,16 +41,14 @@ void		max_absolute_between_three(double a, double b, double c, int tab[3])
 			tab[1] = 2;
 			tab[2] = 0;
 		}
+		return ;
 	}
-	else
+	tab[0] = 2;
+	tab[2] = 0;
+	if (a < b)
 	{
-		tab[0] = 2;
-		tab[2] = 0;
-		if (a < b)
-		{
-			tab[1] = 0;
-			tab[2] = 1;
-		}
+		tab[1] = 0;
+		tab[2] = 1;
 	}
 }
 
@@ -79,12 +78,12 @@ t_octree		*find_node_to_go_neighboor(t_vec3d position, t_octree *node)
 			if (position.z < (double)(node->center.z / 2))
 				node = node->child[1];
 			else
-				node = node->child[3];
+				node = node->child[5];
 		}
 		else
 		{
 			if (position.z < (double)(node->center.z / 2))
-				node = node->child[5];
+				node = node->child[3];
 			else
 				node = node->child[7];
 		}
@@ -112,12 +111,15 @@ t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card)
 			node = node->parent;
 	}
 	if (node->parent)
+	{
+		printf("%p\n", node->parent);
 		return (find_node_to_go_neighboor(position, node));
+	}
 	return (node);
 }
 
 unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
-	, t_doom *data)
+		, t_doom *data)
 {
 	int		ret;
 	t_vec3d	intersect;
@@ -132,7 +134,7 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 	while (i < 3)
 	{
 		if ((ret = data->check_intersect[sorted[i]](&intersect, origin, ray
-			, &node)) == 1)
+						, &node)) == 1)
 			return (add_skybox(intersect));
 		else if (ret == 2)
 			return (add_texture(intersect));
