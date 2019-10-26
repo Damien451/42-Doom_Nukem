@@ -7,47 +7,20 @@
 
 #include <stdio.h>
 
-static inline void	put_textures_names(char *textures[4][10])
-{
-	textures[0][0] = "./textures/blocks/granite_polished.bmp";
-	textures[0][1] = "./textures/blocks/granite.bmp";
-	textures[0][2] = "./textures/blocks/nether_block.bmp";
-	textures[0][3] = "./textures/blocks/nether_bricks.bmp";
-	textures[0][4] = "./textures/blocks/quartz_pillar.bmp";
-	textures[0][5] = "./textures/blocks/quartz.bmp";
-	textures[0][6] = "./textures/blocks/sand.bmp";
-	textures[0][7] = "./textures/blocks/sandstone_bricks.bmp";
-	textures[0][8] = "./textures/blocks/sandstone_chiseled.bmp";
-	textures[0][9] = "./textures/blocks/sandstone.bmp";
-	textures[1][0] = "./textures/blocks/stone_bricks.bmp";
-	textures[1][1] = "./textures/blocks/stone_chiseled.bmp";
-	textures[1][2] = "./textures/blocks/stone_cobblestone.bmp";
-	textures[1][3] = "./textures/blocks/stone_end_bricks.bmp";
-	textures[1][4] = "./textures/blocks/stone_end.bmp";
-	textures[1][5] = "./textures/blocks/obsidian.bmp";
-	textures[1][6] = "./textures/blocks/stone_marine_bricks.bmp";
-	textures[1][7] = "./textures/blocks/stone_mossy_bricks.bmp";
-	textures[1][8] = "./textures/blocks/stone.bmp";
-	textures[1][9] = "./textures/blocks/stone_smooth.bmp";
-}
-
 static inline void	pick_texture(t_doom *data, int x, int y)
 {
 	int		i;
 	int		j;
-	char	*textures[4][10];
 
-	i = -1;
-	j = -1;
+	i = 0;
+	j = 0;
 	x -= 1052;
 	y -= 16;
-	while ((++i + 1) * 85 < x)
-		;
-	while ((++j + 1) * 83 < y)
-		;
-	put_textures_names(textures);
-	ft_putendl(textures[j][i]);
-	//SDL_LoadBMP(textures[j][i]);
+	while ((i + 1) * 85 < x)
+		++i;
+	while ((j + 1) * 83 < y)
+		++j;
+	data->lib.picked_texture = data->lib.textures[j * 10 + i];
 }
 
 static inline void	reset_step(t_doom *data, int step)

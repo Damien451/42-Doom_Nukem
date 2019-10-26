@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphic_lib.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 11:56:01 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 19:32:48 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # define SIZE_TEXTURE			64
 # define BLOCK_SIZE_EDITOR		((HEIGHT - 54) / 64)
 
-# define NBR_TEXT_MENU			5
+# define NBR_TEXTURES_BLOCKS	40
+# define NBR_TEXTURES_MENU		5
 # define NBR_FONTS				6
 # define NB_IMG 				2
 
@@ -81,9 +82,10 @@ struct							s_text
 struct							s_graphic_lib
 {
 	SDL_Surface					*character;
-	SDL_Surface					*menu_texture[NBR_TEXT_MENU];
+	SDL_Surface					*menu_texture[NBR_TEXTURES_MENU];
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
+	SDL_Surface					*textures[NBR_TEXTURES_BLOCKS];
 	SDL_Surface					*editor_texture;
 	SDL_Surface					*picked_texture;
 	SDL_Surface					*hud_texture;
