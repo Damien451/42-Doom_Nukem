@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:59:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 12:26:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/26 22:20:03 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static inline t_octree	*on_x_higher_than_middle(t_vec3d *position
 		if (position->z < (double)(node->center.z >> 1))
 			return (node->child[1]);
 		else
-			return (node->child[3]);
+			return (node->child[5]);
 	}
 	else
 	{
 		if (position->z < (double)(node->center.z >> 1))
-			return (node->child[5]);
+			return (node->child[3]);
 		else
 			return (node->child[7]);
 	}
@@ -51,7 +51,7 @@ static inline t_octree	*on_x_lower_than_middle(t_vec3d *position
 	}
 }
 
-t_octree	*find_actual_position(t_vec3d *position, t_octree *node)
+t_octree				*find_actual_position(t_vec3d *position, t_octree *node)
 {
 	while (node->leaf != EMPTY)
 	{

@@ -16,7 +16,7 @@
 ** ====-* DEFINES *-====
 */
 
-# define EPSILON	1e-20
+# define EPSILON	1e-5
 # define FOV		(60.0 * M_PI / 180.0)
 # define POV		(34 * M_PI / 180.0)
 
@@ -69,6 +69,8 @@ struct						s_doom
 	t_mixer					*mix;
 	int						sampling;
 	int						editor_mode;
+	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_vec3d
+								, t_octree **);
 };
 
 /*
@@ -90,6 +92,14 @@ void						color_rectangle(t_doom *data, t_vec3l rectangle, int step);
 int							create_octree(t_doom *data);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data);
+int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+unsigned int				add_skybox(t_vec3d intersect);
+unsigned int				add_texture(t_vec3d intersect);
 
 /*
 ** ====-* PHYSICS *-====

@@ -1,4 +1,16 @@
-LOGIN = `whoami`
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
+#    Updated: 2019/10/27 20:12:38 by dacuvill         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+LOGIN		= `whoami`
 
 # **************************************************************************** #
 #                                   BINARIES                                   #
@@ -78,6 +90,8 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/init_program.c					\
 					$(PROG)/leave_program.c					\
 					$(PROG)/program.c						\
+					$(RT)/add_textures.c					\
+					$(RT)/check_which_face_is_touched.c		\
 					$(RT)/locate_in_octree.c				\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\
