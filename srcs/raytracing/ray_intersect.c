@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 22:26:19 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/27 19:42:18 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,68 +54,87 @@ void		max_absolute_between_three(double a, double b, double c, int tab[3])
 
 t_octree		*find_node_to_go_neighboor(t_vec3d position, t_octree *node)
 {
-	if (position.x < (double)(node->center.x / 2))
+	while (node->leaf == INSIDE)
 	{
-		if (position.y < (double)(node->center.y / 2))
+		if (position.x < (double)(node->center.x / 2))
 		{
-			if (position.z < (double)(node->center.z / 2))
-				node = node->child[0];
+			if (position.y < (double)(node->center.y / 2))
+			{
+				if (position.z < (double)(node->center.z / 2))
+					node = node->child[0];
+				else
+					node = node->child[4];
+			}
 			else
-				node = node->child[4];
+			{
+				if (position.z < (double)(node->center.z / 2))
+					node = node->child[2];
+				else
+					node = node->child[6];
+			}
 		}
 		else
 		{
-			if (position.z < (double)(node->center.z / 2))
-				node = node->child[2];
+			if (position.y < (double)(node->center.y / 2))
+			{
+				if (position.z < (double)(node->center.z / 2))
+					node = node->child[1];
+				else
+					node = node->child[5];
+			}
 			else
-				node = node->child[6];
+			{
+				if (position.z < (double)(node->center.z / 2))
+					node = node->child[3];
+				else
+					node = node->child[7];
+			}
 		}
 	}
-	else
-	{
-		if (position.y < (double)(node->center.y / 2))
-		{
-			if (position.z < (double)(node->center.z / 2))
-				node = node->child[1];
-			else
-				node = node->child[5];
-		}
-		else
-		{
-			if (position.z < (double)(node->center.z / 2))
-				node = node->child[3];
-			else
-				node = node->child[7];
-		}
-	}
-	if (node->leaf == INSIDE)
-		return (find_node_to_go_neighboor(position, node));
 	return (node);
 }
 
-t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card)
+t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card
+		, t_vec3d origin)
 {
+	static int	i = 0;
+
 	if (card == 1)
 	{
-		while (node->parent && position.x != node->center.x >> 1)
+		while (node && position.x != node->center.x / 2.0)
 			node = node->parent;
+		if (origin.x <= position.x)
+			position.x += 0.5;
+		else
+			position.x -= 0.5;
+		position.y = floor(position.y) + 0.5;
+		position.z = floor(position.z) + 0.5;
 	}
 	else if (card == 2)
 	{
-		while (node->parent && position.y != node->center.y >> 1)
+		while (node && position.y != node->center.y / 2.0)
 			node = node->parent;
+		if (origin.y <= position.y)
+			position.y += 0.5;
+		else
+			position.y -= 0.5;
+		position.x = floor(position.x) + 0.5;
+		position.z = floor(position.z) + 0.5;
 	}
 	else
 	{
-		while (node->parent && position.z != node->center.z >> 1)
+		while (node && position.z != node->center.z / 2.0)
 			node = node->parent;
+		if (origin.z <= position.z)
+			position.z += 0.5;
+		else
+			position.z -= 0.5;
+		position.y = floor(position.y) + 0.5;
+		position.x = floor(position.x) + 0.5;
 	}
-	if (node->parent)
-	{
-		printf("%p\n", node->parent);
+	if (node)
 		return (find_node_to_go_neighboor(position, node));
-	}
-	return (node);
+	return (NULL);
 }
 
 unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
@@ -125,6 +144,8 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 	t_vec3d	intersect;
 	int		sorted[3];
 	int		i;
+	static int	lol = 0;
+	static int	sky = 0;
 
 	sorted[0] = 0;
 	sorted[1] = 1;
@@ -139,8 +160,11 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 		else if (ret == 2)
 			return (add_texture(intersect));
 		else if (ret == 3)
-			return (ray_intersect(ray, intersect, node, data));
+		{
+			origin = intersect;
+			i = -1;
+		}
 		i++;
 	}
-	return (0);
+	return (255);
 }

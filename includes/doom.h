@@ -16,7 +16,7 @@
 ** ====-* DEFINES *-====
 */
 
-# define EPSILON	1e-20
+# define EPSILON	1e-5
 # define FOV		(60.0 * M_PI / 180.0)
 # define POV		(34 * M_PI / 180.0)
 

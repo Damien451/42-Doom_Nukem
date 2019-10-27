@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 19:46:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 22:22:53 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/27 18:40:30 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,5 @@ unsigned int				add_skybox(t_vec3d intersect)
 unsigned int				add_texture(t_vec3d intersect)
 {
 	(void)intersect;
-	printf("lol\n");
 	return (0);
 }

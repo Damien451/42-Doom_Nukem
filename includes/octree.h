@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:21:10 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 17:17:39 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/27 10:13:16 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ t_octree				*find_actual_position(t_vec3d *position
 	, t_octree *node);
 
 t_octree				*find_node_to_go_parent(t_vec3d intersect
-	, t_octree *node, int type);
+	, t_octree *node, int card, t_vec3d origin);
 
 #endif
