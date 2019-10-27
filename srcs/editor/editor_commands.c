@@ -20,7 +20,25 @@ static inline void	pick_texture(t_doom *data, int x, int y)
 		++i;
 	while ((j + 1) * 83 < y)
 		++j;
-	data->lib.picked_texture = data->lib.textures[j * 10 + i];
+	data->lib.picked_texture = j * 10 + i;
+}
+
+static inline void	fill_step(t_doom *data, int step)
+{
+	int 		i;
+	int			j;
+
+	i = -1;
+	while (++i < SIZE_MAP)
+	{
+		j = -1;
+		while (++j < SIZE_MAP)
+		{
+			if (data->lib.picked_texture)
+				data->map_to_save[step][i][j] =
+					data->lib.picked_texture + 1;
+		}
+	}
 }
 
 static inline void	reset_step(t_doom *data, int step)
@@ -48,6 +66,15 @@ static inline void	save_map_to_file(t_doom *data, char *str)
 	}
 }
 
+static inline void	draw(t_doom *data, int x, int y, int step)
+{
+	printf("x = %d, y = %d\n", (y - 10) / BLOCK_SIZE_EDITOR, (x - 10) / BLOCK_SIZE_EDITOR);
+	if (data->editor_mode == 1)
+		data->map_to_save[step][(y - 10) / BLOCK_SIZE_EDITOR][(x - 10) / BLOCK_SIZE_EDITOR] = 0;
+	else
+		data->map_to_save[step][(y - 10) / BLOCK_SIZE_EDITOR][(x - 10) / BLOCK_SIZE_EDITOR] = data->lib.picked_texture + 1;
+}
+
 static inline void	keydown_editor_commands(t_doom *data, int *first)
 {
 	if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
@@ -55,6 +82,16 @@ static inline void	keydown_editor_commands(t_doom *data, int *first)
 		switch_state(data, EDITOR, MAIN_MENU);
 		*first = 0;
 	}
+}
+
+static inline void	mouse_editor_commands2(t_doom *data, int *map)
+{
+	if (data->lib.event.button.x >= 919 && data->lib.event.button.y >= 1046
+		&& data->lib.event.button.x <= 957 && data->lib.event.button.y <= 1079)
+		data->editor_mode = (data->editor_mode == 0 ? 1 : 0);
+	else if (data->lib.event.button.x >= 963 && data->lib.event.button.y >= 1046
+		&& data->lib.event.button.x <= 997 && data->lib.event.button.y <= 1079)
+		fill_step(data, *map);
 }
 
 static inline void	mouse_editor_commands(t_doom *data, int *ok, int *map, char str[50])
@@ -67,10 +104,7 @@ static inline void	mouse_editor_commands(t_doom *data, int *ok, int *map, char s
 		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030)
 	{
 		*ok = 1;
-		color_rectangle(data, (t_vec3l){(data->lib.event.button.y - 10)
-			- (data->lib.event.button.y - 10) % BLOCK_SIZE_EDITOR + 10
-			, (data->lib.event.button.x - 10) - (data->lib.event.button.x - 10)
-			% BLOCK_SIZE_EDITOR + 10, 0xFFFFFF}, *map);
+		draw(data, data->lib.event.button.x, data->lib.event.button.y, *map);
 	}
 	else if(data->lib.event.button.x >= 0 && data->lib.event.button.y >= 1046
 		&& data->lib.event.button.x <= 30 && data->lib.event.button.y <= 1079)
@@ -84,6 +118,7 @@ static inline void	mouse_editor_commands(t_doom *data, int *ok, int *map, char s
 	else if (data->lib.event.button.x >= 997 && data->lib.event.button.y >= 1046
 		&& data->lib.event.button.x <= 1033 && data->lib.event.button.y <= 1079)
 		reset_step(data, *map);
+	mouse_editor_commands2(data, map);
 }
 
 void		editor_commands(t_doom *data, char str[50], int *map, int *first)
@@ -96,12 +131,9 @@ void		editor_commands(t_doom *data, char str[50], int *map, int *first)
 		ok = 0;
 	if (ok == 1)
 	{
-		if (data->lib.event.button.y < 1034 && data->lib.event.button.x < 1034
-			&& data->lib.event.button.y >= 10 && data->lib.event.button.x >= 10)
-			color_rectangle(data, (t_vec3l){(data->lib.event.button.y - 10)
-				- (data->lib.event.button.y - 10) % BLOCK_SIZE_EDITOR + 10
-				, (data->lib.event.button.x - 10) - (data->lib.event.button.x
-				- 10) % BLOCK_SIZE_EDITOR + 10, 0xFFFFFF}, *map);
+		if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
+			&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030)
+			draw(data, data->lib.event.button.x, data->lib.event.button.y, *map);
 	}
 	else if (data->lib.event.type == SDL_KEYDOWN)
 		keydown_editor_commands(data, first);

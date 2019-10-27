@@ -75,9 +75,10 @@ void			load_textures(t_doom *data)
 	data->lib.menu_texture[2] = SDL_LoadBMP("enemy_menu.bmp");
 	data->lib.menu_texture[3] = SDL_LoadBMP("energy_orb.bmp");
 	data->lib.menu_texture[4] = SDL_LoadBMP("textures/background_menu.bmp");
-	data->lib.editor_texture = SDL_LoadBMP("textures/editor.bmp");
+	data->lib.editor_texture[0] = SDL_LoadBMP("textures/editor.bmp");
+	data->lib.editor_texture[1] = SDL_LoadBMP("textures/editor2.bmp");
 	data->lib.hud_texture = SDL_LoadBMP("textures/hud.bmp");
 	load_skybox(data);
 	load_textures_blocks(data->lib.textures);
-	data->lib.picked_texture = data->lib.textures[0];
+	data->lib.picked_texture = NBR_TEXTURES_BLOCKS;
 }

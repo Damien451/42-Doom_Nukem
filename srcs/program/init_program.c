@@ -162,6 +162,7 @@ static void	init_program2(t_doom *data)
 	data->player.speed = 0;
 	parse_input_file(data, "./files/inputs");
 	data->lib.cam_keys = 0;
+	data->editor_mode = 0;
 	init_camera(data);
 }
 

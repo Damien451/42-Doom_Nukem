@@ -68,6 +68,7 @@ struct						s_doom
 	double					sensitivity;
 	t_mixer					*mix;
 	int						sampling;
+	int						editor_mode;
 };
 
 /*
