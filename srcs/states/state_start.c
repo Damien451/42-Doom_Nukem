@@ -121,7 +121,7 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 	if (type > 0 && frame >= 120 && frame <= 135)
 		lightning(data, image, (((frame + 50) << 16) | ((frame + 50) << 8))
 			+ frame + 75, frame);
-	if (type >0 && frame =git= 120)
+	if (type >0 && frame == 120)
 		play_sound(data->mix->sounds[3]);
 	frame += type;
 	if (frame == 255 || frame == 0)

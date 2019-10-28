@@ -16,9 +16,9 @@
 ** ====-* DEFINES *-====
 */
 
-# define EPSILON	1e-20
+# define EPSILON	1e-5
 # define FOV		(60.0 * M_PI / 180.0)
-# define POV		(25.67 * M_PI / 180.0)
+# define POV		(34 * M_PI / 180.0)
 
 # define RUNNING	(1l << 62)
 # define START		(1l)
@@ -66,11 +66,11 @@ struct						s_doom
 	t_octree				*octree;
 	int						load_page[2];
 	double					sensitivity;
-<<<<<<< HEAD
 	t_mixer					*mix;
-=======
 	int						sampling;
->>>>>>> 075bb67ed1cced6d0f63ad9893e0746f400a0e19
+	int						editor_mode;
+	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_vec3d
+								, t_octree **);
 };
 
 /*
@@ -80,7 +80,7 @@ struct						s_doom
 int							init_program(t_doom *data);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
-int							load_textures(t_doom *data);
+void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
 
 /*
@@ -88,9 +88,18 @@ int							load_sounds(t_doom *data);
 */
 
 int							frame_calculator(void);
+void						color_rectangle(t_doom *data, t_vec3l rectangle, int step);
 int							create_octree(t_doom *data);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data);
+int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
+	, t_vec3d ray, t_octree **node);
+unsigned int				add_skybox(t_vec3d intersect);
+unsigned int				add_texture(t_vec3d intersect, t_octree *node);
 
 /*
 ** ====-* PHYSICS *-====
@@ -103,6 +112,8 @@ unsigned int				ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doo
 /*
 ** ====-* COMMANDS *-====
 */
+
+void						editor_commands(t_doom *data, char str[50], int *map, int *first);
 
 /*
 ** ====-* GAMESTATES *-====

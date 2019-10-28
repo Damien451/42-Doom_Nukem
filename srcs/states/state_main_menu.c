@@ -64,7 +64,7 @@ int			state_main_menu(t_doom *data)
 		flag = 1;
 	}
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[5]->pixels, WIDTH * HEIGHT * 4);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
 	anim_main_menu(data, total_frame, frame);
 	buttons_main_menu(buttons);
 	//create_flame(data, data->lib.image);
