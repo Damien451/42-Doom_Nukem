@@ -1,6 +1,8 @@
 # Main executable
 doom-nukem
 
+.DS_Store
+
 # Visual Studio file
 .vscode
 

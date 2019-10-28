@@ -6,158 +6,172 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/25 19:34:53 by roduquen         ###   ########.fr        #
+#    Updated: 2019/10/27 20:12:38 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LOGIN = `whoami`
+LOGIN		= `whoami`
 
 # **************************************************************************** #
 #                                   BINARIES                                   #
 # **************************************************************************** #
 
-NAME = doom-nukem
+NAME		= doom-nukem
 
 # **************************************************************************** #
 #                                  COMPILATION                                 #
 # **************************************************************************** #
 
-CC = clang
-CFLAGS = -Wall -Wextra #-Werror
+CC 			= clang
+CFLAGS		= -Wall -Wextra #-Werror
 
-FSAN = #-fsanitize=address
-DEBUG = #-g3
-OPTI = -O2 -Ofast
+FSAN		= #-fsanitize=address
+DEBUG		= #-g3
+OPTI		= -O2 -Ofast
 
 # **************************************************************************** #
 #                                 DIRECTORIES                                  #
 # **************************************************************************** #
 
-SRCDIR = srcs
-OBJDIR = .objs
-INCDIR = includes
-LIBDIR = libft
-BREWDIR = /Users/$(LOGIN)/.brew
+SRCDIR		= srcs
+OBJDIR		= .objs
+INCDIR		= includes
+LIBDIR		= libft
+BREWDIR		= /Users/$(LOGIN)/.brew
 
-ANIM = animations
-MATHS = maths
-STATES = states
-SHAPES = shapes
-CAMERA = camera
-RT = raytracing
-PROG = program
+ANIM		= animations
+CAMERA		= camera
+EDITOR		= editor
+MATHS		= maths
+PROG		= program
+RT			= raytracing
+SHAPES		= shapes
+SOUND		= sound
+STATES		= states
+UI			= ui
 
-S_ANIMDIR = ./$(SRCDIR)/$(ANIM)
-S_MATHDIR = ./$(SRCDIR)/$(MATHS)
-S_STATDIR = ./$(SRCDIR)/$(STATES)
+S_ANIMDIR	= ./$(SRCDIR)/$(ANIM)
+S_MATHDIR	= ./$(SRCDIR)/$(MATHS)
+S_STATDIR	= ./$(SRCDIR)/$(STATES)
 
-O_ANIMDIR = ./$(OBJDIR)/$(ANIM)
-O_MATHDIR = ./$(OBJDIR)/$(MATHS)
-O_STATDIR = ./$(OBJDIR)/$(STATES)
+O_ANIMDIR	= ./$(OBJDIR)/$(ANIM)
+O_MATHDIR	= ./$(OBJDIR)/$(MATHS)
+O_STATDIR	= ./$(OBJDIR)/$(STATES)
 
 # **************************************************************************** #
 #                                 INCLUDES                                     #
 # **************************************************************************** #
 
-LIBSDL = $(BREWDIR)/lib/ -lSDL2-2.0.0 -lSDL2_mixer-2.0.0 -lSDL2_ttf-2.0.0 \
-		-lSDL2_image-2.0.0 `sdl2-config --cflags --libs`
-INCSDL = $(BREWDIR)/include/SDL2
-LIBFT = $(LIBDIR) -lft
+LIBSDL		= $(BREWDIR)/lib/ -lSDL2-2.0.0 -lSDL2_mixer-2.0.0 -lSDL2_ttf-2.0.0 \
+				-lSDL2_image-2.0.0 `sdl2-config --cflags --libs`
+INCSDL		= $(BREWDIR)/include/SDL2
+LIBFT		= $(LIBDIR) -lft
 
 # **************************************************************************** #
 #                                  SOURCES                                     #
 # **************************************************************************** #
 
-SRCS =		$(ANIM)/anim_main_menu.c				\
-			$(ANIM)/create_flame.c					\
-			$(CAMERA)/camera.c						\
-			$(CAMERA)/camera_commands.c				\
-			$(STATES)/state_get_input.c				\
-			$(STATES)/state_main_menu.c				\
-			$(STATES)/state_scoreboard.c			\
-			$(STATES)/state_settings_menu.c			\
-			$(STATES)/state_start.c					\
-			$(MATHS)/quaternion.c					\
-			$(MATHS)/quaternion_2.c					\
-			$(MATHS)/vec3l_maths.c					\
-			$(MATHS)/vec3l_maths_2.c				\
-			$(MATHS)/vec3d_maths.c					\
-			$(MATHS)/vec3d_maths_2.c				\
-			$(MATHS)/create_octree.c				\
-			$(PROG)/doom.c							\
-			$(PROG)/init_program.c					\
-			$(PROG)/leave_program.c					\
-			$(PROG)/program.c						\
-			$(RT)/raytracing.c						\
-			$(RT)/ray_intersect.c					\
-			$(SHAPES)/draw_circle.c					\
-			$(SHAPES)/draw_rectangle.c				\
-			$(STATES)/state_editor.c				\
-			$(STATES)/state_game.c					\
-			$(STATES)/state_main_menu.c				\
-			$(STATES)/state_play_menu.c				\
-			$(STATES)/state_settings_menu.c			\
-			add_points.c							\
-			frame_calculator.c						\
-			get_default_inputs.c					\
-			load_textures.c							\
-			parse_input_file.c						\
-			put_buttons_names.c						\
-			put_buttons_on_img.c					\
-			put_string_on_renderer.c				\
-			utils.c									\
-			mixer.c									\
-			load_textures.c							\
-			load_sounds.c							
-
+SRCS 		=		$(ANIM)/anim_main_menu.c				\
+					$(ANIM)/create_flame.c					\
+					$(CAMERA)/camera.c						\
+					$(CAMERA)/camera_commands.c				\
+					$(EDITOR)/editor_commands.c				\
+					$(EDITOR)/color_rectangle.c				\
+					$(MATHS)/create_octree.c				\
+					$(MATHS)/octree_memory_management.c		\
+					$(MATHS)/quaternion.c					\
+					$(MATHS)/quaternion_2.c					\
+					$(MATHS)/vec3l_maths.c					\
+					$(MATHS)/vec3l_maths_2.c				\
+					$(MATHS)/vec3d_maths.c					\
+					$(MATHS)/vec3d_maths_2.c				\
+					$(PROG)/doom.c							\
+					$(PROG)/frame_calculator.c				\
+					$(PROG)/init_program.c					\
+					$(PROG)/leave_program.c					\
+					$(PROG)/program.c						\
+					$(RT)/add_textures.c					\
+					$(RT)/check_which_face_is_touched.c		\
+					$(RT)/locate_in_octree.c				\
+					$(RT)/ray_intersect.c					\
+					$(RT)/raytracing.c						\
+					$(SHAPES)/draw_circle.c					\
+					$(SHAPES)/draw_rectangle.c				\
+					$(SOUND)/load_sounds.c					\
+					$(SOUND)/mixer.c						\
+					$(STATES)/state_editor.c				\
+					$(STATES)/state_game.c					\
+					$(STATES)/state_get_input.c				\
+					$(STATES)/state_main_menu.c				\
+					$(STATES)/state_play_menu.c				\
+					$(STATES)/state_start.c					\
+					$(STATES)/state_scoreboard.c			\
+					$(STATES)/state_settings_menu.c			\
+					$(UI)/get_default_inputs.c				\
+					$(UI)/parse_input_file.c				\
+					$(UI)/put_buttons_names.c				\
+					$(UI)/put_buttons_on_img.c				\
+					$(UI)/put_string_on_renderer.c			\
+					add_points.c							\
+					load_textures.c							\
+					utils.c
 
 # **************************************************************************** #
 #                                   UTILS                                      #
 # **************************************************************************** #
 
-OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
-DPDCS = $(OBJS:.o:.d)
+DPDCS		= $(OBJS:.o=.d)
 
 # **************************************************************************** #
 #                                   RULES                                      #
 # **************************************************************************** #
 
-all : $(NAME)
+all				: $(NAME)
 
-$(NAME) : $(OBJS)
+$(NAME)			: $(OBJS)
+
 	@make -C $(LIBDIR)
 	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -L $(LIBFT) -L $(LIBSDL) -o $@ $^
 	@echo "\n\033[36mCreation :\033[0m \033[35;4m$(NAME)\033[0m\n"
 
 -include $(DPDCS)
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -I $(INCDIR) -I $(INCSDL) -I $(LIBDIR) -MMD -o $@ -c $<
+$(OBJDIR)/%.o	: $(SRCDIR)/%.c | $(OBJDIR)
+
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -I $(INCDIR) -I $(INCSDL) \
+		-I $(LIBDIR) -MMD -o $@ -c $<
 	@echo "\033[36mCompilation :\033[0m \033[32m$*\033[0m"
 
-$(OBJDIR) :
-	@mkdir -p $(OBJDIR) 2> /dev/null || true
-	@mkdir -p $(OBJDIR)/$(ANIM) 2> /dev/null || true
-	@mkdir -p $(OBJDIR)/$(MATHS) 2> /dev/null || true
-	@mkdir -p $(OBJDIR)/$(STATES) 2> /dev/null || true
-	@mkdir -p $(OBJDIR)/$(SHAPES) 2> /dev/null || true
-	@mkdir -p $(OBJDIR)/$(CAMERA) 2> /dev/null || true
-	@mkdir -p $(OBJDIR)/$(RT) 2> /dev/null || true
-	@mkdir -p $(OBJDIR)/$(PROG) 2> /dev/null || true
+$(OBJDIR)		:
 
-clean :
+	@mkdir -p $@			2> /dev/null || true
+	@mkdir -p $@/$(ANIM)	2> /dev/null || true
+	@mkdir -p $@/$(CAMERA)	2> /dev/null || true
+	@mkdir -p $@/$(EDITOR)	2> /dev/null || true
+	@mkdir -p $@/$(MATHS)	2> /dev/null || true
+	@mkdir -p $@/$(PROG)	2> /dev/null || true
+	@mkdir -p $@/$(RT)		2> /dev/null || true
+	@mkdir -p $@/$(SHAPES)	2> /dev/null || true
+	@mkdir -p $@/$(SOUND)	2> /dev/null || true
+	@mkdir -p $@/$(STATES)	2> /dev/null || true
+	@mkdir -p $@/$(UI)		2> /dev/null || true
+
+clean			:
+
 	@rm -rf $(OBJDIR)
 	@echo "\n\033[36mDeletion :\033[0m \033[32mObjects\033[0m\n"
 	@make -C libft clean
 
-fclean : clean
+fclean			: clean
+
 	@rm -rf $(NAME)
 	@echo "\033[36mDeletion :\033[0m \033[35;4m$(NAME)\033[0m\n"
 	@make -C libft fclean
 
-cm : clean all
+cm				: clean all
 
-re : fclean all
+re				: fclean all
 
-.PHONY : all clean fclean cm re
+.PHONY			: all clean fclean cm re

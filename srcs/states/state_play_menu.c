@@ -37,6 +37,7 @@ int			state_play_menu(t_doom *data)
 	t_button	buttons[3];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LEAVING, "CLASSIC MODE");
