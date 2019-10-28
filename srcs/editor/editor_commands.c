@@ -68,7 +68,6 @@ static inline void	save_map_to_file(t_doom *data, char *str)
 
 static inline void	draw(t_doom *data, int x, int y, int step)
 {
-	printf("x = %d, y = %d\n", (y - 10) / BLOCK_SIZE_EDITOR, (x - 10) / BLOCK_SIZE_EDITOR);
 	if (data->editor_mode == 1)
 		data->map_to_save[(y - 10) / BLOCK_SIZE_EDITOR][step][(x - 10) / BLOCK_SIZE_EDITOR] = 0;
 	else
@@ -96,7 +95,6 @@ static inline void	mouse_editor_commands2(t_doom *data, int *map)
 
 static inline void	mouse_editor_commands(t_doom *data, int *ok, int *map, char str[50])
 {
-	//printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
 		pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
