@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/25 14:06:22 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/28 23:56:43 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,76 @@
 #include "doom.h"
 #include "vec3.h"
 #include <math.h>
+
+void		check_if_inside_map(t_doom *data, t_vec3d *position)
+{
+	if (position->x > 63.7)
+	{
+		data->player.acceleration.x = 0;
+		position->x = 63.7;
+	}
+	else if (position->x < 0.3)
+	{
+		data->player.acceleration.x = 0;
+		position->x = 0.3;
+	}
+	if (position->y > 63.7)
+	{
+		data->player.acceleration.y = 0;
+		position->y = 63.7;
+	}
+	else if (position->y < 0.3)
+	{
+		data->player.acceleration.y = 0;
+		position->y = 0.3;
+	}
+	if (position->z > 63.7)
+	{
+		data->player.acceleration.z = 0;
+		position->z = 63.7;
+	}
+	else if (position->z < 0.3)
+	{
+		data->player.acceleration.z = 0;
+		position->z = 0.3;
+	}
+}
+
+void		apply_motion(t_doom *data)
+{
+	t_vec3d		new_pos;
+
+	new_pos = vec3d_add(data->player.position, data->player.acceleration);
+	check_if_inside_map(data, &new_pos);
+	if (data->map_to_save[(int)(new_pos.x)][(int)data->player.camera.origin.y][(int)data->player.camera.origin.z])
+	{
+		if (new_pos.x < data->player.camera.origin.x)
+			new_pos.x = floor(new_pos.x) + 1.001;
+		else
+			new_pos.x = floor(new_pos.x) - 0.001;
+	}
+	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y)][(int)data->player.camera.origin.z])
+	{
+		if (new_pos.y < data->player.camera.origin.y)
+			new_pos.y = floor(new_pos.y) + 1.001;
+		else
+			new_pos.y = floor(new_pos.y) - 0.001;
+	}
+	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y)][(int)new_pos.z])
+	{
+		if (new_pos.z < data->player.camera.origin.z)
+			new_pos.z = floor(new_pos.z) + 1.001;
+		else
+			new_pos.z = floor(new_pos.z) - 0.001;
+	}
+	data->player.position = new_pos;
+	//new_pos.y += 1;
+	data->player.acceleration.x = 0;
+	data->player.acceleration.y = 0;
+	data->player.acceleration.z = 0;
+	data->player.camera.origin = new_pos;
+
+}
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y
 	, double *sensitivity)
@@ -35,31 +105,7 @@ void			camera_mouse_motion(t_camera *camera, int *x, int *y
 	}
 }
 
-static void	check_clipping(t_doom *data, int type)
-{
-	type++;
-	if (data->player.camera.origin.x > 63.7)
-		data->player.camera.origin.x = 63.7;
-	else if (data->player.camera.origin.x < 0.3)
-		data->player.camera.origin.x = 0.3;
-	if (data->player.camera.origin.y > 63.7)
-		data->player.camera.origin.y = 63.7;
-	else if (data->player.camera.origin.y < 1.5)
-		data->player.camera.origin.y = 1.5;
-	if (data->player.camera.origin.z > 63.7)
-		data->player.camera.origin.z = 63.7;
-	else if (data->player.camera.origin.z < 0.3)
-		data->player.camera.origin.z = 0.3;
-}
-
-int		check_clip(t_vec3d position, char tab[64][64][64])
-{
-	if (tab[(int)position.y][(int)position.z][(int)position.x])
-		return (0);
-	return (1);
-}
-
-void		camera_event_translate(t_doom *data)
+/*void		camera_event_translate(t_doom *data)
 {
 	double		speed_up;
 	int			stop;
@@ -72,18 +118,9 @@ void		camera_event_translate(t_doom *data)
 	diviseur = data->lib.cam_keys & WATER ? 1 : 1;
 	diviseur *= data->lib.cam_keys & SQUAT ? 1.5 : 1;
 	if (y_max < data->player.camera.origin.y)
-	{
 		y_max = data->player.camera.origin.y;
-//		printf("max size = %f\n", y_max);
-	}
-//	else if (y_max != 0 && data->player.camera.origin.y != 1)
-	//	printf("pos      = %f\n", data->player.camera.origin.y);
 	if (data->player.camera.origin.y == 1)
-	{
-//		if (frame != 1)
-//			printf("frame = %d\n", frame);
 		frame = 0;
-	}
 	frame++;
 	speed_up = data->player.speed + (ACCELERATION * ((data->lib.cam_keys & COURSE) >> 4) / 3.0 + ACCELERATION) / diviseur;
 	stop = 1;
@@ -94,36 +131,24 @@ void		camera_event_translate(t_doom *data)
 		data->player.speed = speed_up;
 		tmp = vec3d_sub(data->player.camera.origin
 				, vec3d_scalar(data->player.camera.right, data->player.speed));
-		if (check_clip(tmp, data->map_to_save))
-			data->player.camera.origin = tmp;
-		stop = 0;
 	}
 	if (data->lib.cam_keys & CAMERA_TR_RIGHT)
 	{
 		data->player.speed = speed_up;
 		tmp = vec3d_add(data->player.camera.origin
 				, vec3d_scalar(data->player.camera.right, data->player.speed));
-		if (check_clip(tmp, data->map_to_save))
-			data->player.camera.origin = tmp;
-		stop = 0;
 	}
 	if (data->lib.cam_keys & CAMERA_TR_FRONT)
 	{
 		data->player.speed = speed_up;
 		tmp = vec3d_add(data->player.camera.origin
 				, vec3d_scalar(data->player.camera.direction, data->player.speed));
-		if (check_clip(tmp, data->map_to_save))
-			data->player.camera.origin = tmp;
-		stop = 0;
 	}
 	if (data->lib.cam_keys & CAMERA_TR_BACK)
 	{
 		data->player.speed = speed_up;
 		tmp = vec3d_sub(data->player.camera.origin
 				, vec3d_scalar(data->player.camera.direction, data->player.speed));
-		if (check_clip(tmp, data->map_to_save))
-			data->player.camera.origin = tmp;
-		stop = 0;
 	}
 	if (data->lib.cam_keys & WATER)
 	{
@@ -136,17 +161,60 @@ void		camera_event_translate(t_doom *data)
 		data->player.gravity = GRAVITY;
 		data->player.camera.origin.y = 1.5;
 	}
-//	printf("data->player.camera.origin.y = %.2f, data->player.gravity = %.2f\n"
-//		,data->player.camera.origin.y, data->player.gravity);
 	if (data->lib.cam_keys & SQUAT)
 	{
 		data->player.speed = 0.04;
 		data->player.camera.origin.y -= 0.5;
 	}
-//	printf("vitesse = %f\n", data->player.speed);
-	if (stop)
-		data->player.speed = 0;
 	check_clipping(data, CAMERA_TR_BACK);
+}*/
+
+void		clamp_acceleration(t_vec3d *vec)
+{
+	if (vec->x > 0.1)
+		vec->x = 0.1;
+	else if (vec->x < -0.1)
+		vec->x = -0.1;
+	if (vec->y > 0.1)
+		vec->y = 0.1;
+	else if (vec->y < -1.0)
+		vec->y = -1.0;
+	if (vec->z > 0.1)
+		vec->z = 0.1;
+	else if (vec->z < -0.1)
+		vec->z = -0.1;
+}
+
+void		camera_event_translate(t_doom *data)
+{
+	t_vec3d		tmp;
+
+	tmp = data->player.acceleration;
+	if (data->lib.cam_keys & CAMERA_TR_LEFT)
+	{
+		tmp = vec3d_sub(tmp, vec3d_scalar(data->player.camera.right
+			, data->player.speed));
+	}
+	if (data->lib.cam_keys & CAMERA_TR_RIGHT)
+	{
+		tmp = vec3d_add(tmp, vec3d_scalar(data->player.camera.right
+			, data->player.speed));
+	}
+	if (data->lib.cam_keys & CAMERA_TR_FRONT)
+	{
+		tmp = vec3d_add(tmp, vec3d_scalar(data->player.camera.direction
+			, data->player.speed));
+	}
+	if (data->lib.cam_keys & CAMERA_TR_BACK)
+	{
+		tmp = vec3d_sub(tmp, vec3d_scalar(data->player.camera.direction
+			, data->player.speed));
+	}
+	if (!(data->lib.cam_keys & WATER))
+		tmp.y = data->player.acceleration.y - 0.0098;
+	clamp_acceleration(&tmp);
+	data->player.acceleration = tmp;
+	apply_motion(data);
 }
 
 static void	camera_release_key(SDL_Event *event, t_doom *data)
@@ -170,6 +238,7 @@ static void	camera_release_key(SDL_Event *event, t_doom *data)
 
 void		camera_press_key(SDL_Event *event, t_doom *data)
 {
+	data->player.speed = 0.1;
 	if (event->key.type == SDL_KEYDOWN)
 	{
 		if (event->key.keysym.sym == SDLK_a)

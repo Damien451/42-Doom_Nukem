@@ -13,7 +13,7 @@ void		init_camera(t_doom *data)
 	data->player.camera.right = X_AXIS;
 	data->player.camera.up = Y_AXIS;
 	data->player.camera.origin.x = 21.7;
-	data->player.camera.origin.y = 25.7;
+	data->player.camera.origin.y = 0;
 	data->player.camera.origin.z = 24.2;
 	data->sampling = 4;
 }

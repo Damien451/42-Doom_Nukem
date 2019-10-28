@@ -66,6 +66,8 @@ struct						s_player
 	double					speed;
 	double					gravity;
 	double					sensitivity;
+	t_vec3d					position;
+	t_vec3d					acceleration;
 };
 
 void						rotate_camera(t_camera *camera, t_vec3d rot_vec
