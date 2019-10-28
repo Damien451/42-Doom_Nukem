@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/27 19:42:18 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/28 09:03:43 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 						, &node)) == 1)
 			return (add_skybox(intersect));
 		else if (ret == 2)
-			return (add_texture(intersect));
+			return (add_texture(intersect, node));
 		else if (ret == 3)
 		{
 			origin = intersect;
@@ -166,5 +166,5 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 		}
 		i++;
 	}
-	return (255);
+	return (0);
 }

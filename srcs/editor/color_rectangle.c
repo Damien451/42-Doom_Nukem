@@ -21,9 +21,9 @@ void		color_rectangle(t_doom *data, t_vec3l rectangle, int step)
 		j = 0;
 		while (j < BLOCK_SIZE_EDITOR)
 		{
-			if (data->map_to_save[step][rectangle.x][rectangle.y] > 0)
+			if (data->map_to_save[rectangle.x][step][rectangle.y] > 0)
 				data->lib.image[(i + coord_x) * WIDTH + coord_y + j] =
-					((unsigned int*)data->lib.textures[(int)data->map_to_save[step][rectangle.x][rectangle.y] - 1]->pixels)
+					((unsigned int*)data->lib.textures[(int)data->map_to_save[rectangle.x][step][rectangle.y] - 1]->pixels)
 					[i * (512 / BLOCK_SIZE_EDITOR) * 512 + j * (512 / BLOCK_SIZE_EDITOR)];
 			else
 				data->lib.image[(i + coord_x) * WIDTH + coord_y + j] = 0xFFFFFF;

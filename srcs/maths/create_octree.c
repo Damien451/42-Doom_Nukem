@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/27 18:49:45 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/28 09:27:28 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 		{
 			while (++count.z < node->size >> 1)
 			{
-				if (data->map_to_save[tester.y + count.y][tester.x + count.x]
+				if (data->map_to_save[tester.x + count.x][tester.y + count.y]
 					[tester.z + count.z])
 					nbr_node++;
 				else if (nbr_node)

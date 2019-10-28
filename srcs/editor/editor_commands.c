@@ -35,7 +35,7 @@ static inline void	fill_step(t_doom *data, int step)
 		while (++j < SIZE_MAP)
 		{
 			if (data->lib.picked_texture)
-				data->map_to_save[step][i][j] =
+				data->map_to_save[i][step][j] =
 					data->lib.picked_texture + 1;
 		}
 	}
@@ -43,7 +43,7 @@ static inline void	fill_step(t_doom *data, int step)
 
 static inline void	reset_step(t_doom *data, int step)
 {
-	int 		i;
+	int			i;
 	int			j;
 
 	i = -1;
@@ -51,7 +51,7 @@ static inline void	reset_step(t_doom *data, int step)
 	{
 		j = -1;
 		while (++j < SIZE_MAP)
-			data->map_to_save[step][i][j] = 0;
+			data->map_to_save[i][step][j] = 0;
 	}
 }
 
@@ -70,9 +70,9 @@ static inline void	draw(t_doom *data, int x, int y, int step)
 {
 	printf("x = %d, y = %d\n", (y - 10) / BLOCK_SIZE_EDITOR, (x - 10) / BLOCK_SIZE_EDITOR);
 	if (data->editor_mode == 1)
-		data->map_to_save[step][(y - 10) / BLOCK_SIZE_EDITOR][(x - 10) / BLOCK_SIZE_EDITOR] = 0;
+		data->map_to_save[(y - 10) / BLOCK_SIZE_EDITOR][step][(x - 10) / BLOCK_SIZE_EDITOR] = 0;
 	else
-		data->map_to_save[step][(y - 10) / BLOCK_SIZE_EDITOR][(x - 10) / BLOCK_SIZE_EDITOR] = data->lib.picked_texture + 1;
+		data->map_to_save[(y - 10) / BLOCK_SIZE_EDITOR][step][(x - 10) / BLOCK_SIZE_EDITOR] = data->lib.picked_texture + 1;
 }
 
 static inline void	keydown_editor_commands(t_doom *data, int *first)
