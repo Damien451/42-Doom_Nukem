@@ -7,3 +7,12 @@ Finish Param inputs menu
 /*  esuits  */
 
 /*  roduquen  */
+
+
+
+
+
+
+
+Graphic Engine : Voxels raytracer using octree as data structure for the map.
+Physic Engine : pseudo-realistic physic, using no real laws.
