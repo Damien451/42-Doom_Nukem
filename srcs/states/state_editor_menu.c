@@ -1,3 +1,4 @@
+
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
@@ -21,32 +22,32 @@ static int	check_inputs_settings(t_doom *data, t_button *btab, int nbuttons)
 				data->button = (data->button == nbuttons - 1)
 				? nbuttons - 1 : data->button + 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
-				switch_state(data, SETTINGS, btab[data->button].state);
+				switch_state(data, EDITOR_MENU, btab[data->button].state);
 		}
 	}
 	return (0);
 }
 
-int			state_settings_menu(t_doom *data)
+int			state_editor_menu(t_doom *data)
 {
-	t_button	buttons[3];
+	t_button	buttons[2];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
-	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
+	/*buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), SETTINGS_SOUND, "SOUND SETTINGS");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), SETTINGS_SOUND, "START");*/
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), SETTINGS_INPUTS, "INPUT SETTINGS");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), EDITOR, "START");
 	buttons[2] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER + (DEF_BUTTON_H + BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), MAIN_MENU, "RETURN");
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-	put_buttons_on_img(data, buttons, 3);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13), label("SETTINGS", RED), data->lib.ptrfont[1]);
-	put_buttons_names(data, buttons, BLACK, 3);
-	if (check_inputs_settings(data, buttons, 3) != 0)
+	put_buttons_on_img(data, buttons, 2);
+	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13), label("EDITOR", RED), data->lib.ptrfont[1]);
+	put_buttons_names(data, buttons, BLACK, 2);
+	if (check_inputs_settings(data, buttons, 2) != 0)
 		return (1);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);

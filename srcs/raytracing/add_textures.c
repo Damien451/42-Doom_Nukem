@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_textures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 19:46:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/28 09:55:20 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:23:13 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ unsigned int				add_texture(t_vec3d intersect, t_octree *node)
 
 	if (tabl[0] == 0)
 	{
-		fd = open("test6.binary", O_RDONLY);
+		fd = open("test5.binary", O_RDONLY);
 		read(fd, tabl, 512 * 512 * 4);
 		close(fd);
 	}

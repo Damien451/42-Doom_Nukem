@@ -1,3 +1,4 @@
+
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
@@ -21,13 +22,13 @@ static int	check_inputs_settings(t_doom *data, t_button *btab, int nbuttons)
 				data->button = (data->button == nbuttons - 1)
 				? nbuttons - 1 : data->button + 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
-				switch_state(data, SETTINGS, btab[data->button].state);
+				switch_state(data, SETTINGS_SOUND, btab[data->button].state);
 		}
 	}
 	return (0);
 }
 
-int			state_settings_menu(t_doom *data)
+int			state_sound_settings(t_doom *data)
 {
 	t_button	buttons[3];
 

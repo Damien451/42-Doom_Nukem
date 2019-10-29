@@ -32,7 +32,7 @@ int				state_get_input(t_doom *data)
 				data->tabinputs.keycode[(data->button > 8 ?
 					data->button - 1 : data->button)] =
 					data->lib.event.key.keysym.sym;
-			switch_state(data, GET_INPUT, SETTINGS);
+			switch_state(data, GET_INPUT, SETTINGS_INPUTS);
 		}
 	}
 	return (0);

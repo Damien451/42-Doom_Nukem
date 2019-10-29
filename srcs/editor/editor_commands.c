@@ -59,10 +59,14 @@ static inline void	save_map_to_file(t_doom *data, char *str)
 {
 	int			fd;
 
-	if ((fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0777)) != -1)
+	fd = 0;
+	if (check_map_validity(data) == 0)
 	{
-		write(fd, data->map_to_save, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-		close(fd);
+		if ((fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0777)) != -1)
+		{
+			write(fd, data->map_to_save, SIZE_MAP * SIZE_MAP * SIZE_MAP);
+			close(fd);
+		}
 	}
 }
 
@@ -95,6 +99,7 @@ static inline void	mouse_editor_commands2(t_doom *data, int *map)
 
 static inline void	mouse_editor_commands(t_doom *data, int *ok, int *map, char str[50])
 {
+	//printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
 		pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);

@@ -39,7 +39,7 @@ static void	buttons_main_menu(t_button buttons[5])
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAYING, "PLAY");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), EDITOR, "MAP EDITOR");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), EDITOR_MENU, "MAP EDITOR");
 	buttons[2] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER + (DEF_BUTTON_H + BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), SCORES, "SCOREBOARD");
