@@ -15,4 +15,4 @@ Finish Param inputs menu
 
 
 Graphic Engine : Voxels raytracer using octree as data structure for the map.
-Physic Engine : pseudo-realistic physic, using no real laws.
+\nPhysic Engine : pseudo-realistic physic, using no real laws.
