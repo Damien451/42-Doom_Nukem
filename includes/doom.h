@@ -20,17 +20,20 @@
 # define FOV		(60.0 * M_PI / 180.0)
 # define POV		(34 * M_PI / 180.0)
 
-# define RUNNING	(1l << 62)
-# define START		(1l)
-# define PLAYING	(1l << 1)
-# define PAUSE		(1l << 2)
-# define MAIN_MENU	(1l << 3)
-# define PLAY_MENU	(1l << 4)
-# define EDITOR		(1l << 5)
-# define SCORES		(1l << 6)
-# define SETTINGS	(1l << 7)
-# define GET_INPUT	(1l << 8)
-# define LEAVING	(1l << 9)
+# define RUNNING			(1l << 62)
+# define START				(1l)
+# define PLAYING			(1l << 1)
+# define PAUSE				(1l << 2)
+# define MAIN_MENU			(1l << 3)
+# define PLAY_MENU			(1l << 4)
+# define EDITOR_MENU		(1l << 5)
+# define EDITOR				(1l << 6)
+# define SCORES				(1l << 7)
+# define SETTINGS			(1l << 8)
+# define SETTINGS_INPUTS	(1l << 9)
+# define SETTINGS_SOUND		(1l << 10)
+# define GET_INPUT			(1l << 11)
+# define LEAVING			(1l << 12)
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -115,6 +118,8 @@ unsigned int				add_texture(t_vec3d intersect, t_octree *node);
 
 void						editor_commands(t_doom *data, char str[50], int *map, int *first);
 
+int							check_map_validity(t_doom *data);
+
 /*
 ** ====-* GAMESTATES *-====
 */
@@ -122,6 +127,8 @@ void						editor_commands(t_doom *data, char str[50], int *map, int *first);
 void						switch_state(t_doom *data, long actual_state, long new_state);
 
 int							state_start(t_doom *data);
+
+int							state_inputs_settings_menu(t_doom *data);
 
 int							state_main_menu(t_doom *data);
 
@@ -131,9 +138,13 @@ int							state_scoreboard(t_doom *data);
 
 int							state_settings_menu(t_doom *data);
 
+int							state_sound_settings(t_doom *data);
+
 int							state_get_input(t_doom *data);
 
 int							state_editor(t_doom *data);
+
+int							state_editor_menu(t_doom *data);
 
 int							state_game(t_doom *data);
 

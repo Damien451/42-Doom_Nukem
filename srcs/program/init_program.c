@@ -126,8 +126,10 @@ static int	init_fonts(t_doom *data)
 		return (1);
 	if (!(data->lib.ptrfont[4] = TTF_OpenFont("./font/DEPLETED_URANIUM.ttf", 200)))
 		return (1);
-	if (!(data->lib.ptrfont[5] = TTF_OpenFont("./font/SciFi_Movies.ttf", 200)))
+	if (!(data->lib.ptrfont[5] = TTF_OpenFont("./font/xolonium/Xolonium-Regular.ttf", 25)))
 		return (1);
+	/*if (!(data->lib.ptrfont[5] = TTF_OpenFont("./font/SciFi_Movies.ttf", 20)))
+		return (1);*/
 	init_tab(data);
 	return (0);
 }

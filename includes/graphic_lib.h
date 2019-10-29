@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/27 17:51:40 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/10/28 13:13:08 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define NBR_TEXTURES_MENU		5
 # define NBR_FONTS				6
 # define NB_IMG 				2
+# define ID_START_BLOCK			30
+# define ID_FINISH_BLOCK		31
 
 # define WHITE					(SDL_Color){255, 255, 255, 0}
 # define BLACK					(SDL_Color){0, 0, 0, 0}

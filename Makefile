@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/27 20:12:38 by dacuvill         ###   ########.fr        #
+#    Updated: 2019/10/29 18:07:30 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,8 +75,9 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(ANIM)/create_flame.c					\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
-					$(EDITOR)/editor_commands.c				\
+					$(EDITOR)/check_map_validity.c			\
 					$(EDITOR)/color_rectangle.c				\
+					$(EDITOR)/editor_commands.c				\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/octree_memory_management.c		\
 					$(MATHS)/quaternion.c					\
@@ -100,10 +101,13 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(SOUND)/load_sounds.c					\
 					$(SOUND)/mixer.c						\
 					$(STATES)/state_editor.c				\
+					$(STATES)/state_editor_menu.c			\
 					$(STATES)/state_game.c					\
 					$(STATES)/state_get_input.c				\
+					$(STATES)/state_inputs_settings_menu.c	\
 					$(STATES)/state_main_menu.c				\
 					$(STATES)/state_play_menu.c				\
+					$(STATES)/state_sound_settings.c		\
 					$(STATES)/state_start.c					\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
