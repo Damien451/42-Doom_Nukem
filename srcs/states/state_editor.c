@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/01 21:00:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/11/01 21:18:26 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ static inline void	set_quadrillage(t_doom *data, int step)
 	nbr = 1.0;
 	if (step > 0)
 		nbr = 1.0 / ((double)step + 1);
+	if (nbr < 0.1)
+		nbr = 0.1;
 	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_BLEND);
-	k = step - 11;
+	k = step - 10;
 	if (k < -1)
 		k = -1;
 	alpha = nbr;
