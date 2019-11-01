@@ -73,6 +73,8 @@ struct					s_img
 
 t_point					add_points(t_point a, t_point b);
 
+void					create_buttons_inputs(t_doom *data, t_button *btab);
+
 int						draw_rectangle(t_graphic_lib *lib, t_point position, t_point dimensions, int color);
 
 int						put_buttons_on_img(t_doom *data, t_button *btab, int nbuttons);

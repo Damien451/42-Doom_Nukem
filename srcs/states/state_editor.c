@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/29 16:06:45 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/10/31 18:17:33 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "vec3.h"
 #include "octree.h"
 
-#include "stdio.h"
+#include <stdio.h>
 
 static inline int	display_info(t_doom *data, char *map_name, int step)
 {
@@ -34,7 +34,6 @@ static inline int	display_info(t_doom *data, char *map_name, int step)
 	ft_strcat(info, is_valid = (check_map_validity(data) == 0 ?
 		", Map Valid" : ", Map Invalid"));
 	tmp = &info[0];
-	printf("len info = %zu\n", ft_strlen(tmp));
 	if (ft_strlen(tmp) > 57)
 	{
 		ft_bzero(&info[57], 13);
@@ -71,8 +70,11 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 	int		fd;
 	int		ret;
 	char	str_to_map[SIZE_MAP * SIZE_MAP * SIZE_MAP];
+	char	full_path[50];
 
-	if ((fd = open(str, O_RDONLY)) != -1)
+	full_path[0] = 0;
+	ft_strcat(ft_strcat(full_path, "./maps/"), str);
+	if ((fd = open(full_path, O_RDONLY)) != -1)
 	{
 		ret = read(fd, str_to_map, SIZE_MAP * SIZE_MAP * SIZE_MAP);
 		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
@@ -116,7 +118,6 @@ int					state_editor(t_doom *data)
 {
 	static int		first = 0;
 	static int		map = 0;
-	static char		*str = "dacuvill's really cool ' map";
 	int				oct[3];
 
 	oct[0] = 0;
@@ -125,7 +126,7 @@ int					state_editor(t_doom *data)
 	if (!first)
 	{
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
-		parse_file(data, str, map);
+		parse_file(data, data->map_name, map);
 		create_octree(data);
 		aff_octree(data->octree, data, oct);
 		printf("empty = %d, full = %d, inside = %d, total = %d\n"
@@ -139,9 +140,9 @@ int					state_editor(t_doom *data)
 	SDL_ShowCursor(SDL_TRUE);
 	set_quadrillage(data, map);
 	while (SDL_PollEvent(&data->lib.event))
-		editor_commands(data, str, &map, &first);
+		editor_commands(data, data->map_name, &map, &first);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-	display_info(data, str, map);
+	display_info(data, data->map_name, map);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }

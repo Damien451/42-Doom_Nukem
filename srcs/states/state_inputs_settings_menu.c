@@ -74,69 +74,13 @@ static int	check_inputs_settings(t_doom *data, int nbuttons)
 	return (0);
 }
 
-static void	create_buttons2(t_doom *data, t_button *btab, int coords[NB_MODIF_INPUTS + 2][2])
-{
-	int			i;
-	char		titles[NB_MODIF_INPUTS][30];
-	char		*desc[NB_MODIF_INPUTS];
-
-	i = -1;
-	desc[0] = "Move forward - ";
-	desc[1] = "Move left - ";
-	desc[2] = "Move backward - ";
-	desc[3] = "Move right - ";
-	desc[4] = "Pick obj - ";
-	desc[5] = "Reload - ";
-	desc[6] = "Sprint - ";
-	desc[7] = "Zoom - ";
-	desc[8] = "Couch - ";
-	desc[9] = "Jump - ";
-	desc[10] = "Inventory - ";
-	desc[11] = "Screenshot - ";
-	while (++i < NB_MODIF_INPUTS + 2)
-	{
-		if (i != 8 && i != 13)
-			btab[i] = button(point(coords[i][0], coords[i][1]), point(SET_BUTTON_W, SET_BUTTON_H), 0,
-				ft_strcat(ft_strcpy(titles[(i > 8 ? i - 1 : i)], desc[(i > 8 ? i - 1 : i)]), SDL_GetKeyName(data->tabinputs.keycode[(i > 8 ? i - 1 : i)])));
-		else if (i == 8)
-			btab[8] = button(point(coords[i][0], coords[i][1]), point(SET_BUTTON_W, SET_BUTTON_H), 0, "Save & quit");
-		else
-			btab[13] = button(point(coords[i][0], coords[i][1]), point(SET_BUTTON_W, SET_BUTTON_H), 0, "Reset");
-	}
-}
-
-static void	create_buttons(t_doom *data, t_button *btab)
-{
-	int			posy[5];
-	int			coords[NB_MODIF_INPUTS + 2][2];
-	int			i;
-	int			j;
-
-	i = -1;
-	j = 0;
-	posy[0] = HEIGHT_CENTER - (BUTTON_GAP_Y + 2 * SET_BUTTON_H);
-	while (++j < 5)
-		posy[j] = posy[j - 1] + SET_BUTTON_H + BUTTON_GAP_Y;
-	while (++i < NB_MODIF_INPUTS + 2)
-	{
-		if (i < 4)
-			coords[i][0] = WIDTH_CENTER - (SET_BUTTON_W + SET_BUTTON_W / 2 + BUTTON_GAP_X);
-		else if (i < 9)
-			coords[i][0] = WIDTH_CENTER - SET_BUTTON_W / 2;
-		else
-			coords[i][0] = coords[8][0] + BUTTON_GAP_X + SET_BUTTON_W;
-		coords[i][1] = (i < 4 ? posy[i] : posy[(i + 1) % 5]);
-	}
-	create_buttons2(data, btab, coords);
-}
-
 int			state_inputs_settings_menu(t_doom *data)
 {
 	t_button	buttons[14];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
-	create_buttons(data, buttons);
+	create_buttons_inputs(data, buttons);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 14);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13), label("SETTINGS", RED), data->lib.ptrfont[1]);
@@ -146,4 +90,3 @@ int			state_inputs_settings_menu(t_doom *data)
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/10/29 18:07:30 by dacuvill         ###   ########.fr        #
+#    Updated: 2019/11/01 17:08:59 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
 FSAN		= #-fsanitize=address
-DEBUG		= #-g3
+DEBUG		= -g3
 OPTI		= -O2 -Ofast
 
 # **************************************************************************** #
@@ -77,6 +77,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(CAMERA)/camera_commands.c				\
 					$(EDITOR)/check_map_validity.c			\
 					$(EDITOR)/color_rectangle.c				\
+					$(EDITOR)/deal_with_map_directory.c		\
 					$(EDITOR)/editor_commands.c				\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/octree_memory_management.c		\
@@ -104,6 +105,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_editor_menu.c			\
 					$(STATES)/state_game.c					\
 					$(STATES)/state_get_input.c				\
+					$(STATES)/state_get_map_name.c			\
 					$(STATES)/state_inputs_settings_menu.c	\
 					$(STATES)/state_main_menu.c				\
 					$(STATES)/state_play_menu.c				\
@@ -111,6 +113,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_start.c					\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
+					$(UI)/create_buttons_inputs.c			\
 					$(UI)/get_default_inputs.c				\
 					$(UI)/parse_input_file.c				\
 					$(UI)/put_buttons_names.c				\

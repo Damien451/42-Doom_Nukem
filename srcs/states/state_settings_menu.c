@@ -14,12 +14,12 @@ static int	check_inputs_settings(t_doom *data, t_button *btab, int nbuttons)
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
 				(unsigned int)data->lib.event.key.keysym.sym == 
 				data->tabinputs.keycode[0])
-				data->button = data->button == 0 ? 0 : data->button - 1;
+				data->button = data->button == 0 ? nbuttons - 1 : data->button - 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
 				data->button = (data->button == nbuttons - 1)
-				? nbuttons - 1 : data->button + 1;
+				? 0 : data->button + 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 				switch_state(data, SETTINGS, btab[data->button].state);
 		}

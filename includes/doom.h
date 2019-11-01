@@ -28,12 +28,13 @@
 # define PLAY_MENU			(1l << 4)
 # define EDITOR_MENU		(1l << 5)
 # define EDITOR				(1l << 6)
-# define SCORES				(1l << 7)
-# define SETTINGS			(1l << 8)
-# define SETTINGS_INPUTS	(1l << 9)
-# define SETTINGS_SOUND		(1l << 10)
-# define GET_INPUT			(1l << 11)
-# define LEAVING			(1l << 12)
+# define GET_MAP_NAME		(1l << 7)
+# define SCORES				(1l << 8)
+# define SETTINGS			(1l << 9)
+# define SETTINGS_INPUTS	(1l << 10)
+# define SETTINGS_SOUND		(1l << 11)
+# define GET_INPUT			(1l << 12)
+# define LEAVING			(1l << 13)
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -64,6 +65,7 @@ struct						s_doom
 	t_bubble				*lightning_list;
 	t_bubble				*lightning_list2;
 	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	char					*map_name;
 	long					button;
 	long					state;
 	t_octree				*octree;
@@ -72,6 +74,7 @@ struct						s_doom
 	t_mixer					*mix;
 	int						sampling;
 	int						editor_mode;
+	int						map_to_show;
 	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_vec3d
 								, t_octree **);
 };
@@ -85,6 +88,8 @@ int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
 void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
+char						*get_map_name(int map_to_show);
+int							count_maps(int *first);
 
 /*
 ** ====-* GRAPHICS *-====
@@ -141,6 +146,8 @@ int							state_settings_menu(t_doom *data);
 int							state_sound_settings(t_doom *data);
 
 int							state_get_input(t_doom *data);
+
+int							state_get_map_name(t_doom *data);
 
 int							state_editor(t_doom *data);
 
