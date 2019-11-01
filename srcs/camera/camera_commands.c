@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/28 23:56:43 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/01 16:45:34 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void			camera_mouse_motion(t_camera *camera, int *x, int *y
 	{
 		move = *sensitivity * (double)*y;
 		x_angle = camera->x_angle + move;
-		if (x_angle > -1 && x_angle < 1)
-		{
+	//	if (x_angle > -1 && x_angle < 1)
+	//	{
 			camera->x_angle = x_angle;
 			rotate_camera(camera, camera->right, move);
-		}
+//		}
 	}
 }
 
@@ -171,18 +171,16 @@ void			camera_mouse_motion(t_camera *camera, int *x, int *y
 
 void		clamp_acceleration(t_vec3d *vec)
 {
-	if (vec->x > 0.1)
-		vec->x = 0.1;
-	else if (vec->x < -0.1)
-		vec->x = -0.1;
-	if (vec->y > 0.1)
-		vec->y = 0.1;
-	else if (vec->y < -1.0)
-		vec->y = -1.0;
-	if (vec->z > 0.1)
-		vec->z = 0.1;
-	else if (vec->z < -0.1)
-		vec->z = -0.1;
+	if (vec->x > 0.5)
+		vec->x = 0.5;
+	else if (vec->x < -0.5)
+		vec->x = -0.5;
+	if (vec->y > 0.5)
+		vec->y = 0.5;
+	if (vec->z > 0.5)
+		vec->z = 0.5;
+	else if (vec->z < -0.5)
+		vec->z = -0.5;
 }
 
 void		camera_event_translate(t_doom *data)
@@ -211,7 +209,7 @@ void		camera_event_translate(t_doom *data)
 			, data->player.speed));
 	}
 	if (!(data->lib.cam_keys & WATER))
-		tmp.y = data->player.acceleration.y - 0.0098;
+		tmp.y = data->player.acceleration.y - 0.0225;
 	clamp_acceleration(&tmp);
 	data->player.acceleration = tmp;
 	apply_motion(data);
@@ -238,7 +236,9 @@ static void	camera_release_key(SDL_Event *event, t_doom *data)
 
 void		camera_press_key(SDL_Event *event, t_doom *data)
 {
-	data->player.speed = 0.1;
+	t_vec3l		vec;
+
+	data->player.speed = 0.5;
 	if (event->key.type == SDL_KEYDOWN)
 	{
 		if (event->key.keysym.sym == SDLK_a)
@@ -253,7 +253,7 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 			data->lib.cam_keys |= COURSE;
 		else if (event->key.keysym.sym == SDLK_SPACE
 			&& data->player.gravity == GRAVITY && !(data->lib.cam_keys & WATER))
-			data->player.gravity = -0.18 * GRAVITY;
+			data->player.acceleration.y = 1;
 		else if (event->key.keysym.sym == SDLK_p)
 		{
 			if (WATER & data->lib.cam_keys)

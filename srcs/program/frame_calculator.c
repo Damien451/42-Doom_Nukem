@@ -13,8 +13,7 @@ int			frame_calculator(void)
 		actual_frame = frame;
 		time = actual_time;
 		frame = 0;
-		return (0);
-//		return (actual_frame);
+		return (actual_frame);
 	}
 	frame++;
 	return (0);

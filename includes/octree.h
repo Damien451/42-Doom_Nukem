@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:21:10 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/27 20:13:00 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/11/01 16:23:32 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 **	DEFINES
 */
 
-# define EMPTY	0
-# define INSIDE	1
-# define FULL	2
+# define EMPTY		0
+# define INSIDE		1
+# define FULL		2
+# define BREAKABLE	3
 
 /*
 **	TYPEDEF

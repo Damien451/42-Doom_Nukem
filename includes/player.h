@@ -20,6 +20,7 @@
 # define COURSE				(1 << 4)
 # define WATER				(1 << 5)
 # define SQUAT				(1 << 6)
+# define DESTROY			(1 << 7)
 
 # define GRAVITY			1.0
 # define ACCELERATION		(1.0 / 300.0)

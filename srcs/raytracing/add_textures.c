@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 19:46:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/28 22:44:01 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/10/31 14:46:39 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ unsigned int				add_skybox(t_vec3d intersect)
 	return (fill_percent((64.0 - intersect.y) / 64.0, intersect.x / 64.0, 512, tabl[3]));
 }
 
-unsigned int				add_texture(t_vec3d intersect, t_octree *node)
+unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type)
 {
 	int	fd;
 	static unsigned int	tabl[512*512];
@@ -86,15 +86,15 @@ unsigned int				add_texture(t_vec3d intersect, t_octree *node)
 		read(fd, tabl, 512 * 512 * 4);
 		close(fd);
 	}
-	if (intersect.x == -1)
+	if (type == -1)
 		return (fill_percent(1.0 - (intersect.y - floor(intersect.y)), intersect.z - floor(intersect.z), 512, tabl));
-	else if (intersect.x == -2)
+	else if (type == -2)
 		return (fill_percent(1.0 - (intersect.y - floor(intersect.y)), 1.0 - (intersect.z - floor(intersect.z)), 512, tabl));
-	else if (intersect.y == -1)
+	else if (type == -3)
 		return (fill_percent(intersect.x - floor(intersect.x), intersect.z - floor(intersect.z), 512, tabl));
-	else if (intersect.y == -2)
+	else if (type == -4)
 		return (fill_percent(intersect.x - floor(intersect.x), intersect.z - floor(intersect.z), 512, tabl));
-	else if (intersect.z == -1)
+	else if (type == -5)
 		return (fill_percent(1.0 - (intersect.y - floor(intersect.y)), intersect.x - floor(intersect.x), 512, tabl));
 	return (fill_percent(1.0 - (intersect.y - floor(intersect.y)), 1.0 - (intersect.x - floor(intersect.x)), 512, tabl));
 }

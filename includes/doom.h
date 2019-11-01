@@ -40,6 +40,7 @@ typedef struct s_doom			t_doom;
 typedef struct s_graphic_lib	t_graphic_lib;
 typedef struct s_bubble			t_bubble;
 typedef struct s_octree			t_octree;
+typedef struct s_light			t_light;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -49,6 +50,12 @@ struct						s_bubble
 {
 	int						pos;
 	t_bubble				*next;
+};
+
+struct						s_light
+{
+	t_vec3d					position;
+	double					power;
 };
 
 struct						s_doom
@@ -71,6 +78,7 @@ struct						s_doom
 	int						editor_mode;
 	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_vec3d
 								, t_octree **);
+	t_light					light;
 };
 
 /*
@@ -99,7 +107,7 @@ int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
 int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_vec3d ray, t_octree **node);
 unsigned int				add_skybox(t_vec3d intersect);
-unsigned int				add_texture(t_vec3d intersect, t_octree *node);
+unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type);
 
 /*
 ** ====-* PHYSICS *-====
