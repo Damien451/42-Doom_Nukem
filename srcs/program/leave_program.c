@@ -17,7 +17,7 @@ static void	close_fonts(t_doom *data)
 		TTF_Quit();
 }
 
-static inline void	free_octree(t_octree *node)
+void		free_octree(t_octree *node)
 {
 	int			i;
 
@@ -25,8 +25,9 @@ static inline void	free_octree(t_octree *node)
 	if (node)
 	{
 		while (i < 8)
-			free_octree(node->child[i]);
+			free_octree(node->child[i++]);
 		free(node);
+		node = NULL;
 	}
 }
 

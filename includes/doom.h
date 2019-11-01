@@ -98,6 +98,7 @@ void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
 char						*get_map_name(int map_to_show);
 int							count_maps(int *first);
+void						free_octree(t_octree *node);
 
 /*
 ** ====-* GRAPHICS *-====

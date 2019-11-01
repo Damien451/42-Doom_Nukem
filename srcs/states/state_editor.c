@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/31 18:17:33 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:35:30 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,42 +95,15 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 	return (0);
 }
 
-void				aff_octree(t_octree *node, t_doom *data, int oct[3])
-{
-	int i;
-
-	i = 0;
-	while (i < 8)
-	{
-		if (node->child[i])
-			aff_octree(node->child[i], data, oct);
-		i++;
-	}
-	if (node->leaf == FULL)
-		oct[0]++;
-	else if (node->leaf == EMPTY)
-		oct[1]++;
-	else
-		oct[2]++;
-}
-
 int					state_editor(t_doom *data)
 {
 	static int		first = 0;
 	static int		map = 0;
-	int				oct[3];
 
-	oct[0] = 0;
-	oct[1] = 0;
-	oct[2] = 0;
 	if (!first)
 	{
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
 		parse_file(data, data->map_name, map);
-		create_octree(data);
-		aff_octree(data->octree, data, oct);
-		printf("empty = %d, full = %d, inside = %d, total = %d\n"
-			, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[2]);
 		data->lib.picked_texture = 0;
 		first++;
 	}
