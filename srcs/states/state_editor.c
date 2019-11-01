@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/01 18:35:30 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/01 21:23:29 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 
-static inline int	display_info(t_doom *data, char *map_name, int step)
+static inline int	display_info(t_doom *data, char *str, int step)
 {
 	char	info[70];
 	char	*str_step;
@@ -29,7 +29,7 @@ static inline int	display_info(t_doom *data, char *map_name, int step)
 	ft_bzero(&info, 50);
 	if (!(str_step = ft_itoa(step)))
 		return (1);
-	ft_strcat(ft_strcat(info, "Map : "), map_name);
+	ft_strcat(ft_strcat(info, "Map : "), str);
 	ft_strcat(ft_strcat(info, ", step : "), str_step);
 	ft_strcat(info, is_valid = (check_map_validity(data) == 0 ?
 		", Map Valid" : ", Map Invalid"));
@@ -51,18 +51,32 @@ static inline void	set_quadrillage(t_doom *data, int step)
 {
 	int			i;
 	int			j;
+	int			k;
+	double	alpha;
+	double	nbr;
 
-	i = 0;
-	while (i < SIZE_MAP)
+	nbr = 1.0;
+	if (step > 0)
+		nbr = 1.0 / ((double)step + 1);
+	if (nbr < 0.1)
+		nbr = 0.1;
+	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_BLEND);
+	k = step - 10;
+	if (k < -1)
+		k = -1;
+	alpha = nbr;
+	while (++k <= step)
 	{
-		j = 0;
-		while (j < SIZE_MAP)
+		i = -1;
+		while (++i < SIZE_MAP)
 		{
-			color_rectangle(data, (t_vec3l){i, j, 0}, step);
-			j++;
+			j = -1;
+			while (++j < SIZE_MAP)
+				color_rectangle(data, (t_vec3l){i, j, 0}, k, alpha);
 		}
-		i++;
+		alpha += nbr;
 	}
+	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_NONE);
 }
 
 static inline int	parse_file(t_doom *data, char *str, int step)

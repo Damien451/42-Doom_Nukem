@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "libft.h"
 
 char	*get_map_name(int map_to_show)
 {
