@@ -172,6 +172,7 @@ static void	init_program2(t_doom *data)
 	data->lib.cam_keys = 0;
 	data->editor_mode = 0;
 	data->map_to_show = 0;
+	data->map_name = "\0";
 	init_camera(data);
 }
 

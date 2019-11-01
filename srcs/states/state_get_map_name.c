@@ -59,6 +59,8 @@ int				state_get_map_name(t_doom *data)
 	if (nbinputs == 50)
 	{
 		data->map_name = map_name;
+		nbinputs = -1;
+		map_name[0] = '\0';
 		switch_state(data, GET_MAP_NAME, EDITOR);
 	}
 	return (0);
