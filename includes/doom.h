@@ -104,7 +104,7 @@ int							count_maps(int *first);
 */
 
 int							frame_calculator(void);
-void						color_rectangle(t_doom *data, t_vec3l rectangle, int step);
+void						color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha);
 int							create_octree(t_doom *data);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data);

@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "libft.h"
 
 char	*get_map_name(int map_to_show)
 {
@@ -16,7 +17,10 @@ char	*get_map_name(int map_to_show)
 	while ((maps = readdir(directory)))
 	{
 		if (map_to_show == 0 && maps->d_name[0] != '.')
+		{
+			closedir(directory);
 			return (maps->d_name);
+		}
 		if (maps->d_name[0] != '.')
 			--map_to_show;
 	}
