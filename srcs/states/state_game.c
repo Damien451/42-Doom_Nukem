@@ -60,7 +60,7 @@ void		skybox(t_doom *data)
 	int			h;
 	unsigned int			format;
 	unsigned char			tab[4];
-	static unsigned int			tabl[512 * 512];
+	static unsigned int		tabl[512 * 512];
 	static int				ok = 0;
 	int						fd;
 

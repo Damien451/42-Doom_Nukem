@@ -16,21 +16,22 @@
 ** ====-* DEFINES *-====
 */
 
-# define EPSILON	1e-5
-# define FOV		(60.0 * M_PI / 180.0)
-# define POV		(34 * M_PI / 180.0)
+# define EPSILON			1e-5
+# define FOV				(60.0 * M_PI / 180.0)
+# define POV				(34 * M_PI / 180.0)
 
-# define RUNNING	(1l << 62)
-# define START		(1l)
-# define PLAYING	(1l << 1)
-# define PAUSE		(1l << 2)
-# define MAIN_MENU	(1l << 3)
-# define PLAY_MENU	(1l << 4)
-# define EDITOR		(1l << 5)
-# define SCORES		(1l << 6)
-# define SETTINGS	(1l << 7)
-# define GET_INPUT	(1l << 8)
-# define LEAVING	(1l << 9)
+# define RUNNING			(1l << 62)
+# define START				(1l)
+# define PLAYING			(1l << 1)
+# define PAUSE				(1l << 2)
+# define MAIN_MENU			(1l << 3)
+# define PLAY_MENU			(1l << 4)
+# define EDITOR				(1l << 5)
+# define SCORES				(1l << 6)
+# define SETTINGS			(1l << 7)
+# define GET_INPUT			(1l << 8)
+# define LEAVING			(1l << 9)
+# define SETTINGS_SOUND		(1l << 10)
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -130,6 +131,8 @@ int							state_play_menu(t_doom *data);
 int							state_scoreboard(t_doom *data);
 
 int							state_settings_menu(t_doom *data);
+
+int							state_sound_settings(t_doom *data);
 
 int							state_get_input(t_doom *data);
 
