@@ -79,6 +79,8 @@ int						put_buttons_on_img(t_doom *data, t_button *btab, int nbuttons);
 
 void					put_buttons_names(t_doom *data, t_button *btab, SDL_Color color, int nbuttons);
 
+void					put_sound_bars(t_doom *data);
+
 t_button				button(t_point pos, t_point dim, long state, char *title);
 
 t_point					point(int width, int height);
