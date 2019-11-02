@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/01 15:59:59 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/02 13:38:42 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,8 +259,8 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 		if (intersect.y == floor(intersect.y) && ((intersect.x <= floor(intersect.x) + 0.05 && intersect.x >= floor(intersect.x) - 0.05) || (intersect.z <= floor(intersect.z) + 0.05 && intersect.z >= floor(intersect.z) - 0.05)))
 			return (127 | 127 << 16 | 127 << 8);
 		if (intersect.z == floor(intersect.z) && ((intersect.y <= floor(intersect.y) + 0.05 && intersect.y >= floor(intersect.y) - 0.05) || (intersect.x <= floor(intersect.x) + 0.05 && intersect.x >= floor(intersect.x) - 0.05)))
-			return (127 | 127 << 16 | 127 << 8);*/
-			origin = intersect;
+			return (127 | 127 << 16 | 127 << 8);
+*/			origin = intersect;
 			i = -1;
 		}
 		i++;

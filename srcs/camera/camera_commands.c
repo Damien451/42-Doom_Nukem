@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/01 20:08:27 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/02 19:32:16 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,69 @@ void		check_if_inside_map(t_doom *data, t_vec3d *position)
 void		apply_motion(t_doom *data)
 {
 	t_vec3d		new_pos;
+	double		squat;
+	t_vec3d		course;
+	static int	frame_s = 0;
+	static int	frame_r = 0;
 
+	if (data->lib.cam_keys & SQUAT)
+	{
+		if (frame_s != 10)
+			frame_s++;
+	}
+	else if (frame_s)
+	{
+		frame_s -= 2;
+		if (frame_s < 0)
+			frame_s = 0;
+	}
+	if (data->lib.cam_keys & COURSE)
+	{
+		if (frame_r / 12 == 0)
+		{
+			course = vec3d_scalar(data->player.camera.right, frame_r / 12.0);
+			course = vec3d_scalar(course, 0.1);
+			course.y = frame_r * 0.005;
+			frame_r++;
+		}
+		else if (frame_r / 12 == 1)
+		{
+			course = vec3d_scalar(data->player.camera.right, 1.0 - (frame_r - 12) / 12.0);
+			course = vec3d_scalar(course, 0.1);
+			course.y = 12.0 * 0.005 - (frame_r - 12) * 0.005;
+			frame_r++;
+		}
+		else if (frame_r / 12 == 2)
+		{
+			course = vec3d_scalar(data->player.camera.right, 0.0 - (frame_r - 24) / 12.0);
+			course = vec3d_scalar(course, 0.1);
+			course.y = 0.0 - (frame_r - 24) * 0.005;
+			frame_r++;
+		}
+		else
+		{
+			if (frame_r / 12 == 3)
+			{
+				course = vec3d_scalar(data->player.camera.right, -1.0 + (frame_r - 36) / 12.0);
+				course = vec3d_scalar(course, 0.1);
+				course.y = -12.0 * 0.005 + (frame_r - 36) * 0.005;
+				frame_r++;
+			}
+			if (frame_r / 12 == 4)
+			{
+				course.x = 0;
+				course.z = 0;
+				course.y = 0;
+				frame_r = 0;
+			}
+		}
+	}
+	else
+	{
+		frame_r = 0;
+		course.y = 0;
+	}
+	squat = 1.0 - ((double)frame_s * 0.8 / 10.0);
 	new_pos = vec3d_add(data->player.position, data->player.acceleration);
 	check_if_inside_map(data, &new_pos);
 	if (data->map_to_save[(int)(new_pos.x)][(int)data->player.position.y][(int)data->player.position.z])
@@ -61,15 +123,15 @@ void		apply_motion(t_doom *data)
 			new_pos.x = floor(new_pos.x) + 1.001;
 		else
 			new_pos.x = floor(new_pos.x) - 0.001;
-			data->player.acceleration.x = 0;
+		data->player.acceleration.x = 0;
 	}
-	else if (data->map_to_save[(int)(new_pos.x)][(int)data->player.position.y + 1][(int)data->player.position.z])
+	else if (data->map_to_save[(int)(new_pos.x)][(int)(data->player.position.y + squat)][(int)data->player.position.z])
 	{
 		if (new_pos.x < data->player.position.x)
 			new_pos.x = floor(new_pos.x) + 1.001;
 		else
 			new_pos.x = floor(new_pos.x) - 0.001;
-			data->player.acceleration.x = 0;
+		data->player.acceleration.x = 0;
 	}
 	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y)][(int)data->player.position.z])
 	{
@@ -77,15 +139,15 @@ void		apply_motion(t_doom *data)
 			new_pos.y = floor(new_pos.y) + 1.001;
 		else
 			new_pos.y = floor(new_pos.y) - 0.001;
-			data->player.acceleration.y = 0;
+		data->player.acceleration.y = 0;
 	}
-	else if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y + 1.0)][(int)data->player.position.z])
+	else if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y + squat + course.y)][(int)data->player.position.z])
 	{
 		if (new_pos.y < data->player.position.y)
 			new_pos.y = floor(new_pos.y) + 1.001;
 		else
 			new_pos.y = floor(new_pos.y) - 0.001;
-			data->player.acceleration.y = 0;
+		data->player.acceleration.y = 0;
 	}
 	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y)][(int)new_pos.z])
 	{
@@ -93,24 +155,25 @@ void		apply_motion(t_doom *data)
 			new_pos.z = floor(new_pos.z) + 1.001;
 		else
 			new_pos.z = floor(new_pos.z) - 0.001;
-			data->player.acceleration.z = 0;
+		data->player.acceleration.z = 0;
 	}
-	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y + 1)][(int)new_pos.z])
+	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y + squat + course.y)][(int)new_pos.z])
 	{
 		if (new_pos.z < data->player.position.z)
 			new_pos.z = floor(new_pos.z) + 1.001;
 		else
 			new_pos.z = floor(new_pos.z) - 0.001;
-			data->player.acceleration.z = 0;
+		data->player.acceleration.z = 0;
 	}
 	data->player.position = new_pos;
-	new_pos.y += 1;
+	new_pos = vec3d_add(new_pos, course);
+	new_pos.y += squat;
 	data->player.camera.origin = new_pos;
 
 }
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y
-	, double *sensitivity)
+		, double *sensitivity)
 {
 	double	x_angle;
 	double	move;
@@ -121,7 +184,7 @@ void			camera_mouse_motion(t_camera *camera, int *x, int *y
 	{
 		move = *sensitivity * (double)*y;
 		x_angle = camera->x_angle + move;
-		if (x_angle > -1 && x_angle < 1)
+		if (x_angle > -1.2 && x_angle < 1.2)
 		{
 			camera->x_angle = x_angle;
 			rotate_camera(camera, camera->right, move);
@@ -129,18 +192,18 @@ void			camera_mouse_motion(t_camera *camera, int *x, int *y
 	}
 }
 
-void		clamp_acceleration(t_vec3d *vec)
+void		clamp_acceleration(t_vec3d *vec, double course)
 {
-	if (vec->x > 0.5)
+	if (vec->x > 0.5 + course)
 		vec->x = 0.5;
-	else if (vec->x < -0.5)
-		vec->x = -0.5;
-	if (vec->y > 0.5)
-		vec->y = 0.5;
-	if (vec->z > 0.5)
-		vec->z = 0.5;
-	else if (vec->z < -0.5)
-		vec->z = -0.5;
+	else if (vec->x < -0.5 - course)
+		vec->x = -0.5 - course;
+	if (vec->y > 1.0 + course)
+		vec->y = 1.0 + course;
+	if (vec->z > 0.5 + course)
+		vec->z = 0.5 + course;
+	else if (vec->z < -0.5 - course)
+		vec->z = -0.5 - course;
 }
 
 void		camera_event_translate(t_doom *data)
@@ -151,26 +214,26 @@ void		camera_event_translate(t_doom *data)
 	if (data->lib.cam_keys & CAMERA_TR_LEFT)
 	{
 		tmp = vec3d_sub(tmp, vec3d_scalar(data->player.camera.right
-			, data->player.speed));
+					, data->player.speed));
 	}
 	if (data->lib.cam_keys & CAMERA_TR_RIGHT)
 	{
 		tmp = vec3d_add(tmp, vec3d_scalar(data->player.camera.right
-			, data->player.speed));
+					, data->player.speed));
 	}
 	if (data->lib.cam_keys & CAMERA_TR_FRONT)
 	{
 		tmp = vec3d_add(tmp, vec3d_scalar(data->player.camera.direction
-			, data->player.speed));
+					, data->player.speed));
 	}
 	if (data->lib.cam_keys & CAMERA_TR_BACK)
 	{
 		tmp = vec3d_sub(tmp, vec3d_scalar(data->player.camera.direction
-			, data->player.speed));
+					, data->player.speed));
 	}
 	if (!(data->lib.cam_keys & WATER))
 		tmp.y = data->player.acceleration.y - 0.0225;
-	clamp_acceleration(&tmp);
+	clamp_acceleration(&tmp, data->lib.cam_keys & COURSE ? 0.5 : 0);
 	data->player.acceleration = tmp;
 	apply_motion(data);
 }
@@ -196,7 +259,7 @@ static void	camera_release_key(SDL_Event *event, t_doom *data)
 
 void		camera_press_key(SDL_Event *event, t_doom *data)
 {
-	data->player.speed = 0.05;
+	data->player.speed = 0.025 * (data->lib.cam_keys & COURSE ? 1.5 : 1) * (data->lib.cam_keys & SQUAT ? 0.2 : 1);
 	if (event->key.type == SDL_KEYDOWN)
 	{
 		if (event->key.keysym.sym == SDLK_a)

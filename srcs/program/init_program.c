@@ -16,9 +16,9 @@ void		init_camera(t_doom *data)
 	data->player.position.y = 60;
 	data->player.position.z = 60;
 	data->sampling = 4;
-	data->light.position.x = 32.1;
-	data->light.position.y = 60.1;
-	data->light.position.z = 32.1;
+	data->light.position.x = 32 + EPSILON;
+	data->light.position.y = 64 - EPSILON;
+	data->light.position.z = 32 + EPSILON;
 }
 
 static void	init_tab(t_doom *data)
