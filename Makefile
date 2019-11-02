@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/11/01 21:23:39 by roduquen         ###   ########.fr        #
+#    Updated: 2019/11/02 21:24:26 by roduquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(ANIM)/create_flame.c					\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
+					$(CAMERA)/clipping.c					\
 					$(EDITOR)/check_map_validity.c			\
 					$(EDITOR)/color_rectangle.c				\
 					$(EDITOR)/deal_with_map_directory.c		\

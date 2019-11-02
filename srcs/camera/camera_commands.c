@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/02 19:32:16 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/02 22:58:23 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void		apply_motion(t_doom *data)
 		if (frame_s < 0)
 			frame_s = 0;
 	}
-	if (data->lib.cam_keys & COURSE)
+	squat = 0.03 * (data->lib.cam_keys & SQUAT ? 0.10 : 1.0);
+	if ((data->lib.cam_keys & COURSE || data->lib.cam_keys & SQUAT) && (data->player.acceleration.x >= squat || data->player.acceleration.x <= -squat || data->player.acceleration.z >= squat || data->player.acceleration.z <= -squat))
 	{
 		if (frame_r / 12 == 0)
 		{
@@ -114,62 +115,39 @@ void		apply_motion(t_doom *data)
 		frame_r = 0;
 		course.y = 0;
 	}
-	squat = 1.0 - ((double)frame_s * 0.8 / 10.0);
 	new_pos = vec3d_add(data->player.position, data->player.acceleration);
 	check_if_inside_map(data, &new_pos);
-	if (data->map_to_save[(int)(new_pos.x)][(int)data->player.position.y][(int)data->player.position.z])
+	course = vec3d_add(new_pos, course);
+	course.y += 1.0 - ((double)frame_s * 0.8 / 10.0);
+	check_player_clipping(&data->player.acceleration, &new_pos, data->map_to_save, data->player.position);
+	check_camera_clipping(&data->player.acceleration, &course, data->map_to_save, data->player.position);
+/*	if (data->map_to_save[(int)(new_pos.x + course.x)][(int)(data->player.position.y)][(int)data->player.position.z])
 	{
 		if (new_pos.x < data->player.position.x)
 			new_pos.x = floor(new_pos.x) + 1.001;
 		else
 			new_pos.x = floor(new_pos.x) - 0.001;
 		data->player.acceleration.x = 0;
-	}
-	else if (data->map_to_save[(int)(new_pos.x)][(int)(data->player.position.y + squat)][(int)data->player.position.z])
-	{
-		if (new_pos.x < data->player.position.x)
-			new_pos.x = floor(new_pos.x) + 1.001;
-		else
-			new_pos.x = floor(new_pos.x) - 0.001;
-		data->player.acceleration.x = 0;
-	}
-	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y)][(int)data->player.position.z])
+	}*/
+/*	if (data->map_to_save[(int)(new_pos.x + course.x)][(int)(new_pos.y+ course.y)][(int)data->player.position.z])
 	{
 		if (new_pos.y < data->player.position.y)
 			new_pos.y = floor(new_pos.y) + 1.001;
 		else
 			new_pos.y = floor(new_pos.y) - 0.001;
 		data->player.acceleration.y = 0;
-	}
-	else if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y + squat + course.y)][(int)data->player.position.z])
-	{
-		if (new_pos.y < data->player.position.y)
-			new_pos.y = floor(new_pos.y) + 1.001;
-		else
-			new_pos.y = floor(new_pos.y) - 0.001;
-		data->player.acceleration.y = 0;
-	}
-	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y)][(int)new_pos.z])
+	}*/
+/*	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y + squat + course.y)][(int)new_pos.z])
 	{
 		if (new_pos.z < data->player.position.z)
 			new_pos.z = floor(new_pos.z) + 1.001;
 		else
 			new_pos.z = floor(new_pos.z) - 0.001;
 		data->player.acceleration.z = 0;
-	}
-	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y + squat + course.y)][(int)new_pos.z])
-	{
-		if (new_pos.z < data->player.position.z)
-			new_pos.z = floor(new_pos.z) + 1.001;
-		else
-			new_pos.z = floor(new_pos.z) - 0.001;
-		data->player.acceleration.z = 0;
-	}
+	}*/
+	data->player.camera.origin = course;
 	data->player.position = new_pos;
-	new_pos = vec3d_add(new_pos, course);
-	new_pos.y += squat;
-	data->player.camera.origin = new_pos;
-
+	printf("data->player.camera.origin = (%.2f|%.2f|%.2f) || player = (%.2f|%.2f|%.2f)\n", course.x, course.y, course.z, new_pos.x, new_pos.y, new_pos.z);
 }
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y

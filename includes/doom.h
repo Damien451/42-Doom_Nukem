@@ -122,6 +122,11 @@ unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type);
 ** ====-* PHYSICS *-====
 */
 
+int			check_player_clipping(t_vec3d *acceleration, t_vec3d *new_pos
+	, char map[64][64][64], t_vec3d position);
+int			check_camera_clipping(t_vec3d *acceleration, t_vec3d *new_pos
+	, char map[64][64][64], t_vec3d position);
+
 /*
 ** ====-* GAMEPLAY *-====
 */
