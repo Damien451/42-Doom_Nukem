@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/02 23:25:51 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/03 01:14:00 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,11 +195,15 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 	int				i;
 	unsigned int	color;
 	unsigned char	c_color[4];
+	unsigned char	test_color[4];
 	t_octree		*tmp;
+	double			test;
 
 	sorted[0] = 0;
 	sorted[1] = 1;
 	sorted[2] = 2;
+	test_color[0] = 0;
+	c_color[0] = 0;
 	max_absolute_between_three(ray.x, ray.y, ray.z, sorted);
 	i = 0;
 	while (i < 3)
@@ -212,12 +216,9 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 		{
 			ray = vec3d_unit(vec3d_sub(data->light.position, intersect));
 			color = add_texture(intersect, node, ret);
-			c_color[0] = 0;
-			c_color[1] = (color >> 16 & 255) >> 1;
-			c_color[2] = (color >> 8 & 255) >> 1;
-			c_color[3] = (color & 255) >> 1;
-			if (vec3d_length2(vec3d_sub(data->light.position, intersect)) > data->light.power)
-				return (*((unsigned int*)&c_color));
+			c_color[1] = (color >> 16 & 255) >> 2;
+			c_color[2] = (color >> 8 & 255) >> 2;
+			c_color[3] = (color & 255) >> 2;
 			if (ret == -2 && intersect.x < data->light.position.x)
 				return (*((unsigned int*)&c_color));
 			if (ret == -1 && intersect.x > data->light.position.x)
@@ -230,6 +231,18 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 				return (*((unsigned int*)&c_color));
 			if (ret == -5 && intersect.z > data->light.position.z)
 				return (*((unsigned int*)&c_color));
+			if ((test = vec3d_length2(vec3d_sub(data->light.position, intersect))) > data->light.power)
+				return (*((unsigned int*)&c_color));
+			test_color[1] = (color >> 16 & 255) - c_color[1];
+			test_color[2] = (color >> 8 & 255) - c_color[2];
+			test_color[3] = (color & 255) - c_color[3];
+			test = 1.0 - test / data->light.power;
+			test_color[1] *= test;
+			test_color[2] *= test;
+			test_color[3] *= test;
+			test_color[1] = c_color[1] + test_color[1];
+			test_color[2] = c_color[2] + test_color[2];
+			test_color[3] = c_color[3] + test_color[3];
 			sorted[0] = 0;
 			sorted[1] = 1;
 			sorted[2] = 2;
@@ -242,9 +255,23 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 				ret = data->check_intersect[sorted[i]](&intersect, origin
 						, ray, &node);
 				if (ret == 1)
-					return (color);
+					return (*((unsigned int*)&test_color));
 				else if (ret < 0)
-					return (*((unsigned int*)&c_color));
+				{
+					if (ret == -2 && intersect.x < data->light.position.x)
+						return (*((unsigned int*)&c_color));
+					if (ret == -1 && intersect.x > data->light.position.x)
+						return (*((unsigned int*)&c_color));
+					if (ret == -4 && intersect.y < data->light.position.y)
+						return (*((unsigned int*)&c_color));
+					if (ret == -3 && intersect.y > data->light.position.y)
+						return (*((unsigned int*)&c_color));
+					if (ret == -6 && intersect.z < data->light.position.z)
+						return (*((unsigned int*)&c_color));
+					if (ret == -5 && intersect.z > data->light.position.z)
+						return (*((unsigned int*)&c_color));
+					return (*((unsigned int*)&test_color));
+				}
 				else if (ret == 3)
 				{
 					origin = intersect;
@@ -255,13 +282,13 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 		}
 		else if (ret == 3)
 		{
-	/*	if (intersect.x == floor(intersect.x) && ((intersect.y <= floor(intersect.y) + 0.05 && intersect.y >= floor(intersect.y) - 0.05) || (intersect.z <= floor(intersect.z) + 0.05 && intersect.z >= floor(intersect.z) - 0.05)))
-			return (127 | 127 << 16 | 127 << 8);
-		if (intersect.y == floor(intersect.y) && ((intersect.x <= floor(intersect.x) + 0.05 && intersect.x >= floor(intersect.x) - 0.05) || (intersect.z <= floor(intersect.z) + 0.05 && intersect.z >= floor(intersect.z) - 0.05)))
-			return (127 | 127 << 16 | 127 << 8);
-		if (intersect.z == floor(intersect.z) && ((intersect.y <= floor(intersect.y) + 0.05 && intersect.y >= floor(intersect.y) - 0.05) || (intersect.x <= floor(intersect.x) + 0.05 && intersect.x >= floor(intersect.x) - 0.05)))
-			return (127 | 127 << 16 | 127 << 8);
-	*/		origin = intersect;
+			/*	if (intersect.x == floor(intersect.x) && ((intersect.y <= floor(intersect.y) + 0.05 && intersect.y >= floor(intersect.y) - 0.05) || (intersect.z <= floor(intersect.z) + 0.05 && intersect.z >= floor(intersect.z) - 0.05)))
+				return (127 | 127 << 16 | 127 << 8);
+				if (intersect.y == floor(intersect.y) && ((intersect.x <= floor(intersect.x) + 0.05 && intersect.x >= floor(intersect.x) - 0.05) || (intersect.z <= floor(intersect.z) + 0.05 && intersect.z >= floor(intersect.z) - 0.05)))
+				return (127 | 127 << 16 | 127 << 8);
+				if (intersect.z == floor(intersect.z) && ((intersect.y <= floor(intersect.y) + 0.05 && intersect.y >= floor(intersect.y) - 0.05) || (intersect.x <= floor(intersect.x) + 0.05 && intersect.x >= floor(intersect.x) - 0.05)))
+				return (127 | 127 << 16 | 127 << 8);
+			 */		origin = intersect;
 			i = -1;
 		}
 		i++;
