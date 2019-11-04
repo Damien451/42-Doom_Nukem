@@ -5,13 +5,13 @@
 
 #include <stdio.h>
 
-static void	init_desc(char *desc[NB_MODIF_INPUTS][20])
+static void	init_desc(char desc[NB_MODIF_INPUTS][25])
 {
 	int			i;
 
 	i = -1;
 	while (++i < NB_MODIF_INPUTS)
-		ft_bzero(desc[i], 20);
+		ft_bzero(desc[i], 25);
 	ft_strcat(desc[0], "Move forward - ");
 	ft_strcat(desc[1], "Move left - ");
 	ft_strcat(desc[2], "Move backward - ");
@@ -30,14 +30,14 @@ static void	create_buttons_inputs2(t_doom *data, t_button *btab,
 	int coords[NB_MODIF_INPUTS + 2][2])
 {
 	int			i;
-	char		titles[NB_MODIF_INPUTS][30];
-	char		desc[NB_MODIF_INPUTS][20];
+	static char	titles[NB_MODIF_INPUTS][40];
+	static char	desc[NB_MODIF_INPUTS][25];
 
 	i = -1;
-	init_desc(&desc);
+	init_desc(desc);
 	while (++i < NB_MODIF_INPUTS + 2)
 	{
-		ft_bzero(&titles[i], 30);
+		ft_bzero(&titles[i], 40);
 		if (i != 8 && i != 13)
 			btab[i] = button(point(coords[i][0], coords[i][1]),
 				point(SET_BUTTON_W, SET_BUTTON_H), 0,
@@ -53,7 +53,7 @@ static void	create_buttons_inputs2(t_doom *data, t_button *btab,
 	}
 }
 
-void	create_buttons_inputs(t_doom *data, t_button *btab)
+void		create_buttons_inputs(t_doom *data, t_button *btab)
 {
 	int			posy[5];
 	int			coords[NB_MODIF_INPUTS + 2][2];

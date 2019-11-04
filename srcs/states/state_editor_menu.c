@@ -46,7 +46,8 @@ static void	check_inputs_menu(t_doom *data, t_button *btab,
 				data->tabinputs.keycode[2])
 				data->button = (data->button == tab[0] - 1)
 				? 0 : data->button + 1;
-			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
+			else if (data->lib.event.key.keysym.sym == SDLK_RETURN &&
+				!(tab[1] == 0 && data->button == 0))
 			{
 				*first = 0;
 				switch_state(data, EDITOR_MENU, btab[data->button].state);
