@@ -12,10 +12,13 @@ void		init_camera(t_doom *data)
 	data->player.sensitivity = SENSITIVITY;
 	data->player.camera.right = X_AXIS;
 	data->player.camera.up = Y_AXIS;
-	data->player.camera.origin.x = 21.7;
-	data->player.camera.origin.y = 0;
-	data->player.camera.origin.z = 24.2;
+	data->player.position.x = 60;
+	data->player.position.y = 60;
+	data->player.position.z = 60;
 	data->sampling = 4;
+	data->light.position.x = 32.1;
+	data->light.position.y = 60.1;
+	data->light.position.z = 32.1;
 }
 
 static void	init_tab(t_doom *data)
@@ -165,6 +168,8 @@ static void	init_program2(t_doom *data)
 	parse_input_file(data, "./files/inputs");
 	data->lib.cam_keys = 0;
 	data->editor_mode = 0;
+	data->map_to_show = 0;
+	data->map_name = "\0";
 	init_camera(data);
 }
 

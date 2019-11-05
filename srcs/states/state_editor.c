@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   state_editor.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/14 14:12:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/29 16:06:45 by dacuvill         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "doom.h"
 #include "libft.h"
@@ -17,9 +6,9 @@
 #include "vec3.h"
 #include "octree.h"
 
-#include "stdio.h"
+#include <stdio.h>
 
-static inline int	display_info(t_doom *data, char *map_name, int step)
+static inline int	display_info(t_doom *data, char *str, int step)
 {
 	char	info[70];
 	char	*str_step;
@@ -29,12 +18,11 @@ static inline int	display_info(t_doom *data, char *map_name, int step)
 	ft_bzero(&info, 50);
 	if (!(str_step = ft_itoa(step)))
 		return (1);
-	ft_strcat(ft_strcat(info, "Map : "), map_name);
+	ft_strcat(ft_strcat(info, "Map : "), str);
 	ft_strcat(ft_strcat(info, ", step : "), str_step);
 	ft_strcat(info, is_valid = (check_map_validity(data) == 0 ?
 		", Map Valid" : ", Map Invalid"));
 	tmp = &info[0];
-	printf("len info = %zu\n", ft_strlen(tmp));
 	if (ft_strlen(tmp) > 57)
 	{
 		ft_bzero(&info[57], 13);
@@ -52,18 +40,32 @@ static inline void	set_quadrillage(t_doom *data, int step)
 {
 	int			i;
 	int			j;
+	int			k;
+	double	alpha;
+	double	nbr;
 
-	i = 0;
-	while (i < SIZE_MAP)
+	nbr = 1.0;
+	if (step > 0)
+		nbr = 1.0 / ((double)step + 1);
+	if (nbr < 0.1)
+		nbr = 0.1;
+	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_BLEND);
+	k = step - 10;
+	if (k < -1)
+		k = -1;
+	alpha = nbr;
+	while (++k <= step)
 	{
-		j = 0;
-		while (j < SIZE_MAP)
+		i = -1;
+		while (++i < SIZE_MAP)
 		{
-			color_rectangle(data, (t_vec3l){i, j, 0}, step);
-			j++;
+			j = -1;
+			while (++j < SIZE_MAP)
+				color_rectangle(data, (t_vec3l){i, j, 0}, k, alpha);
 		}
-		i++;
+		alpha += nbr;
 	}
+	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_NONE);
 }
 
 static inline int	parse_file(t_doom *data, char *str, int step)
@@ -71,8 +73,11 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 	int		fd;
 	int		ret;
 	char	str_to_map[SIZE_MAP * SIZE_MAP * SIZE_MAP];
+	char	full_path[50];
 
-	if ((fd = open(str, O_RDONLY)) != -1)
+	full_path[0] = 0;
+	ft_strcat(ft_strcat(full_path, "./maps/"), str);
+	if ((fd = open(full_path, O_RDONLY)) != -1)
 	{
 		ret = read(fd, str_to_map, SIZE_MAP * SIZE_MAP * SIZE_MAP);
 		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
@@ -93,43 +98,15 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 	return (0);
 }
 
-void				aff_octree(t_octree *node, t_doom *data, int oct[3])
-{
-	int i;
-
-	i = 0;
-	while (i < 8)
-	{
-		if (node->child[i])
-			aff_octree(node->child[i], data, oct);
-		i++;
-	}
-	if (node->leaf == FULL)
-		oct[0]++;
-	else if (node->leaf == EMPTY)
-		oct[1]++;
-	else
-		oct[2]++;
-}
-
 int					state_editor(t_doom *data)
 {
 	static int		first = 0;
 	static int		map = 0;
-	static char		*str = "dacuvill's really cool ' map";
-	int				oct[3];
 
-	oct[0] = 0;
-	oct[1] = 0;
-	oct[2] = 0;
 	if (!first)
 	{
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
-		parse_file(data, str, map);
-		create_octree(data);
-		aff_octree(data->octree, data, oct);
-		printf("empty = %d, full = %d, inside = %d, total = %d\n"
-			, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[2]);
+		parse_file(data, data->map_name, map);
 		data->lib.picked_texture = 0;
 		first++;
 	}
@@ -139,9 +116,9 @@ int					state_editor(t_doom *data)
 	SDL_ShowCursor(SDL_TRUE);
 	set_quadrillage(data, map);
 	while (SDL_PollEvent(&data->lib.event))
-		editor_commands(data, str, &map, &first);
+		editor_commands(data, data->map_name, &map, &first);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-	display_info(data, str, map);
+	display_info(data, data->map_name, map);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }

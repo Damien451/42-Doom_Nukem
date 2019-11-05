@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/28 09:27:28 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/01 16:27:51 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 	t_vec3l		tester;
 	t_vec3l		count;
 	int			nbr_node;
+	int			total;
+	char		c;
 
+	total = 0;
 	nbr_node = 0;
 	tester.x = (node->center.x >> 1) - (node->size >> 2);
 	tester.y = (node->center.y >> 1) - (node->size >> 2);
@@ -33,14 +36,21 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 		{
 			while (++count.z < node->size >> 1)
 			{
-				if (data->map_to_save[tester.x + count.x][tester.y + count.y]
-					[tester.z + count.z])
+				if ((c = data->map_to_save[tester.x + count.x][tester.y + count.y]
+					[tester.z + count.z]) == 2 && node->size >> 1 > 1)
+					return (-1);
+				else if (c == 2)
+					return (-2);
+				else if (c)
 					nbr_node++;
 				else if (nbr_node)
 					return (-1);
+				total++;
 			}
 		}
 	}
+	if (nbr_node != 0 && total != nbr_node)
+		return (-1);
 	return (nbr_node);
 }
 
@@ -97,6 +107,8 @@ void					check_if_child_is_leaf(t_doom *data, t_octree *node)
 			node->child[i]->leaf = EMPTY;
 		else if (ret == -1)
 			node->child[i]->leaf = INSIDE;
+		else if (ret == -2)
+			node->child[i]->leaf = BREAKABLE;
 		else
 			node->child[i]->leaf = FULL;
 		i++;

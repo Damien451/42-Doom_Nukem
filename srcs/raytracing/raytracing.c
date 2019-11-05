@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/27 17:27:34 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/01 19:28:58 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ static inline void		apply_sampling(unsigned int *image, unsigned int color
 	i = 0;
 	while (i < sampling)
 	{
-		tmp = position + i;
+		tmp = position + i - sampling / 2;
 		j = 0;
 		while (j < sampling)
 		{
-			image[tmp + j * WIDTH] = color;
+			image[tmp + (j - sampling / 2) * WIDTH] = color;
 			j++;
 		}
 		i++;
@@ -62,10 +62,10 @@ void					*launch_rays(void *ptr)
 
 	data = ((t_thread*)ptr)->data;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
-	i = 51 + ((t_thread*)ptr)->num;
+	i = 51 + ((t_thread*)ptr)->num + data->sampling / 2;
 	while (i < WIDTH - 51)
 	{
-		j = 51;
+		j = 51 + data->sampling / 2;
 		while (j < 829)
 		{
 			apply_sampling(data->lib.image
@@ -88,11 +88,12 @@ int						raytracing(t_doom *data)
 	SDL_RenderClear(data->lib.renderer);
 	if (!data->lib.cam_keys && data->sampling != 1)
 		data->sampling = 1;
+	data->sampling = 5;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;
 		thread[i].image = data->lib.image;
-		thread[i].num = data->sampling * i;
+		thread[i].num = data->sampling * (i + 1);
 		thread[i].frame = i;
 		thread[i].total_frame = i;
 		if (pthread_create(&thread[i].thread, NULL, (*launch_rays)

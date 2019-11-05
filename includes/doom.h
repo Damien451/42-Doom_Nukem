@@ -28,12 +28,13 @@
 # define PLAY_MENU			(1l << 4)
 # define EDITOR_MENU		(1l << 5)
 # define EDITOR				(1l << 6)
-# define SCORES				(1l << 7)
-# define SETTINGS			(1l << 8)
-# define SETTINGS_INPUTS	(1l << 9)
-# define SETTINGS_SOUND		(1l << 10)
-# define GET_INPUT			(1l << 11)
-# define LEAVING			(1l << 12)
+# define GET_MAP_NAME		(1l << 7)
+# define SCORES				(1l << 8)
+# define SETTINGS			(1l << 9)
+# define SETTINGS_INPUTS	(1l << 10)
+# define SETTINGS_SOUND		(1l << 11)
+# define GET_INPUT			(1l << 12)
+# define LEAVING			(1l << 13)
 
 
 /*
@@ -44,6 +45,7 @@ typedef struct s_doom			t_doom;
 typedef struct s_graphic_lib	t_graphic_lib;
 typedef struct s_bubble			t_bubble;
 typedef struct s_octree			t_octree;
+typedef struct s_light			t_light;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -53,6 +55,12 @@ struct						s_bubble
 {
 	int						pos;
 	t_bubble				*next;
+};
+
+struct						s_light
+{
+	t_vec3d					position;
+	double					power;
 };
 
 struct						s_doom
@@ -65,6 +73,7 @@ struct						s_doom
 	t_bubble				*lightning_list;
 	t_bubble				*lightning_list2;
 	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	char					*map_name;
 	long					button;
 	long					state;
 	t_octree				*octree;
@@ -73,8 +82,10 @@ struct						s_doom
 	t_mixer					*mix;
 	int						sampling;
 	int						editor_mode;
+	int						map_to_show;
 	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_vec3d
 								, t_octree **);
+	t_light					light;
 };
 
 /*
@@ -86,13 +97,16 @@ int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
 void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
+char						*get_map_name(int map_to_show);
+int							count_maps(int *first);
+void						free_octree(t_octree *node);
 
 /*
 ** ====-* GRAPHICS *-====
 */
 
 int							frame_calculator(void);
-void						color_rectangle(t_doom *data, t_vec3l rectangle, int step);
+void						color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha);
 int							create_octree(t_doom *data);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data);
@@ -103,7 +117,7 @@ int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
 int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_vec3d ray, t_octree **node);
 unsigned int				add_skybox(t_vec3d intersect);
-unsigned int				add_texture(t_vec3d intersect, t_octree *node);
+unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type);
 
 /*
 ** ====-* PHYSICS *-====
@@ -142,6 +156,8 @@ int							state_settings_menu(t_doom *data);
 int							state_sound_settings(t_doom *data);
 
 int							state_get_input(t_doom *data);
+
+int							state_get_map_name(t_doom *data);
 
 int							state_editor(t_doom *data);
 
