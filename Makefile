@@ -114,12 +114,14 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_start.c					\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
+					$(STATES)/state_sound_settings.c		\
 					$(UI)/create_buttons_inputs.c			\
 					$(UI)/get_default_inputs.c				\
 					$(UI)/parse_input_file.c				\
 					$(UI)/put_buttons_names.c				\
 					$(UI)/put_buttons_on_img.c				\
 					$(UI)/put_string_on_renderer.c			\
+					$(UI)/put_sound_bars.c					\
 					add_points.c							\
 					load_textures.c							\
 					utils.c

@@ -16,9 +16,9 @@
 ** ====-* DEFINES *-====
 */
 
-# define EPSILON	1e-5
-# define FOV		(60.0 * M_PI / 180.0)
-# define POV		(34 * M_PI / 180.0)
+# define EPSILON			1e-5
+# define FOV				(60.0 * M_PI / 180.0)
+# define POV				(34 * M_PI / 180.0)
 
 # define RUNNING			(1l << 62)
 # define START				(1l)
@@ -36,6 +36,7 @@
 # define SETTINGS_SOUND		(1l << 12)
 # define GET_INPUT			(1l << 13)
 # define LEAVING			(1l << 14)
+
 
 /*
 ** ====-* TYPEDEFS *-====
