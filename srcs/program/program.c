@@ -13,6 +13,8 @@ static int	game_state(t_doom *data)
 		state_editor(data);
 	else if (data->state & GET_MAP_NAME)
 		state_get_map_name(data);
+	else if (data->state & DELETE_MAP)
+		state_delete_map(data);
 	else if (data->state & SCORES)
 		state_scoreboard(data);
 	else if (data->state & SETTINGS)
