@@ -11,19 +11,19 @@ static void mouse_sound_commands(t_doom *data, int **tab)
 		&& data->lib.event.button.y <= BAR_HEIGHT_START + BAR_HEIGHT  && data->lib.event.button.x<= BAR_WIDTH_START + BAR_WIDTH)
 	{
 		(*tab)[0] = (int)((data->lib.event.button.x - BAR_WIDTH_START) * 100.0 / BAR_WIDTH + 0.5);
-		set_master_volume(data->mix, data->lib.event.button.x - (double)BAR_WIDTH_START / (double)BAR_WIDTH);
+		set_master_volume(data->mix, (data->lib.event.button.x - (double)BAR_WIDTH_START) / (double)BAR_WIDTH);
 	}
 	else if (data->lib.event.button.y >= BAR_HEIGHT_START + BAR_GAP && data->lib.event.button.x>= BAR_WIDTH_START
 		&& data->lib.event.button.y <= BAR_HEIGHT_START +  BAR_HEIGHT + BAR_GAP && data->lib.event.button.x<= BAR_WIDTH_START + BAR_WIDTH)
 	{
 		(*tab)[1] = (int)((data->lib.event.button.x - BAR_WIDTH_START) * 100.0 / BAR_WIDTH + 0.5);
-		set_music_volume(data->mix, data->lib.event.button.x - (double)BAR_WIDTH_START / (double)BAR_WIDTH);
+		set_music_volume(data->mix, (data->lib.event.button.x - (double)BAR_WIDTH_START) / (double)BAR_WIDTH);
 	}
 	else if (data->lib.event.button.y >= BAR_HEIGHT_START + 2 * BAR_GAP && data->lib.event.button.x>= BAR_WIDTH_START
 		&& data->lib.event.button.y <= BAR_HEIGHT_START + BAR_HEIGHT + 2 * BAR_GAP && data->lib.event.button.x<= BAR_WIDTH_START + BAR_WIDTH)
 	{
 		(*tab)[2] = (int)((data->lib.event.button.x - BAR_WIDTH_START) * 100.0 / BAR_WIDTH + 0.5);
-		set_sound_effects_volume(data->mix, data->lib.event.button.x - (double)BAR_WIDTH_START / (double)BAR_WIDTH);
+		set_sound_effects_volume(data->mix, (data->lib.event.button.x - (double)BAR_WIDTH_START) / (double)BAR_WIDTH);
 	}
 }
 
