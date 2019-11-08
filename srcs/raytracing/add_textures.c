@@ -71,7 +71,7 @@ unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type)
 
 	if (tabl[0] == 0)
 	{
-		fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/nether_bricks.binary", O_RDONLY);
+		fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/gold.binary", O_RDONLY);
 		read(fd, tabl, 512 * 512 * 4);
 		close(fd);
 	}
