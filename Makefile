@@ -6,7 +6,7 @@
 #    By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 14:47:48 by roduquen          #+#    #+#              #
-#    Updated: 2019/11/01 21:23:39 by roduquen         ###   ########.fr        #
+#    Updated: 2019/11/06 18:41:46 by dacuvill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(SHAPES)/draw_rectangle.c				\
 					$(SOUND)/load_sounds.c					\
 					$(SOUND)/mixer.c						\
+					$(STATES)/state_delete_map.c			\
 					$(STATES)/state_editor.c				\
 					$(STATES)/state_editor_menu.c			\
 					$(STATES)/state_game.c					\
@@ -113,12 +114,14 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_start.c					\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
+					$(STATES)/state_sound_settings.c		\
 					$(UI)/create_buttons_inputs.c			\
 					$(UI)/get_default_inputs.c				\
 					$(UI)/parse_input_file.c				\
 					$(UI)/put_buttons_names.c				\
 					$(UI)/put_buttons_on_img.c				\
 					$(UI)/put_string_on_renderer.c			\
+					$(UI)/put_sound_bars.c					\
 					add_points.c							\
 					load_textures.c							\
 					utils.c

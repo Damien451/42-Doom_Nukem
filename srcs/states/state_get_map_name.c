@@ -41,7 +41,8 @@ static void		check_inputs_map_name(t_doom *data, char *map_name,
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)
  		{
-			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
+			if (data->lib.event.key.keysym.sym == SDLK_RETURN &&
+				*nbinputs > 0)
 			{
 				switch_state(data, GET_MAP_NAME, EDITOR);
 				return ;
@@ -65,7 +66,7 @@ static void		check_inputs_map_name(t_doom *data, char *map_name,
 int				state_get_map_name(t_doom *data)
 {
 	t_button	input_field;
-	static int	nbinputs = -1;
+	static int	nbinputs = 0;
 	static char	map_name[25];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);

@@ -16,9 +16,9 @@
 ** ====-* DEFINES *-====
 */
 
-# define EPSILON	1e-5
-# define FOV		(60.0 * M_PI / 180.0)
-# define POV		(34 * M_PI / 180.0)
+# define EPSILON			1e-5
+# define FOV				(60.0 * M_PI / 180.0)
+# define POV				(34 * M_PI / 180.0)
 
 # define RUNNING			(1l << 62)
 # define START				(1l)
@@ -29,12 +29,14 @@
 # define EDITOR_MENU		(1l << 5)
 # define EDITOR				(1l << 6)
 # define GET_MAP_NAME		(1l << 7)
-# define SCORES				(1l << 8)
-# define SETTINGS			(1l << 9)
-# define SETTINGS_INPUTS	(1l << 10)
-# define SETTINGS_SOUND		(1l << 11)
-# define GET_INPUT			(1l << 12)
-# define LEAVING			(1l << 13)
+# define DELETE_MAP			(1l << 8)
+# define SCORES				(1l << 9)
+# define SETTINGS			(1l << 10)
+# define SETTINGS_INPUTS	(1l << 11)
+# define SETTINGS_SOUND		(1l << 12)
+# define GET_INPUT			(1l << 13)
+# define LEAVING			(1l << 14)
+
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -157,6 +159,8 @@ int							state_sound_settings(t_doom *data);
 int							state_get_input(t_doom *data);
 
 int							state_get_map_name(t_doom *data);
+
+int							state_delete_map(t_doom *data);
 
 int							state_editor(t_doom *data);
 
