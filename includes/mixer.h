@@ -26,4 +26,8 @@ int		load_sound(char *path, Mix_Chunk **sound);
 int		play_sound(Mix_Chunk *sound);
 int		loop_sound(Mix_Chunk *sound);
 
+int		set_master_volume(t_mixer *mix, double a);
+int		set_music_volume(t_mixer *mix, double a);
+int		set_sound_effects_volume(t_mixer *mix, double a);
+
 #endif

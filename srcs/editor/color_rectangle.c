@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-void		color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha)
+void			color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha)
 {
 	int			i;
 	int			j;

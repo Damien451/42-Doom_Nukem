@@ -94,6 +94,8 @@ static inline void	keydown_editor_commands(t_doom *data, int *map, int *first)
 		(unsigned int)data->lib.event.key.keysym.sym ==
 		data->tabinputs.keycode[2])
 		*map = (*map > 0 ? *map - 1 : *map);
+	else if (data->lib.event.key.keysym.sym == SDLK_e)
+		data->editor_mode = (data->editor_mode == 0 ? 1 : 0);
 	else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 	{
 		*first = 0;

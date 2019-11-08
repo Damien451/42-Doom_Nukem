@@ -13,9 +13,9 @@ int		init_mixer(t_doom *data)
     data->mix->format = AUDIO_S16SYS;
     data->mix->channels = 2;
     data->mix->buffers = 4096;
-    data->mix->v_master = 1;
-    data->mix->v_sound_effects = 1;
-    data->mix->v_music = 1;
+    data->mix->v_master = 0.8;
+    data->mix->v_sound_effects = 0.8;
+    data->mix->v_music = 0.8;
 	if (Mix_OpenAudio(data->mix->rate, data->mix->format, data->mix->channels, data->mix->buffers) != 0)
 	{
 		printf("Unable to initialize audio: %s\n", Mix_GetError());

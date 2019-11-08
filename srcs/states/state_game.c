@@ -56,14 +56,11 @@ void		skybox(t_doom *data)
 {
 	int			i;
 	int			j;
-	unsigned char	*test;
-	int			w;
-	int			h;
-	unsigned int			format;
+//	unsigned int			format;
 	unsigned char			tab[4];
 	static unsigned int		tabl[512 * 512];
 	static int				ok = 0;
-	int						fd;
+//	int						fd;
 
 	tab[0] = 0;
 /*	if (!ok)
@@ -79,11 +76,12 @@ void		skybox(t_doom *data)
 		j = 0;
 		while (j < 512)
 		{
-			tab[1] = ((unsigned char*)data->lib.textures[0]->pixels)[i * data->lib.textures[0]->pitch + j * 4 + 2];
-			tab[2] = ((unsigned char*)data->lib.textures[0]->pixels)[i * data->lib.textures[0]->pitch + j * 4 + 3];
-			tab[3] = ((unsigned char*)data->lib.textures[0]->pixels)[i * data->lib.textures[0]->pitch + j * 4 + 1];
+			tab[3] = ((unsigned char *)data->lib.textures[0]->pixels)[i * data->lib.textures[0]->pitch + j * 4];
+			tab[1] = ((unsigned char *)data->lib.textures[0]->pixels)[i * data->lib.textures[0]->pitch + j * 4 + 1];
+			tab[2] = ((unsigned char *)data->lib.textures[0]->pixels)[i * data->lib.textures[0]->pitch + j * 4 + 2];
+			tab[0] = ((unsigned char *)data->lib.textures[0]->pixels)[i * data->lib.textures[0]->pitch + j * 4];
 			tabl[i * 512 + j] = *((unsigned int *)&tab);
-//			data->lib.image[i * WIDTH + j] = *((unsigned int*)&tab);
+			data->lib.image[i * WIDTH + j] = *((unsigned int*)&tab);
 			data->lib.image[i * WIDTH + j] = tabl[i * 512 + j];
 			j++;
 		}
@@ -278,7 +276,7 @@ int			state_game(t_doom *data)
 	//	printf("\n");
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	raytracing(data);
-//	skybox(data);
+	//skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);

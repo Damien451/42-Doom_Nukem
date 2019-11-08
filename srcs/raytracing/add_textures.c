@@ -69,10 +69,10 @@ unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type)
 	int	fd;
 	static unsigned int	tabl[512*512];
 
-
+	(void)node;
 	if (tabl[0] == 0)
 	{
-		fd = open("test5.binary", O_RDONLY);
+		fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/gold.binary", O_RDONLY);
 		read(fd, tabl, 512 * 512 * 4);
 		close(fd);
 	}

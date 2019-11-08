@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/05 14:21:28 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/08 20:03:02 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ int						create_octree_v2(t_doom *data)
 	}
 	data->octree_v2 = octree_v2;
 	printf("Pointerless bytes used = %d\n", i * 4);
+	return (0);
 }
 
 void				aff_octree(t_octree *node, t_doom *data, int oct[3])
