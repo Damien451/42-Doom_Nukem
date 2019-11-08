@@ -69,6 +69,7 @@ unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type)
 	int	fd;
 	static unsigned int	tabl[512*512];
 
+
 	if (tabl[0] == 0)
 	{
 		fd = open("test5.binary", O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/02 22:58:23 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/03 23:26:06 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void		apply_motion(t_doom *data)
 	}*/
 	data->player.camera.origin = course;
 	data->player.position = new_pos;
-	printf("data->player.camera.origin = (%.2f|%.2f|%.2f) || player = (%.2f|%.2f|%.2f)\n", course.x, course.y, course.z, new_pos.x, new_pos.y, new_pos.z);
+	//printf("data->player.camera.origin = (%.2f|%.2f|%.2f) || player = (%.2f|%.2f|%.2f)\n", course.x, course.y, course.z, new_pos.x, new_pos.y, new_pos.z);
 }
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y

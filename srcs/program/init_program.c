@@ -19,7 +19,7 @@ void		init_camera(t_doom *data)
 	data->light.position.x = 32 + EPSILON;
 	data->light.position.y = 2 - EPSILON;
 	data->light.position.z = 32 + EPSILON;
-	data->light.power = 25;
+	data->light.power = 49;
 }
 
 static void	init_tab(t_doom *data)

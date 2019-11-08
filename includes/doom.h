@@ -85,6 +85,7 @@ struct						s_doom
 	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_vec3d
 								, t_octree **);
 	t_light					light;
+	unsigned int			*octree_v2;
 };
 
 /*

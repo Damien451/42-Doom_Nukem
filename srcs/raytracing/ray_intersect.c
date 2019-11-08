@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/03 01:14:00 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/08 19:17:19 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 			return (add_skybox(intersect));
 		else if (ret < 0)
 		{
+			data->light.position = data->player.camera.origin;
 			ray = vec3d_unit(vec3d_sub(data->light.position, intersect));
 			color = add_texture(intersect, node, ret);
 			c_color[1] = (color >> 16 & 255) >> 2;

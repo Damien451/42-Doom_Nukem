@@ -1,6 +1,7 @@
 #include <SDL.h>
+#include "libft.h"
 
-int			frame_calculator(void)
+void		frame_calculator(void)
 {
 	static long		frame = 0;
 	static long		time = 0;
@@ -13,8 +14,8 @@ int			frame_calculator(void)
 		actual_frame = frame;
 		time = actual_time;
 		frame = 0;
-		return (actual_frame);
+		ft_putnbr(frame);
+		ft_putchar('\n');
 	}
 	frame++;
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:59:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 22:20:03 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:02:56 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,10 @@ t_octree				*find_actual_position(t_vec3d *position, t_octree *node)
 {
 	while (node->leaf != EMPTY)
 	{
-		if (node->leaf == INSIDE)
-		{
 			if (position->x < (double)(node->center.x >> 1))
 				node = on_x_lower_than_middle(position, node);
 			else
 				node = on_x_higher_than_middle(position, node);
-		}
 	}
 	return (node);
 }
