@@ -283,8 +283,8 @@ int			state_game(t_doom *data)
 	//		printf("water");
 	//	printf("\n");
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
-	//raytracing(data);
-	skybox(data);
+	raytracing(data);
+	//skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
