@@ -103,7 +103,7 @@ static t_octree				*find_position(t_vec3d *position, t_octree *node)
 	return (node);
 }
 
-void			interaction(t_doom *data)
+/*void			interaction(t_doom *data)
 {
 	t_octree	*node;
 	t_vec3d		intersect;
@@ -203,7 +203,7 @@ void			interaction(t_doom *data)
 			return ;
 		}
 	}
-}
+}*/
 
 int			state_game(t_doom *data)
 {
@@ -225,8 +225,8 @@ int			state_game(t_doom *data)
 			data->lib.cam_keys &= ~DESTROY;
 		camera_press_key(&data->lib.event, data);
 	}
-	if (data->lib.cam_keys & DESTROY)
-		interaction(data);
+//	if (data->lib.cam_keys & DESTROY)
+//		interaction(data);
 	camera_event_translate(data);
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	raytracing(data);

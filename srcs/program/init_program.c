@@ -6,6 +6,39 @@
 #include <SDL_image.h>
 #include <SDL.h>
 
+int			init_light(t_doom *data)
+{
+	t_light		*tmp;
+	int			i;
+
+	data->light = malloc(sizeof(t_light));
+	data->light->type = TORCH;
+	data->light->position = vec3d(19 + EPSILON, 40 + EPSILON, 2 + EPSILON);
+	tmp = data->light;
+	i = 4;
+	while (i < 64)
+	{
+		tmp->next = malloc(sizeof(t_light));
+		tmp->next->type = TORCH;
+		tmp->next->position = vec3d(19 + EPSILON, 40 + EPSILON, i + EPSILON);
+		i += 2;
+		tmp = tmp->next;
+	}
+	i = 2;
+	while (i < 64)
+	{
+		tmp->next = malloc(sizeof(t_light));
+		tmp->next->type = TORCH;
+		tmp->next->position = vec3d(35 + EPSILON, 40 + EPSILON, i + EPSILON);
+		i += 2;
+		tmp = tmp->next;
+	}
+	tmp->next = malloc(sizeof(t_light));
+	tmp->next->type = SUN;
+	tmp->next->next = NULL;
+	return (0);
+}
+
 void		init_camera(t_doom *data)
 {
 	data->player.camera.direction = Z_AXIS;
@@ -16,10 +49,7 @@ void		init_camera(t_doom *data)
 	data->player.position.y = 2.5;
 	data->player.position.z = 32;
 	data->sampling = 4;
-	data->light.position.x = 32 + EPSILON;
-	data->light.position.y = 2 - EPSILON;
-	data->light.position.z = 32 + EPSILON;
-	data->light.power = 50 * 50;
+	init_light(data);
 }
 
 static void	init_tab(t_doom *data)

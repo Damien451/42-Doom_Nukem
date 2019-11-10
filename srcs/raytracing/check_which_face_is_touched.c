@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 15:51:32 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/01 16:28:59 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/10 21:49:57 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <pthread.h>
 #include <math.h>
 
-int		check_x_intersect(t_vec3d *intersect, t_vec3d origin, t_vec3d ray
+int		check_x_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 	, t_octree **node)
 {
 	double		distance;
@@ -28,16 +28,16 @@ int		check_x_intersect(t_vec3d *intersect, t_vec3d origin, t_vec3d ray
 	type = -1;
 	size = (*node)->size >> 1;
 	intersect->x = ((*node)->center.x - size) >> 1;
-	if ((distance = (intersect->x - origin.x) / ray.x) <= 0)
+	if ((distance = (intersect->x - origin.x) / ray->direction.x) <= 0)
 	{
 		type = -2;
 		intersect->x = ((*node)->center.x + size) >> 1;
-		distance = (intersect->x - origin.x) / ray.x;
+		distance = (intersect->x - origin.x) / ray->direction.x;
 	}
 	if (distance <= 0)
 		return (0);
-	intersect->y = origin.y + distance * ray.y;
-	intersect->z = origin.z + distance * ray.z;
+	intersect->y = origin.y + distance * ray->direction.y;
+	intersect->z = origin.z + distance * ray->direction.z;
 	if (intersect->y >= (((*node)->center.y - size) >> 1)
 		&& intersect->y <= (((*node)->center.y + size) >> 1)
 		&& intersect->z >= (((*node)->center.z - size) >> 1)
@@ -55,7 +55,7 @@ int		check_x_intersect(t_vec3d *intersect, t_vec3d origin, t_vec3d ray
 	return (0);
 }
 
-int		check_y_intersect(t_vec3d *intersect, t_vec3d origin, t_vec3d ray
+int		check_y_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 	, t_octree **node)
 {
 	double		distance;
@@ -65,16 +65,16 @@ int		check_y_intersect(t_vec3d *intersect, t_vec3d origin, t_vec3d ray
 	type = -3;
 	size = (*node)->size >> 1;
 	intersect->y = ((*node)->center.y - size) >> 1;
-	if ((distance = (intersect->y - origin.y) / ray.y) <= 0)
+	if ((distance = (intersect->y - origin.y) / ray->direction.y) <= 0)
 	{
 		type = -4;
 		intersect->y = ((*node)->center.y + size) >> 1;
-		distance = (intersect->y - origin.y) / ray.y;
+		distance = (intersect->y - origin.y) / ray->direction.y;
 	}
 	if (distance <= 0)
 		return (0);
-	intersect->x = origin.x + distance * ray.x;
-	intersect->z = origin.z + distance * ray.z;
+	intersect->x = origin.x + distance * ray->direction.x;
+	intersect->z = origin.z + distance * ray->direction.z;
 	if (intersect->x >= (((*node)->center.x - size) >> 1)
 		&& intersect->x <= (((*node)->center.x + size) >> 1)
 		&& intersect->z >= (((*node)->center.z - size) >> 1)
@@ -92,7 +92,7 @@ int		check_y_intersect(t_vec3d *intersect, t_vec3d origin, t_vec3d ray
 	return (0);
 }
 
-int		check_z_intersect(t_vec3d *intersect, t_vec3d origin, t_vec3d ray
+int		check_z_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 	, t_octree **node)
 {
 	double		distance;
@@ -102,16 +102,16 @@ int		check_z_intersect(t_vec3d *intersect, t_vec3d origin, t_vec3d ray
 	type = -5;
 	size = (*node)->size >> 1;
 	intersect->z = ((*node)->center.z - size) >> 1;
-	if ((distance = (intersect->z - origin.z) / ray.z) <= 0)
+	if ((distance = (intersect->z - origin.z) / ray->direction.z) <= 0)
 	{
 		type = -6;
 		intersect->z = ((*node)->center.z + size) >> 1;
-		distance = (intersect->z - origin.z) / ray.z;
+		distance = (intersect->z - origin.z) / ray->direction.z;
 	}
 	if (distance <= 0)
 		return (0);
-	intersect->x = origin.x + distance * ray.x;
-	intersect->y = origin.y + distance * ray.y;
+	intersect->x = origin.x + distance * ray->direction.x;
+	intersect->y = origin.y + distance * ray->direction.y;
 	if (intersect->x >= (((*node)->center.x - size) >> 1)
 		&& intersect->x <= (((*node)->center.x + size) >> 1)
 		&& intersect->y >= (((*node)->center.y - size) >> 1)

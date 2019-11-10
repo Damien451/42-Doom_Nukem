@@ -37,6 +37,8 @@
 # define GET_INPUT			(1l << 13)
 # define LEAVING			(1l << 14)
 
+# define SUN				(1)
+# define TORCH				(2)
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -47,6 +49,7 @@ typedef struct s_graphic_lib	t_graphic_lib;
 typedef struct s_bubble			t_bubble;
 typedef struct s_octree			t_octree;
 typedef struct s_light			t_light;
+typedef struct s_ray			t_ray;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -61,7 +64,20 @@ struct						s_bubble
 struct						s_light
 {
 	t_vec3d					position;
-	double					power;
+	char					type;
+	t_light					*next;
+};
+
+struct						s_ray
+{
+	int						color;
+	int						black;
+	unsigned char			c_color[4];
+	double					length;
+	t_vec3d					intersect;
+	t_vec3d					origin;
+	t_vec3d					direction;
+	t_octree				*node;
 };
 
 struct						s_doom
@@ -84,11 +100,13 @@ struct						s_doom
 	int						sampling;
 	int						editor_mode;
 	int						map_to_show;
-	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_vec3d
+	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_ray *
 								, t_octree **);
-	t_light					light;
+	t_light					*light;
 	unsigned int			*octree_v2;
 	int						ball;
+	int						torch;
+	t_vec3d					sun;
 };
 
 /*
@@ -112,13 +130,13 @@ int							frame_calculator(void);
 void						color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha);
 int							create_octree(t_doom *data);
 int							raytracing(t_doom *data);
-unsigned int				ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data);
+unsigned int				ray_intersect(t_ray ray, t_vec3d origin, t_octree *node, t_doom *data);
 int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
-	, t_vec3d ray, t_octree **node);
+	, t_ray *ray, t_octree **node);
 int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
-	, t_vec3d ray, t_octree **node);
+	, t_ray *ray, t_octree **node);
 int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
-	, t_vec3d ray, t_octree **node);
+	, t_ray *ray, t_octree **node);
 unsigned int				add_skybox(t_vec3d intersect);
 unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom *data);
 
