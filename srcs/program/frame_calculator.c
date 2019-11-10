@@ -13,9 +13,9 @@ void		frame_calculator(void)
 	{
 		actual_frame = frame;
 		time = actual_time;
-		frame = 0;
 		ft_putnbr(frame);
 		ft_putchar('\n');
+		frame = 0;
 	}
 	frame++;
 }

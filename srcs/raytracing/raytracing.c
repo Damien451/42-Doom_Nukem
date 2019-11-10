@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/07 11:38:01 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/10 11:32:59 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,16 +212,42 @@ void					*launch_rays(void *ptr)
 	pthread_exit(0);
 }
 
+void					light_gun(t_doom *data)
+{
+	static t_vec3d	position = {-5, 0, 0};
+	static t_vec3d	direction = {0, 0, 0};
+
+	if (position.x < 0)
+	{
+		position = data->player.camera.origin;
+		direction = data->player.camera.direction;
+	}
+	else
+	{
+		position = vec3d_add(position, direction);
+		data->light.position = position;
+		if (position.x > 64.0 || position.x < 0.0 || position.y > 64.0 || position.y < 0.0 || position.z > 64.0 || position.z < 0.0)
+		{
+			position.x = -1;
+			data->ball = 0;
+		}
+	}
+}
+
 int						raytracing(t_doom *data)
 {
 	t_thread		thread[NBR_THREAD];
 	int				i;
 
 	i = 0;
+	data->light.power = 50 + (rand() & 255);
+//	data->light.power = 50;
+	if (data->ball)
+		light_gun(data);
 	SDL_RenderClear(data->lib.renderer);
 	if (!data->lib.cam_keys && data->sampling != 1)
 		data->sampling = 1;
-	data->sampling = 5;
+	data->sampling = 6;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;

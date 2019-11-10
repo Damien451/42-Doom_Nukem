@@ -88,6 +88,7 @@ struct						s_doom
 								, t_octree **);
 	t_light					light;
 	unsigned int			*octree_v2;
+	int						ball;
 };
 
 /*
@@ -119,7 +120,7 @@ int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
 int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_vec3d ray, t_octree **node);
 unsigned int				add_skybox(t_vec3d intersect);
-unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type);
+unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====
