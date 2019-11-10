@@ -70,25 +70,59 @@ static void		load_skybox(t_doom *data)
 }
 
 
-/*static void		load_textures_blocks2(t_doom *data)
+static void		load_textures_blocks_binary2(t_doom *data)
 {
-	data->lib.textures_block[24] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz.binary", O_RDONLY);
-	data->lib.textures_block[25] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_pillar.binary", O_RDONLY);
-	data->lib.textures_block[26] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_chiseled.binary", O_RDONLY);
-	data->lib.textures_block[27] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron_bars.binary", O_RDONLY);
-	data->lib.textures_block[28] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/glass.binary", O_RDONLY);
-	data->lib.textures_block[29] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/glass_broken.binary", O_RDONLY);
-	data->lib.textures_block[30] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/start_block.binary", O_RDONLY);
-	data->lib.textures_block[31] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/arrival_block.binary", O_RDONLY);
-	data->lib.textures_block[32] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/water.binary", O_RDONLY);
-	data->lib.textures_block[33] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/gold.binary", O_RDONLY);
-	data->lib.textures_block[34] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.binary", O_RDONLY);
-	data->lib.textures_block[35] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak.binary", O_RDONLY);
-	data->lib.textures_block[36] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak_planks.binary", O_RDONLY);
-	data->lib.textures_block[37] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak.binary", O_RDONLY);
-	data->lib.textures_block[38] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak_planks.binary", O_RDONLY);
-	data->lib.textures_block[39] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/dirt.binary", O_RDONLY);
-}*/
+	int		fd;
+
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[24], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_pillar.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[25], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_chiseled.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[26], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron_bars.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[27], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/glass.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[28], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/glass_broken.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[29], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/start_block.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[30], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/arrival_block.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[31], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/water.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[32], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/gold.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[33], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[34], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[35], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak_planks.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[36], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[37], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak_planks.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[38], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/dirt.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[39], 512 * 512 * 4);
+	close(fd);
+}
 
 static void		load_binary_textures(t_doom *data)
 {
@@ -172,6 +206,7 @@ static void		load_binary_textures(t_doom *data)
 	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/gravel.binary", O_RDONLY);
 	read(fd, data->lib.textures_block[23], 512 * 4 * 512);
 	close(fd);
+	load_textures_blocks_binary2(data);
 }
 
 void			load_textures(t_doom *data)

@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 16:11:23 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/10 19:55:07 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int				find_ac_position(t_vec3d *position, unsigned int *octree_v2, int *value)
 			j = on_x_higher_than_middle(position, &center, size);
 		}
 		tmp = octree_v2[i] ^ 0xFFFF0000;
-		tmp >>= 
+		tmp >>= 16;
 		tmp2 = INSIDE << (j << 1);
 		printf("octree = %#6x | inside = %#6x | octree clean = %#6x\n", octree_v2[i], tmp2, tmp);
 		if (!(tmp ^ tmp2))
@@ -234,6 +234,30 @@ void					light_gun(t_doom *data)
 	}
 }
 
+void					sun(t_doom *data)
+{
+	static int			frame = 0;
+
+	if (frame == 0)
+	{
+		data->light.position.x = 0;
+		data->light.position.y = 63;
+		data->light.position.z = 0;
+	}
+	else
+	{
+		data->light.position.z += 0.01;
+		data->light.position.x += 0.01;
+		if (data->light.position.z > 64.0)
+		{
+			data->light.position.z = 0;
+			data->light.position.x = 0;
+			frame = 0;
+		}
+	}
+	frame++;
+}
+
 int						raytracing(t_doom *data)
 {
 	t_thread		thread[NBR_THREAD];
@@ -247,13 +271,15 @@ int						raytracing(t_doom *data)
 		frame = 0;
 	}
 	frame++;
-	data->light.power = 1000;
+	data->light.power = 10000;
 	if (data->ball)
 		light_gun(data);
+	else
+		sun(data);
 	SDL_RenderClear(data->lib.renderer);
-	if (!data->lib.cam_keys && data->sampling != 1)
-		data->sampling = 1;
-	data->sampling = 6;
+	data->sampling = 1;
+	if (data->lib.cam_keys & COURSE)
+		data->sampling = 6;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;
