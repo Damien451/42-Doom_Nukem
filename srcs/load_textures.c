@@ -1,5 +1,7 @@
 #include "doom.h"
 #include "graphic_lib.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 static void		load_textures_blocks2(SDL_Surface *textures[NBR_TEXTURES_BLOCKS])
 {
@@ -67,6 +69,111 @@ static void		load_skybox(t_doom *data)
 	}
 }
 
+
+/*static void		load_textures_blocks2(t_doom *data)
+{
+	data->lib.textures_block[24] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz.binary", O_RDONLY);
+	data->lib.textures_block[25] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_pillar.binary", O_RDONLY);
+	data->lib.textures_block[26] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_chiseled.binary", O_RDONLY);
+	data->lib.textures_block[27] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron_bars.binary", O_RDONLY);
+	data->lib.textures_block[28] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/glass.binary", O_RDONLY);
+	data->lib.textures_block[29] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/glass_broken.binary", O_RDONLY);
+	data->lib.textures_block[30] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/start_block.binary", O_RDONLY);
+	data->lib.textures_block[31] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/arrival_block.binary", O_RDONLY);
+	data->lib.textures_block[32] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/water.binary", O_RDONLY);
+	data->lib.textures_block[33] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/gold.binary", O_RDONLY);
+	data->lib.textures_block[34] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.binary", O_RDONLY);
+	data->lib.textures_block[35] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak.binary", O_RDONLY);
+	data->lib.textures_block[36] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak_planks.binary", O_RDONLY);
+	data->lib.textures_block[37] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak.binary", O_RDONLY);
+	data->lib.textures_block[38] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak_planks.binary", O_RDONLY);
+	data->lib.textures_block[39] = fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks/dirt.binary", O_RDONLY);
+}*/
+
+static void		load_binary_textures(t_doom *data)
+{
+	int		fd;
+
+	fd = 0;
+	while (fd < NBR_TEXTURES_BLOCKS)
+	{
+		data->lib.textures_block[fd] = malloc(512 * 512 * 4);
+		fd++;
+	}
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/andesite.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[0], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/andesite_polished.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[1], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/diorite.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[2], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/diorite_polished.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[3], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/granite.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[4], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/granite_polished.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[5], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/sand.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[6], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/sandstone.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[7], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/sandstone_bricks.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[8], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/sandstone_chiseled.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[9], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[10], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_smooth.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[11], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_chiseled.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[12], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_slabs.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[13], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_white_slabs.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[14], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_cobble.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[15], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_cobble_mossy.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[16], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_bricks.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[17], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_end_bricks.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[18], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/stone_end.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[19], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/nether_rock.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[20], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/nether_bricks.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[21], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/obsidian.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[22], 512 * 4 * 512);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/gravel.binary", O_RDONLY);
+	read(fd, data->lib.textures_block[23], 512 * 4 * 512);
+	close(fd);
+}
+
 void			load_textures(t_doom *data)
 {
 	data->lib.character = SDL_LoadBMP("textures/character.bmp");
@@ -78,6 +185,7 @@ void			load_textures(t_doom *data)
 	data->lib.editor_texture[0] = SDL_LoadBMP("textures/editor.bmp");
 	data->lib.editor_texture[1] = SDL_LoadBMP("textures/editor2.bmp");
 	data->lib.hud_texture = SDL_LoadBMP("textures/hud.bmp");
+	load_binary_textures(data);
 	load_skybox(data);
 	load_textures_blocks(data->lib.textures);
 	data->lib.picked_texture = NBR_TEXTURES_BLOCKS;

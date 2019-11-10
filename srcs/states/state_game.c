@@ -44,7 +44,7 @@ void		skybox(t_doom *data)
 	}
 	if (!ok)
 	{
-		i = open("damien.binary", O_TRUNC | O_WRONLY | O_CREAT, 0777);
+		i = open("test.binary", O_TRUNC | O_WRONLY | O_CREAT, 0777);
 		write(i, tabl, 512*512*4);
 		ok++;
 	}
@@ -230,6 +230,7 @@ int			state_game(t_doom *data)
 	camera_event_translate(data);
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	raytracing(data);
+//	skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);

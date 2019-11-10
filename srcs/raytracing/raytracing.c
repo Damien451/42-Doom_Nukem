@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 11:32:59 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/10 16:11:23 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,10 +238,16 @@ int						raytracing(t_doom *data)
 {
 	t_thread		thread[NBR_THREAD];
 	int				i;
+	static int		frame = 0;
 
 	i = 0;
-	data->light.power = 50 + (rand() & 255);
-//	data->light.power = 50;
+	if (frame == 4)
+	{
+		data->light.power = 50 + (rand() & 15);
+		frame = 0;
+	}
+	frame++;
+	data->light.power = 1000;
 	if (data->ball)
 		light_gun(data);
 	SDL_RenderClear(data->lib.renderer);

@@ -66,25 +66,34 @@ unsigned int				add_skybox(t_vec3d intersect)
 unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom *data)
 {
 	int	fd;
-	unsigned int *tabl;
+	static unsigned int *tabl;
 
 	(void)node;
-//	if (tabl[0] == 0)
-//	{
-//		fd = open("test.binary", O_RDONLY);
-//		read(fd, tabl, 512 * 512 * 4);
-//		close(fd);
-//	}
-	tabl = data->lib.textures_block[(int)data->map_to_save[(int)intersect.x][(int)intersect.y][(int)intersect.z]];
 	if (type == -1)
+	{
+		tabl = data->lib.textures_block[(int)data->map_to_save[(int)intersect.x - 1][(int)intersect.y][(int)intersect.z] - 1];
 		return (fill_percent(1.0 - (intersect.y - floor(intersect.y)), intersect.z - floor(intersect.z), 512, tabl));
+	}
 	else if (type == -2)
+	{
+		tabl = data->lib.textures_block[(int)data->map_to_save[(int)intersect.x][(int)intersect.y][(int)intersect.z] - 1];
 		return (fill_percent(1.0 - (intersect.y - floor(intersect.y)), 1.0 - (intersect.z - floor(intersect.z)), 512, tabl));
+	}
 	else if (type == -3)
+	{
+		tabl = data->lib.textures_block[(int)data->map_to_save[(int)intersect.x][(int)intersect.y - 1][(int)intersect.z] - 1];
 		return (fill_percent(intersect.x - floor(intersect.x), intersect.z - floor(intersect.z), 512, tabl));
+	}
 	else if (type == -4)
+	{
+		tabl = data->lib.textures_block[(int)data->map_to_save[(int)intersect.x][(int)intersect.y][(int)intersect.z] - 1];
 		return (fill_percent(intersect.x - floor(intersect.x), intersect.z - floor(intersect.z), 512, tabl));
+	}
 	else if (type == -5)
+	{
+		tabl = data->lib.textures_block[(int)data->map_to_save[(int)intersect.x][(int)intersect.y][(int)intersect.z - 1] - 1];
 		return (fill_percent(1.0 - (intersect.y - floor(intersect.y)), intersect.x - floor(intersect.x), 512, tabl));
+	}
+	tabl = data->lib.textures_block[(int)data->map_to_save[(int)intersect.x][(int)intersect.y][(int)intersect.z] - 1];
 	return (fill_percent(1.0 - (intersect.y - floor(intersect.y)), 1.0 - (intersect.x - floor(intersect.x)), 512, tabl));
 }

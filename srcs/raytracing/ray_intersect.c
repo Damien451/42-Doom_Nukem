@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 12:37:25 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/10 13:34:52 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 			//data->light.position = data->player.camera.origin;
 			ray = vec3d_unit(vec3d_sub(data->light.position, intersect));
 			color = add_texture(intersect, node, ret, data);
-			black = (color & 0xF8F8F8F8) >> 3;
+			black = (color & 0xF8F8F8) >> 3;
 			if (ret == -2 && intersect.x < data->light.position.x)
 				return (black);
 			if (ret == -1 && intersect.x > data->light.position.x)
@@ -232,6 +232,7 @@ unsigned int		ray_intersect(t_vec3d ray, t_vec3d origin, t_octree *node
 				return (black);
 			if ((length = vec3d_length2(vec3d_sub(data->light.position, intersect))) > data->light.power)
 				return (black);
+			test_color[0] = (color & 255);
 			test_color[1] = ((color >> 24) & 255);
 			test_color[2] = ((color >> 16) & 255);
 			test_color[3] = (color >> 8) & 255;
