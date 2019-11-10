@@ -56,7 +56,7 @@ int			state_main_menu(t_doom *data)
 	t_button	buttons[5];
 	static int	total_frame = 0;
 	static int	frame = 0;
-	static int flag = 0;
+	static int	flag = 0;
 
 	if (flag == 0)
 	{
