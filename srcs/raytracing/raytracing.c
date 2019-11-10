@@ -6,7 +6,7 @@
 /*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/01 19:28:58 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/10 16:11:23 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,146 @@ static inline void		apply_sampling(unsigned int *image, unsigned int color
 	i = 0;
 	while (i < sampling)
 	{
-		tmp = position + i - sampling / 2;
+		tmp = position + i - (sampling >> 1);
 		j = 0;
 		while (j < sampling)
 		{
-			image[tmp + (j - sampling / 2) * WIDTH] = color;
+			image[tmp + (j - (sampling >> 1)) * WIDTH] = color;
 			j++;
 		}
 		i++;
 	}
+}
+
+static inline int	on_x_higher_than_middle(t_vec3d *position
+	, t_vec3l *center, double size)
+{
+	if (position->y < (double)(center->y >> 1))
+	{
+		center->y -= (size);
+		if (position->z < (double)(center->z >> 1))
+		{
+			center->z -= (size);
+			return (6);
+		}
+		else
+		{
+			center->z += size;
+			return (2);
+		}
+	}
+	else
+	{
+		center->y += (size);
+		if (position->z < (double)(center->z >> 1))
+		{
+			center->z -= (size);
+			return (4);
+		}
+		else
+		{
+			center->z += size;
+			return (0);
+		}
+	}
+}
+
+static inline int	on_x_lower_than_middle(t_vec3d *position
+		, t_vec3l *center, double size)
+{
+	if (position->y < (double)(center->y >> 1))
+	{
+		center->y -= (size);
+		if (position->z < (double)(center->z >> 1))
+		{
+			center->z -= (size);
+			return (7);
+		}
+		else
+		{
+			center->z += size;
+			return (3);
+		}
+	}
+	else
+	{
+		center->y += (size);
+		if (position->z < (double)(center->z >> 1))
+		{
+			center->z -= (size);
+			return (5);
+		}
+		else
+		{
+			center->z += size;
+			return (1);
+		}
+	}
+}
+
+int				find_ac_position(t_vec3d *position, unsigned int *octree_v2, int *value)
+{
+	t_vec3l		center;
+	double		size;
+	int			new;
+	int			i;
+	int			j;
+	int			count;
+	unsigned int	tmp;
+	unsigned int	tmp2;
+
+	center = vec3l(64, 64, 64);
+	i = 0;
+	size = 32;
+	while (1)
+	{
+		if (position->x < (double)(center.x >> 1))
+		{
+			center.x -= size;
+			j = on_x_lower_than_middle(position, &center, size);
+		}
+		else
+		{
+			center.x += size;
+			j = on_x_higher_than_middle(position, &center, size);
+		}
+		tmp = octree_v2[i] ^ 0xFFFF0000;
+		tmp >>= 
+		tmp2 = INSIDE << (j << 1);
+		printf("octree = %#6x | inside = %#6x | octree clean = %#6x\n", octree_v2[i], tmp2, tmp);
+		if (!(tmp ^ tmp2))
+		{
+			new = 0;
+			count = 1;
+			j = 7 - j;
+			while (new <= j)
+			{
+				tmp2 = INSIDE << (new << 1);
+				if (!(tmp ^ tmp2))
+					count++;
+				new++;
+			}
+			i = octree_v2[i];
+			while (count)
+			{
+				if ((octree_v2[i] & 0xFFFF0000) == 0xFFFF0000)
+				{
+					i++;
+					count--;
+				}
+				else
+					i++;
+			}
+		}
+		else
+		{
+			*value = 7 - j;
+			printf("INT center = (%ld|%ld|%ld), size = %.2f\n", center.x, center.y, center.z, size);
+			return (i);
+		}
+		size /= 2;
+	}
+	return (0);
 }
 
 void					*launch_rays(void *ptr)
@@ -62,6 +193,8 @@ void					*launch_rays(void *ptr)
 
 	data = ((t_thread*)ptr)->data;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
+//	printf("OCTREE center = (%ld|%ld|%ld), size = %d\n", position->center.x, position->center.y, position->center.z, position->size);
+//	find_ac_position(&data->player.camera.origin, data->octree_v2, &i);
 	i = 51 + ((t_thread*)ptr)->num + data->sampling / 2;
 	while (i < WIDTH - 51)
 	{
@@ -79,21 +212,53 @@ void					*launch_rays(void *ptr)
 	pthread_exit(0);
 }
 
+void					light_gun(t_doom *data)
+{
+	static t_vec3d	position = {-5, 0, 0};
+	static t_vec3d	direction = {0, 0, 0};
+
+	if (position.x < 0)
+	{
+		position = data->player.camera.origin;
+		direction = data->player.camera.direction;
+	}
+	else
+	{
+		position = vec3d_add(position, direction);
+		data->light.position = position;
+		if (position.x > 64.0 || position.x < 0.0 || position.y > 64.0 || position.y < 0.0 || position.z > 64.0 || position.z < 0.0)
+		{
+			position.x = -1;
+			data->ball = 0;
+		}
+	}
+}
+
 int						raytracing(t_doom *data)
 {
 	t_thread		thread[NBR_THREAD];
 	int				i;
+	static int		frame = 0;
 
 	i = 0;
+	if (frame == 4)
+	{
+		data->light.power = 50 + (rand() & 15);
+		frame = 0;
+	}
+	frame++;
+	data->light.power = 1000;
+	if (data->ball)
+		light_gun(data);
 	SDL_RenderClear(data->lib.renderer);
 	if (!data->lib.cam_keys && data->sampling != 1)
 		data->sampling = 1;
-	data->sampling = 5;
+	data->sampling = 6;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;
 		thread[i].image = data->lib.image;
-		thread[i].num = data->sampling * (i + 1);
+		thread[i].num = data->sampling * (i);
 		thread[i].frame = i;
 		thread[i].total_frame = i;
 		if (pthread_create(&thread[i].thread, NULL, (*launch_rays)

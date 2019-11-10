@@ -39,7 +39,7 @@ struct						s_vec3l
 */
 
 t_vec3d						vec3d(double x, double y, double z);
-double						vec3d_lenght2(t_vec3d vec);
+double						vec3d_length2(t_vec3d vec);
 t_vec3d						vec3d_unit(t_vec3d vec);
 t_vec3d						vec3d_add(t_vec3d vec_a, t_vec3d vec_b);
 t_vec3d						vec3d_sub(t_vec3d vec_a, t_vec3d vec_b);
@@ -53,7 +53,7 @@ double						vec3d_dot(t_vec3d vec_a, t_vec3d vec_b);
 */
 
 t_vec3l						vec3l(long x, long y, long z);
-long						vec3l_lenght2(t_vec3l vec);
+long						vec3l_length2(t_vec3l vec);
 t_vec3l						vec3l_unit(t_vec3l vec);
 t_vec3l						vec3l_add(t_vec3l vec_a, t_vec3l vec_b);
 t_vec3l						vec3l_sub(t_vec3l vec_a, t_vec3l vec_b);

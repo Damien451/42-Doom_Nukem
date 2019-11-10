@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/28 13:13:08 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/11/10 16:32:53 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_MENU		5
 # define NBR_FONTS				6
-# define NB_IMG 				2
+# define NB_IMG					2
 # define ID_START_BLOCK			30
 # define ID_FINISH_BLOCK		31
 
@@ -104,6 +104,7 @@ struct							s_graphic_lib
 	unsigned int				*image;
 	unsigned int				cam_keys;
 	unsigned int				picked_texture;
+	unsigned int				*textures_block[NBR_TEXTURES_BLOCKS];
 };
 
 /*

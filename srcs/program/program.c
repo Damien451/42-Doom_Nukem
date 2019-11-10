@@ -42,11 +42,7 @@ int			program(t_doom *data)
 				, &pitch))
 		{
 			game_state(data);
-			if ((pitch = frame_calculator()))
-			{
-				ft_putnbr(pitch);
-				ft_putchar('\n');
-			}
+			frame_calculator();
 			SDL_UnlockTexture(data->lib.texture);
 			SDL_RenderClear(data->lib.renderer);
 		}
