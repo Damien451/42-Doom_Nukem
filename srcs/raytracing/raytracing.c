@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <roduquen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 16:11:23 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/10 18:12:35 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,13 +247,13 @@ int						raytracing(t_doom *data)
 		frame = 0;
 	}
 	frame++;
-	data->light.power = 1000;
+	data->light.power = 100000;
 	if (data->ball)
 		light_gun(data);
 	SDL_RenderClear(data->lib.renderer);
-	if (!data->lib.cam_keys && data->sampling != 1)
-		data->sampling = 1;
-	data->sampling = 6;
+	data->sampling = 1;
+	if (data->lib.cam_keys & COURSE)
+		data->sampling = 6;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;

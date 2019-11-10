@@ -68,16 +68,7 @@ unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom 
 	int	fd;
 	static unsigned int *tabl;
 
-<<<<<<< HEAD
-	if (tabl[0] == 0)
-	{
-		fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/gold.binary", O_RDONLY);
-		read(fd, tabl, 512 * 512 * 4);
-		close(fd);
-	}
-=======
 	(void)node;
->>>>>>> master
 	if (type == -1)
 	{
 		tabl = data->lib.textures_block[(int)data->map_to_save[(int)intersect.x - 1][(int)intersect.y][(int)intersect.z] - 1];
