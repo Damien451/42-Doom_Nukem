@@ -196,19 +196,19 @@ unsigned int		launch_ray_to_light(t_ray *ray_inf, t_light *light, int ret, t_vec
 	if (light->type == SUN)
 		light->position = data->sun;
 	ray_inf->direction = vec3d_unit(vec3d_sub(light->position, origin));
-/*	if (ret == -2 && origin.x < data->light.position.x)
+	if (ret == -2 && origin.x < light->position.x)
 		return (0);
-	if (ret == -1 && origin.x > data->light.position.x)
+	if (ret == -1 && origin.x > light->position.x)
 		return (0);
-	if (ret == -4 && origin.y < data->light.position.y)
+	if (ret == -4 && origin.y < light->position.y)
 		return (0);
-	if (ret == -3 && origin.y > data->light.position.y)
+	if (ret == -3 && origin.y > light->position.y)
 		return (0);
-	if (ret == -6 && origin.z < data->light.position.z)
+	if (ret == -6 && origin.z < light->position.z)
 		return (0);
-	if (ret == -5 && origin.z > data->light.position.z)
+	if (ret == -5 && origin.z > light->position.z)
 		return (0);
-*/	if ((length = vec3d_length2(vec3d_sub(light->position, origin))) > (light->type == SUN ? 10000 : data->torch))
+	if ((length = vec3d_length2(vec3d_sub(light->position, origin))) > (light->type == SUN ? 10000 : data->torch))
 		return (0);
 	length = 1.0 - length / (light->type == SUN ? 5000 : data->torch);
 	intersect = origin;

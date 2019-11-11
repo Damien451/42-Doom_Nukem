@@ -273,10 +273,10 @@ int						raytracing(t_doom *data)
 //		frame = 0;
 //	}
 	frame++;
-/*	if (data->ball)
-		light_gun(data);
-	else
-*/		sun(data);
+//	if (data->ball)
+//		light_gun(data);
+//	else
+		sun(data);
 	SDL_RenderClear(data->lib.renderer);
 	data->sampling = 1;
 	if (data->lib.cam_keys & COURSE)

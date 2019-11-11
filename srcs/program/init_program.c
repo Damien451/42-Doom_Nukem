@@ -15,13 +15,13 @@ int			init_light(t_doom *data)
 	data->light->type = TORCH;
 	data->light->position = vec3d(19 + EPSILON, 40 + EPSILON, 2 + EPSILON);
 	tmp = data->light;
-	i = 4;
+	i = 10;
 	while (i < 64)
 	{
 		tmp->next = malloc(sizeof(t_light));
 		tmp->next->type = TORCH;
 		tmp->next->position = vec3d(19 + EPSILON, 40 + EPSILON, i + EPSILON);
-		i += 2;
+		i += 8;
 		tmp = tmp->next;
 	}
 	i = 2;
@@ -30,9 +30,13 @@ int			init_light(t_doom *data)
 		tmp->next = malloc(sizeof(t_light));
 		tmp->next->type = TORCH;
 		tmp->next->position = vec3d(35 + EPSILON, 40 + EPSILON, i + EPSILON);
-		i += 2;
+		i += 8;
 		tmp = tmp->next;
 	}
+	tmp->next = malloc(sizeof(t_light));
+	tmp->next->type = TORCH;
+	tmp->next->position = vec3d(27 + EPSILON, 44 + EPSILON, 32 + EPSILON);
+	tmp = tmp->next;
 	tmp->next = malloc(sizeof(t_light));
 	tmp->next->type = SUN;
 	tmp->next->next = NULL;
