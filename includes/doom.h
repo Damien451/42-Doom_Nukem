@@ -107,6 +107,7 @@ struct						s_doom
 	int						ball;
 	int						torch;
 	t_vec3d					sun;
+	char					photo;
 };
 
 /*
@@ -139,6 +140,7 @@ int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
 unsigned int				add_skybox(t_vec3d intersect);
 unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom *data);
+int							convert_to_ppm(unsigned int *view);
 
 /*
 ** ====-* PHYSICS *-====
