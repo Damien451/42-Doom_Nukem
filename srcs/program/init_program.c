@@ -53,6 +53,7 @@ void		init_camera(t_doom *data)
 	data->player.position.y = 2.5;
 	data->player.position.z = 32;
 	data->sampling = 4;
+	data->editor_alpha = 10;
 	init_light(data);
 }
 
@@ -162,7 +163,7 @@ static int	init_fonts(t_doom *data)
 		return (1);
 	if (!(data->lib.ptrfont[3] = TTF_OpenFont("./font/After_the_Goldrush.ttf", 200)))
 		return (1);
-	if (!(data->lib.ptrfont[4] = TTF_OpenFont("./font/DEPLETED_URANIUM.ttf", 200)))
+	if (!(data->lib.ptrfont[4] = TTF_OpenFont("./font/8th_Cargo.ttf", 37)))
 		return (1);
 	if (!(data->lib.ptrfont[5] = TTF_OpenFont("./font/xolonium/Xolonium-Regular.ttf", 25)))
 		return (1);

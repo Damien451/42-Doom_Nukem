@@ -102,6 +102,8 @@ static inline void	keydown_editor_commands(t_doom *data, int *map, int *first)
 		*map = 0;
 		switch_state(data, EDITOR, EDITOR_MENU);
 	}
+	else if (data->lib.event.key.keysym.sym == SDLK_t && !data->lib.event.key.repeat)
+		data->editor_alpha = data->editor_alpha == 1 ? 10 : 1;
 }
 
 static inline void	mouse_editor_commands2(t_doom *data, int *map)

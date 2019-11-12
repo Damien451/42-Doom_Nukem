@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 16:32:53 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/11 12:39:35 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define WHITE					(SDL_Color){255, 255, 255, 0}
 # define BLACK					(SDL_Color){0, 0, 0, 0}
 # define RED					(SDL_Color){255, 0, 0, 0}
+# define DARK_RED				(SDL_Color){255, 30, 30, 0}
 # define BLUE					(SDL_Color){0, 0, 255, 0}
 # define GREEN					(SDL_Color){0, 255, 0, 0}
 # define YELLOW					(SDL_Color){255, 255, 0, 0}

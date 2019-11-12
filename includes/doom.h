@@ -99,6 +99,7 @@ struct						s_doom
 	t_mixer					*mix;
 	int						sampling;
 	int						editor_mode;
+	int						editor_alpha;
 	int						map_to_show;
 	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_ray *
 								, t_octree **);

@@ -50,7 +50,7 @@ static inline void	set_quadrillage(t_doom *data, int step)
 	if (nbr < 0.1)
 		nbr = 0.1;
 	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_BLEND);
-	k = step - 10;
+	k = step - data->editor_alpha;
 	if (k < -1)
 		k = -1;
 	alpha = nbr;

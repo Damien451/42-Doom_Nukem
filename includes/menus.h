@@ -18,12 +18,10 @@
 # define BUTTON_GAP_X (WIDTH / 12)
 # define BUTTON_GAP_Y (HEIGHT / 36)
 
-//# define BAR_HEIGHT_START	(HEIGHT / 2.75)
-//# define BAR_WIDTH_START	(WIDTH / 3.5)
-# define BAR_HEIGHT_START	(HEIGHT / 2.75)
-# define BAR_WIDTH_START	(WIDTH / 2)
 # define BAR_WIDTH			(WIDTH * 2.0 / 5.0)
 # define BAR_HEIGHT			(HEIGHT / 60)
+# define BAR_HEIGHT_START	(HEIGHT / 2.75)
+# define BAR_WIDTH_START	(WIDTH / 2 - BAR_WIDTH / 2)
 # define BAR_GAP			(HEIGHT / 7)
 
 # define SET_BUTTON_W (WIDTH / 5)
