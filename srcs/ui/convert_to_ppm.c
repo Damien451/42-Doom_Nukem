@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:59:14 by roduquen          #+#    #+#             */
-/*   Updated: 2019/05/10 15:07:17 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/17 15:04:28 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static void	fill_ppm_file(unsigned int *view, int fd)
 	unsigned char	color[3];
 
 	i = 51;
-	while (i < 829)
+	while (i < WIDTH - 51)
 	{
 		j = 51;
-		while (j < WIDTH - 51)
+		while (j < 829)
 		{
-			color[0] = (view[i * WIDTH + j] >> 24) & 255;
-			color[1] = (view[i * WIDTH + j] >> 16) & 255;
-			color[2] = (view[i * WIDTH + j] >> 8) & 255;
+			color[0] = (view[i * WIDTH + j] >> 16) & 255;
+			color[1] = (view[i * WIDTH + j] >> 8) & 255;
+			color[2] = (view[i * WIDTH + j]) & 255;
 			dprintf(fd, "%3d %3d %3d  ", color[0], color[1], color[2]);
 			j++;
 		}
