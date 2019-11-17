@@ -261,6 +261,8 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 		}
 		else if (event->key.keysym.sym == SDLK_LCTRL)
 			data->lib.cam_keys |= SQUAT;
+		else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
+			data->photo = 1;
 		data->sampling = 4;
 	}
 	camera_release_key(event, data);
