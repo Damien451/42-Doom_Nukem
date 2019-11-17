@@ -80,6 +80,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/frame_calculator.c				\
 					$(PROG)/init_program.c					\
 					$(PROG)/leave_program.c					\
+					$(PROG)/leave_state_game.c				\
 					$(PROG)/program.c						\
 					$(RT)/add_textures.c					\
 					$(RT)/check_which_face_is_touched.c		\
@@ -88,8 +89,10 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/raytracing.c						\
 					$(SHAPES)/draw_circle.c					\
 					$(SHAPES)/draw_rectangle.c				\
+					$(SOUND)/get_default_sounds.c			\
 					$(SOUND)/load_sounds.c					\
 					$(SOUND)/mixer.c						\
+					$(SOUND)/mixer2.c						\
 					$(STATES)/state_delete_map.c			\
 					$(STATES)/state_editor.c				\
 					$(STATES)/state_editor_menu.c			\

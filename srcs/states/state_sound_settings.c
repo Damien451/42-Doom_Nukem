@@ -59,8 +59,12 @@ static int	check_sound_settings(t_doom *data, int tab[3])
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)
 		{
-			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
+			if (data->lib.event.key.keysym.sym == SDLK_RETURN &&
+				data->button == 0)
 				switch_state(data, SETTINGS_SOUND, SETTINGS);
+			else if (data->lib.event.key.keysym.sym == SDLK_RETURN &&
+				data->button == 1)
+				get_default_sounds(data);
 		}
 		if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
 			mouse_sound_commands(data, tab);
@@ -70,20 +74,22 @@ static int	check_sound_settings(t_doom *data, int tab[3])
 
 int			state_sound_settings(t_doom *data)
 {
-	t_button	button_return[1];
+	t_button	buttons[2];
 	static int	first = 1;
 	static int	tab[3];
 
-	if (first)
+	if (first == 1)
 	{
-		tab[0] = 80;
-		tab[1] = 80;
-		tab[2] = 80;
-		first = 0;
+		tab[0] = (int)(data->mix->v_master * 100);
+		tab[1] = (int)(data->mix->v_music * 100);
+		tab[2] = (int)(data->mix->v_sound_effects * 100);
 	}
-	button_return[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
+	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER + (3 * DEF_BUTTON_H + 3 * BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LEAVING, "RETURN");
+	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
+		HEIGHT_CENTER + (4 * DEF_BUTTON_H + 4 * BUTTON_GAP_Y)),
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LEAVING, "RESET");
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
 	SDL_SetRelativeMouseMode(SDL_FALSE);
@@ -91,8 +97,8 @@ int			state_sound_settings(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	if (check_sound_settings(data, tab) != 0)
 		return (1);
-	put_buttons_on_img(data, button_return, 1);
-	put_buttons_names(data, button_return, BLACK, 1);
+	put_buttons_on_img(data, buttons, 2);
+	put_buttons_names(data, buttons, BLACK, 2);
 	put_sound_bars(data, tab);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
 		label("SETTINGS", RED), data->lib.ptrfont[1]);

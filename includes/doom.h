@@ -40,6 +40,8 @@
 # define SUN				(1)
 # define TORCH				(2)
 
+# define SPAWNBLOCK			32
+
 /*
 ** ====-* TYPEDEFS *-====
 */
@@ -118,6 +120,7 @@ struct						s_doom
 int							init_program(t_doom *data);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
+void						leave_state_game(t_vec3d *position);
 void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
 char						*get_map_name(int map_to_show);

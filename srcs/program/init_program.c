@@ -49,9 +49,9 @@ void		init_camera(t_doom *data)
 	data->player.sensitivity = SENSITIVITY;
 	data->player.camera.right = X_AXIS;
 	data->player.camera.up = Y_AXIS;
-	data->player.position.x = 32;
-	data->player.position.y = 2.5;
-	data->player.position.z = 32;
+	data->player.position.x = -1;
+	data->player.position.y = -1;
+	data->player.position.z = -1;
 	data->sampling = 4;
 	data->editor_alpha = 10;
 	init_light(data);
@@ -227,7 +227,7 @@ int			init_program(t_doom *data)
 		return (1);
 	}
 	if (!(data->lib.window = SDL_CreateWindow("Doom Nukem"
-					, /*SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED*/ 0, 0, WIDTH
+					, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, /*0, 0,*/ WIDTH
 					, HEIGHT, SDL_WINDOW_SHOWN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"

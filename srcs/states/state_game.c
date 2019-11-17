@@ -205,13 +205,49 @@ static t_octree				*find_position(t_vec3d *position, t_octree *node)
 	}
 }*/
 
+#include <stdio.h>
+
+static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
+{
+	int		x;
+	int		y;
+	int		z;
+
+	printf("yo\n");
+	z = -1;
+	while (++z < 63)
+	{
+		y = -1;
+		while (++y < 63)
+		{
+			x = -1;
+			while (++x < 63)
+			{
+				if (map[z][y][x] == SPAWNBLOCK)
+				{
+					position->x = z;
+					position->y = y + 1;
+					position->z = x;
+				}
+			}
+		}
+	}
+}
+
 int			state_game(t_doom *data)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	if (data->player.position.x == -1 && data->player.position.y == -1 &&
+		data->player.position.z == -1)
+		set_player_spawn(data->map_to_save, &data->player.position);
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+		{
+			leave_state_game(&data->player.position);
 			switch_state(data, PLAYING, MAIN_MENU);
+			return (0);
+		}
 		else if (data->lib.event.type == SDL_MOUSEMOTION)
 			camera_mouse_motion(&data->player.camera
 					, &data->lib.event.motion.xrel, &data->lib.event.motion.yrel
