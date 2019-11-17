@@ -25,7 +25,8 @@ static void		load_textures_blocks2(SDL_Surface *textures[NBR_TEXTURES_BLOCKS])
 
 static void		load_textures_blocks(SDL_Surface *textures[NBR_TEXTURES_BLOCKS])
 {
-	textures[0] = SDL_LoadBMP("/sgoinfre/goinfre/Perso/dacuvill/blocks/andesite.bmp");
+	textures[0] = SDL_LoadBMP("./stone_bricks.bmp");
+	//textures[0] = SDL_LoadBMP("/sgoinfre/goinfre/Perso/dacuvill/blocks/andesite.bmp");
 	textures[1] = SDL_LoadBMP("/sgoinfre/goinfre/Perso/dacuvill/blocks/andesite_polished.bmp");
 	textures[2] = SDL_LoadBMP("/sgoinfre/goinfre/Perso/dacuvill/blocks/diorite.bmp");
 	textures[3] = SDL_LoadBMP("/sgoinfre/goinfre/Perso/dacuvill/blocks/diorite_polished.bmp");
