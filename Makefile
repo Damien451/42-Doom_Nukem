@@ -68,6 +68,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/color_rectangle.c				\
 					$(EDITOR)/deal_with_map_directory.c		\
 					$(EDITOR)/editor_commands.c				\
+					$(EDITOR)/editor_utils.c				\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/octree_memory_management.c		\
 					$(MATHS)/quaternion.c					\
@@ -93,6 +94,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(SOUND)/load_sounds.c					\
 					$(SOUND)/mixer.c						\
 					$(SOUND)/mixer2.c						\
+					$(SOUND)/mouse_sound_commands.c			\
 					$(STATES)/state_delete_map.c			\
 					$(STATES)/state_editor.c				\
 					$(STATES)/state_editor_menu.c			\

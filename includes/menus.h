@@ -83,6 +83,8 @@ void					create_buttons_inputs(t_doom *data, t_button *btab);
 
 int						draw_rectangle(t_graphic_lib *lib, t_point position, t_point dimensions, int color);
 
+void					mouse_sound_commands(t_doom *data, int tab[3]);
+
 int						put_buttons_on_img(t_doom *data, t_button *btab, int nbuttons);
 
 void					put_buttons_names(t_doom *data, t_button *btab, SDL_Color color, int nbuttons);

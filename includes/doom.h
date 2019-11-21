@@ -131,9 +131,14 @@ void						free_octree(t_octree *node);
 ** ====-* GRAPHICS *-====
 */
 
+void						draw_block(t_doom *data, int x, int y, int step);
+void						erase_block(t_doom *data, int x, int y, int step);
+void						fill_step(t_doom *data, int step);
 int							frame_calculator(void);
 void						color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha);
 int							create_octree(t_doom *data);
+void						pick_texture(t_doom *data, int x, int y);
+void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_ray ray, t_vec3d origin, t_octree *node, t_doom *data);
 int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
