@@ -22,15 +22,15 @@ void		skybox(t_doom *data)
 	int 					k;
 	char					destpath[70] = "/sgoinfre/goinfre/Perso/dacuvill/new_blocks_binaries/";
 	char					full_destpath[100];
-	char					originpath[60] = "/sgoinfre/goinfre/Perso/dacuvill/blocks_rgb_tmp2/";
-	char					full_originpath[70];
+	char					originpath[60] = "/sgoinfre/goinfre/Perso/dacuvill/blocks_rgb_tmp/";
+	char					full_originpath[80];
 
 	k = -1;
 	while (++k < NBR_TEXTURES_BLOCKS)
 	{
-		ft_bzero(full_originpath, 70);
+		ft_bzero(full_originpath, 80);
 		ft_bzero(full_destpath, 100);
-		ft_strcat(ft_strcat(full_originpath, originpath), ft_itoa(k));
+		ft_strcat(ft_strcat(ft_strcat(full_originpath, originpath), ft_itoa(k)), ".rgb");
 		ft_strcat(ft_strcat(ft_strcat(full_destpath, destpath), ft_itoa(k)), ".binary");
 		tab[0] = 0;
 		/*if (ok )
@@ -47,9 +47,9 @@ void		skybox(t_doom *data)
 			while (j < 128)
 			{
 				tab[3] = 0;
-				tab[1] = tabi[i * 128 * 3 + 3 * j];
-				tab[2] = tabi[i * 128 * 3 + 3 * j + 1];
-				tab[0] = tabi[i * 128 * 3 + 3 * j + 2];
+				tab[1] = tabi[i * 128 * 3 + 3 * j + 1];
+				tab[2] = tabi[i * 128 * 3 + 3 * j + 2];
+				tab[0] = tabi[i * 128 * 3 + 3 * j];
 				tabl[i * 128 + j] = *((unsigned int *)&tab);
 				data->lib.image[i * WIDTH + j] = *((unsigned int*)&tab);
 				data->lib.image[i * WIDTH + j] = tabl[i * 128 + j];
@@ -288,7 +288,7 @@ int			state_game(t_doom *data)
 		data->photo = 0;
 		convert_to_ppm(data->lib.image);
 	}
-	//skybox(data);
+//	skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
