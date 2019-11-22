@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 22:35:23 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:32:03 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,8 @@ unsigned int		ray_intersect(t_ray ray, t_vec3d origin, t_octree *node
 			origin = intersect;
 			light = data->light;
 			ray.color = add_texture(origin, node, ret, data);
-			ray.black = (ray.color & 0xF8F8F8) >> 3;
+			ray.black = (ray.color & 0xF8F8F800) >> 3;
+//			printf("%#x\n", ray.color);
 			while (light)
 			{
 				launch_ray_to_light(&ray, light, ret, ray.direction, origin, node, data);
@@ -310,18 +311,15 @@ unsigned int		ray_intersect(t_ray ray, t_vec3d origin, t_octree *node
 					return (ray.color);
 				light = light->next;
 			}
-			ray.c_color[0] = (ray.color & 255);
-			ray.c_color[1] = ((ray.color >> 24) & 255);
 			ray.c_color[2] = ((ray.color >> 16) & 255);
-			ray.c_color[3] = ((ray.color >> 8) & 255);
-			if ((new_ret = ray.c_color[0] * ray.length + ((ray.black) & 255)) < ((ray.color) & 255))
-				ray.c_color[0] = new_ret;
-			if ((new_ret = ray.c_color[1] * ray.length + ((ray.black >> 24) & 255)) < ((ray.color >> 24) & 255))
-				ray.c_color[1] = new_ret;
+			ray.c_color[1] = ((ray.color >> 8) & 255);
+			ray.c_color[0] = ((ray.color) & 255);
 			if ((new_ret = ray.c_color[2] * ray.length + ((ray.black >> 16) & 255)) < ((ray.color >> 16) & 255))
 				ray.c_color[2] = new_ret;
-			if ((new_ret = ray.c_color[3] * ray.length + ((ray.black >> 8) & 255)) < ((ray.color >> 8) & 255))
-				ray.c_color[3] = new_ret;
+			if ((new_ret = ray.c_color[1] * ray.length + ((ray.black >> 8) & 255)) < ((ray.color >> 8) & 255))
+				ray.c_color[1] = new_ret;
+			if ((new_ret = ray.c_color[0] * ray.length + ((ray.black) & 255)) < ((ray.color) & 255))
+				ray.c_color[0] = new_ret;
 			return (*((unsigned int*)&ray.c_color));
 		}
 		else if (ret == 3)

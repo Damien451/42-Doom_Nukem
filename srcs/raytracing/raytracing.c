@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/22 17:33:24 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:30:44 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ void					sun(t_doom *data)
 			frame = -3200;
 		}
 	}
-	data->sun = data->player.camera.origin;
+//	data->sun = data->player.camera.origin;
 	frame++;
 }
 

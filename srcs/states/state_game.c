@@ -33,23 +33,19 @@ void		skybox(t_doom *data)
 		ft_strcat(ft_strcat(ft_strcat(full_originpath, originpath), ft_itoa(k)), ".rgb");
 		ft_strcat(ft_strcat(ft_strcat(full_destpath, destpath), ft_itoa(k)), ".binary");
 		tab[0] = 0;
-		/*if (ok )
-		{*/
-			fd = open(full_originpath, O_RDONLY);
-			read(fd, tabi, 128*128*3);
-			close(fd);
-		//}
-		//	printf("pitch   = %u\n", data->lib.textures[0]->pitch);
+		fd = open(full_originpath, O_RDONLY);
+		read(fd, tabi, 128*128*3);
+		close(fd);
 		i = 0;
 		while (i < 128)
 		{
 			j = 0;
 			while (j < 128)
 			{
-				tab[3] = 0;
+				tab[0] = tabi[i * 128 * 3 + 3 * j + 2];
 				tab[1] = tabi[i * 128 * 3 + 3 * j + 1];
-				tab[2] = tabi[i * 128 * 3 + 3 * j + 2];
-				tab[0] = tabi[i * 128 * 3 + 3 * j];
+				tab[2] = tabi[i * 128 * 3 + 3 * j];
+				tab[3] = 0;
 				tabl[i * 128 + j] = *((unsigned int *)&tab);
 				data->lib.image[i * WIDTH + j] = *((unsigned int*)&tab);
 				data->lib.image[i * WIDTH + j] = tabl[i * 128 + j];
@@ -59,16 +55,17 @@ void		skybox(t_doom *data)
 		}
 		//if (!ok)
 		//{
-			i = open(full_destpath, O_TRUNC | O_WRONLY | O_CREAT, 0777);
-			write(i, tabi, 128*128*4);
-			close(i);
-			ok++;
+		i = open(full_destpath, O_TRUNC | O_WRONLY | O_CREAT, 0777);
+		printf("%s\n", full_destpath);
+		write(i, tabl, 128*128*4);
+		close(i);
+		ok++;
 		//}
 	}
 }
 
 static inline t_octree	*on_x_higher_than_middle(t_vec3d *position
-	, t_octree *node)
+		, t_octree *node)
 {
 	if (position->y < (double)(node->center.y >> 1))
 	{
@@ -121,42 +118,89 @@ static t_octree				*find_position(t_vec3d *position, t_octree *node)
 }
 
 /*void			interaction(t_doom *data)
-{
-	t_octree	*node;
-	t_vec3d		intersect;
-	int			ret;
+  {
+  t_octree	*node;
+  t_vec3d		intersect;
+  int			ret;
 
-	node = find_position(&data->player.camera.origin, data->octree);
-	ret = check_x_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
+  node = find_position(&data->player.camera.origin, data->octree);
+  ret = check_x_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+  {
+  node->leaf = EMPTY;
+  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+  return ;
+  }
+  else if (ret == 3)
+  {
+  ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+  {
+  node->leaf = EMPTY;
+  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+  return ;
+  }
+  ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+  {
+  node->leaf = EMPTY;
+  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+  return ;
+  }
+  ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+  {
+  node->leaf = EMPTY;
+  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+  return ;
+  }
+  }
+  ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+  {
+  node->leaf = EMPTY;
+  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+  return ;
+  }
+  else if (ret == 3)
+  {
+  ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+  {
+  node->leaf = EMPTY;
+  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+  return ;
+  }
+  ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+  {
+  node->leaf = EMPTY;
+  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+  return ;
+  }
+  ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+  {
+  node->leaf = EMPTY;
+  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+  return ;
+  }
+  }
+  ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
+  if (ret < 0 && node->leaf == BREAKABLE)
+{
+	node->leaf = EMPTY;
+	data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
+	return ;
+}
+else if (ret == 3)
+{
+	ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
 	if (ret < 0 && node->leaf == BREAKABLE)
 	{
 		node->leaf = EMPTY;
 		data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
 		return ;
-	}
-	else if (ret == 3)
-	{
-		ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
-		ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
-		ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
 	}
 	ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
 	if (ret < 0 && node->leaf == BREAKABLE)
@@ -165,30 +209,6 @@ static t_octree				*find_position(t_vec3d *position, t_octree *node)
 		data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
 		return ;
 	}
-	else if (ret == 3)
-	{
-		ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
-		ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
-		ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
-	}
 	ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
 	if (ret < 0 && node->leaf == BREAKABLE)
 	{
@@ -196,30 +216,7 @@ static t_octree				*find_position(t_vec3d *position, t_octree *node)
 		data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
 		return ;
 	}
-	else if (ret == 3)
-	{
-		ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
-		ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
-		ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-		if (ret < 0 && node->leaf == BREAKABLE)
-		{
-			node->leaf = EMPTY;
-			data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-			return ;
-		}
-	}
+}
 }*/
 
 #include <stdio.h>
@@ -255,7 +252,7 @@ int			state_game(t_doom *data)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	if (data->player.position.x == -1 && data->player.position.y == -1 &&
-		data->player.position.z == -1)
+			data->player.position.z == -1)
 		set_player_spawn(data->map_to_save, &data->player.position);
 	while (SDL_PollEvent(&data->lib.event))
 	{
@@ -278,8 +275,8 @@ int			state_game(t_doom *data)
 			data->lib.cam_keys &= ~DESTROY;
 		camera_press_key(&data->lib.event, data);
 	}
-//	if (data->lib.cam_keys & DESTROY)
-//		interaction(data);
+	//	if (data->lib.cam_keys & DESTROY)
+	//		interaction(data);
 	camera_event_translate(data);
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	raytracing(data);
