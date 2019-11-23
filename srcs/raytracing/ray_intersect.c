@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/22 19:32:03 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/23 09:49:48 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,6 @@ unsigned int		launch_ray_to_light(t_ray *ray_inf, t_light *light, int ret, t_vec
 
 	if (light->type == SUN)
 		light->position = data->sun;
-	ray_inf->direction = vec3d_unit(vec3d_sub(light->position, origin));
 	if (ret == -2 && origin.x < light->position.x)
 		return (0);
 	if (ret == -1 && origin.x > light->position.x)
@@ -215,6 +214,7 @@ unsigned int		launch_ray_to_light(t_ray *ray_inf, t_light *light, int ret, t_vec
 	sorted[0] = 0;
 	sorted[1] = 1;
 	sorted[2] = 2;
+	ray_inf->direction = vec3d_unit(vec3d_sub(light->position, origin));
 	max_absolute_between_three(ray_inf->direction.x, ray_inf->direction.y, ray_inf->direction.z, sorted);
 	i = 0;
 	while (i < 3)
@@ -302,7 +302,7 @@ unsigned int		ray_intersect(t_ray ray, t_vec3d origin, t_octree *node
 			origin = intersect;
 			light = data->light;
 			ray.color = add_texture(origin, node, ret, data);
-			ray.black = (ray.color & 0xF8F8F800) >> 3;
+			ray.black = (ray.color & 0xF8F8F8) >> 3;
 //			printf("%#x\n", ray.color);
 			while (light)
 			{
