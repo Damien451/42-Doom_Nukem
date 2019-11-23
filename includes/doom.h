@@ -40,7 +40,7 @@
 # define SUN				(1)
 # define TORCH				(2)
 
-# define SPAWNBLOCK			32
+# define SPAWNBLOCK			31
 
 /*
 ** ====-* TYPEDEFS *-====
