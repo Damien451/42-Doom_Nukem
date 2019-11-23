@@ -100,6 +100,7 @@ int					state_editor(t_doom *data)
 
 	if (!first)
 	{
+		
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
 		parse_file(data, data->map_name, map);
 		data->lib.picked_texture = 0;

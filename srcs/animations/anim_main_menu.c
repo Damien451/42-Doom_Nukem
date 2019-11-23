@@ -123,7 +123,8 @@ int					anim_main_menu(t_doom *data, int total_frame, int frame)
 		thread[i].num = i;
 		thread[i].total_frame = total_frame;
 		thread[i].frame = frame;
-		if (pthread_create(&thread[i].thread, NULL, (*thread_main_anim), &thread[i]) < 0)
+		if (pthread_create(&thread[i].thread, NULL, (*thread_main_anim)
+			, &thread[i]) < 0)
 			return (1);
 		i++;
 	}

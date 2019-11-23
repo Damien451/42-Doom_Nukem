@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/22 19:30:44 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/23 16:26:07 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,9 +279,9 @@ int						raytracing(t_doom *data)
 //	else
 		sun(data);
 	SDL_RenderClear(data->lib.renderer);
-	data->sampling = 1;
+	data->sampling = 6;
 	if (data->lib.cam_keys & COURSE)
-		data->sampling = 6;
+		data->sampling = 1;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;
