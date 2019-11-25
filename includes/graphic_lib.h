@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/11 12:39:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/11/25 19:22:27 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define SIZE_MAP				64
 # define SIZE_TEXTURE			64
 # define BLOCK_SIZE_EDITOR		((HEIGHT - 54) / 64)
+# define TEXTURE_SIZE			83
 
 # define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_MENU		5

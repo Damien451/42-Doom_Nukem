@@ -141,6 +141,7 @@ void						pick_texture(t_doom *data, int x, int y);
 void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_ray ray, t_vec3d origin, t_octree *node, t_doom *data);
+void						show_picked_texture(t_doom *data);
 int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
 int							check_y_intersect(t_vec3d *intersect, t_vec3d origin

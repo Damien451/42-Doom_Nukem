@@ -96,13 +96,13 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 int					state_editor(t_doom *data)
 {
 	static int		first = 0;
-	static int		map = 0;
+	static int		step = 0;
 
 	if (!first)
 	{
 		
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
-		parse_file(data, data->map_name, map);
+		parse_file(data, data->map_name, step);
 		data->lib.picked_texture = 0;
 		first++;
 	}
@@ -111,11 +111,12 @@ int					state_editor(t_doom *data)
 		WIDTH * HEIGHT * 4);
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_ShowCursor(SDL_TRUE);
-	set_quadrillage(data, map);
+	set_quadrillage(data, step);
 	while (SDL_PollEvent(&data->lib.event))
-		editor_commands(data, data->map_name, &map, &first);
+		editor_commands(data, data->map_name, &step, &first);
+	show_picked_texture(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-	display_info(data, data->map_name, map);
+	display_info(data, data->map_name, step);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }

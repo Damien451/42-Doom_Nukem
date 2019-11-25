@@ -53,22 +53,28 @@ static inline void	mouse_editor_commands2(t_doom *data, int *map)
 }
 
 static inline void	mouse_editor_commands(t_doom *data, int *ok,
-	int *map, char str[50])
+	int *map, int button)
 {
-	//printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
+	printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
 		pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
 	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
-		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030)
+		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030
+		&& button == SDL_BUTTON_LEFT)
 	{
 		*ok = 1;
 		draw_block(data, data->lib.event.button.x,
 			data->lib.event.button.y, *map);
 	}
-	else if (data->lib.event.button.x >= 0 && data->lib.event.button.y >= 1046
-		&& data->lib.event.button.x <= 30 && data->lib.event.button.y <= 1079)
-		save_map_to_file(data, str);
+	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
+		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030
+		&& button == SDL_BUTTON_RIGHT)
+	{
+		*ok = 1;
+		erase_block(data, data->lib.event.button.x,
+			data->lib.event.button.y, *map);
+	}
 	else if (data->lib.event.button.x >= 37 && data->lib.event.button.y >= 1046
 		&& data->lib.event.button.x <= 68 && data->lib.event.button.y <= 1079)
 		*map = (*map < SIZE_MAP - 1 ? *map + 1 : *map);
@@ -86,15 +92,12 @@ void				editor_commands(t_doom *data, char str[50],
 {
 	static int		ok = 0;
 
+	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
+		mouse_editor_commands(data, &ok, map, data->lib.event.button.button);
 	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN &&
-		data->lib.event.button.button == SDL_BUTTON_LEFT)
-		mouse_editor_commands(data, &ok, map, str);
-	else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN &&
-		data->lib.event.button.button == SDL_BUTTON_RIGHT)
-	{
-		erase_block(data, data->lib.event.button.x, data->lib.event.button.y, *map);
-		ok = 1;
-	}
+		data->lib.event.button.x >= 0 && data->lib.event.button.y >= 1046
+		&& data->lib.event.button.x <= 30 && data->lib.event.button.y <= 1079)
+		save_map_to_file(data, str);
 	if (data->lib.event.type == SDL_MOUSEBUTTONUP)
 		ok = 0;
 	if (ok == 1)
