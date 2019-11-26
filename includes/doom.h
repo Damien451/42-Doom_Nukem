@@ -41,6 +41,8 @@
 # define SUN				(1)
 # define TORCH				(2)
 
+# define SPAWNBLOCK			31
+
 /*
 ** ====-* TYPEDEFS *-====
 */
@@ -100,6 +102,7 @@ struct						s_doom
 	t_mixer					*mix;
 	int						sampling;
 	int						editor_mode;
+	int						editor_alpha;
 	int						map_to_show;
 	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_ray *
 								, t_octree **);
@@ -108,6 +111,7 @@ struct						s_doom
 	int						ball;
 	int						torch;
 	t_vec3d					sun;
+	char					photo;
 };
 
 /*
@@ -117,6 +121,7 @@ struct						s_doom
 int							init_program(t_doom *data);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
+void						leave_state_game(t_vec3d *position);
 void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
 char						*get_map_name(int map_to_show);
@@ -127,11 +132,17 @@ void						free_octree(t_octree *node);
 ** ====-* GRAPHICS *-====
 */
 
+void						draw_block(t_doom *data, int x, int y, int step);
+void						erase_block(t_doom *data, int x, int y, int step);
+void						fill_step(t_doom *data, int step);
 int							frame_calculator(void);
 void						color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha);
 int							create_octree(t_doom *data);
+void						pick_texture(t_doom *data, int x, int y);
+void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_ray ray, t_vec3d origin, t_octree *node, t_doom *data);
+void						show_picked_texture(t_doom *data);
 int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
 int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
@@ -140,6 +151,7 @@ int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
 unsigned int				add_skybox(t_vec3d intersect);
 unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom *data);
+int							convert_to_ppm(unsigned int *view);
 
 /*
 ** ====-* PHYSICS *-====

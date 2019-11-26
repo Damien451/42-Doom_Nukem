@@ -41,8 +41,8 @@ static inline void	set_quadrillage(t_doom *data, int step)
 	int			i;
 	int			j;
 	int			k;
-	double	alpha;
-	double	nbr;
+	double		alpha;
+	double		nbr;
 
 	nbr = 1.0;
 	if (step > 0)
@@ -72,21 +72,20 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 {
 	int		fd;
 	int		ret;
-	char	str_to_map[SIZE_MAP * SIZE_MAP * SIZE_MAP];
+	char	strtomap[SIZE_MAP * SIZE_MAP * SIZE_MAP];
 	char	full_path[50];
 
-	full_path[0] = 0;
+	ft_bzero(full_path, 50);
 	ft_strcat(ft_strcat(full_path, "./maps/"), str);
 	if ((fd = open(full_path, O_RDONLY)) != -1)
 	{
-		ret = read(fd, str_to_map, SIZE_MAP * SIZE_MAP * SIZE_MAP);
+		ret = read(fd, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
 		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
 		{
 			close(fd);
 			return (1);
 		}
-		ft_memcpy(data->map_to_save, str_to_map, SIZE_MAP * SIZE_MAP
-			* SIZE_MAP);
+		ft_memcpy(data->map_to_save, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
 		set_quadrillage(data, step);
 		close(fd);
 	}
@@ -101,24 +100,27 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 int					state_editor(t_doom *data)
 {
 	static int		first = 0;
-	static int		map = 0;
+	static int		step = 0;
 
 	if (!first)
 	{
+		
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
-		parse_file(data, data->map_name, map);
+		parse_file(data, data->map_name, step);
 		data->lib.picked_texture = 0;
 		first++;
 	}
-	ft_memcpy(data->lib.image, data->lib.editor_texture[data->editor_mode]->pixels
-		, WIDTH * HEIGHT * 4);
+	ft_memcpy(data->lib.image,
+		data->lib.editor_texture[data->editor_mode]->pixels,
+		WIDTH * HEIGHT * 4);
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_ShowCursor(SDL_TRUE);
-	set_quadrillage(data, map);
+	set_quadrillage(data, step);
 	while (SDL_PollEvent(&data->lib.event))
-		editor_commands(data, data->map_name, &map, &first);
+		editor_commands(data, data->map_name, &step, &first);
+	show_picked_texture(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-	display_info(data, data->map_name, map);
+	display_info(data, data->map_name, step);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }

@@ -5,35 +5,49 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+static int	check_eof(int fd)
+{
+	char			c;
+
+	if (read(fd, &c, 1))
+		return (1);
+	return (0);
+}
+
+static void	fill_tabinputs(t_doom *data, unsigned int tab[NB_MODIF_INPUTS])
+{
+	int				i;
+
+	i = -1;
+	while (++i < NB_MODIF_INPUTS)
+		data->tabinputs.keycode[i] = tab[i];
+}
+
 static int	read_input_file(t_doom *data, int fd)
 {
 	int				nbinput;
 	int				rd;
 	unsigned char	buff[4 * NB_MODIF_INPUTS];
 	unsigned int	tab[NB_MODIF_INPUTS];
-	char			c;
 
+	rd = -1;
 	if (read(fd, buff, 4 * NB_MODIF_INPUTS) != 4 * NB_MODIF_INPUTS)
 		return (1);
-	if (read(fd, &c, 1))
+	if (check_eof(fd) == 1)
 		return (1);
-	rd = -1;
 	while (++rd < NB_MODIF_INPUTS)
 		tab[rd] = *((int*)&buff[rd * 4]);
 	rd = -1;
 	while (++rd < NB_MODIF_INPUTS)
 	{
-		nbinput = rd + 1;
-		while (nbinput < NB_MODIF_INPUTS)
+		nbinput = rd;
+		while (++nbinput < NB_MODIF_INPUTS)
 		{
 			if (tab[rd] == tab[nbinput])
 				return (1);
-			nbinput++;
 		}
 	}
-	rd = -1;
-	while (++rd < NB_MODIF_INPUTS)
-		data->tabinputs.keycode[rd] = tab[rd];
+	fill_tabinputs(data, tab);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 22:24:06 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/23 17:13:19 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ void					sun(t_doom *data)
 			frame = -3200;
 		}
 	}
+	data->sun = data->player.camera.origin;
 	frame++;
 }
 
@@ -278,9 +279,9 @@ int						raytracing(t_doom *data)
 //	else
 		sun(data);
 	SDL_RenderClear(data->lib.renderer);
-	data->sampling = 1;
+	data->sampling = 6;
 	if (data->lib.cam_keys & COURSE)
-		data->sampling = 6;
+		data->sampling = 1;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;

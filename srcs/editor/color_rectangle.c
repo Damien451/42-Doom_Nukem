@@ -27,7 +27,7 @@ void			color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha)
 		while (j < BLOCK_SIZE_EDITOR)
 		{
 			color = ((unsigned int*)data->lib.textures[(int)data->map_to_save[rectangle.x][step][rectangle.y] - 1]->pixels)
-					[i * (512 / BLOCK_SIZE_EDITOR) * 512 + j * (512 / BLOCK_SIZE_EDITOR)];
+					[i * (128 / BLOCK_SIZE_EDITOR) * 128 + j * (128 / BLOCK_SIZE_EDITOR)];
 			c_color[1] = color >> 16;
 			c_color[2] = (color >> 8) & 255;
 			c_color[3] = color & 255;

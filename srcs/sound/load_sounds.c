@@ -7,7 +7,6 @@ static void		add_sound_path(t_doom *data)
 	data->mix->sound_path[2] = "ressources/sound/0124.wav";
 	data->mix->sound_path[3] = "ressources/sound/Storm_exclamation.wav";
 	data->mix->sound_path[4] = "ressources/sound/Posedion.wav";
-
 }
 
 int				load_sounds(t_doom *data)

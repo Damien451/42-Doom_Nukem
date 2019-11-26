@@ -14,11 +14,11 @@ typedef struct		s_mixer
 	Uint16			format;
 	int				channels;
 	int				buffers;
-	Mix_Chunk 					*sounds[NB_SOUND];
-	char						*sound_path[NB_SOUND];
-	double						v_master;
-	double						v_music;
-	double						v_sound_effects;
+	Mix_Chunk 		*sounds[NB_SOUND];
+	char			*sound_path[NB_SOUND];
+	double			v_master;
+	double			v_music;
+	double			v_sound_effects;
 }					t_mixer;
 
 int		init_mixer(t_doom *data);
@@ -29,5 +29,7 @@ int		loop_sound(Mix_Chunk *sound);
 int		set_master_volume(t_mixer *mix, double a);
 int		set_music_volume(t_mixer *mix, double a);
 int		set_sound_effects_volume(t_mixer *mix, double a);
+
+void	get_default_sounds(t_doom *data);
 
 #endif

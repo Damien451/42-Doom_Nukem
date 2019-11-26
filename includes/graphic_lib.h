@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 16:32:53 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/25 19:22:27 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define SIZE_MAP				64
 # define SIZE_TEXTURE			64
 # define BLOCK_SIZE_EDITOR		((HEIGHT - 54) / 64)
+# define TEXTURE_SIZE			83
 
 # define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_MENU		5
@@ -41,6 +42,7 @@
 # define WHITE					(SDL_Color){255, 255, 255, 0}
 # define BLACK					(SDL_Color){0, 0, 0, 0}
 # define RED					(SDL_Color){255, 0, 0, 0}
+# define DARK_RED				(SDL_Color){255, 30, 30, 0}
 # define BLUE					(SDL_Color){0, 0, 255, 0}
 # define GREEN					(SDL_Color){0, 255, 0, 0}
 # define YELLOW					(SDL_Color){255, 255, 0, 0}

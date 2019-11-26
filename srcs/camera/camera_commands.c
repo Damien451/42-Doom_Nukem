@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 11:23:17 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/17 16:20:27 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		check_if_inside_map(t_doom *data, t_vec3d *position)
 	else if (position->y < 0.3)
 	{
 		data->player.acceleration.y = 0;
-		position->y = 62.3;
+		position->y = 0.3;
 	}
 	if (position->z > 63.7)
 	{
@@ -261,6 +261,8 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 		}
 		else if (event->key.keysym.sym == SDLK_LCTRL)
 			data->lib.cam_keys |= SQUAT;
+		else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
+			data->photo = 1;
 		data->sampling = 4;
 	}
 	camera_release_key(event, data);
