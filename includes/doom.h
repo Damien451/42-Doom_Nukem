@@ -10,6 +10,7 @@
 # include "menus.h"
 # include "mixer.h"
 # include "player.h"
+# include "entities.h"
 # include "vec3.h"
 
 /*
