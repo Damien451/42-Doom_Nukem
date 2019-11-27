@@ -46,9 +46,11 @@ static inline void	set_quadrillage(t_doom *data, int step)
 
 	nbr = 1.0;
 	if (step > 0)
-		nbr = (1.0 / ((double)step + 1)) < 0.1 ? 0.1 : 1.0 / ((double)step + 1);
+		nbr = (1.0 / ((double)step + 1)) < 0.1 ? 0.1
+			: 1.0 / ((double)step + 1);
 	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_BLEND);
-	k = step - data->editor_alpha < -1 ? -1 : step - data->editor_alpha;
+	k = step - data->lib.editor.alpha < -1 ? -1
+		: step - data->lib.editor.alpha;
 	alpha = nbr;
 	while (++k <= step)
 	{
@@ -103,18 +105,19 @@ int					state_editor(t_doom *data)
 		
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
 		parse_file(data, data->map_name, step);
-		data->lib.picked_texture = 0;
+		data->lib.editor.picked_texture = 0;
+		data->lib.editor.brush_size = 5;
 		first++;
 	}
 	ft_memcpy(data->lib.image,
-		data->lib.editor_texture[data->editor_mode]->pixels,
+		data->lib.editor.texture[data->lib.editor.mode]->pixels,
 		WIDTH * HEIGHT * 4);
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_ShowCursor(SDL_TRUE);
 	set_quadrillage(data, step);
 	while (SDL_PollEvent(&data->lib.event))
 		editor_commands(data, data->map_name, &step, &first);
-	show_picked_texture(data);
+	show_selected_params(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	display_info(data, data->map_name, step);
 	SDL_RenderPresent(data->lib.renderer);

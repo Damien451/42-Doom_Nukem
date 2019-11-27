@@ -13,7 +13,7 @@ void	pick_texture(t_doom *data, int x, int y)
 		++i;
 	while ((j + 1) * 83 < y)
 		++j;
-	data->lib.picked_texture = j * 10 + i;
+	data->lib.editor.picked_texture = j * 10 + i;
 }
 
 void	fill_step(t_doom *data, int step)
@@ -27,9 +27,8 @@ void	fill_step(t_doom *data, int step)
 		j = -1;
 		while (++j < SIZE_MAP)
 		{
-			if (data->lib.picked_texture)
-				data->map_to_save[i][step][j] =
-					data->lib.picked_texture + 1;
+			data->map_to_save[i][step][j] =
+				data->lib.editor.picked_texture + 1;
 		}
 	}
 }
@@ -50,14 +49,53 @@ void	reset_step(t_doom *data, int step)
 
 void	erase_block(t_doom *data, int x, int y, int step)
 {
-	if (x >= 15 && y >= 15 && x <= 1030 && y <= 1030)
-		data->map_to_save[(y - 10) / BLOCK_SIZE_EDITOR][step][(x - 10)
-			/ BLOCK_SIZE_EDITOR] = 0;
+	int			tmpx;
+	int			tmpy;
+	int			tmpbrush;
+	int			nbrx;
+	int			nbry;
+
+	tmpbrush = data->lib.editor.brush_size;
+	tmpy = y - tmpbrush / 2;
+	nbry = tmpbrush + 1;
+	while (--nbry > 0)
+	{
+		nbrx = tmpbrush + 1;
+		tmpx = x - tmpbrush / 2;
+		while (--nbrx > 0)
+		{
+			if (tmpx >= 15 && tmpx <= 1030 && tmpy >= 15 && tmpy <= 1030)
+				data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
+					step][(tmpx - 10) / BLOCK_SIZE_EDITOR] = 0;
+			tmpx += BLOCK_SIZE_EDITOR;
+		}
+		tmpy += BLOCK_SIZE_EDITOR;
+	}
 }
 
 void	draw_block(t_doom *data, int x, int y, int step)
 {
-	if (x >= 15 && y >= 15 && x <= 1030 && y <= 1030)
-		data->map_to_save[(y - 10) / BLOCK_SIZE_EDITOR][step][(x - 10)
-			/ BLOCK_SIZE_EDITOR] = data->lib.picked_texture + 1;
+	int			tmpx;
+	int			tmpy;
+	int			tmpbrush;
+	int			nbrx;
+	int			nbry;
+
+	tmpbrush = data->lib.editor.brush_size;
+	tmpy = y - tmpbrush / 2;
+	nbry = tmpbrush + 1;
+	while (--nbry > 0)
+	{
+		nbrx = tmpbrush + 1;
+		tmpx = x - tmpbrush / 2;
+		while (--nbrx > 0)
+		{
+			if (tmpx >= 15 && tmpx <= 1030 && tmpy >= 15 && tmpy <= 1030)
+				data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
+					step][(tmpx - 10)
+					/ BLOCK_SIZE_EDITOR] = data->lib.editor.picked_texture + 1;
+			tmpx += BLOCK_SIZE_EDITOR;
+		}
+		tmpy += BLOCK_SIZE_EDITOR;
+	}
 }

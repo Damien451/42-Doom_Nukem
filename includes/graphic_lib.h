@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/25 19:22:27 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/11/27 17:30:15 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 */
 
 typedef struct s_graphic_lib	t_graphic_lib;
+typedef struct s_editor			t_editor;
 typedef struct s_doom			t_doom;
 typedef struct s_format			t_format;
 typedef struct s_text			t_text;
@@ -83,6 +84,16 @@ struct							s_text
 	int							h;
 };
 
+struct							s_editor
+{
+	SDL_Surface					*texture[2];
+	unsigned int				picked_texture;
+	int							mode;
+	int							alpha;
+	int							brush_size;
+};
+
+
 struct							s_graphic_lib
 {
 	SDL_Surface					*character;
@@ -90,7 +101,6 @@ struct							s_graphic_lib
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
 	SDL_Surface					*textures[NBR_TEXTURES_BLOCKS];
-	SDL_Surface					*editor_texture[2];
 	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
 	SDL_Window					*window;
@@ -100,12 +110,12 @@ struct							s_graphic_lib
 	SDL_Surface					*surfaces[NB_IMG];
 	char						*texture_path[NB_IMG];
 	SDL_Event					event;
+	t_editor					editor;
 	t_format					format;
 	t_text						text;
 	TTF_Font					*ptrfont[NBR_FONTS];
 	unsigned int				*image;
 	unsigned int				cam_keys;
-	unsigned int				picked_texture;
 	unsigned int				*textures_block[NBR_TEXTURES_BLOCKS];
 };
 

@@ -1,10 +1,11 @@
 #include "doom.h"
 #include "libft.h"
+#include <inputs.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include "vec3.h"
 
-static inline void	save_map_to_file(t_doom *data, char *str)
+static inline void	save_map_to_file(t_doom *data, char *map_name)
 {
 	int			fd;
 	char		full_path[50];
@@ -13,7 +14,7 @@ static inline void	save_map_to_file(t_doom *data, char *str)
 	ft_bzero(full_path, 50);
 	if (check_map_validity(data) == 0)
 	{
-		if ((fd = open(ft_strcat(ft_strcat(full_path, "./maps/"), str),
+		if ((fd = open(ft_strcat(ft_strcat(full_path, "./maps/"), map_name),
 			O_WRONLY | O_CREAT | O_TRUNC, 0777)) != -1)
 		{
 			write(fd, data->map_to_save, SIZE_MAP * SIZE_MAP * SIZE_MAP);
@@ -22,7 +23,8 @@ static inline void	save_map_to_file(t_doom *data, char *str)
 	}
 }
 
-static inline void	keydown_editor_commands(t_doom *data, int *map, int *first)
+static inline void	keydown_editor_commands(t_doom *data, int *map, int *first,
+	char *map_name)
 {
 	if (data->lib.event.key.keysym.sym == SDLK_UP ||
 		(unsigned int)data->lib.event.key.keysym.sym ==
@@ -39,65 +41,28 @@ static inline void	keydown_editor_commands(t_doom *data, int *map, int *first)
 		switch_state(data, EDITOR, EDITOR_MENU);
 	}
 	else if (data->lib.event.key.keysym.sym == SDLK_t && !data->lib.event.key.repeat)
-		data->editor_alpha = data->editor_alpha == 1 ? 10 : 1;
+		data->lib.editor.alpha = data->lib.editor.alpha == 1 ? 10 : 1;
+	else if (data->lib.event.key.keysym.sym == SDLK_s && !data->lib.event.key.repeat)
+		save_map_to_file(data, map_name);
 }
 
-static inline void	mouse_editor_commands2(t_doom *data, int *map)
-{
-	if (data->lib.event.button.x >= 1859 && data->lib.event.button.y >= 573
-		&& data->lib.event.button.x <= 1910 && data->lib.event.button.y <= 1070)
-		data->editor_mode = (data->editor_mode == 0 ? 1 : 0);
-	else if (data->lib.event.button.x >= 963 && data->lib.event.button.y >= 1046
-		&& data->lib.event.button.x <= 997 && data->lib.event.button.y <= 1079)
-		fill_step(data, *map);
-}
-
-static inline void	mouse_editor_commands(t_doom *data, int *ok,
-	int *map, int button)
-{
-	printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
-	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
-		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
-		pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
-	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
-		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030
-		&& button == SDL_BUTTON_LEFT)
-	{
-		*ok = 1;
-		draw_block(data, data->lib.event.button.x,
-			data->lib.event.button.y, *map);
-	}
-	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
-		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030
-		&& button == SDL_BUTTON_RIGHT)
-	{
-		*ok = 1;
-		erase_block(data, data->lib.event.button.x,
-			data->lib.event.button.y, *map);
-	}
-	else if (data->lib.event.button.x >= 37 && data->lib.event.button.y >= 1046
-		&& data->lib.event.button.x <= 68 && data->lib.event.button.y <= 1079)
-		*map = (*map < SIZE_MAP - 1 ? *map + 1 : *map);
-	else if (data->lib.event.button.x >= 76 && data->lib.event.button.y >= 1046
-		&& data->lib.event.button.x <= 109 && data->lib.event.button.y <= 1079)
-		*map = (*map > 0 ? *map - 1 : *map);
-	else if (data->lib.event.button.x >= 997 && data->lib.event.button.y >= 1046
-		&& data->lib.event.button.x <= 1033 && data->lib.event.button.y <= 1079)
-		reset_step(data, *map);
-	mouse_editor_commands2(data, map);
-}
-
-void				editor_commands(t_doom *data, char str[50],
+void				editor_commands(t_doom *data, char map_name[50],
 	int *map, int *first)
 {
 	static int		ok = 0;
 
-	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
+	if (data->lib.event.button.x >= 1859 && data->lib.event.button.y >= 573
+		&& data->lib.event.button.x <= 1910 && data->lib.event.button.y <= 1070
+		&& data->lib.event.type == SDL_MOUSEBUTTONDOWN)
+		data->lib.editor.mode = (data->lib.editor.mode == 0 ? 1 : 0);
+	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
+		&& data->lib.editor.mode == 0)
 		mouse_editor_commands(data, &ok, map, data->lib.event.button.button);
-	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN &&
-		data->lib.event.button.x >= 0 && data->lib.event.button.y >= 1046
-		&& data->lib.event.button.x <= 30 && data->lib.event.button.y <= 1079)
-		save_map_to_file(data, str);
+	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
+		&& data->lib.editor.mode == 0
+		&& data->lib.event.button.x >= 1197 && data->lib.event.button.y >= 773
+		&& data->lib.event.button.x <= 1226 && data->lib.event.button.y <= 802)
+		save_map_to_file(data, map_name);
 	if (data->lib.event.type == SDL_MOUSEBUTTONUP)
 		ok = 0;
 	if (ok == 1)
@@ -105,10 +70,10 @@ void				editor_commands(t_doom *data, char str[50],
 		if (data->lib.event.button.button == SDL_BUTTON_LEFT)
 			draw_block(data, data->lib.event.button.x,
 				data->lib.event.button.y, *map);
-		else if (data->lib.event.button.button == SDL_BUTTON_RIGHT)
+		if (data->lib.event.button.button == SDL_BUTTON_RIGHT)
 			erase_block(data, data->lib.event.button.x,
 				data->lib.event.button.y, *map);
 	}
 	else if (data->lib.event.type == SDL_KEYDOWN)
-		keydown_editor_commands(data, map, first);
+		keydown_editor_commands(data, map, first, map_name);
 }

@@ -100,8 +100,6 @@ struct						s_doom
 	double					sensitivity;
 	t_mixer					*mix;
 	int						sampling;
-	int						editor_mode;
-	int						editor_alpha;
 	int						map_to_show;
 	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_ray *
 								, t_octree **);
@@ -141,7 +139,7 @@ void						pick_texture(t_doom *data, int x, int y);
 void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_ray ray, t_vec3d origin, t_octree *node, t_doom *data);
-void						show_picked_texture(t_doom *data);
+void						show_selected_params(t_doom *data);
 int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
 int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
@@ -169,9 +167,11 @@ int			check_camera_clipping(t_vec3d *acceleration, t_vec3d *new_pos
 ** ====-* COMMANDS *-====
 */
 
-void						editor_commands(t_doom *data, char str[50], int *map, int *first);
+void						editor_commands(t_doom *data, char map_name[50], int *map, int *first);
 
 int							check_map_validity(t_doom *data);
+
+void						mouse_editor_commands(t_doom *data, int *ok, int *map, int button);
 
 /*
 ** ====-* GAMESTATES *-====

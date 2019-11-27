@@ -53,7 +53,6 @@ void		init_camera(t_doom *data)
 	data->player.position.y = -1;
 	data->player.position.z = -1;
 	data->sampling = 4;
-	data->editor_alpha = 10;
 	init_light(data);
 }
 
@@ -203,7 +202,8 @@ static void	init_program2(t_doom *data)
 	data->player.speed = 0;
 	parse_input_file(data, "./files/inputs");
 	data->lib.cam_keys = 0;
-	data->editor_mode = 0;
+	data->lib.editor.mode = 0;
+	data->lib.editor.alpha = 10;
 	data->map_to_show = 0;
 	data->map_name = "\0";
 	init_camera(data);

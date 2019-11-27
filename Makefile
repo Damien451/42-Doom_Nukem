@@ -69,7 +69,8 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/deal_with_map_directory.c		\
 					$(EDITOR)/editor_commands.c				\
 					$(EDITOR)/editor_utils.c				\
-					$(EDITOR)/show_picked_texture.c			\
+					$(EDITOR)/mouse_editor_commands.c		\
+					$(EDITOR)/show_selected_params.c		\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/octree_memory_management.c		\
 					$(MATHS)/quaternion.c					\
