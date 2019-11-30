@@ -24,6 +24,8 @@ typedef struct s_doom		t_doom;
 struct						s_thread
 {
 	pthread_t				thread;
+	pthread_mutex_t			*mutex;
+	pthread_mutex_t			*game;
 	int						num;
 	unsigned int			*image;
 	int						total_frame;

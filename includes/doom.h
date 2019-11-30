@@ -79,7 +79,9 @@ struct						s_ray
 	t_vec3d					intersect;
 	t_vec3d					origin;
 	t_vec3d					direction;
+	char					face;
 	t_octree				*node;
+	t_vec3d					normal;
 };
 
 struct						s_doom
@@ -109,6 +111,9 @@ struct						s_doom
 	int						torch;
 	t_vec3d					sun;
 	char					photo;
+	int						actual_i;
+	int						actual_j;
+	int						*samplingt[6];
 };
 
 /*
@@ -138,7 +143,7 @@ int							create_octree(t_doom *data);
 void						pick_texture(t_doom *data, int x, int y);
 void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
-unsigned int				ray_intersect(t_ray ray, t_vec3d origin, t_octree *node, t_doom *data);
+unsigned int				ray_intersect(t_ray ray, t_doom *data);
 void						show_selected_params(t_doom *data);
 int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
@@ -149,6 +154,8 @@ int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
 unsigned int				add_skybox(t_vec3d intersect);
 unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom *data);
 int							convert_to_ppm(unsigned int *view);
+double						launch_ray_to_light(t_ray ray, t_light *light, t_doom *data);
+void		max_absolute_between_three(double a, double b, double c, int tab[3]);
 
 /*
 ** ====-* PHYSICS *-====

@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 15:51:32 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 21:49:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:58:38 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <math.h>
 
 int		check_x_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
-	, t_octree **node)
+		, t_octree **node)
 {
 	double		distance;
 	int			size;
@@ -37,26 +37,26 @@ int		check_x_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 	if (distance <= 0)
 		return (0);
 	intersect->y = origin.y + distance * ray->direction.y;
-	intersect->z = origin.z + distance * ray->direction.z;
 	if (intersect->y >= (((*node)->center.y - size) >> 1)
-		&& intersect->y <= (((*node)->center.y + size) >> 1)
-		&& intersect->z >= (((*node)->center.z - size) >> 1)
-		&& intersect->z <= (((*node)->center.z + size) >> 1))
+			&& intersect->y <= (((*node)->center.y + size) >> 1))
 	{
-		if (intersect->x >= 64.0 || intersect->x <= 0.0)
-			return (1);
-		*node = find_node_to_go_parent(*intersect, *node, 1, origin);
-		if (*node == NULL)
-			return (1);
-		if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
-			return (type);
-		return (3);
+		intersect->z = origin.z + distance * ray->direction.z;
+		if (intersect->z >= (((*node)->center.z - size) >> 1)
+				&& intersect->z <= (((*node)->center.z + size) >> 1))
+		{
+			*node = find_node_to_go_parent(*intersect, *node, 1, origin);
+			if (*node == NULL)
+				return (1);
+			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
+				return (type);
+			return (2);
+		}
 	}
 	return (0);
 }
 
 int		check_y_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
-	, t_octree **node)
+		, t_octree **node)
 {
 	double		distance;
 	int			size;
@@ -74,26 +74,26 @@ int		check_y_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 	if (distance <= 0)
 		return (0);
 	intersect->x = origin.x + distance * ray->direction.x;
-	intersect->z = origin.z + distance * ray->direction.z;
 	if (intersect->x >= (((*node)->center.x - size) >> 1)
-		&& intersect->x <= (((*node)->center.x + size) >> 1)
-		&& intersect->z >= (((*node)->center.z - size) >> 1)
-		&& intersect->z <= (((*node)->center.z + size) >> 1))
+			&& intersect->x <= (((*node)->center.x + size) >> 1))
 	{
-		if (intersect->y >= 64.0 || intersect->y <= 0.0)
-			return (1);
-		*node = find_node_to_go_parent(*intersect, *node, 2, origin);
-		if (*node == NULL)
-			return (1);
-		if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
-			return (type);
-		return (3);
+		intersect->z = origin.z + distance * ray->direction.z;
+		if (intersect->z >= (((*node)->center.z - size) >> 1)
+				&& intersect->z <= (((*node)->center.z + size) >> 1))
+		{
+			*node = find_node_to_go_parent(*intersect, *node, 2, origin);
+			if (*node == NULL)
+				return (1);
+			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
+				return (type);
+			return (2);
+		}
 	}
 	return (0);
 }
 
 int		check_z_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
-	, t_octree **node)
+		, t_octree **node)
 {
 	double		distance;
 	int			size;
@@ -111,20 +111,20 @@ int		check_z_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 	if (distance <= 0)
 		return (0);
 	intersect->x = origin.x + distance * ray->direction.x;
-	intersect->y = origin.y + distance * ray->direction.y;
 	if (intersect->x >= (((*node)->center.x - size) >> 1)
-		&& intersect->x <= (((*node)->center.x + size) >> 1)
-		&& intersect->y >= (((*node)->center.y - size) >> 1)
-		&& intersect->y <= (((*node)->center.y + size) >> 1))
+			&& intersect->x <= (((*node)->center.x + size) >> 1))
 	{
-		if (intersect->z >= 64.0 || intersect->z <= 0.0)
-			return (1);
-		*node = find_node_to_go_parent(*intersect, *node, 3, origin);
-		if (*node == NULL)
-			return (1);
-		if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
-			return (type);
-		return (3);
+		intersect->y = origin.y + distance * ray->direction.y;
+		if (intersect->y >= (((*node)->center.y - size) >> 1)
+				&& intersect->y <= (((*node)->center.y + size) >> 1))
+		{
+			*node = find_node_to_go_parent(*intersect, *node, 3, origin);
+			if (*node == NULL)
+				return (1);
+			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
+				return (type);
+			return (2);
+		}
 	}
 	return (0);
 }
