@@ -216,8 +216,63 @@ static void	init_func_pointer(t_doom *data)
 	data->check_intersect[2] = &check_z_intersect;
 }
 
+#include <fcntl.h>
+#include <unistd.h>
+
+int			load_sampling(t_doom *data)
+{
+	int		size;
+	int		fd;
+	char	sizec[4];
+
+	fd = open("sampling1.binary", O_RDONLY);
+	read(fd, sizec, 4);
+	size = *((int*)sizec);
+	data->samplingt[0] = malloc(sizeof(int) * (size * 2 + 1));
+	data->samplingt[0][0] = size;
+	read(fd, &data->samplingt[0][1], size * 8);
+	fd = open("sampling2.binary", O_RDONLY);
+	read(fd, sizec, 4);
+	size = *((int*)sizec);
+	printf("%d\n", data->samplingt[0][0]);
+	data->samplingt[1] = malloc(sizeof(int) * (size * 2 + 1));
+	data->samplingt[1][0] = size;
+	read(fd, &data->samplingt[1][1], size * 8);
+	printf("%d\n", data->samplingt[1][0]);
+	fd = open("sampling3.binary", O_RDONLY);
+	read(fd, sizec, 4);
+	size = *((int*)sizec);
+	data->samplingt[2] = malloc(sizeof(int) * (size * 2 + 1));
+	data->samplingt[2][0] = size;
+	read(fd, &data->samplingt[2][1], size * 8);
+	printf("%d\n", data->samplingt[2][0]);
+	fd = open("sampling4.binary", O_RDONLY);
+	read(fd, sizec, 4);
+	size = *((int*)sizec);
+	data->samplingt[3] = malloc(sizeof(int) * (size * 2 + 1));
+	data->samplingt[3][0] = size;
+	read(fd, &data->samplingt[3][1], size * 8);
+	printf("%d\n", data->samplingt[3][0]);
+	fd = open("sampling5.binary", O_RDONLY);
+	read(fd, sizec, 4);
+	size = *((int*)sizec);
+	data->samplingt[4] = malloc(sizeof(int) * (size * 2 + 1));
+	data->samplingt[4][0] = size;
+	read(fd, &data->samplingt[4][1], size * 8);
+	printf("%d\n", data->samplingt[4][0]);
+	fd = open("sampling6.binary", O_RDONLY);
+	read(fd, sizec, 4);
+	size = *((int*)sizec);
+	data->samplingt[5] = malloc(sizeof(int) * (size * 2 + 1));
+	data->samplingt[5][0] = size;
+	read(fd, &data->samplingt[5][1], size * 8);
+	printf("%d\n", data->samplingt[5][0]);
+	return (0);
+}
+
 int			init_program(t_doom *data)
 {
+	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/23 16:22:17 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:01:50 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void		max_absolute_between_three(double a, double b, double c, int tab[3])
+void	max_absolute_between_three(double a, double b, double c, int tab[3])
 {
+	tab[0] = 0;
+	tab[1] = 1;
+	tab[2] = 2;
 	if (a <= b && a <= c)
 	{
 		if (c < b)
@@ -186,73 +189,6 @@ t_octree				*find_position(t_vec3d *position, t_octree *node)
 	return (node);
 }
 
-unsigned int		launch_ray_to_light(t_ray *ray_inf, t_light *light, int ret, t_vec3d ray, t_vec3d origin, t_octree *node, t_doom *data)
-{
-	t_vec3d			intersect;
-	double			length;
-	int				i;
-	int				sorted[3];
-
-	if (light->type == SUN)
-		light->position = data->sun;
-	if (ret == -2 && origin.x < light->position.x)
-		return (0);
-	if (ret == -1 && origin.x > light->position.x)
-		return (0);
-	if (ret == -4 && origin.y < light->position.y)
-		return (0);
-	if (ret == -3 && origin.y > light->position.y)
-		return (0);
-	if (ret == -6 && origin.z < light->position.z)
-		return (0);
-	if (ret == -5 && origin.z > light->position.z)
-		return (0);
-	if ((length = vec3d_length2(vec3d_sub(light->position, origin))) > (light->type == SUN ? 10000 : data->torch))
-		return (0);
-	length = 1.0 - length / (light->type == SUN ? 5000 : data->torch);
-	intersect = origin;
-	sorted[0] = 0;
-	sorted[1] = 1;
-	sorted[2] = 2;
-	ray_inf->direction = vec3d_unit(vec3d_sub(light->position, origin));
-	max_absolute_between_three(ray_inf->direction.x, ray_inf->direction.y, ray_inf->direction.z, sorted);
-	i = 0;
-	while (i < 3)
-	{
-		ret = data->check_intersect[sorted[i]](&intersect, origin
-				, ray_inf, &node);
-		if (ret == 1)
-		{
-			ray_inf->length += length;
-			return (0);
-		}
-		else if (ret < 0)
-		{
-			if (ret == -2 && intersect.x < light->position.x)
-				return (0);
-			if (ret == -1 && intersect.x > light->position.x)
-				return (0);
-			if (ret == -4 && intersect.y < light->position.y)
-				return (0);
-			if (ret == -3 && intersect.y > light->position.y)
-				return (0);
-			if (ret == -6 && intersect.z < light->position.z)
-				return (0);
-			if (ret == -5 && intersect.z > light->position.z)
-				return (0);
-			ray_inf->length += length;
-			return (0);
-		}
-		else if (ret == 3)
-		{
-			origin = intersect;
-			i = -1;
-		}
-		i++;
-	}
-	return (0);
-}
-
 unsigned int		print_octree(t_vec3d intersect)
 {
 
@@ -274,62 +210,65 @@ unsigned int		print_octree(t_vec3d intersect)
 	return (0);
 }
 
-unsigned int		ray_intersect(t_ray ray, t_vec3d origin, t_octree *node
-		, t_doom *data)
+t_vec3d		find_normal(int face)
 {
-	int				ret;
-	t_vec3d			intersect;
+	if (face == -2)
+		return (vec3d(-1, 0, 0));
+	if (face == -1)
+		return (vec3d(1, 0, 0));
+	if (face == -4)
+		return (vec3d(0, -1, 0));
+	if (face == -3)
+		return (vec3d(0, 1, 0));
+	if (face == -6)
+		return (vec3d(0, 0, -1));
+	return (vec3d(0, 0, 1));
+}
+
+unsigned int		ray_intersect(t_ray ray, t_doom *data)
+{
 	int				sorted[3];
 	int				i;
 	t_octree		*tmp;
 	t_light			*light;
-	unsigned int	new_ret;
 
-	sorted[0] = 0;
-	sorted[1] = 1;
-	sorted[2] = 2;
 	max_absolute_between_three(ray.direction.x, ray.direction.y, ray.direction.z, sorted);
 	i = 0;
 	while (i < 3)
 	{
-		tmp = node;
-		if ((ret = data->check_intersect[sorted[i]](&intersect, origin, &ray
-						, &node)) == 1)
-			return (add_skybox(intersect));
-		else if (ret < 0)
+		tmp = ray.node;
+		if ((ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin, &ray
+						, &ray.node)) == 0)
+			i++;
+		else if (ray.face == 2)
 		{
-			node = tmp;
-			origin = intersect;
+	//		if ((ray.face = print_octree(ray.intersect)))
+	//			return (ray.face);
+			ray.origin = ray.intersect;
+			i = 0;
+		}
+		else if (ray.face < 0)
+		{
+			ray.node = tmp;
+			ray.origin = ray.intersect;
 			light = data->light;
-			ray.color = add_texture(origin, node, ret, data);
+			ray.color = add_texture(ray.origin, ray.node, ray.face, data);
 			ray.black = (ray.color & 0xF8F8F8) >> 3;
-//			printf("%#x\n", ray.color);
+			ray.normal = find_normal(ray.face);
 			while (light)
 			{
-				launch_ray_to_light(&ray, light, ret, ray.direction, origin, node, data);
+				ray.length += launch_ray_to_light(ray, light, data);
 				if (ray.length >= 1.0)
 					return (ray.color);
 				light = light->next;
 			}
-			ray.c_color[2] = ((ray.color >> 16) & 255);
-			ray.c_color[1] = ((ray.color >> 8) & 255);
-			ray.c_color[0] = ((ray.color) & 255);
-			if ((new_ret = ray.c_color[2] * ray.length + ((ray.black >> 16) & 255)) < ((ray.color >> 16) & 255))
-				ray.c_color[2] = new_ret;
-			if ((new_ret = ray.c_color[1] * ray.length + ((ray.black >> 8) & 255)) < ((ray.color >> 8) & 255))
-				ray.c_color[1] = new_ret;
-			if ((new_ret = ray.c_color[0] * ray.length + ((ray.black) & 255)) < ((ray.color) & 255))
-				ray.c_color[0] = new_ret;
+			ray.c_color[2] = ((ray.color >> 16) & 255) * ray.length + ((ray.black >> 16) & 255);
+			ray.c_color[1] = ((ray.color >> 8) & 255) * ray.length + ((ray.black >> 8) & 255);
+			ray.c_color[0] = ((ray.color) & 255) * ray.length + ((ray.black) & 255);
 			return (*((unsigned int*)&ray.c_color));
 		}
-		else if (ret == 3)
-		{
-	//		if ((ret = print_octree(intersect)))
-	//			return (ret);
-			origin = intersect;
-			i = -1;
-		}
-		i++;
+		else
+			return (add_skybox(ray.intersect));
 	}
 	return (0);
 }
