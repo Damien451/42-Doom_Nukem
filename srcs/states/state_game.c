@@ -117,117 +117,12 @@ static t_octree				*find_position(t_vec3d *position, t_octree *node)
 	return (node);
 }
 
-/*void			interaction(t_doom *data)
-  {
-  t_octree	*node;
-  t_vec3d		intersect;
-  int			ret;
-
-  node = find_position(&data->player.camera.origin, data->octree);
-  ret = check_x_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-  {
-  node->leaf = EMPTY;
-  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-  return ;
-  }
-  else if (ret == 3)
-  {
-  ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-  {
-  node->leaf = EMPTY;
-  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-  return ;
-  }
-  ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-  {
-  node->leaf = EMPTY;
-  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-  return ;
-  }
-  ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-  {
-  node->leaf = EMPTY;
-  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-  return ;
-  }
-  }
-  ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-  {
-  node->leaf = EMPTY;
-  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-  return ;
-  }
-  else if (ret == 3)
-  {
-  ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-  {
-  node->leaf = EMPTY;
-  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-  return ;
-  }
-  ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-  {
-  node->leaf = EMPTY;
-  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-  return ;
-  }
-  ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-  {
-  node->leaf = EMPTY;
-  data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-  return ;
-  }
-  }
-  ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-  if (ret < 0 && node->leaf == BREAKABLE)
-{
-	node->leaf = EMPTY;
-	data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-	return ;
-}
-else if (ret == 3)
-{
-	ret = check_x_intersect(&intersect, intersect, data->player.camera.direction, &node);
-	if (ret < 0 && node->leaf == BREAKABLE)
-	{
-		node->leaf = EMPTY;
-		data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-		return ;
-	}
-	ret = check_y_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-	if (ret < 0 && node->leaf == BREAKABLE)
-	{
-		node->leaf = EMPTY;
-		data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-		return ;
-	}
-	ret = check_z_intersect(&intersect, data->player.camera.origin, data->player.camera.direction, &node);
-	if (ret < 0 && node->leaf == BREAKABLE)
-	{
-		node->leaf = EMPTY;
-		data->map_to_save[node->center.x >> 1][node->center.y >> 1][node->center.z >> 1] = 0;
-		return ;
-	}
-}
-}*/
-
-#include <stdio.h>
-
 static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 {
 	int		x;
 	int		y;
 	int		z;
 
-	printf("yo\n");
 	z = -1;
 	while (++z < 63)
 	{
@@ -239,9 +134,9 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 			{
 				if (map[z][y][x] == SPAWNBLOCK)
 				{
-					position->x = z;
+					position->x = z + 0.5;
 					position->y = y + 1;
-					position->z = x;
+					position->z = x + 0.5;
 				}
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/30 18:41:06 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/01 22:31:10 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ void					*launch_rays(void *ptr)
 		data->actual_i += 2;
 		pthread_mutex_unlock(((t_thread*)ptr)->mutex);
 	}
-//	pthread_exit(0);
-	return (NULL);
+	pthread_exit(0);
 }
 
 /*void					light_gun(t_doom *data)
@@ -138,17 +137,6 @@ int						raytracing(t_doom *data)
 	pthread_mutex_t	mutex;
 
 	i = 0;
-	if (frame == 4)
-	{
-		data->torch = 50 + (rand() & 15);
-		frame = 0;
-	}
-	frame++;
-	sun(data);
-	SDL_RenderClear(data->lib.renderer);
-	data->sampling = 4;
-	if (data->lib.cam_keys & COURSE)
-		data->sampling = 1;
 	pthread_mutex_init(&mutex, NULL);
 	data->actual_i = 2;
 	while (i < NBR_THREAD)
@@ -160,6 +148,17 @@ int						raytracing(t_doom *data)
 			return (1);
 		i++;
 	}
+	SDL_RenderClear(data->lib.renderer);
+	data->sampling = 4;
+	if (data->lib.cam_keys & COURSE)
+		data->sampling = 1;
+	if (frame == 4)
+	{
+		data->torch = 50 + (rand() & 15);
+		frame = 0;
+	}
+	sun(data);
+	frame++;
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(thread[i++].thread, NULL);

@@ -186,6 +186,7 @@ int			check_player_clipping(t_vec3d *acceleration, t_vec3d *new_pos
 	, char map[64][64][64], t_vec3d position);
 int			check_camera_clipping(t_vec3d *acceleration, t_vec3d *new_pos
 	, char map[64][64][64], t_vec3d position);
+void		apply_motion(t_doom *data);
 
 /*
 ** ====-* GAMEPLAY *-====

@@ -63,6 +63,8 @@ struct						s_inventory
 struct						s_player
 {
 	t_camera				camera;
+	t_vec3d					course;
+	t_vec3d					new_pos;
 	t_inventory				inventory;
 	double					speed;
 	double					gravity;
