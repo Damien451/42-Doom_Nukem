@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/30 17:01:50 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/01 20:10:03 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,57 @@
 
 void	max_absolute_between_three(double a, double b, double c, int tab[3])
 {
-	tab[0] = 0;
-	tab[1] = 1;
-	tab[2] = 2;
+	int		ax;
+	int		bx;
+	int		cx;
+
+	ax = 0;
+	bx = 1;
+	cx = 2;
+	if (a < 0)
+	{
+		a = -a;
+		ax = 3;
+	}
+	if (b < 0)
+	{
+		b = -b;
+		bx = 4;
+	}
+	if (c < 0)
+	{
+		c = -c;
+		cx = 5;
+	}
+	tab[0] = ax;
+	tab[1] = bx;
+	tab[2] = cx;
 	if (a <= b && a <= c)
 	{
 		if (c < b)
 		{
-			tab[1] = 2;
-			tab[2] = 1;
+			tab[1] = cx;
+			tab[2] = bx;
 		}
 		return ;
 	}
 	if (b <= a && b <= c)
 	{
-		tab[0] = 1;
-		tab[1] = 0;
+		tab[0] = bx;
+		tab[1] = ax;
 		if (c < a)
 		{
-			tab[1] = 2;
-			tab[2] = 0;
+			tab[1] = cx;
+			tab[2] = ax;
 		}
 		return ;
 	}
-	tab[0] = 2;
-	tab[2] = 0;
+	tab[0] = cx;
+	tab[2] = ax;
 	if (a < b)
 	{
-		tab[1] = 0;
-		tab[2] = 1;
+		tab[1] = ax;
+		tab[2] = bx;
 	}
 }
 
@@ -212,15 +234,15 @@ unsigned int		print_octree(t_vec3d intersect)
 
 t_vec3d		find_normal(int face)
 {
-	if (face == -2)
+	if (face == 1)
 		return (vec3d(-1, 0, 0));
-	if (face == -1)
+	if (face == 0)
 		return (vec3d(1, 0, 0));
-	if (face == -4)
+	if (face == 3)
 		return (vec3d(0, -1, 0));
-	if (face == -3)
+	if (face == 2)
 		return (vec3d(0, 1, 0));
-	if (face == -6)
+	if (face == 5)
 		return (vec3d(0, 0, -1));
 	return (vec3d(0, 0, 1));
 }
@@ -238,23 +260,26 @@ unsigned int		ray_intersect(t_ray ray, t_doom *data)
 	{
 		tmp = ray.node;
 		if ((ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin, &ray
-						, &ray.node)) == 0)
+						, &ray.node)) == -1)
 			i++;
-		else if (ray.face == 2)
+		else if (ray.face == -3)
 		{
 	//		if ((ray.face = print_octree(ray.intersect)))
 	//			return (ray.face);
 			ray.origin = ray.intersect;
 			i = 0;
 		}
-		else if (ray.face < 0)
+		else if (ray.face >= 0)
 		{
 			ray.node = tmp;
 			ray.origin = ray.intersect;
 			light = data->light;
-			ray.color = add_texture(ray.origin, ray.node, ray.face, data);
+			ray.color = data->add_texture[ray.face](ray.origin, data);
 			ray.black = (ray.color & 0xF8F8F8) >> 3;
 			ray.normal = find_normal(ray.face);
+			ray.length = launch_ray_to_sun(ray, data);
+			if (ray.length >= 1.0)
+				return (ray.color);
 			while (light)
 			{
 				ray.length += launch_ray_to_light(ray, light, data);
@@ -262,10 +287,11 @@ unsigned int		ray_intersect(t_ray ray, t_doom *data)
 					return (ray.color);
 				light = light->next;
 			}
-			ray.c_color[2] = ((ray.color >> 16) & 255) * ray.length + ((ray.black >> 16) & 255);
-			ray.c_color[1] = ((ray.color >> 8) & 255) * ray.length + ((ray.black >> 8) & 255);
-			ray.c_color[0] = ((ray.color) & 255) * ray.length + ((ray.black) & 255);
-			return (*((unsigned int*)&ray.c_color));
+			ray.c_color[2] = ((ray.color >> 16) & 255) * ray.length;
+			ray.c_color[1] = ((ray.color >> 8) & 255) * ray.length;
+			ray.c_color[0] = ((ray.color) & 255) * ray.length;
+			ray.black += *((unsigned int*)&ray.c_color);
+			return (ray.black);
 		}
 		else
 			return (add_skybox(ray.intersect));

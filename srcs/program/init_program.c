@@ -211,9 +211,24 @@ static void	init_program2(t_doom *data)
 
 static void	init_func_pointer(t_doom *data)
 {
-	data->check_intersect[0] = &check_x_intersect;
-	data->check_intersect[1] = &check_y_intersect;
-	data->check_intersect[2] = &check_z_intersect;
+	data->check_intersect[0] = &check_x_intersect_pos;
+	data->check_intersect[1] = &check_y_intersect_pos;
+	data->check_intersect[2] = &check_z_intersect_pos;
+	data->check_intersect[3] = &check_x_intersect_neg;
+	data->check_intersect[4] = &check_y_intersect_neg;
+	data->check_intersect[5] = &check_z_intersect_neg;
+	data->add_texture[0] = &add_x_neg;
+	data->add_texture[1] = &add_x_pos;
+	data->add_texture[2] = &add_y_neg;
+	data->add_texture[3] = &add_y_pos;
+	data->add_texture[4] = &add_z_neg;
+	data->add_texture[5] = &add_z_pos;
+	data->check_light_view[0] = &check_light_view_x_neg;
+	data->check_light_view[1] = &check_light_view_x_pos;
+	data->check_light_view[2] = &check_light_view_y_neg;
+	data->check_light_view[3] = &check_light_view_y_pos;
+	data->check_light_view[4] = &check_light_view_z_neg;
+	data->check_light_view[5] = &check_light_view_z_pos;
 }
 
 #include <fcntl.h>

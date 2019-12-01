@@ -86,7 +86,8 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/leave_state_game.c				\
 					$(PROG)/program.c						\
 					$(RT)/add_textures.c					\
-					$(RT)/check_which_face_is_touched.c		\
+					$(RT)/check_which_face_is_touched_neg.c	\
+					$(RT)/check_which_face_is_touched_pos.c	\
 					$(RT)/compute_lights.c					\
 					$(RT)/locate_in_octree.c				\
 					$(RT)/ray_intersect.c					\

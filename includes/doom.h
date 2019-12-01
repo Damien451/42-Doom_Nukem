@@ -79,7 +79,7 @@ struct						s_ray
 	t_vec3d					intersect;
 	t_vec3d					origin;
 	t_vec3d					direction;
-	char					face;
+	int						face;
 	t_octree				*node;
 	t_vec3d					normal;
 };
@@ -103,8 +103,10 @@ struct						s_doom
 	t_mixer					*mix;
 	int						sampling;
 	int						map_to_show;
-	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_ray *
+	int						(*check_intersect[6])(t_vec3d *, t_vec3d, t_ray *
 								, t_octree **);
+	int						(*add_texture[6])(t_vec3d, t_doom *);
+	int						(*check_light_view[6])(t_vec3d, t_vec3d);
 	t_light					*light;
 	unsigned int			*octree_v2;
 	int						ball;
@@ -145,17 +147,36 @@ void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_ray ray, t_doom *data);
 void						show_selected_params(t_doom *data);
-int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
+int							check_x_intersect_neg(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
-int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
+int							check_y_intersect_neg(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
-int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
+int							check_z_intersect_neg(t_vec3d *intersect, t_vec3d origin
+	, t_ray *ray, t_octree **node);
+int							check_x_intersect_pos(t_vec3d *intersect, t_vec3d origin
+	, t_ray *ray, t_octree **node);
+int							check_y_intersect_pos(t_vec3d *intersect, t_vec3d origin
+	, t_ray *ray, t_octree **node);
+int							check_z_intersect_pos(t_vec3d *intersect, t_vec3d origin
 	, t_ray *ray, t_octree **node);
 unsigned int				add_skybox(t_vec3d intersect);
-unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom *data);
 int							convert_to_ppm(unsigned int *view);
 double						launch_ray_to_light(t_ray ray, t_light *light, t_doom *data);
 void		max_absolute_between_three(double a, double b, double c, int tab[3]);
+double		launch_ray_to_sun(t_ray ray, t_doom *data);
+int							add_x_neg(t_vec3d intersect, t_doom *data);
+int							add_y_neg(t_vec3d intersect, t_doom *data);
+int							add_z_neg(t_vec3d intersect, t_doom *data);
+int							add_x_pos(t_vec3d intersect, t_doom *data);
+int							add_y_pos(t_vec3d intersect, t_doom *data);
+int							add_z_pos(t_vec3d intersect, t_doom *data);
+int			check_light_view_x_pos(t_vec3d position, t_vec3d light_pos);
+int			check_light_view_x_neg(t_vec3d position, t_vec3d light_pos);
+int			check_light_view_y_pos(t_vec3d position, t_vec3d light_pos);
+int			check_light_view_y_neg(t_vec3d position, t_vec3d light_pos);
+int			check_light_view_z_pos(t_vec3d position, t_vec3d light_pos);
+int			check_light_view_z_neg(t_vec3d position, t_vec3d light_pos);
+unsigned int				add_texture(t_vec3d intersect, int type, t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_which_face_is_touched.c                      :+:      :+:    :+:   */
+/*   check_which_face_is_touched_neg.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 15:51:32 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/30 17:58:38 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/01 18:52:59 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,17 @@
 #include <pthread.h>
 #include <math.h>
 
-int		check_x_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
+int		check_x_intersect_neg(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		, t_octree **node)
 {
 	double		distance;
 	int			size;
-	int			type;
 
-	type = -1;
 	size = (*node)->size >> 1;
 	intersect->x = ((*node)->center.x - size) >> 1;
-	if ((distance = (intersect->x - origin.x) / ray->direction.x) <= 0)
-	{
-		type = -2;
-		intersect->x = ((*node)->center.x + size) >> 1;
-		distance = (intersect->x - origin.x) / ray->direction.x;
-	}
-	if (distance <= 0)
-		return (0);
+	if ((distance = (intersect->x - origin.x)) >= 0)
+		return (-1);
+	distance /= ray->direction.x;
 	intersect->y = origin.y + distance * ray->direction.y;
 	if (intersect->y >= (((*node)->center.y - size) >> 1)
 			&& intersect->y <= (((*node)->center.y + size) >> 1))
@@ -46,33 +39,26 @@ int		check_x_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		{
 			*node = find_node_to_go_parent(*intersect, *node, 1, origin);
 			if (*node == NULL)
-				return (1);
+				return (-2);
 			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
-				return (type);
-			return (2);
+				return (0);
+			return (-3);
 		}
 	}
-	return (0);
+	return (-1);
 }
 
-int		check_y_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
+int		check_y_intersect_neg(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		, t_octree **node)
 {
 	double		distance;
 	int			size;
-	int			type;
 
-	type = -3;
 	size = (*node)->size >> 1;
 	intersect->y = ((*node)->center.y - size) >> 1;
-	if ((distance = (intersect->y - origin.y) / ray->direction.y) <= 0)
-	{
-		type = -4;
-		intersect->y = ((*node)->center.y + size) >> 1;
-		distance = (intersect->y - origin.y) / ray->direction.y;
-	}
-	if (distance <= 0)
-		return (0);
+	if ((distance = (intersect->y - origin.y)) >= 0)
+		return (-1);
+	distance /= ray->direction.y;
 	intersect->x = origin.x + distance * ray->direction.x;
 	if (intersect->x >= (((*node)->center.x - size) >> 1)
 			&& intersect->x <= (((*node)->center.x + size) >> 1))
@@ -83,33 +69,26 @@ int		check_y_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		{
 			*node = find_node_to_go_parent(*intersect, *node, 2, origin);
 			if (*node == NULL)
-				return (1);
+				return (-2);
 			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
-				return (type);
-			return (2);
+				return (2);
+			return (-3);
 		}
 	}
-	return (0);
+	return (-1);
 }
 
-int		check_z_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
+int		check_z_intersect_neg(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		, t_octree **node)
 {
 	double		distance;
 	int			size;
-	int			type;
 
-	type = -5;
 	size = (*node)->size >> 1;
 	intersect->z = ((*node)->center.z - size) >> 1;
-	if ((distance = (intersect->z - origin.z) / ray->direction.z) <= 0)
-	{
-		type = -6;
-		intersect->z = ((*node)->center.z + size) >> 1;
-		distance = (intersect->z - origin.z) / ray->direction.z;
-	}
-	if (distance <= 0)
-		return (0);
+	if ((distance = (intersect->z - origin.z)) >= 0)
+		return (-1);
+	distance /= ray->direction.z;
 	intersect->x = origin.x + distance * ray->direction.x;
 	if (intersect->x >= (((*node)->center.x - size) >> 1)
 			&& intersect->x <= (((*node)->center.x + size) >> 1))
@@ -120,11 +99,11 @@ int		check_z_intersect(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		{
 			*node = find_node_to_go_parent(*intersect, *node, 3, origin);
 			if (*node == NULL)
-				return (1);
+				return (-2);
 			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
-				return (type);
-			return (2);
+				return (4);
+			return (-3);
 		}
 	}
-	return (0);
+	return (-1);
 }
