@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/02 13:20:32 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/02 13:54:58 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,17 @@ unsigned int		ray_intersect(t_ray ray, const t_doom * const data)
 			ray.color = data->add_texture[ray.face](ray.origin, data);
 			ray.black = (ray.color & 0xF8F8F8) >> 3;
 			ray.normal = data->normal[ray.face];
-			ray.length = launch_ray_to_light(ray, data->sun_light, data);
-			if (ray.length >= 1.0)
+			data->player_light->position = data->player.camera.origin;
+			ray.length = launch_ray_to_light(ray, data->player_light, data);
+			if (ray.length >= 0.875)
+				return (ray.color);
+			ray.length += launch_ray_to_light(ray, data->sun_light, data);
+			if (ray.length >= 0.875)
 				return (ray.color);
 			while (light)
 			{
 				ray.length += launch_ray_to_light(ray, light, data);
-				if (ray.length >= 1.0)
+				if (ray.length >= 0.875)
 					return (ray.color);
 				light = light->next;
 			}

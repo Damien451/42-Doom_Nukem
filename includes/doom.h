@@ -39,6 +39,7 @@
 
 # define SUN				(0)
 # define TORCH				(1)
+# define PLAYER				(2)
 
 # define SPAWNBLOCK			31
 
@@ -113,7 +114,8 @@ struct						s_doom
 	int						torch;
 	t_vec3d					sun;
 	t_light					*sun_light;
-	int						power[2];
+	t_light					*player_light;
+	int						power[3];
 	char					photo;
 	int						actual_i;
 	int						actual_j;
