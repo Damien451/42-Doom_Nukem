@@ -19,7 +19,7 @@ void		skybox(t_doom *data)
 	int						fd;
 
 
-	int 					k;
+	int						k;
 	char					destpath[70] = "/sgoinfre/goinfre/Perso/dacuvill/new_blocks_binaries/";
 	char					full_destpath[100];
 	char					originpath[60] = "/sgoinfre/goinfre/Perso/dacuvill/blocks_rgb_tmp/";
@@ -92,6 +92,8 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 
 int			state_game(t_doom *data)
 {
+	int	time = SDL_GetTicks();
+
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	if (data->player.position.x == -1 && data->player.position.y == -1 &&
 			data->player.position.z == -1)
@@ -121,6 +123,7 @@ int			state_game(t_doom *data)
 	//		interaction(data);
 	camera_event_translate(data);
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
+//	printf("Time for computing physical motor = %d\n", SDL_GetTicks() - time);
 	raytracing(data);
 	if (data->photo)
 	{

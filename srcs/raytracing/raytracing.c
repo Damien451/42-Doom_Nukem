@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/02 09:24:45 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/02 13:20:29 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,39 @@
 #include <pthread.h>
 #include <math.h>
 
-static inline void	create_ray_dir_vec(const double x, const double y, const t_doom *data, t_ray *ray)
+static inline void		ray_create(const int pos[2], const t_camera camera
+		, t_ray *ray)
 {
-	ray->direction.x = (data->player.camera.right.x * x)
-		+ (data->player.camera.up.x * y) + data->player.camera.direction.x;
-	ray->direction.y = (data->player.camera.right.y * x)
-		+ (data->player.camera.up.y * y) + data->player.camera.direction.y;
-	ray->direction.z = (data->player.camera.right.z * x)
-		+ (data->player.camera.up.z * y) + data->player.camera.direction.z;
+	double	x;
+	double	y;
+
+	x = (2 * (pos[1] - 51 + .5) / WIDTH - 1) * FOV;
+	y = (1 - (2 * (pos[0] - 51 + .5) / HEIGHT)) * POV;
+	ray->direction.x = (camera.right.x * x) + (camera.up.x * y)
+		+ camera.direction.x;
+	ray->direction.y = (camera.right.y * x) + (camera.up.y * y)
+		+ camera.direction.y;
+	ray->direction.z = (camera.right.z * x) + (camera.up.z * y)
+		+ camera.direction.z;
 }
 
-static inline void		ray_create(const int pos[2], const t_doom *data, t_ray *ray)
-{
-	create_ray_dir_vec((2 * (pos[1] - 51 + .5) / WIDTH - 1) * FOV
-		, (1 - (2 * (pos[0] - 51 + .5) / HEIGHT)) * POV, data, ray);
-}
-
-static inline void		apply_sampling(unsigned int *image, const unsigned int color
-	, const int sampling, const int position)
+static inline void		apply_sampling(unsigned int *image
+		, const unsigned int color, const int sampling, const int position)
 {
 	int				i;
 	int				j;
 	int				tmp;
+	int				sampl;
 
 	i = 0;
+	sampl = sampling >> 1;
 	while (i < sampling)
 	{
-		tmp = position + i - (sampling >> 1);
+		tmp = position + i - sampl;
 		j = 0;
 		while (j < sampling)
 		{
-			image[tmp + (j - (sampling >> 1)) * WIDTH] = color;
+			image[tmp + (j - sampl) * WIDTH] = color;
 			j++;
 		}
 		i++;
@@ -60,23 +62,29 @@ void					*launch_rays(void *ptr)
 	t_doom			*data;
 	int				i;
 	int				pos[2];
+	int				j;
 
 	data = ((t_thread*)ptr)->data;
 	pthread_mutex_lock(((t_thread*)ptr)->mutex);
 	i = data->actual_i;
-	data->actual_i += 2;
+	data->actual_i += (8);
 	pthread_mutex_unlock(((t_thread*)ptr)->mutex);
-	while (i < data->samplingt[data->sampling - 1][0] * 2)
+	while (i < ((t_thread*)ptr)->frame)
 	{
-		pos[0] = data->samplingt[data->sampling - 1][i];
-		pos[1] = data->samplingt[data->sampling - 1][i + 1];
-		ray_create(pos, data, &((t_thread*)ptr)->ray);
-		apply_sampling(data->lib.image
-				, ray_intersect(((t_thread*)ptr)->ray, data)
-				, data->sampling, pos[1] + pos[0] * WIDTH);
+		j = 0;
+		while (j < 8)
+		{
+			pos[0] = data->samplingt[data->sampling - 1][i + j];
+			pos[1] = data->samplingt[data->sampling - 1][i + 1 + j];
+			ray_create(pos, data->player.camera, &((t_thread*)ptr)->ray);
+			apply_sampling(data->lib.image
+					, ray_intersect(((t_thread*)ptr)->ray, data)
+					, data->sampling, pos[1] + pos[0] * WIDTH);
+			j += 2;
+		}
 		pthread_mutex_lock(((t_thread*)ptr)->mutex);
 		i = data->actual_i;
-		data->actual_i += 2;
+		data->actual_i += (8);
 		pthread_mutex_unlock(((t_thread*)ptr)->mutex);
 	}
 	pthread_exit(0);
@@ -96,7 +104,8 @@ void					*launch_rays(void *ptr)
   {
   position = vec3d_add(position, direction);
   data->light.position = position;
-  if (position.x > 64.0 || position.x < 0.0 || position.y > 64.0 || position.y < 0.0 || position.z > 64.0 || position.z < 0.0)
+  if (position.x > 64.0 || position.x < 0.0 || position.y > 64.0
+  || position.y < 0.0 || position.z > 64.0 || position.z < 0.0)
   {
   position.x = -1;
   data->ball = 0;
@@ -110,18 +119,18 @@ void					sun(t_doom *data)
 
 	if (frame == 0)
 	{
-		data->sun.x = 0;
-		data->sun.y = 63 + EPSILON;
-		data->sun.z = 0;
+		data->sun_light->position.x = 0;
+		data->sun_light->position.y = 63 + EPSILON;
+		data->sun_light->position.z = 0;
 	}
 	else
 	{
-		data->sun.z += 0.05;
-		data->sun.x += 0.05;
-		if (data->sun.z > 64.0)
+		data->sun_light->position.z += 0.05;
+		data->sun_light->position.x += 0.05;
+		if (data->sun_light->position.z > 64.0)
 		{
-			data->sun.z = 0.0;
-			data->sun.x = 0.0;
+			data->sun_light->position.z = 0.0;
+			data->sun_light->position.x = 0.0;
 			frame = 0;
 		}
 	}
@@ -138,9 +147,13 @@ int						raytracing(t_doom *data)
 	i = 0;
 	data->actual_i = 2;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
+	data->sampling = 4;
+	if (data->lib.cam_keys & COURSE)
+		data->sampling = 1;
 	while (i < NBR_THREAD)
 	{
 		thread[i].data = data;
+		thread[i].frame = data->samplingt[data->sampling - 1][0] * 2 - 4;
 		thread[i].mutex = &data->mutex;
 		thread[i].ray.node = position;
 		thread[i].ray.origin = data->player.camera.origin;
@@ -150,12 +163,9 @@ int						raytracing(t_doom *data)
 		i++;
 	}
 	SDL_RenderClear(data->lib.renderer);
-	data->sampling = 4;
-	if (data->lib.cam_keys & COURSE)
-		data->sampling = 1;
 	if (frame == 4)
 	{
-		data->torch = 50 + (rand() & 15);
+		data->power[TORCH] = 50 + (rand() & 15);
 		frame = 0;
 	}
 	sun(data);

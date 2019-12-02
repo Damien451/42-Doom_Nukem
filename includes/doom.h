@@ -37,8 +37,8 @@
 # define GET_INPUT			(1l << 13)
 # define LEAVING			(1l << 14)
 
-# define SUN				(1)
-# define TORCH				(2)
+# define SUN				(0)
+# define TORCH				(1)
 
 # define SPAWNBLOCK			31
 
@@ -66,7 +66,7 @@ struct						s_bubble
 struct						s_light
 {
 	t_vec3d					position;
-	char					type;
+	int						type;
 	t_light					*next;
 };
 
@@ -95,6 +95,7 @@ struct						s_doom
 	t_bubble				*lightning_list2;
 	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					*map_name;
+	unsigned int			**skybox;
 	long					button;
 	long					state;
 	t_octree				*octree;
@@ -111,6 +112,8 @@ struct						s_doom
 	int						ball;
 	int						torch;
 	t_vec3d					sun;
+	t_light					*sun_light;
+	int						power[2];
 	char					photo;
 	int						actual_i;
 	int						actual_j;
@@ -148,10 +151,10 @@ void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_ray ray, const t_doom * const data);
 void						show_selected_params(t_doom *data);
-unsigned int				add_skybox(t_vec3d intersect);
+unsigned int				add_skybox(t_vec3d intersect, unsigned int *skybox[6]);
 int							convert_to_ppm(unsigned int *view);
 double						launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data);
-void		max_absolute_between_three(double a, double b, double c, int tab[3]);
+void		max_absolute_between_three(t_vec3d vec, int tab[3]);
 double		launch_ray_to_sun(t_ray ray, const t_doom * const data);
 
 /*

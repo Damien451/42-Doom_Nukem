@@ -6,14 +6,14 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:59:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/02 09:01:35 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/02 10:38:16 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec3.h"
 #include "octree.h"
 
-t_octree				*find_actual_position(t_vec3d *position, t_octree *node)
+t_octree	*find_actual_position(t_vec3d *position, t_octree *node)
 {
 	int			child;
 
@@ -31,7 +31,7 @@ t_octree				*find_actual_position(t_vec3d *position, t_octree *node)
 	return (node);
 }
 
-t_octree		*find_node_to_go_neighboor(t_vec3d position, t_octree *node)
+t_octree	*find_node_to_go_neighboor(t_vec3d position, t_octree *node)
 {
 	int			child;
 

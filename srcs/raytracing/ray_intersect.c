@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/02 09:01:43 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/02 13:20:32 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,62 +21,6 @@
 #include <math.h>
 #include <fcntl.h>
 #include <unistd.h>
-
-void	max_absolute_between_three(double a, double b, double c, int tab[3])
-{
-	int		ax;
-	int		bx;
-	int		cx;
-
-	ax = 0;
-	bx = 1;
-	cx = 2;
-	if (a < 0)
-	{
-		a = -a;
-		ax = 3;
-	}
-	if (b < 0)
-	{
-		b = -b;
-		bx = 4;
-	}
-	if (c < 0)
-	{
-		c = -c;
-		cx = 5;
-	}
-	tab[0] = ax;
-	tab[1] = bx;
-	tab[2] = cx;
-	if (a <= b && a <= c)
-	{
-		if (c < b)
-		{
-			tab[1] = cx;
-			tab[2] = bx;
-		}
-		return ;
-	}
-	if (b <= a && b <= c)
-	{
-		tab[0] = bx;
-		tab[1] = ax;
-		if (c < a)
-		{
-			tab[1] = cx;
-			tab[2] = ax;
-		}
-		return ;
-	}
-	tab[0] = cx;
-	tab[2] = ax;
-	if (a < b)
-	{
-		tab[1] = ax;
-		tab[2] = bx;
-	}
-}
 
 t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card
 		, t_vec3d origin)
@@ -148,7 +92,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom * const data)
 	t_octree		*tmp;
 	t_light			*light;
 
-	max_absolute_between_three(ray.direction.x, ray.direction.y, ray.direction.z, sorted);
+	max_absolute_between_three(ray.direction, sorted);
 	tmp = ray.node;
 	i = 0;
 	while (i < 3)
@@ -173,7 +117,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom * const data)
 			ray.color = data->add_texture[ray.face](ray.origin, data);
 			ray.black = (ray.color & 0xF8F8F8) >> 3;
 			ray.normal = data->normal[ray.face];
-			ray.length = launch_ray_to_sun(ray, data);
+			ray.length = launch_ray_to_light(ray, data->sun_light, data);
 			if (ray.length >= 1.0)
 				return (ray.color);
 			while (light)
@@ -189,7 +133,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom * const data)
 			return (ray.black + *((unsigned int*)&ray.c_color));
 		}
 		else
-			return (add_skybox(ray.intersect));
+			return (add_skybox(ray.intersect, data->skybox));
 	}
 	return (0);
 }

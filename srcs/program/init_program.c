@@ -6,22 +6,27 @@
 #include <SDL_image.h>
 #include <SDL.h>
 #include <pthread.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 int			init_light(t_doom *data)
 {
 	t_light		*tmp;
 	int			i;
 
+	data->sun_light = malloc(sizeof(t_light));
+	data->sun_light->type = SUN;
+	data->power[SUN] = 5000;
 	data->light = malloc(sizeof(t_light));
 	data->light->type = TORCH;
-	data->light->position = vec3d(19 + EPSILON, 40 + EPSILON, 2 + EPSILON);
+	data->light->position = vec3d(19.5, 40.5, 2.5);
 	tmp = data->light;
 	i = 10;
 	while (i < 64)
 	{
 		tmp->next = malloc(sizeof(t_light));
 		tmp->next->type = TORCH;
-		tmp->next->position = vec3d(19 + EPSILON, 40 + EPSILON, i + EPSILON);
+		tmp->next->position = vec3d(19.5, 40.5, i + 0.5);
 		i += 8;
 		tmp = tmp->next;
 	}
@@ -30,18 +35,46 @@ int			init_light(t_doom *data)
 	{
 		tmp->next = malloc(sizeof(t_light));
 		tmp->next->type = TORCH;
-		tmp->next->position = vec3d(35 + EPSILON, 40 + EPSILON, i + EPSILON);
+		tmp->next->position = vec3d(35.5, 40.5, i + 0.5);
 		i += 8;
 		tmp = tmp->next;
 	}
 	tmp->next = malloc(sizeof(t_light));
 	tmp->next->type = TORCH;
-	tmp->next->position = vec3d(27 + EPSILON, 44 + EPSILON, 32 + EPSILON);
+	tmp->next->position = vec3d(27.5, 44.5, 32.5);
 	tmp = tmp->next;
 	tmp->next = malloc(sizeof(t_light));
 	tmp->next->type = SUN;
 	tmp->next->next = NULL;
 	return (0);
+}
+
+void		load_skybox(t_doom *data)
+{
+	int		fd;
+
+	fd = 0;
+	data->skybox = malloc(sizeof(int*) * 6);
+	while (fd < 6)
+		data->skybox[fd++] = malloc(sizeof(int) * 512 * 512);
+	fd = open("test.binary", O_RDONLY);
+	read(fd, data->skybox[0], 512 * 512 * 4);
+	close(fd);
+	fd = open("test2.binary", O_RDONLY);
+	read(fd, data->skybox[1], 512 * 512 * 4);
+	close(fd);
+	fd = open("test3.binary", O_RDONLY);
+	read(fd, data->skybox[2], 512 * 512 * 4);
+	close(fd);
+	fd = open("test4.binary", O_RDONLY);
+	read(fd, data->skybox[3], 512 * 512 * 4);
+	close(fd);
+	fd = open("test5.binary", O_RDONLY);
+	read(fd, data->skybox[4], 512 * 512 * 4);
+	close(fd);
+	fd = open("test6.binary", O_RDONLY);
+	read(fd, data->skybox[5], 512 * 512 * 4);
+	close(fd);
 }
 
 void		init_camera(t_doom *data)
@@ -55,6 +88,7 @@ void		init_camera(t_doom *data)
 	data->player.position.z = -1;
 	data->sampling = 4;
 	init_light(data);
+	load_skybox(data);
 }
 
 static void	init_tab(t_doom *data)
@@ -168,7 +202,7 @@ static int	init_fonts(t_doom *data)
 	if (!(data->lib.ptrfont[5] = TTF_OpenFont("./font/xolonium/Xolonium-Regular.ttf", 25)))
 		return (1);
 	/*if (!(data->lib.ptrfont[5] = TTF_OpenFont("./font/SciFi_Movies.ttf", 20)))
-		return (1);*/
+	  return (1);*/
 	init_tab(data);
 	return (0);
 }
