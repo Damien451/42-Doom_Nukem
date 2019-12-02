@@ -133,5 +133,6 @@ int			state_game(t_doom *data)
 //	skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
+	SDL_RenderClear(data->lib.renderer);
 	return (0);
 }
