@@ -16,6 +16,7 @@
 typedef struct s_thread		t_thread;
 
 typedef struct s_doom		t_doom;
+typedef struct s_ray		t_ray;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -31,6 +32,7 @@ struct						s_thread
 	int						total_frame;
 	int						frame;
 	t_doom					*data;
+	t_ray					ray;
 };
 
 #endif

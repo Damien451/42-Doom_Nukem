@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 22:24:05 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/01 20:24:44 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/02 08:09:49 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ double		compute_normal(t_vec3d direction, t_vec3d normal)
 	return (power);
 }
 
-double		launch_ray_to_light(t_ray ray, t_light *light, t_doom *data)
+double		launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data)
 {
 	double			length;
 	int				i;
@@ -90,7 +90,7 @@ double		launch_ray_to_light(t_ray ray, t_light *light, t_doom *data)
 	return (0);
 }
 
-double		launch_ray_to_sun(t_ray ray, t_doom *data)
+double		launch_ray_to_sun(t_ray ray, const t_doom * const data)
 {
 	double			length;
 	int				i;

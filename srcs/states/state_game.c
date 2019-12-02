@@ -64,59 +64,6 @@ void		skybox(t_doom *data)
 	}
 }
 
-static inline t_octree	*on_x_higher_than_middle(t_vec3d *position
-		, t_octree *node)
-{
-	if (position->y < (double)(node->center.y >> 1))
-	{
-		if (position->z < (double)(node->center.z >> 1))
-			return (node->child[1]);
-		else
-			return (node->child[5]);
-	}
-	else
-	{
-		if (position->z < (double)(node->center.z >> 1))
-			return (node->child[3]);
-		else
-			return (node->child[7]);
-	}
-}
-
-static inline t_octree	*on_x_lower_than_middle(t_vec3d *position
-		, t_octree *node)
-{
-	if (position->y < (double)(node->center.y >> 1))
-	{
-		if (position->z < (double)(node->center.z >> 1))
-			return (node->child[0]);
-		else
-			return (node->child[4]);
-	}
-	else
-	{
-		if (position->z < (double)(node->center.z >> 1))
-			return (node->child[2]);
-		else
-			return (node->child[6]);
-	}
-}
-
-static t_octree				*find_position(t_vec3d *position, t_octree *node)
-{
-	while (node->leaf != EMPTY)
-	{
-		if (node->leaf == INSIDE)
-		{
-			if (position->x < (double)(node->center.x >> 1))
-				node = on_x_lower_than_middle(position, node);
-			else
-				node = on_x_higher_than_middle(position, node);
-		}
-	}
-	return (node);
-}
-
 static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 {
 	int		x;

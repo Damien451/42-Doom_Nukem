@@ -5,6 +5,7 @@
 #include <time.h>
 #include <SDL_image.h>
 #include <SDL.h>
+#include <pthread.h>
 
 int			init_light(t_doom *data)
 {
@@ -207,6 +208,7 @@ static void	init_program2(t_doom *data)
 	data->map_to_show = 0;
 	data->map_name = "\0";
 	init_camera(data);
+	pthread_mutex_init(&data->mutex, NULL);
 }
 
 static void	init_func_pointer(t_doom *data)
@@ -229,6 +231,12 @@ static void	init_func_pointer(t_doom *data)
 	data->check_light_view[3] = &check_light_view_y_pos;
 	data->check_light_view[4] = &check_light_view_z_neg;
 	data->check_light_view[5] = &check_light_view_z_pos;
+	data->normal[0] = vec3d(1, 0, 0);
+	data->normal[1] = vec3d(-1, 0, 0);
+	data->normal[2] = vec3d(0, 1, 0);
+	data->normal[3] = vec3d(0, -1, 0);
+	data->normal[4] = vec3d(0, 0, 1);
+	data->normal[5] = vec3d(0, 0, -1);
 }
 
 #include <fcntl.h>
@@ -246,42 +254,42 @@ int			load_sampling(t_doom *data)
 	data->samplingt[0] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[0][0] = size;
 	read(fd, &data->samplingt[0][1], size * 8);
+	close(fd);
 	fd = open("sampling2.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
-	printf("%d\n", data->samplingt[0][0]);
 	data->samplingt[1] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[1][0] = size;
 	read(fd, &data->samplingt[1][1], size * 8);
-	printf("%d\n", data->samplingt[1][0]);
+	close(fd);
 	fd = open("sampling3.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
 	data->samplingt[2] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[2][0] = size;
 	read(fd, &data->samplingt[2][1], size * 8);
-	printf("%d\n", data->samplingt[2][0]);
+	close(fd);
 	fd = open("sampling4.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
 	data->samplingt[3] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[3][0] = size;
 	read(fd, &data->samplingt[3][1], size * 8);
-	printf("%d\n", data->samplingt[3][0]);
+	close(fd);
 	fd = open("sampling5.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
 	data->samplingt[4] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[4][0] = size;
 	read(fd, &data->samplingt[4][1], size * 8);
-	printf("%d\n", data->samplingt[4][0]);
+	close(fd);
 	fd = open("sampling6.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
 	data->samplingt[5] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[5][0] = size;
 	read(fd, &data->samplingt[5][1], size * 8);
-	printf("%d\n", data->samplingt[5][0]);
+	close(fd);
 	return (0);
 }
 
