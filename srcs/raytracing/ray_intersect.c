@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/02 08:06:28 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/02 09:01:43 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,6 @@ void	max_absolute_between_three(double a, double b, double c, int tab[3])
 	}
 }
 
-t_octree		*find_node_to_go_neighboor(t_vec3d position, t_octree *node)
-{
-	int			child;
-
-	while (node->leaf == INSIDE)
-	{
-		child = 0;
-		if (position.x >= (double)(node->center.x >> 1))
-			child |= 1;
-		if (position.y >= (double)(node->center.y >> 1))
-			child |= 2;
-		if (position.z >= (double)(node->center.z >> 1))
-			child |= 4;
-		node = node->child[child];
-	}
-	return (node);
-}
-
 t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card
 		, t_vec3d origin)
 {
@@ -107,8 +89,8 @@ t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card
 			position.x += 0.5;
 		else
 			position.x -= 0.5;
-		position.y = floor(position.y) + 0.5;
-		position.z = floor(position.z) + 0.5;
+		position.y = (int)position.y + 0.5;
+		position.z = (int)position.z + 0.5;
 	}
 	else if (card == 2)
 	{
@@ -118,8 +100,8 @@ t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card
 			position.y += 0.5;
 		else
 			position.y -= 0.5;
-		position.x = floor(position.x) + 0.5;
-		position.z = floor(position.z) + 0.5;
+		position.x = (int)position.x + 0.5;
+		position.z = (int)position.z + 0.5;
 	}
 	else
 	{
@@ -129,8 +111,8 @@ t_octree	*find_node_to_go_parent(t_vec3d position, t_octree *node, int card
 			position.z += 0.5;
 		else
 			position.z -= 0.5;
-		position.y = floor(position.y) + 0.5;
-		position.x = floor(position.x) + 0.5;
+		position.y = (int)position.y + 0.5;
+		position.x = (int)position.x + 0.5;
 	}
 	if (node)
 		return (find_node_to_go_neighboor(position, node));

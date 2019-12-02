@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/02 08:02:00 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/02 09:24:45 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static inline void		ray_create(const int pos[2], const t_doom *data, t_ray *ray)
 {
 	create_ray_dir_vec((2 * (pos[1] - 51 + .5) / WIDTH - 1) * FOV
 		, (1 - (2 * (pos[0] - 51 + .5) / HEIGHT)) * POV, data, ray);
-	ray->length = 0;
 }
 
 static inline void		apply_sampling(unsigned int *image, const unsigned int color

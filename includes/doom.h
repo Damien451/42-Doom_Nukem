@@ -108,7 +108,6 @@ struct						s_doom
 	int						(*add_texture[6])(t_vec3d, const t_doom * const);
 	int						(*check_light_view[6])(t_vec3d, t_vec3d);
 	t_light					*light;
-	unsigned int			*octree_v2;
 	int						ball;
 	int						torch;
 	t_vec3d					sun;
@@ -149,35 +148,56 @@ void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_ray ray, const t_doom * const data);
 void						show_selected_params(t_doom *data);
-int							check_x_intersect_neg(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
-int							check_y_intersect_neg(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
-int							check_z_intersect_neg(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
-int							check_x_intersect_pos(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
-int							check_y_intersect_pos(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
-int							check_z_intersect_pos(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
 unsigned int				add_skybox(t_vec3d intersect);
 int							convert_to_ppm(unsigned int *view);
 double						launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data);
 void		max_absolute_between_three(double a, double b, double c, int tab[3]);
 double		launch_ray_to_sun(t_ray ray, const t_doom * const data);
-int							add_x_neg(t_vec3d intersect, const t_doom * const data);
-int							add_y_neg(t_vec3d intersect, const t_doom * const data);
-int							add_z_neg(t_vec3d intersect, const t_doom * const data);
-int							add_x_pos(t_vec3d intersect, const t_doom * const data);
-int							add_y_pos(t_vec3d intersect, const t_doom * const data);
-int							add_z_pos(t_vec3d intersect, const t_doom * const data);
-int			check_light_view_x_pos(t_vec3d position, t_vec3d light_pos);
-int			check_light_view_x_neg(t_vec3d position, t_vec3d light_pos);
-int			check_light_view_y_pos(t_vec3d position, t_vec3d light_pos);
-int			check_light_view_y_neg(t_vec3d position, t_vec3d light_pos);
-int			check_light_view_z_pos(t_vec3d position, t_vec3d light_pos);
-int			check_light_view_z_neg(t_vec3d position, t_vec3d light_pos);
+
+/*
+** ====-* RAYTRACER *-====
+*/
+
+t_octree					*find_node_to_go_neighboor(t_vec3d position
+		, t_octree *node);
+int							check_light_view_x_pos(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_x_neg(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_y_pos(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_y_neg(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_z_pos(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_z_neg(t_vec3d position
+		, t_vec3d light_pos);
+int							add_x_neg(t_vec3d intersect
+		, const t_doom * const data);
+int							add_y_neg(t_vec3d intersect
+		, const t_doom * const data);
+int							add_z_neg(t_vec3d intersect
+		, const t_doom * const data);
+int							add_x_pos(t_vec3d intersect
+		, const t_doom * const data);
+int							add_y_pos(t_vec3d intersect
+		, const t_doom * const data);
+int							add_z_pos(t_vec3d intersect
+		, const t_doom * const data);
+int							check_x_intersect_neg(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_y_intersect_neg(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_z_intersect_neg(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_x_intersect_pos(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_y_intersect_pos(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_z_intersect_pos(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+unsigned int			fill_percent_128(double a, double b
+		, unsigned int tab[128 * 128]);
 
 /*
 ** ====-* PHYSICS *-====

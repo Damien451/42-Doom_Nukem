@@ -6,43 +6,13 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 22:24:05 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/02 08:09:49 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/02 09:45:49 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "libft.h"
 #include "graphic_lib.h"
-
-int			check_light_view_x_pos(t_vec3d position, t_vec3d light_pos)
-{
-	return (position.x < light_pos.x);
-}
-
-int			check_light_view_x_neg(t_vec3d position, t_vec3d light_pos)
-{
-	return (position.x > light_pos.x);
-}
-
-int			check_light_view_y_pos(t_vec3d position, t_vec3d light_pos)
-{
-	return (position.y < light_pos.y);
-}
-
-int			check_light_view_y_neg(t_vec3d position, t_vec3d light_pos)
-{
-	return (position.y > light_pos.y);
-}
-
-int			check_light_view_z_pos(t_vec3d position, t_vec3d light_pos)
-{
-	return (position.z < light_pos.z);
-}
-
-int			check_light_view_z_neg(t_vec3d position, t_vec3d light_pos)
-{
-	return (position.z > light_pos.z);
-}
 
 double		compute_normal(t_vec3d direction, t_vec3d normal)
 {
@@ -54,7 +24,22 @@ double		compute_normal(t_vec3d direction, t_vec3d normal)
 	return (power);
 }
 
-double		launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data)
+double		compute_light_power(t_ray ray, double length, t_vec3d position
+	, const t_doom *const data, int power)
+{
+	if (ray.face >= 0)
+	{
+		if (data->check_light_view[ray.face](ray.intersect, position))
+			return (0);
+		return ((1.0 - length / power) * compute_normal(ray.direction
+					, ray.normal));
+	}
+	return ((1.0 - length / power) * compute_normal(ray.direction
+				, ray.normal));
+}
+
+double		launch_ray_to_light(t_ray ray, t_light *light
+	, const t_doom *const data)
 {
 	double			length;
 	int				i;
@@ -62,10 +47,12 @@ double		launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data
 
 	if (data->check_light_view[ray.face](ray.origin, light->position))
 		return (0);
-	if ((length = vec3d_length2(vec3d_sub(light->position, ray.origin))) > data->torch)
+	if ((length = vec3d_length2(vec3d_sub(light->position, ray.origin)))
+			> data->torch)
 		return (0);
 	ray.direction = vec3d_unit(vec3d_sub(light->position, ray.origin));
-	max_absolute_between_three(ray.direction.x, ray.direction.y, ray.direction.z, sorted);
+	max_absolute_between_three(ray.direction.x, ray.direction.y
+			, ray.direction.z, sorted);
 	i = 0;
 	while (i < 3)
 	{
@@ -78,19 +65,13 @@ double		launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data
 			ray.origin = ray.intersect;
 			i = 0;
 		}
-		else if (ray.face >= 0)
-		{
-			if (data->check_light_view[ray.face](ray.intersect, light->position))
-				return (0);
-			return ((1.0 - length / data->torch) * compute_normal(ray.direction, ray.normal));
-		}
 		else
-			return ((1.0 - length / data->torch) * compute_normal(ray.direction, ray.normal));
+			return (compute_light_power(ray, length, light->position, data, data->torch));
 	}
 	return (0);
 }
 
-double		launch_ray_to_sun(t_ray ray, const t_doom * const data)
+double		launch_ray_to_sun(t_ray ray, const t_doom *const data)
 {
 	double			length;
 	int				i;
@@ -101,7 +82,8 @@ double		launch_ray_to_sun(t_ray ray, const t_doom * const data)
 	if ((length = vec3d_length2(vec3d_sub(data->sun, ray.origin))) > 5000)
 		return (0);
 	ray.direction = vec3d_unit(vec3d_sub(data->sun, ray.origin));
-	max_absolute_between_three(ray.direction.x, ray.direction.y, ray.direction.z, sorted);
+	max_absolute_between_three(ray.direction.x, ray.direction.y, ray.direction.z
+			, sorted);
 	i = 0;
 	while (i < 3)
 	{
@@ -114,14 +96,8 @@ double		launch_ray_to_sun(t_ray ray, const t_doom * const data)
 			ray.origin = ray.intersect;
 			i = 0;
 		}
-		else if (ray.face >= 0)
-		{
-			if (data->check_light_view[ray.face](ray.intersect, data->sun))
-				return (0);
-			return ((1.0 - length / 5000) * compute_normal(ray.direction, ray.normal));
-		}
 		else
-			return ((1.0 - length / 5000) * compute_normal(ray.direction, ray.normal));
+			return (compute_light_power(ray, length, data->sun, data, 5000));
 	}
 	return (0);
 }
