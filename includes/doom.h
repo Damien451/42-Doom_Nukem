@@ -11,6 +11,8 @@
 # include "mixer.h"
 # include "player.h"
 # include "vec3.h"
+# include "thread.h"
+# include <pthread.h>
 
 /*
 ** ====-* DEFINES *-====
@@ -53,6 +55,7 @@ typedef struct s_bubble			t_bubble;
 typedef struct s_octree			t_octree;
 typedef struct s_light			t_light;
 typedef struct s_ray			t_ray;
+typedef struct s_thread			t_thread;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -83,6 +86,21 @@ struct						s_ray
 	int						face;
 	t_octree				*node;
 	t_vec3d					normal;
+	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
+};
+
+struct						s_thread
+{
+	pthread_t				thread;
+	pthread_mutex_t			*mutex;
+	pthread_mutex_t			*game;
+	t_octree				*(*find_parent[3])(t_vec3d, t_octree*, t_vec3d);
+	int						num;
+	unsigned int			*image;
+	int						total_frame;
+	int						frame;
+	t_doom					*data;
+	t_ray					ray;
 };
 
 struct						s_doom
@@ -121,6 +139,8 @@ struct						s_doom
 	int						actual_j;
 	int						*samplingt[6];
 	t_vec3d					normal[6];
+	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
+	t_thread				thread[NBR_THREAD];
 	pthread_mutex_t			mutex;
 };
 
@@ -203,6 +223,11 @@ int							check_z_intersect_pos(t_vec3d *intersect
 		, t_vec3d origin, t_ray *ray, t_octree **node);
 unsigned int			fill_percent_128(double a, double b
 		, unsigned int tab[128 * 128]);
+t_octree	*find_parent_x(t_vec3d position, t_octree *node, t_vec3d origin);
+t_octree	*find_parent_y(t_vec3d position, t_octree *node, t_vec3d origin);
+t_octree	*find_parent_z(t_vec3d position, t_octree *node, t_vec3d origin);
+void					*launch_rays(void *ptr);
+void					sun(t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====

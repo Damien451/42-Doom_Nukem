@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 15:51:32 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/02 09:24:23 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/03 11:31:32 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		check_x_intersect_neg(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		if (intersect->z >= (((*node)->center.z - size) >> 1)
 				&& intersect->z <= (((*node)->center.z + size) >> 1))
 		{
-			*node = find_node_to_go_parent(*intersect, *node, 1, origin);
+			*node = ray->find_parent[0](*intersect, *node, origin);
 			if (*node == NULL)
 				return (-2);
 			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
@@ -67,7 +67,7 @@ int		check_y_intersect_neg(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		if (intersect->z >= (((*node)->center.z - size) >> 1)
 				&& intersect->z <= (((*node)->center.z + size) >> 1))
 		{
-			*node = find_node_to_go_parent(*intersect, *node, 2, origin);
+			*node = ray->find_parent[1](*intersect, *node, origin);
 			if (*node == NULL)
 				return (-2);
 			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)
@@ -97,7 +97,7 @@ int		check_z_intersect_neg(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		if (intersect->y >= (((*node)->center.y - size) >> 1)
 				&& intersect->y <= (((*node)->center.y + size) >> 1))
 		{
-			*node = find_node_to_go_parent(*intersect, *node, 3, origin);
+			*node = ray->find_parent[2](*intersect, *node, origin);
 			if (*node == NULL)
 				return (-2);
 			if ((*node)->leaf == FULL || (*node)->leaf == BREAKABLE)

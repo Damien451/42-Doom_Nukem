@@ -19,11 +19,12 @@ int			init_light(t_doom *data)
 	data->power[SUN] = 5000;
 	data->player_light = malloc(sizeof(t_light));
 	data->player_light->type = PLAYER;
-	data->power[PLAYER] = 200;
+	data->power[PLAYER] = 25;
 	data->light = malloc(sizeof(t_light));
 	data->light->type = TORCH;
 	data->light->position = vec3d(19.5, 40.5, 2.5);
 	tmp = data->light;
+	tmp->next = NULL;
 	i = 10;
 	while (i < 64)
 	{

@@ -94,9 +94,11 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/check_which_face_is_touched_neg.c	\
 					$(RT)/check_which_face_is_touched_pos.c	\
 					$(RT)/compute_lights.c					\
+					$(RT)/launch_rays.c						\
 					$(RT)/locate_in_octree.c				\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\
+					$(RT)/sun_animation.c					\
 					$(SHAPES)/draw_circle.c					\
 					$(SHAPES)/draw_rectangle.c				\
 					$(SOUND)/get_default_sounds.c			\

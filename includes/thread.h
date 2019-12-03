@@ -5,7 +5,7 @@
 ** ====-* INCLUDES *-====
 */
 
-# include <pthread.h>
+# include "vec3.h"
 
 # define NBR_THREAD			8
 
@@ -13,26 +13,9 @@
 ** ====-* TYPEDEFS *-====
 */
 
-typedef struct s_thread		t_thread;
-
-typedef struct s_doom		t_doom;
-typedef struct s_ray		t_ray;
-
 /*
 ** ====-* STRUCTURES *-====
 */
 
-struct						s_thread
-{
-	pthread_t				thread;
-	pthread_mutex_t			*mutex;
-	pthread_mutex_t			*game;
-	int						num;
-	unsigned int			*image;
-	int						total_frame;
-	int						frame;
-	t_doom					*data;
-	t_ray					ray;
-};
 
 #endif
