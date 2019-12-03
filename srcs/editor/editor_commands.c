@@ -23,31 +23,33 @@ static inline void	save_map_to_file(t_doom *data, char *map_name)
 	}
 }
 
-static inline void	keydown_editor_commands(t_doom *data, int *map, int *first,
+static inline void	keydown_editor_commands(t_doom *data, int *step, int *first,
 	char *map_name)
 {
-	if (data->lib.event.key.keysym.sym == SDLK_UP ||
-		(unsigned int)data->lib.event.key.keysym.sym ==
-		data->tabinputs.keycode[0])
-		*map = (*map < SIZE_MAP - 1 ? *map + 1 : *map);
-	else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
-		(unsigned int)data->lib.event.key.keysym.sym ==
-		data->tabinputs.keycode[2])
-		*map = (*map > 0 ? *map - 1 : *map);
+	if (data->lib.event.key.keysym.sym == SDLK_UP)
+		*step = (*step < SIZE_MAP - 1 ? *step + 1 : *step);
+	else if (data->lib.event.key.keysym.sym == SDLK_DOWN)
+		*step = (*step > 0 ? *step - 1 : *step);
 	else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 	{
 		*first = 0;
-		*map = 0;
+		*step = 0;
 		switch_state(data, EDITOR, EDITOR_MENU);
 	}
 	else if (data->lib.event.key.keysym.sym == SDLK_t && !data->lib.event.key.repeat)
 		data->lib.editor.alpha = data->lib.editor.alpha == 1 ? 10 : 1;
 	else if (data->lib.event.key.keysym.sym == SDLK_s && !data->lib.event.key.repeat)
 		save_map_to_file(data, map_name);
+	else if (data->lib.event.key.keysym.sym == SDLK_f && !data->lib.event.key.repeat)
+		fill_step(data, *step);
+	else if (data->lib.event.key.keysym.sym == SDLK_r && !data->lib.event.key.repeat)
+		reset_step(data, *step);
+	else if (data->lib.event.key.keysym.sym == SDLK_c && !data->lib.event.key.repeat)
+		copy_step(data, *step);
 }
 
 void				editor_commands(t_doom *data, char map_name[50],
-	int *map, int *first)
+	int *step, int *first)
 {
 	static int		ok = 0;
 
@@ -55,9 +57,8 @@ void				editor_commands(t_doom *data, char map_name[50],
 		&& data->lib.event.button.x <= 1910 && data->lib.event.button.y <= 1070
 		&& data->lib.event.type == SDL_MOUSEBUTTONDOWN)
 		data->lib.editor.mode = (data->lib.editor.mode == 0 ? 1 : 0);
-	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
-		&& data->lib.editor.mode == 0)
-		mouse_editor_commands(data, &ok, map, data->lib.event.button.button);
+	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
+		mouse_editor_commands(data, &ok, step, data->lib.event.button.button);
 	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
 		&& data->lib.editor.mode == 0
 		&& data->lib.event.button.x >= 1197 && data->lib.event.button.y >= 773
@@ -69,11 +70,11 @@ void				editor_commands(t_doom *data, char map_name[50],
 	{
 		if (data->lib.event.button.button == SDL_BUTTON_LEFT)
 			draw_block(data, data->lib.event.button.x,
-				data->lib.event.button.y, *map);
+				data->lib.event.button.y, *step);
 		if (data->lib.event.button.button == SDL_BUTTON_RIGHT)
 			erase_block(data, data->lib.event.button.x,
-				data->lib.event.button.y, *map);
+				data->lib.event.button.y, *step);
 	}
 	else if (data->lib.event.type == SDL_KEYDOWN)
-		keydown_editor_commands(data, map, first, map_name);
+		keydown_editor_commands(data, step, first, map_name);
 }

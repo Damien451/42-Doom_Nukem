@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/27 17:30:15 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:59:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,10 @@ struct							s_editor
 	int							mode;
 	int							alpha;
 	int							brush_size;
+	int							pickmode;
+	unsigned int				block1;
+	unsigned int				block2;
+	unsigned int				blocktoremove;
 };
 
 

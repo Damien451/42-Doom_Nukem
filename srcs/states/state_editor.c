@@ -95,6 +95,16 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 	return (0);
 }
 
+static void			init_editor(t_editor *editor)
+{
+	editor->picked_texture = 0;
+	editor->brush_size = 1;
+	editor->pickmode = 0;
+	editor->block1 = 0;
+	editor->block2 = 0;
+	editor->blocktoremove = 0;
+}
+
 int					state_editor(t_doom *data)
 {
 	static int		first = 0;
@@ -105,8 +115,7 @@ int					state_editor(t_doom *data)
 		
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
 		parse_file(data, data->map_name, step);
-		data->lib.editor.picked_texture = 0;
-		data->lib.editor.brush_size = 5;
+		init_editor(&data->lib.editor);
 		first++;
 	}
 	ft_memcpy(data->lib.image,

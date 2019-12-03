@@ -13,7 +13,15 @@ void	pick_texture(t_doom *data, int x, int y)
 		++i;
 	while ((j + 1) * 83 < y)
 		++j;
-	data->lib.editor.picked_texture = j * 10 + i;
+	if (data->lib.editor.pickmode == 0)
+		data->lib.editor.picked_texture = j * 10 + i;
+	else if (data->lib.editor.pickmode == 1)
+		data->lib.editor.block1 = j * 10 + i;	
+	else if (data->lib.editor.pickmode == 2)
+		data->lib.editor.block2 = j * 10 + i;
+	else if (data->lib.editor.pickmode == 3)
+		data->lib.editor.blocktoremove = j * 10 + i;
+	data->lib.editor.pickmode = 0;
 }
 
 void	fill_step(t_doom *data, int step)
@@ -56,12 +64,12 @@ void	erase_block(t_doom *data, int x, int y, int step)
 	int			nbry;
 
 	tmpbrush = data->lib.editor.brush_size;
-	tmpy = y - tmpbrush / 2;
 	nbry = tmpbrush + 1;
+	tmpy = (tmpbrush == 1 ? y : y - BLOCK_SIZE_EDITOR * tmpbrush / 2);
 	while (--nbry > 0)
 	{
 		nbrx = tmpbrush + 1;
-		tmpx = x - tmpbrush / 2;
+		tmpx = (tmpbrush == 1 ? x : x - BLOCK_SIZE_EDITOR * tmpbrush / 2);
 		while (--nbrx > 0)
 		{
 			if (tmpx >= 15 && tmpx <= 1030 && tmpy >= 15 && tmpy <= 1030)
@@ -82,12 +90,12 @@ void	draw_block(t_doom *data, int x, int y, int step)
 	int			nbry;
 
 	tmpbrush = data->lib.editor.brush_size;
-	tmpy = y - tmpbrush / 2;
 	nbry = tmpbrush + 1;
+	tmpy = (tmpbrush == 1 ? y : y - BLOCK_SIZE_EDITOR * tmpbrush / 2);
 	while (--nbry > 0)
 	{
 		nbrx = tmpbrush + 1;
-		tmpx = x - tmpbrush / 2;
+		tmpx = (tmpbrush == 1 ? x : x - BLOCK_SIZE_EDITOR * tmpbrush / 2);
 		while (--nbrx > 0)
 		{
 			if (tmpx >= 15 && tmpx <= 1030 && tmpy >= 15 && tmpy <= 1030)
