@@ -8,9 +8,10 @@ typedef struct s_entity t_entity;
 
 typedef struct	s_entity
 {
-	SDL_Surface *texture;
 	t_vec3d		pos;
+	SDL_Surface *texture;
 	t_entity	*next;
+	int			idl;
 }				t_entity;
 
 typedef struct	s_zbuf
