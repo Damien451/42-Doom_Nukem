@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/17 16:20:27 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/03 20:55:52 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,7 @@
 #include "vec3.h"
 #include <math.h>
 
-void		check_if_inside_map(t_doom *data, t_vec3d *position)
-{
-	if (position->x > 63.7)
-	{
-		data->player.acceleration.x = 0;
-		position->x = 63.7;
-	}
-	else if (position->x < 0.3)
-	{
-		data->player.acceleration.x = 0;
-		position->x = 0.3;
-	}
-	if (position->y > 63.7)
-	{
-		data->player.acceleration.y = 0;
-		position->y = 63.7;
-	}
-	else if (position->y < 0.3)
-	{
-		data->player.acceleration.y = 0;
-		position->y = 0.3;
-	}
-	if (position->z > 63.7)
-	{
-		data->player.acceleration.z = 0;
-		position->z = 63.7;
-	}
-	else if (position->z < 0.3)
-	{
-		data->player.acceleration.z = 0;
-		position->z = 0.3;
-	}
-}
-
-void		apply_motion(t_doom *data)
+/*void		apply_motion(t_doom *data)
 {
 	t_vec3d		new_pos;
 	double		squat;
@@ -114,41 +80,14 @@ void		apply_motion(t_doom *data)
 	{
 		frame_r = 0;
 		course.y = 0;
-	}
-	new_pos = vec3d_add(data->player.position, data->player.acceleration);
-	check_if_inside_map(data, &new_pos);
-	course = vec3d_add(new_pos, course);
-	course.y += 1.0 - ((double)frame_s * 0.8 / 10.0);
-	check_player_clipping(&data->player.acceleration, &new_pos, data->map_to_save, data->player.position);
-	check_camera_clipping(&data->player.acceleration, &course, data->map_to_save, data->player.position);
-/*	if (data->map_to_save[(int)(new_pos.x + course.x)][(int)(data->player.position.y)][(int)data->player.position.z])
-	{
-		if (new_pos.x < data->player.position.x)
-			new_pos.x = floor(new_pos.x) + 1.001;
-		else
-			new_pos.x = floor(new_pos.x) - 0.001;
-		data->player.acceleration.x = 0;
 	}*/
-/*	if (data->map_to_save[(int)(new_pos.x + course.x)][(int)(new_pos.y+ course.y)][(int)data->player.position.z])
-	{
-		if (new_pos.y < data->player.position.y)
-			new_pos.y = floor(new_pos.y) + 1.001;
-		else
-			new_pos.y = floor(new_pos.y) - 0.001;
-		data->player.acceleration.y = 0;
-	}*/
-/*	if (data->map_to_save[(int)new_pos.x][(int)(new_pos.y + squat + course.y)][(int)new_pos.z])
-	{
-		if (new_pos.z < data->player.position.z)
-			new_pos.z = floor(new_pos.z) + 1.001;
-		else
-			new_pos.z = floor(new_pos.z) - 0.001;
-		data->player.acceleration.z = 0;
-	}*/
-	data->player.camera.origin = course;
-	data->player.position = new_pos;
-	//printf("data->player.camera.origin = (%.2f|%.2f|%.2f) || player = (%.2f|%.2f|%.2f)\n", course.x, course.y, course.z, new_pos.x, new_pos.y, new_pos.z);
-}
+//	course = vec3d_add(new_pos, course);
+//	course.y += 1.0 - ((double)frame_s * 0.8 / 10.0);
+//	check_player_clipping(&data->player.acceleration, &new_pos, data->map_to_save, data->player.position);
+//	check_camera_clipping(&data->player.acceleration, &course, data->map_to_save, data->player.position);
+//	data->player.camera.origin = course;
+//	data->player.position = new_pos;
+//}
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y
 		, double *sensitivity)
@@ -213,7 +152,6 @@ void		camera_event_translate(t_doom *data)
 		tmp.y = data->player.acceleration.y - 0.0225;
 	clamp_acceleration(&tmp, data->lib.cam_keys & COURSE ? 0.5 : 0);
 	data->player.acceleration = tmp;
-	apply_motion(data);
 }
 
 static void	camera_release_key(SDL_Event *event, t_doom *data)

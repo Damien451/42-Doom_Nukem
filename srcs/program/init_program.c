@@ -14,6 +14,9 @@ int			init_light(t_doom *data)
 	t_light		*tmp;
 	int			i;
 
+	data->player.camera.origin.x = 1;
+	data->player.camera.origin.y = 5;
+	data->player.camera.origin.z = 1;
 	data->sun_light = malloc(sizeof(t_light));
 	data->sun_light->type = SUN;
 	data->power[SUN] = 5000;

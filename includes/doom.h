@@ -45,6 +45,14 @@
 
 # define SPAWNBLOCK			31
 
+# define X_MIN				(0)
+# define X_MAX				(1)
+# define Y_MIN				(2)
+# define Y_MID				(3)
+# define Y_MAX				(4)
+# define Z_MIN				(5)
+# define Z_MAX				(6)
+
 /*
 ** ====-* TYPEDEFS *-====
 */
@@ -176,8 +184,8 @@ void						show_selected_params(t_doom *data);
 unsigned int				add_skybox(t_vec3d intersect, unsigned int *skybox[6]);
 int							convert_to_ppm(unsigned int *view);
 double						launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data);
-void		max_absolute_between_three(t_vec3d vec, int tab[3]);
-double		launch_ray_to_sun(t_ray ray, const t_doom * const data);
+void						max_absolute_between_three(t_vec3d vec, int tab[3]);
+double						launch_ray_to_sun(t_ray ray, const t_doom * const data);
 
 /*
 ** ====-* RAYTRACER *-====
@@ -221,22 +229,18 @@ int							check_y_intersect_pos(t_vec3d *intersect
 		, t_vec3d origin, t_ray *ray, t_octree **node);
 int							check_z_intersect_pos(t_vec3d *intersect
 		, t_vec3d origin, t_ray *ray, t_octree **node);
-unsigned int			fill_percent_128(double a, double b
+unsigned int				fill_percent_128(double a, double b
 		, unsigned int tab[128 * 128]);
-t_octree	*find_parent_x(t_vec3d position, t_octree *node, t_vec3d origin);
-t_octree	*find_parent_y(t_vec3d position, t_octree *node, t_vec3d origin);
-t_octree	*find_parent_z(t_vec3d position, t_octree *node, t_vec3d origin);
-void					*launch_rays(void *ptr);
-void					sun(t_doom *data);
+t_octree					*find_parent_x(t_vec3d position, t_octree *node, t_vec3d origin);
+t_octree					*find_parent_y(t_vec3d position, t_octree *node, t_vec3d origin);
+t_octree					*find_parent_z(t_vec3d position, t_octree *node, t_vec3d origin);
+void						*launch_rays(void *ptr);
+void						sun(t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====
 */
 
-int			check_player_clipping(t_vec3d *acceleration, t_vec3d *new_pos
-	, char map[64][64][64], t_vec3d position);
-int			check_camera_clipping(t_vec3d *acceleration, t_vec3d *new_pos
-	, char map[64][64][64], t_vec3d position);
 void		apply_motion(t_doom *data);
 
 /*

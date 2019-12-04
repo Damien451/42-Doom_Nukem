@@ -82,7 +82,7 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 				if (map[z][y][x] == SPAWNBLOCK)
 				{
 					position->x = z + 0.5;
-					position->y = y + 1;
+					position->y = y + 5.7;
 					position->z = x + 0.5;
 				}
 			}
@@ -92,12 +92,10 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 
 int			state_game(t_doom *data)
 {
-	int	time = SDL_GetTicks();
-
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	if (data->player.position.x == -1 && data->player.position.y == -1 &&
-			data->player.position.z == -1)
-		set_player_spawn(data->map_to_save, &data->player.position);
+//	if (data->player.position.x == -1 && data->player.position.y == -1 &&
+//			data->player.position.z == -1)
+//		set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
@@ -121,16 +119,16 @@ int			state_game(t_doom *data)
 	}
 	//	if (data->lib.cam_keys & DESTROY)
 	//		interaction(data);
-	camera_event_translate(data);
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
-//	printf("Time for computing physical motor = %d\n", SDL_GetTicks() - time);
 	raytracing(data);
+	data->player.acceleration = data->player.physics.acceleration;
+	data->player.camera.origin = data->player.physics.origin;
+	printf("end = data->player.camera.origin = [%.2f, %.2f, %.2f]\n", data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z);
 	if (data->photo)
 	{
 		data->photo = 0;
 		convert_to_ppm(data->lib.image);
 	}
-//	skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
