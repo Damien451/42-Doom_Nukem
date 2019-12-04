@@ -174,12 +174,15 @@ void						draw_block(t_doom *data, int x, int y, int step);
 void						erase_block(t_doom *data, int x, int y, int step);
 void						fill_step(t_doom *data, int step);
 int							frame_calculator(void);
+void						copy_step(t_doom *data, int step);
 void						color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha);
 int							create_octree(t_doom *data);
 void						pick_texture(t_doom *data, int x, int y);
 void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
 unsigned int				ray_intersect(t_ray ray, const t_doom * const data);
+void						remove_type_block(t_doom *data);
+void						replace_blocks(t_doom *data);
 void						show_selected_params(t_doom *data);
 unsigned int				add_skybox(t_vec3d intersect, unsigned int *skybox[6]);
 int							convert_to_ppm(unsigned int *view);
@@ -251,11 +254,11 @@ void		apply_motion(t_doom *data);
 ** ====-* COMMANDS *-====
 */
 
-void						editor_commands(t_doom *data, char map_name[50], int *map, int *first);
+void						editor_commands(t_doom *data, char map_name[50], int *step, int *first);
 
 int							check_map_validity(t_doom *data);
 
-void						mouse_editor_commands(t_doom *data, int *ok, int *map, int button);
+void						mouse_editor_commands(t_doom *data, int *ok, int *step, int button);
 
 /*
 ** ====-* GAMESTATES *-====
