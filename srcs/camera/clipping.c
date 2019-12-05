@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:07:09 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/04 20:10:17 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/05 12:12:59 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,19 @@ int			add_vertex_clipping_y_min(t_vec3d *acceleration, t_vec3d *new_pos
 {
 	if (map[(int)position.x][(int)(new_pos->y)][(int)position.z])
 	{
-		printf("YOYOYO\n");
 		new_pos->y = floor(new_pos->y) + 1.001;
+		acceleration->y = 0;
+		return (1);
+	}
+	return (0);
+}
+
+int			add_vertex_clipping_y_max(t_vec3d *acceleration, t_vec3d *new_pos
+	, char map[64][64][64], t_vec3d position)
+{
+	if (map[(int)position.x][(int)(new_pos->y)][(int)position.z])
+	{
+		new_pos->y = floor(new_pos->y) - 0.001;
 		acceleration->y = 0;
 		return (1);
 	}

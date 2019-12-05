@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:04:19 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/03 12:08:19 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/05 17:31:55 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static inline int		catch_next_pixel_to_compute(t_doom *data, void *ptr)
 
 	pthread_mutex_lock(((t_thread*)ptr)->mutex);
 	i = data->actual_i;
-	data->actual_i += (8);
+	data->actual_i += (32);
 	pthread_mutex_unlock(((t_thread*)ptr)->mutex);
 	return (i);
 }
@@ -80,7 +80,7 @@ void					*launch_rays(void *ptr)
 	while (i < ((t_thread*)ptr)->frame)
 	{
 		j = -2;
-		while ((j += 2) < 8)
+		while ((j += 2) < 32)
 		{
 			pos[0] = data->samplingt[data->sampling - 1][i + j];
 			pos[1] = data->samplingt[data->sampling - 1][i + 1 + j];

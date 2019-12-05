@@ -71,18 +71,18 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 	int		z;
 
 	z = -1;
-	while (++z < 63)
+	while (++z < 64)
 	{
 		y = -1;
-		while (++y < 63)
+		while (++y < 64)
 		{
 			x = -1;
-			while (++x < 63)
+			while (++x < 64)
 			{
 				if (map[z][y][x] == SPAWNBLOCK)
 				{
 					position->x = z + 0.5;
-					position->y = y + 5.7;
+					position->y = y + 2.6;
 					position->z = x + 0.5;
 				}
 			}
@@ -93,9 +93,9 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 int			state_game(t_doom *data)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-//	if (data->player.position.x == -1 && data->player.position.y == -1 &&
-//			data->player.position.z == -1)
-//		set_player_spawn(data->map_to_save, &data->player.camera.origin);
+	if (data->player.camera.origin.x == -1 && data->player.camera.origin.y == -1 &&
+			data->player.camera.origin.z == -1)
+		set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
@@ -123,7 +123,7 @@ int			state_game(t_doom *data)
 	raytracing(data);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
-	printf("end = data->player.camera.origin = [%.2f, %.2f, %.2f]\n", data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z);
+//	printf("end = data->player.camera.origin = [%.2f, %.2f, %.2f]\n", data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z);
 	if (data->photo)
 	{
 		data->photo = 0;

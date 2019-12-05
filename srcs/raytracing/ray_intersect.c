@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/03 12:16:40 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/05 17:32:57 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ unsigned int		compute_lights(t_ray ray, t_doom *data, t_octree *node)
 	ray.length += launch_ray_to_light(ray, data->sun_light, data);
 	if (ray.length >= 0.875)
 		return (ray.color);
+	return (compute_color(ray));
 	while (light)
 	{
 		ray.length += launch_ray_to_light(ray, light, data);

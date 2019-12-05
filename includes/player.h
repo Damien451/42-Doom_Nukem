@@ -30,6 +30,8 @@
 # define Y_AXIS				(t_vec3d){0, 1, 0}
 # define Z_AXIS				(t_vec3d){0, 0, 1}
 # define SENSITIVITY		(double)(M_PI / 90.0 / data->sensitivity)
+# define WIDTH_PLAYER		0.2
+# define SIZE_PLAYER		1.5
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -100,6 +102,8 @@ void		camera_press_key(SDL_Event *event, t_doom *data);
 void		camera_event_translate(t_doom *data);
 
 int			add_vertex_clipping_y_min(t_vec3d *acceleration, t_vec3d *new_pos
+	, char map[64][64][64], t_vec3d position);
+int			add_vertex_clipping_y_max(t_vec3d *acceleration, t_vec3d *new_pos
 	, char map[64][64][64], t_vec3d position);
 int			add_vertex_clipping_x_min(t_vec3d *acceleration, t_vec3d *new_pos
 	, char map[64][64][64], t_vec3d position);

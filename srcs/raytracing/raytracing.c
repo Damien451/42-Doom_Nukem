@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/04 20:19:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/05 18:20:57 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ int					raytracing(t_doom *data)
 		frame = 0;
 	}
 	sun(data);
-	int time = SDL_GetTicks();
 	add_clipping_for_each_point(data, &data->player);
-	printf("time to compute new physic = %d\n", SDL_GetTicks() - time);
 	frame++;
 	i = 0;
 	while (i < NBR_THREAD)

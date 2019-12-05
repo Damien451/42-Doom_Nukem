@@ -14,9 +14,6 @@ int			init_light(t_doom *data)
 	t_light		*tmp;
 	int			i;
 
-	data->player.camera.origin.x = 1;
-	data->player.camera.origin.y = 5;
-	data->player.camera.origin.z = 1;
 	data->sun_light = malloc(sizeof(t_light));
 	data->sun_light->type = SUN;
 	data->power[SUN] = 5000;
@@ -90,9 +87,9 @@ void		init_camera(t_doom *data)
 	data->player.sensitivity = SENSITIVITY;
 	data->player.camera.right = X_AXIS;
 	data->player.camera.up = Y_AXIS;
-	data->player.position.x = -1;
-	data->player.position.y = -1;
-	data->player.position.z = -1;
+	data->player.camera.origin.x = -1;
+	data->player.camera.origin.y = -1;
+	data->player.camera.origin.z = -1;
 	data->sampling = 4;
 	init_light(data);
 	load_skybox(data);
