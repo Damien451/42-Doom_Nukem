@@ -64,13 +64,17 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/clipping.c					\
+					$(CAMERA)/player_hitbox.c				\
 					$(EDITOR)/check_map_validity.c			\
 					$(EDITOR)/color_rectangle.c				\
 					$(EDITOR)/deal_with_map_directory.c		\
 					$(EDITOR)/editor_commands.c				\
 					$(EDITOR)/editor_utils.c				\
-					$(EDITOR)/show_picked_texture.c			\
+					$(EDITOR)/editor_utils2.c				\
+					$(EDITOR)/mouse_editor_commands.c		\
+					$(EDITOR)/show_selected_params.c		\
 					$(MATHS)/create_octree.c				\
+					$(MATHS)/max_absolute_between_three.c	\
 					$(MATHS)/octree_memory_management.c		\
 					$(MATHS)/quaternion.c					\
 					$(MATHS)/quaternion_2.c					\
@@ -84,11 +88,19 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/leave_program.c					\
 					$(PROG)/leave_state_game.c				\
 					$(PROG)/program.c						\
+					$(RT)/add_texture_neg.c					\
+					$(RT)/add_texture_pos.c					\
 					$(RT)/add_textures.c					\
-					$(RT)/check_which_face_is_touched.c		\
+					$(RT)/check_light_view_neg.c			\
+					$(RT)/check_light_view_pos.c			\
+					$(RT)/check_which_face_is_touched_neg.c	\
+					$(RT)/check_which_face_is_touched_pos.c	\
+					$(RT)/compute_lights.c					\
+					$(RT)/launch_rays.c						\
 					$(RT)/locate_in_octree.c				\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\
+					$(RT)/sun_animation.c					\
 					$(SHAPES)/draw_circle.c					\
 					$(SHAPES)/draw_rectangle.c				\
 					$(SOUND)/get_default_sounds.c			\

@@ -12,6 +12,8 @@
 # include "player.h"
 # include "entities.h"
 # include "vec3.h"
+# include "thread.h"
+# include <pthread.h>
 
 /*
 ** ====-* DEFINES *-====
@@ -38,10 +40,19 @@
 # define GET_INPUT			(1l << 13)
 # define LEAVING			(1l << 14)
 
-# define SUN				(1)
-# define TORCH				(2)
+# define SUN				(0)
+# define TORCH				(1)
+# define PLAYER				(2)
 
 # define SPAWNBLOCK			31
+
+# define X_MIN				(0)
+# define X_MAX				(1)
+# define Y_MIN				(2)
+# define Y_MID				(3)
+# define Y_MAX				(4)
+# define Z_MIN				(5)
+# define Z_MAX				(6)
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -53,6 +64,7 @@ typedef struct s_bubble			t_bubble;
 typedef struct s_octree			t_octree;
 typedef struct s_light			t_light;
 typedef struct s_ray			t_ray;
+typedef struct s_thread			t_thread;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -67,7 +79,7 @@ struct						s_bubble
 struct						s_light
 {
 	t_vec3d					position;
-	char					type;
+	int						type;
 	t_light					*next;
 };
 
@@ -80,7 +92,24 @@ struct						s_ray
 	t_vec3d					intersect;
 	t_vec3d					origin;
 	t_vec3d					direction;
+	int						face;
 	t_octree				*node;
+	t_vec3d					normal;
+	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
+};
+
+struct						s_thread
+{
+	pthread_t				thread;
+	pthread_mutex_t			*mutex;
+	pthread_mutex_t			*game;
+	t_octree				*(*find_parent[3])(t_vec3d, t_octree*, t_vec3d);
+	int						num;
+	unsigned int			*image;
+	int						total_frame;
+	int						frame;
+	t_doom					*data;
+	t_ray					ray;
 };
 
 struct						s_doom
@@ -94,6 +123,7 @@ struct						s_doom
 	t_bubble				*lightning_list2;
 	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					*map_name;
+	unsigned int			**skybox;
 	long					button;
 	long					state;
 	t_octree				*octree;
@@ -101,17 +131,26 @@ struct						s_doom
 	double					sensitivity;
 	t_mixer					*mix;
 	int						sampling;
-	int						editor_mode;
-	int						editor_alpha;
 	int						map_to_show;
-	int						(*check_intersect[3])(t_vec3d *, t_vec3d, t_ray *
+	int						(*check_intersect[6])(t_vec3d *, t_vec3d, t_ray *
 								, t_octree **);
+	int						(*add_texture[6])(t_vec3d, const t_doom * const);
+	int						(*check_light_view[6])(t_vec3d, t_vec3d);
 	t_light					*light;
-	unsigned int			*octree_v2;
 	int						ball;
 	int						torch;
 	t_vec3d					sun;
+	t_light					*sun_light;
+	t_light					*player_light;
+	int						power[3];
 	char					photo;
+	int						actual_i;
+	int						actual_j;
+	int						*samplingt[6];
+	t_vec3d					normal[6];
+	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
+	t_thread				thread[NBR_THREAD];
+	pthread_mutex_t			mutex;
 };
 
 /*
@@ -136,31 +175,78 @@ void						draw_block(t_doom *data, int x, int y, int step);
 void						erase_block(t_doom *data, int x, int y, int step);
 void						fill_step(t_doom *data, int step);
 int							frame_calculator(void);
+void						copy_step(t_doom *data, int step);
 void						color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha);
 int							create_octree(t_doom *data);
+void						pick_element(t_doom *data, int x, int y);
 void						pick_texture(t_doom *data, int x, int y);
 void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);
-unsigned int				ray_intersect(t_ray ray, t_vec3d origin, t_octree *node, t_doom *data);
-void						show_picked_texture(t_doom *data);
-int							check_x_intersect(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
-int							check_y_intersect(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
-int							check_z_intersect(t_vec3d *intersect, t_vec3d origin
-	, t_ray *ray, t_octree **node);
-unsigned int				add_skybox(t_vec3d intersect);
-unsigned int				add_texture(t_vec3d intersect, t_octree *node, int type, t_doom *data);
+unsigned int				ray_intersect(t_ray ray, const t_doom * const data);
+void						remove_type_block(t_doom *data);
+void						replace_blocks(t_doom *data);
+void						show_selected_params(t_doom *data);
+unsigned int				add_skybox(t_vec3d intersect, unsigned int *skybox[6]);
 int							convert_to_ppm(unsigned int *view);
+double						launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data);
+void						max_absolute_between_three(t_vec3d vec, int tab[3]);
+double						launch_ray_to_sun(t_ray ray, const t_doom * const data);
+
+/*
+** ====-* RAYTRACER *-====
+*/
+
+t_octree					*find_node_to_go_neighboor(t_vec3d position
+		, t_octree *node);
+int							check_light_view_x_pos(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_x_neg(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_y_pos(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_y_neg(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_z_pos(t_vec3d position
+		, t_vec3d light_pos);
+int							check_light_view_z_neg(t_vec3d position
+		, t_vec3d light_pos);
+int							add_x_neg(t_vec3d intersect
+		, const t_doom * const data);
+int							add_y_neg(t_vec3d intersect
+		, const t_doom * const data);
+int							add_z_neg(t_vec3d intersect
+		, const t_doom * const data);
+int							add_x_pos(t_vec3d intersect
+		, const t_doom * const data);
+int							add_y_pos(t_vec3d intersect
+		, const t_doom * const data);
+int							add_z_pos(t_vec3d intersect
+		, const t_doom * const data);
+int							check_x_intersect_neg(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_y_intersect_neg(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_z_intersect_neg(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_x_intersect_pos(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_y_intersect_pos(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+int							check_z_intersect_pos(t_vec3d *intersect
+		, t_vec3d origin, t_ray *ray, t_octree **node);
+unsigned int				fill_percent_128(double a, double b
+		, unsigned int tab[128 * 128]);
+t_octree					*find_parent_x(t_vec3d position, t_octree *node, t_vec3d origin);
+t_octree					*find_parent_y(t_vec3d position, t_octree *node, t_vec3d origin);
+t_octree					*find_parent_z(t_vec3d position, t_octree *node, t_vec3d origin);
+void						*launch_rays(void *ptr);
+void						sun(t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====
 */
 
-int			check_player_clipping(t_vec3d *acceleration, t_vec3d *new_pos
-	, char map[64][64][64], t_vec3d position);
-int			check_camera_clipping(t_vec3d *acceleration, t_vec3d *new_pos
-	, char map[64][64][64], t_vec3d position);
+void		apply_motion(t_doom *data);
 
 /*
 ** ====-* GAMEPLAY *-====
@@ -170,9 +256,11 @@ int			check_camera_clipping(t_vec3d *acceleration, t_vec3d *new_pos
 ** ====-* COMMANDS *-====
 */
 
-void						editor_commands(t_doom *data, char str[50], int *map, int *first);
+void						editor_commands(t_doom *data, char map_name[50], int *step, int *first);
 
 int							check_map_validity(t_doom *data);
+
+void						mouse_editor_commands(t_doom *data, int *ok, int *step, int button);
 
 /*
 ** ====-* GAMESTATES *-====
