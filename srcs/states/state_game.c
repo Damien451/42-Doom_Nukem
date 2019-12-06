@@ -99,7 +99,7 @@ int			state_game(t_doom *data)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			leave_state_game(&data->player.position);
+			leave_state_game(&data->player.camera.origin);
 			switch_state(data, PLAYING, MAIN_MENU);
 			return (0);
 		}
