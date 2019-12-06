@@ -60,3 +60,27 @@ void		copy_step(t_doom *data, int step)
 			data->map_to_save[i][step][j] = data->map_to_save[i][step - 1][j];
 	}
 }
+
+void		pick_element(t_doom *data, int x, int y)
+{
+	/*int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	x -= 1052;
+	y -= 368;
+	while ((i + 1) * 85 < x)
+		++i;
+	while ((j + 1) * 83 < y)
+		++j;*/
+	if (data->lib.editor.pickmode == 0)
+		data->lib.editor.picked_texture = 40;
+	else if (data->lib.editor.pickmode == 1)
+		data->lib.editor.block1 = 40;
+	else if (data->lib.editor.pickmode == 2)
+		data->lib.editor.block2 = 40;
+	else if (data->lib.editor.pickmode == 3)
+		data->lib.editor.blocktoremove = 40;
+	data->lib.editor.pickmode = 0;
+}

@@ -125,6 +125,8 @@ void				show_selected_params(t_doom *data)
 		y = 2;
 	if (y == 3)
 		y = 6;
+	if (y == 4)
+		y = 20;
 	y += 13 + (tmp * TEXTURE_SIZE);
 	draw_select_square(&data->lib, (t_point){(int)x, y},
 		(t_point){85, 85}, 0xff0000);

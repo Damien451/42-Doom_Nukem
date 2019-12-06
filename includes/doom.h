@@ -177,6 +177,7 @@ int							frame_calculator(void);
 void						copy_step(t_doom *data, int step);
 void						color_rectangle(t_doom *data, t_vec3l rectangle, int step, double alpha);
 int							create_octree(t_doom *data);
+void						pick_element(t_doom *data, int x, int y);
 void						pick_texture(t_doom *data, int x, int y);
 void						reset_step(t_doom *data, int step);
 int							raytracing(t_doom *data);

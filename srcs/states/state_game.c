@@ -19,7 +19,7 @@ void		skybox(t_doom *data)
 	int						fd;
 
 
-	int						k;
+	/*int						k;
 	char					destpath[70] = "/sgoinfre/goinfre/Perso/dacuvill/new_blocks_binaries/";
 	char					full_destpath[100];
 	char					originpath[60] = "/sgoinfre/goinfre/Perso/dacuvill/blocks_rgb_tmp/";
@@ -32,8 +32,8 @@ void		skybox(t_doom *data)
 		ft_bzero(full_destpath, 100);
 		ft_strcat(ft_strcat(ft_strcat(full_originpath, originpath), ft_itoa(k)), ".rgb");
 		ft_strcat(ft_strcat(ft_strcat(full_destpath, destpath), ft_itoa(k)), ".binary");
-		tab[0] = 0;
-		fd = open(full_originpath, O_RDONLY);
+		tab[0] = 0;*/
+		fd = open("./cut_sandstone.rgb", O_RDONLY);
 		read(fd, tabi, 128*128*3);
 		close(fd);
 		i = 0;
@@ -55,13 +55,12 @@ void		skybox(t_doom *data)
 		}
 		//if (!ok)
 		//{
-		i = open(full_destpath, O_TRUNC | O_WRONLY | O_CREAT, 0777);
-		printf("%s\n", full_destpath);
+		i = open("sandstone.binary", O_TRUNC | O_WRONLY | O_CREAT, 0777);
 		write(i, tabl, 128*128*4);
 		close(i);
 		ok++;
 		//}
-	}
+	//}
 }
 
 static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
@@ -93,9 +92,9 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 int			state_game(t_doom *data)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	if (data->player.camera.origin.x == -1 && data->player.camera.origin.y == -1 &&
-			data->player.camera.origin.z == -1)
-		set_player_spawn(data->map_to_save, &data->player.camera.origin);
+	/*if (data->player.position.x == -1 && data->player.position.y == -1 &&
+			data->player.position.z == -1)
+		set_player_spawn(data->map_to_save, &data->player.camera.origin);*/
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
@@ -129,6 +128,7 @@ int			state_game(t_doom *data)
 		data->photo = 0;
 		convert_to_ppm(data->lib.image);
 	}
+	//skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);

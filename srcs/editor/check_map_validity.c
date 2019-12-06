@@ -1,34 +1,44 @@
 
 #include "doom.h"
 #include "graphic_lib.h"
+#include "vec3.h"
 
-static inline void	checks(char block, int *start, int *finish)
+static inline void	checks(char map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP],
+	t_vec3d *coords, int *start, int *finish)
 {
-	if ((int)block == ID_START_BLOCK + 1)
+	int			block;
+	int			upblock;
+	int			upblock2;
+
+	block = (int)map_to_save[(int)coords->x][(int)coords->y]
+		[(int)coords->z];
+	upblock = (int)map_to_save[(int)coords->x][(int)coords->y + 1]
+		[(int)coords->z];
+	upblock2 = (int)map_to_save[(int)coords->x][(int)coords->y + 2]
+		[(int)coords->z];
+	if (block == ID_START_BLOCK + 1 && upblock == 0 && upblock2 == 0)
 		(*start)++;
-	else if ((int)block == ID_FINISH_BLOCK + 1)
+	else if (block == ID_FINISH_BLOCK + 1 && upblock == 0 && upblock2 == 0)
 		(*finish)++;
 }
 
 int					check_map_validity(t_doom *data)
 {
-	int			i;
-	int			step;
-	int			j;
+	t_vec3d		coords;
 	int			start;
 	int			finish;
 
-	i = -1;
+	coords.x = -1;
 	start = 0;
 	finish = 0;
-	while (++i < SIZE_MAP)
+	while (++coords.x < SIZE_MAP)
 	{
-		step = -1;
-		while (++step < SIZE_MAP)
+		coords.y = -1;
+		while (++coords.y < SIZE_MAP - 2)
 		{
-			j = -1;
-			while (++j < SIZE_MAP)
-				checks(data->map_to_save[i][step][j], &start, &finish);
+			coords.z = -1;
+			while (++coords.z < SIZE_MAP)
+				checks(data->map_to_save, &coords, &start, &finish);
 		}
 	}
 	return (start == 1 && finish == 1 ? 0 : 1);

@@ -60,10 +60,13 @@ static inline void	mouse_editor_commands2(t_doom *data, int *step)
 void				mouse_editor_commands(t_doom *data, int *ok,
 	int *step, int button)
 {
-	//printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
+	printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
 		pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
+	else if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 368
+		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 557)
+		pick_element(data, data->lib.event.button.x, data->lib.event.button.y);
 	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
 		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030
 		&& button == SDL_BUTTON_LEFT)
