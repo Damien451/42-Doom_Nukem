@@ -1,12 +1,12 @@
 #include "entity.h"
 
-double		distance(t_vec2d a, t_vec2d b)
+static double	distance(t_vec2d a, t_vec2d b)
 {
 	return (vec3d_length2(vec3d_sub(a, b)));
 }
 
 
-t_vec2d		calculate_position(t_entity entity, t_camera camera)
+static t_vec2d	calculate_position(t_entity entity, t_camera camera)
 {
 	t_vec3d dir;
 	t_vec3d fr;
@@ -27,7 +27,7 @@ t_vec2d		calculate_position(t_entity entity, t_camera camera)
 	return (pos);
 }
 
-void	create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture)
+void		create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture)
 {
 	t_entity entity;
 
@@ -47,7 +47,7 @@ void	create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture)
 	}
 }
 
-int init_zbuf(t_zbuf *zbuf)
+int 		init_zbuf(t_zbuf *zbuf)
 {
 	if (zbuf->zdist)
 		ft_memset(zbuf->zdist, HEIGHT * WIDTH * sizeof(double), -1);
@@ -96,7 +96,7 @@ t_zbuf		z_buffer(t_entity *entities, t_player player)
 	t_entity	*ptr;
 
 	if (!(init_zbuf(&zbuf)))
-		return (zbuf);	
+		return (zbuf);
 	ptr = entities;
 	while (ptr)
 	{

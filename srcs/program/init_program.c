@@ -90,6 +90,9 @@ void		init_camera(t_doom *data)
 	data->player.camera.origin.x = -1;
 	data->player.camera.origin.y = -1;
 	data->player.camera.origin.z = -1;
+	data->player.position.x = -1;
+	data->player.position.y = -1;
+	data->player.position.z = -1;
 	data->sampling = 4;
 	init_light(data);
 	load_skybox(data);

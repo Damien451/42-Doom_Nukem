@@ -92,9 +92,9 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 int			state_game(t_doom *data)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	/*if (data->player.position.x == -1 && data->player.position.y == -1 &&
+	if (data->player.position.x == -1 && data->player.position.y == -1 &&
 			data->player.position.z == -1)
-		set_player_spawn(data->map_to_save, &data->player.camera.origin);*/
+		set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
