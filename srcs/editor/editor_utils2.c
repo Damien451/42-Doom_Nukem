@@ -74,6 +74,8 @@ void		pick_element(t_doom *data, int x, int y)
 		++i;
 	while ((j + 1) * 83 < y)
 		++j;*/
+	x = 0;
+	y = 0;
 	if (data->lib.editor.pickmode == 0)
 		data->lib.editor.picked_texture = 40;
 	else if (data->lib.editor.pickmode == 1)

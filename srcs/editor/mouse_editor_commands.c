@@ -2,6 +2,14 @@
 #include "libft.h"
 #include "inputs.h"
 
+/*static inline void	check_click_try_mode(t_doom *data, int x)
+{
+	if (x >= 1178 && data->lib.event.button.y >= 1034
+		&& x <= 1225 && data->lib.event.button.y <= 1062)
+		if (check_map_validity(data) == 0)
+			
+}*/
+
 static inline void	mouse_editor_commands3(t_doom *data, int *step)
 {
 	if (data->lib.event.button.x >= 1283 && data->lib.event.button.y >= 711
@@ -29,6 +37,7 @@ static inline void	mouse_editor_commands3(t_doom *data, int *step)
 		&& data->lib.event.button.x <= 1573 && data->lib.event.button.y <= 1005
 		&& *step > 0)
 		copy_step(data, *step);
+	//mouse_editor_commands4(data, data->lib.event.button.x);
 }
 
 static inline void	mouse_editor_commands2(t_doom *data, int *step)
