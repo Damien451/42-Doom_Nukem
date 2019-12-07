@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:04:19 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/05 17:31:55 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/07 13:34:48 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static inline void		ray_create(const int pos[2], const t_camera camera
 		+ camera.direction.y;
 	ray->direction.z = (camera.right.z * x) + (camera.up.z * y)
 		+ camera.direction.z;
+	ray->length = 0;
 }
 
 static inline void		apply_sampling(unsigned int *image

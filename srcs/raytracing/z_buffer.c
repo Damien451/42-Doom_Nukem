@@ -47,12 +47,12 @@ void		create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture)
 	}
 }
 
-int 		init_zbuf(t_zbuf *zbuf)
+int			init_zbuf(t_zbuf *zbuf)
 {
 	if (zbuf->zdist)
 		ft_memset(zbuf->zdist, HEIGHT * WIDTH * sizeof(double), -1);
 	if (!zbuf->zdist)
-		if (!(zbuf->zdist = ft_memalloc(HEIGHT * WIDTH * sizeof(double))))	
+		if (!(zbuf->zdist = ft_memalloc(HEIGHT * WIDTH * sizeof(double))))
 			return (0);
 	if (!zbuf->zcolor)
 		if (!(zbuf->zcolor = ft_memalloc(HEIGHT * WIDTH * sizeof(int))))
@@ -66,10 +66,10 @@ static void	place_in_zbuf(t_entity entities, t_player player, t_zbuf *zbuf)
 {
 	double	dist;
 	t_vec2d pos;
-	int 	text_height;
+	int		text_height;
 	int		text_width;
-	int 	x;
-	int 	y;
+	int		x;
+	int		y;
 
 	dist = distance(player.position, entities.pos);
 	text_height = entities->texture.h;
@@ -84,7 +84,7 @@ static void	place_in_zbuf(t_entity entities, t_player player, t_zbuf *zbuf)
 			if (dist < zbuf->dist && x <= WIDTH && x >= 0 && y <= HEIGHT && y >= 0)
 			{
 				zbuf->dist = dist,
-				zbuf->zcolor[x + y * WIDTH] = entities->texture->pixels[(x - pos.x + text_width / 2) + (y - pos.y + text_height / 2) * text_width]; 
+				zbuf->zcolor[x + y * WIDTH] = entities->texture->pixels[(x - pos.x + text_width / 2) + (y - pos.y + text_height / 2) * text_width];
 			}
 		}
 	}

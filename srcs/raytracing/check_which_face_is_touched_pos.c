@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 15:51:32 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/03 11:31:15 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/07 13:39:12 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		check_x_intersect_pos(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		if (intersect->z >= (((*node)->center.z - size) >> 1)
 				&& intersect->z <= (((*node)->center.z + size) >> 1))
 		{
+			ray->length += distance;
 			*node = ray->find_parent[0](*intersect, *node, origin);
 			if (*node == NULL)
 				return (-2);
@@ -67,6 +68,7 @@ int		check_y_intersect_pos(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		if (intersect->z >= (((*node)->center.z - size) >> 1)
 				&& intersect->z <= (((*node)->center.z + size) >> 1))
 		{
+			ray->length += distance;
 			*node = ray->find_parent[1](*intersect, *node, origin);
 			if (*node == NULL)
 				return (-2);
@@ -97,6 +99,7 @@ int		check_z_intersect_pos(t_vec3d *intersect, t_vec3d origin, t_ray *ray
 		if (intersect->y >= (((*node)->center.y - size) >> 1)
 				&& intersect->y <= (((*node)->center.y + size) >> 1))
 		{
+			ray->length += distance;
 			*node = ray->find_parent[2](*intersect, *node, origin);
 			if (*node == NULL)
 				return (-2);

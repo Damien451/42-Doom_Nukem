@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/05 17:32:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/07 13:41:26 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ unsigned int		compute_color(t_ray ray)
 unsigned int		compute_lights(t_ray ray, t_doom *data, t_octree *node)
 {
 	t_light		*light;
+	double		length;
 
 	light = data->light;
 	ray.node = node;
@@ -41,13 +42,15 @@ unsigned int		compute_lights(t_ray ray, t_doom *data, t_octree *node)
 	ray.black = (ray.color & 0xF8F8F8) >> 3;
 	ray.normal = data->normal[ray.face];
 	data->player_light->position = data->player.camera.origin;
+	length = ray.length;
 	ray.length = launch_ray_to_light(ray, data->player_light, data);
+	if (length > 16.0)
+		return (ray.black);
 	if (ray.length >= 0.875)
 		return (ray.color);
 	ray.length += launch_ray_to_light(ray, data->sun_light, data);
 	if (ray.length >= 0.875)
 		return (ray.color);
-	return (compute_color(ray));
 	while (light)
 	{
 		ray.length += launch_ray_to_light(ray, light, data);
