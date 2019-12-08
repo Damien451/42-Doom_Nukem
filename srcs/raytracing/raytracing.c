@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/05 18:20:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/08 17:46:07 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int					raytracing(t_doom *data)
 		return (1);
 	if (frame == 4)
 	{
-		data->power[TORCH] = 50 + (rand() & 15);
+		data->power[TORCH] = 7 + (rand() & 3);
 		frame = 0;
 	}
 	sun(data);

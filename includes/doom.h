@@ -151,6 +151,7 @@ struct						s_doom
 	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
 	t_thread				thread[NBR_THREAD];
 	pthread_mutex_t			mutex;
+	t_light					light_array[64][64][64];
 };
 
 /*
@@ -191,6 +192,7 @@ int							convert_to_ppm(unsigned int *view);
 double						launch_ray_to_light(t_ray ray, t_light *light, const t_doom * const data);
 void						max_absolute_between_three(t_vec3d vec, int tab[3]);
 double						launch_ray_to_sun(t_ray ray, const t_doom * const data);
+int							create_light_array(t_doom *data);
 
 /*
 ** ====-* RAYTRACER *-====

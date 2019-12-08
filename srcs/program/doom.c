@@ -11,12 +11,13 @@ static int	display_errors(int type)
 
 int			main(void)
 {
-	t_doom	data;
+	t_doom	*data;
 
-	ft_memset(&data, 0, sizeof(t_doom));
-	if (init_program(&data))
+	data = malloc(sizeof(t_doom));
+	ft_memset(data, 0, sizeof(t_doom));
+	if (init_program(data))
 		return (display_errors(0));
-	program(&data);
-	leave_program(&data, 0);
+	program(data);
+	leave_program(data, 0);
 	return (0);
 }

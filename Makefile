@@ -73,6 +73,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/editor_utils2.c				\
 					$(EDITOR)/mouse_editor_commands.c		\
 					$(EDITOR)/show_selected_params.c		\
+					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/max_absolute_between_three.c	\
 					$(MATHS)/octree_memory_management.c		\

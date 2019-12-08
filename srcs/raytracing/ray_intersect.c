@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/07 20:52:38 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/08 17:18:33 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 {
 	t_light		*light;
 
-	light = data->light;
 	ray.node = node;
 	ray.origin = ray.intersect;
 	ray.color = data->add_texture[ray.face](ray.origin, data);
@@ -48,13 +47,16 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	ray.length += launch_ray_to_light(ray, data->sun_light, data);
 	if (ray.length >= 0.875)
 		return (ray.color);
-	return (compute_color(ray));
-	while (light)
+	if (data->light_array[(int)ray.intersect.x][(int)ray.intersect.y][(int)ray.intersect.z].type == 1)
 	{
-		ray.length += launch_ray_to_light(ray, light, data);
-		if (ray.length >= 0.875)
-			return (ray.color);
-		light = light->next;
+		light = data->light_array[(int)ray.intersect.x][(int)ray.intersect.y][(int)ray.intersect.z].next;
+		while (light)
+		{
+			ray.length += launch_ray_to_light(ray, light, data);
+			if (ray.length >= 0.875)
+				return (ray.color);
+			light = light->next;
+		}
 	}
 	return (compute_color(ray));
 }
@@ -71,7 +73,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 	while (i < 3)
 	{
 		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin
-			, &ray, &ray.node);
+				, &ray, &ray.node);
 		if (ray.face == -1)
 			i++;
 		else if (ray.face == -3)

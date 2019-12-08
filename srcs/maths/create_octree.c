@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/11/10 09:50:55 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/08 17:23:07 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 					return (-1);
 				else if (c == 2)
 					return (-2);
-				else if (c)
+				else if (c && c != 41)
 					nbr_node++;
 				else if (nbr_node)
 					return (-1);
@@ -115,22 +115,6 @@ void					check_if_child_is_leaf(t_doom *data, t_octree *node)
 	}
 }
 
-int						strlen_of_octree_v2(t_octree *node)
-{
-	int			i;
-	int			r;
-
-	i = 0;
-	if (node)
-	{
-		r = 1;
-		while (i < 8)
-			r += strlen_of_octree_v2(node->child[i++]);
-		return (r);
-	}
-	return (0);
-}
-
 void				aff_octree(t_octree *node, t_doom *data, int oct[3])
 {
 	int i;
@@ -175,6 +159,6 @@ int						create_octree(t_doom *data)
 	aff_octree(actual, data, oct);
 	printf("empty = %d, full = %d, inside = %d, total = %d, total bytes used = %d\n"
 			, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[2], (oct[0] + oct[1] + oct[2]) * 65);
-//	create_octree_v2(data);
+	create_light_array(data);
 	return (0);
 }
