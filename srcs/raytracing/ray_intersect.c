@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/08 17:18:33 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/08 18:30:19 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,20 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	, t_octree *node)
 {
 	t_light		*light;
+	t_vec3d		previous;
 
 	ray.node = node;
 	ray.origin = ray.intersect;
 	ray.color = data->add_texture[ray.face](ray.origin, data);
 	ray.black = (ray.color & 0xF8F8F8) >> 3;
 	ray.normal = data->normal[ray.face];
+	previous = ray.intersect;
+	if (ray.face == 0)
+		previous.x -= 1;
+	else if (ray.face == 2)
+		previous.y -= 1;
+	else if (ray.face == 4)
+		previous.z -= 1;
 	data->player_light->position = data->player.camera.origin;
 	ray.length = launch_ray_to_light(ray, data->player_light, data);
 	if (ray.length >= 0.875)
@@ -47,9 +55,9 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	ray.length += launch_ray_to_light(ray, data->sun_light, data);
 	if (ray.length >= 0.875)
 		return (ray.color);
-	if (data->light_array[(int)ray.intersect.x][(int)ray.intersect.y][(int)ray.intersect.z].type == 1)
+	if (data->light_array[(int)previous.x][(int)previous.y][(int)previous.z].type == 1)
 	{
-		light = data->light_array[(int)ray.intersect.x][(int)ray.intersect.y][(int)ray.intersect.z].next;
+		light = data->light_array[(int)previous.x][(int)previous.y][(int)previous.z].next;
 		while (light)
 		{
 			ray.length += launch_ray_to_light(ray, light, data);
