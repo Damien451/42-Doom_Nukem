@@ -47,19 +47,20 @@ void		create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture)
 	}
 }
 
-int 		init_zbuf(t_zbuf *zbuf)
+int			init_zbuf(t_zbuf *zbuf)
 {
 	if (zbuf->zdist)
-		ft_memset(zbuf->zdist, HEIGHT * WIDTH * sizeof(double), -1);
+		ft_memset(zbuf->zdist, 0, HEIGHT * WIDTH * sizeof(double));
 	if (!zbuf->zdist)
-		if (!(zbuf->zdist = ft_memalloc(HEIGHT * WIDTH * sizeof(double))))	
+		if (!(zbuf->zdist = ft_memalloc(HEIGHT * WIDTH * sizeof(double))))
 			return (0);
 	if (!zbuf->zcolor)
 		if (!(zbuf->zcolor = ft_memalloc(HEIGHT * WIDTH * sizeof(int))))
 			return (0);
 	if (zbuf->zcolor)
-		ft_memset(zbuf->zcolor, HEIGHT * WIDTH * sizeof(int), 0);
-	return (1);
+		ft_memset(zbuf->zcolor, 0, HEIGHT * WIDTH * sizeof(int));
+	return (1)
+
 }
 
 static void	place_in_zbuf(t_entity entities, t_player player, t_zbuf *zbuf)
@@ -72,6 +73,7 @@ static void	place_in_zbuf(t_entity entities, t_player player, t_zbuf *zbuf)
 	int 	y;
 	int		*img;
 
+
 	img = (int*)entities.texture->pixels;
 	dist = distance(player.position, entities.pos);
 	text_height = entities.texture->h;
@@ -83,7 +85,8 @@ static void	place_in_zbuf(t_entity entities, t_player player, t_zbuf *zbuf)
 		y = pos.y - text_height / 2;
 		while(y < pos.y + text_height / 2)
 		{
-			if (x <= WIDTH && x >= 0 && y <= HEIGHT && y >= 0 && dist < zbuf->zdist[x + y * WIDTH])
+
+			if (x <= WIDTH && x >= 0 && y <= HEIGHT && y >= 0 && (dist < zbuf->zdist[x + y * WIDTH] || zbuf->dist == 0.0))
 			{
 				zbuf->zdist[x + y * WIDTH] = dist,
 				zbuf->zcolor[x + y * WIDTH] = img[(int)((x - pos.x + text_width / 2) + (y - pos.y + text_height / 2) * text_width)]; 

@@ -81,7 +81,7 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 				if (map[z][y][x] == SPAWNBLOCK)
 				{
 					position->x = z + 0.5;
-					position->y = y + 2.6;
+					position->y = y + 2.5;
 					position->z = x + 0.5;
 				}
 			}
