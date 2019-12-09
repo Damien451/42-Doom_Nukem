@@ -237,7 +237,7 @@ static void	init_program2(t_doom *data)
 	data->button = 0;
 	data->load_page[0] = 0;
 	data->load_page[1] = 0;
-	data->player.health = 900;
+	data->player.health = 1000;
 	data->sensitivity = 100;
 	data->player.speed = 0;
 	parse_input_file(data, "./files/inputs");
