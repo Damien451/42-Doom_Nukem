@@ -84,6 +84,7 @@ struct						s_player
 	double					speed;
 	double					gravity;
 	double					sensitivity;
+	int						health;
 	t_vec3d					position;
 	t_vec3d					acceleration;
 	t_hitbox				hitbox[12];
