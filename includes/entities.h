@@ -1,7 +1,9 @@
 #ifndef ENTITIES_H
 # define ENTITIES_H
 
-# include "doom.h"
+# include "graphic_lib.h"
+# include "player.h"
+# include "libft.h"
 # include "vec3.h"
 
 typedef struct s_entity t_entity;
@@ -26,6 +28,6 @@ typedef struct	s_zbuf
 
 void		create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture);
 int 		init_zbuf(t_zbuf *zbuf);
-t_zbuf		z_buffer(t_entity *entities, t_player player);
+void		z_buffer(t_entity *entities, t_player player, t_zbuf *zbuf);
 
 #endif

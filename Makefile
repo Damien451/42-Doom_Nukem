@@ -101,6 +101,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\
 					$(RT)/sun_animation.c					\
+					$(RT)/z_buffer.c						\
 					$(SHAPES)/draw_circle.c					\
 					$(SHAPES)/draw_rectangle.c				\
 					$(SOUND)/get_default_sounds.c			\

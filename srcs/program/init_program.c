@@ -245,6 +245,7 @@ static void	init_program2(t_doom *data)
 	data->lib.editor.alpha = 10;
 	data->map_to_show = 0;
 	data->map_name = "\0";
+	init_zbuf((data->zbuf));
 	init_camera(data);
 	pthread_mutex_init(&data->mutex, NULL);
 }
