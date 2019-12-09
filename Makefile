@@ -132,6 +132,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(UI)/put_buttons_on_img.c				\
 					$(UI)/put_string_on_renderer.c			\
 					$(UI)/put_sound_bars.c					\
+					$(UI)/put_health_bar.c					\
 					add_points.c							\
 					load_textures.c							\
 					utils.c

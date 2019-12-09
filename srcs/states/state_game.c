@@ -119,6 +119,7 @@ int			state_game(t_doom *data)
 	//	if (data->lib.cam_keys & DESTROY)
 	//		interaction(data);
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
+	put_health_bar(data);
 	raytracing(data);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;

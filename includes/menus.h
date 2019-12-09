@@ -100,4 +100,6 @@ void					start_drawing_circle(t_doom *data, int i
 
 int						create_flame(t_doom *data, unsigned int *image);
 
+void					put_health_bar(t_doom *data);
+
 #endif
