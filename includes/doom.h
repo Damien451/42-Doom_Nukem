@@ -151,7 +151,7 @@ struct						s_doom
 	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
 	t_thread				thread[NBR_THREAD];
 	pthread_mutex_t			mutex;
-	t_zbuf					*zbuf;
+	t_zbuf					zbuf;
 	t_light					light_array[64][64][64];
 };
 
