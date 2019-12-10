@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/09 16:38:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/10 12:50:20 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	ray.length += launch_ray_to_light(ray, data->sun_light, data);
 	if (ray.length >= 0.875)
 		return (ray.color);
-	if (data->light_array[(int)previous.x][(int)previous.y][(int)previous.z].type == 1)
+	if (data->light_array[(int)previous.x][(int)previous.y][(int)previous.z].type >= 2)
 	{
 		light = data->light_array[(int)previous.x][(int)previous.y][(int)previous.z].next;
 		while (light)

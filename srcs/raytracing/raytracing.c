@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/09 15:56:51 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/10 12:37:07 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,46 @@ static inline int	init_thread_structure(t_doom *data)
 int					raytracing(t_doom *data)
 {
 	int				i;
-	static int		frame = 0;
-	static int		nbr_frame = 0;
+	static int		frame[4] = {0};
+	static int		nbr_frame[4] = {0};
 
 	data->actual_i = 2;
 	data->sampling = 4;
 	if (data->lib.cam_keys & COURSE)
 		data->sampling = 1;
-	if (frame == nbr_frame)
+	sun(data);
+	if (frame[0] == nbr_frame[0])
 	{
 		data->power[TORCH] = 2 + (rand() & 3);
-		frame = 0;
-		nbr_frame = data->power[TORCH] + (rand() & 3);
+		frame[0] = 0;
+		nbr_frame[0] = data->power[TORCH] + (rand() & 3);
 	}
-	sun(data);
+	if (frame[1] == nbr_frame[1])
+	{
+		data->power[TORCH2] = 2 + (rand() & 3);
+		frame[1] = 0;
+		nbr_frame[1] = data->power[TORCH2] + (rand() & 3);
+	}
+	if (frame[2] == nbr_frame[2])
+	{
+		data->power[TORCH3] = 2 + (rand() & 3);
+		frame[2] = 0;
+		nbr_frame[2] = data->power[TORCH3] + (rand() & 3);
+	}
+	if (frame[3] == nbr_frame[3])
+	{
+		data->power[TORCH4] = 2 + (rand() & 3);
+		frame[3] = 0;
+		nbr_frame[3] = data->power[TORCH4] + (rand() & 3);
+	}
 	SDL_RenderClear(data->lib.renderer);
 	if (init_thread_structure(data) == 1)
 		return (1);
 	add_clipping_for_each_point(data, &data->player);
-	frame++;
+	frame[0]++;
+	frame[1]++;
+	frame[2]++;
+	frame[3]++;
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(data->thread[i++].thread, NULL);

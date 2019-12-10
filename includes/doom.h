@@ -41,8 +41,11 @@
 # define LEAVING			(1l << 14)
 
 # define SUN				(0)
-# define TORCH				(1)
-# define PLAYER				(2)
+# define PLAYER				(1)
+# define TORCH				(2)
+# define TORCH2				(3)
+# define TORCH3				(4)
+# define TORCH4				(5)
 
 # define SPAWNBLOCK			31
 
@@ -142,7 +145,7 @@ struct						s_doom
 	t_vec3d					sun;
 	t_light					*sun_light;
 	t_light					*player_light;
-	int						power[3];
+	int						power[6];
 	char					photo;
 	int						actual_i;
 	int						actual_j;
