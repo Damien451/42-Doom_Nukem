@@ -50,7 +50,7 @@ static inline void	set_quadrillage(t_doom *data, int step)
 			: 1.0 / ((double)step + 1);
 	k = step - data->lib.editor.alpha < -1 ? -1
 		: step - data->lib.editor.alpha;
-	alpha = nbr;
+	alpha = (data->lib.editor.alpha == 10) ? nbr : 1;
 	while (++k <= step)
 	{
 		i = -1;
