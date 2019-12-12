@@ -43,6 +43,7 @@ typedef struct s_inventory	t_inventory;
 typedef struct s_doom		t_doom;
 typedef struct s_hitbox		t_hitbox;
 typedef struct s_physics	t_physics;
+typedef struct s_octree		t_octree;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -57,6 +58,7 @@ struct						s_physics
 {
 	t_vec3d					origin;
 	t_vec3d					acceleration;
+	t_octree				*octree;
 };
 
 struct						s_camera

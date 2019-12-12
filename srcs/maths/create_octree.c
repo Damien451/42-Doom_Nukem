@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/08 17:23:07 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/12 14:56:10 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,7 @@ int						create_octree(t_doom *data)
 	oct[1] = 0;
 	oct[2] = 0;
 	aff_octree(actual, data, oct);
-	printf("empty = %d, full = %d, inside = %d, total = %d, total bytes used = %d\n"
-			, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[2], (oct[0] + oct[1] + oct[2]) * 65);
-	create_light_array(data);
+//	printf("empty = %d, full = %d, inside = %d, total = %d, total bytes used = %d\n"
+//			, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[2], (oct[0] + oct[1] + oct[2]) * 65);
 	return (0);
 }
