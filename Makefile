@@ -13,9 +13,9 @@ NAME		= doom-nukem
 CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
-FSAN		= #-fsanitize=address
-DEBUG		= -Og3
-OPTI		= -Ofast -flto -funsafe-math-optimizations -ffinite-math-only -fno-math-errno -fassociative-math -freciprocal-math -fno-signed-zeros -fno-trapping-math
+FSAN		= -fsanitize=address
+DEBUG		= -g3
+OPTI		= -O2 -Ofast -flto
 
 # **************************************************************************** #
 #                                 DIRECTORIES                                  #
@@ -124,6 +124,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
 					$(STATES)/state_sound_settings.c		\
+					$(STATES)/state_test_mode.c				\
 					$(UI)/convert_to_ppm.c					\
 					$(UI)/create_buttons_inputs.c			\
 					$(UI)/get_default_inputs.c				\

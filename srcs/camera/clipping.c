@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clipping.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:07:09 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/10 17:53:55 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/12 14:36:28 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ int			add_vertex_clipping_x_max(t_vec3d *acceleration, t_vec3d *new_pos
 }
 
 int			add_vertex_clipping_y_min(t_vec3d *acceleration, t_vec3d *new_pos
-	, char map[64][64][64], t_vec3d position)
+	, char map[64][64][64], t_vec3d position, t_player *player)
 {
 	if (map[(int)position.x][(int)(new_pos->y)][(int)position.z]
 			&& map[(int)position.x][(int)(new_pos->y)][(int)position.z] != 41)
 	{
+		player->health -= (acceleration->y < -0.45 ? (int)(((acceleration->y
+			+ 0.40) * (acceleration->y + 0.40)) * 1500) : 0);
 		new_pos->y = floor(new_pos->y) + 1.001;
 		acceleration->y = 0;
 		return (1);

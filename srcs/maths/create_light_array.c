@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_light_array.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:22:41 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/10 12:34:39 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:08:00 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		add_light_to_node(t_doom *data, int x, int y, int z, double tab[3], int typ
 		light->next = NULL;
 		light->type = type;
 	}
-	printf("actual = %d\n", actual++);
 	return (0);
 }
 

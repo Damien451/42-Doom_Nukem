@@ -103,7 +103,7 @@ void		camera_press_key(SDL_Event *event, t_doom *data);
 void		camera_event_translate(t_doom *data);
 
 int			add_vertex_clipping_y_min(t_vec3d *acceleration, t_vec3d *new_pos
-	, char map[64][64][64], t_vec3d position);
+	, char map[64][64][64], t_vec3d position, t_player *player);
 int			add_vertex_clipping_y_max(t_vec3d *acceleration, t_vec3d *new_pos
 	, char map[64][64][64], t_vec3d position);
 int			add_vertex_clipping_x_min(t_vec3d *acceleration, t_vec3d *new_pos
