@@ -1,8 +1,8 @@
 #include "doom.h"
 
-void	leave_state_game(t_vec3d *position)
+void	leave_state_game(t_player *player)
 {
-	position->x = -1;
-	position->y = -1;
-	position->z = -1;
+	player->camera.origin.x = -1;
+	player->camera.origin.y = -1;
+	player->camera.origin.z = -1;
 }

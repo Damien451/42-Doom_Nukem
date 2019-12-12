@@ -106,7 +106,7 @@ int			state_game(t_doom *data)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			leave_state_game(&data->player.camera.origin);
+			leave_state_game(&data->player);
 			switch_state(data, PLAYING, MAIN_MENU);
 			return (0);
 		}
@@ -122,6 +122,16 @@ int			state_game(t_doom *data)
 		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
 			data->lib.cam_keys &= ~DESTROY;
 		camera_press_key(&data->lib.event, data);
+	}
+	//	if (data->lib.cam_keys & DESTROY)
+	//		interaction(data);
+	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
+	if (data->player.health <= 0)
+	{
+		//ici on appellera la fonction de mort
+		printf("T'es mort mon gars\n");
+		data->player.health = 1000;
+		switch_state(data, PLAYING, MAIN_MENU);
 	}
 	put_health_bar(data);
 	raytracing(data);

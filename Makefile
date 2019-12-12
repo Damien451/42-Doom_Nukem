@@ -124,6 +124,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
 					$(STATES)/state_sound_settings.c		\
+					$(STATES)/state_test_mode.c				\
 					$(UI)/convert_to_ppm.c					\
 					$(UI)/create_buttons_inputs.c			\
 					$(UI)/get_default_inputs.c				\

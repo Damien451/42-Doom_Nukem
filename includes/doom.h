@@ -37,8 +37,9 @@
 # define SETTINGS			(1l << 10)
 # define SETTINGS_INPUTS	(1l << 11)
 # define SETTINGS_SOUND		(1l << 12)
-# define GET_INPUT			(1l << 13)
-# define LEAVING			(1l << 14)
+# define TEST_MODE			(1l << 13)
+# define GET_INPUT			(1l << 14)
+# define LEAVING			(1l << 15)
 
 # define SUN				(0)
 # define PLAYER				(1)
@@ -165,7 +166,7 @@ struct						s_doom
 int							init_program(t_doom *data);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
-void						leave_state_game(t_vec3d *position);
+void						leave_state_game(t_player *player);
 void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
 char						*get_map_name(int map_to_show);
@@ -287,6 +288,8 @@ int							state_scoreboard(t_doom *data);
 int							state_settings_menu(t_doom *data);
 
 int							state_sound_settings(t_doom *data);
+
+int							state_test_mode(t_doom *data);
 
 int							state_get_input(t_doom *data);
 

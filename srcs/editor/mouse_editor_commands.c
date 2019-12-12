@@ -2,13 +2,13 @@
 #include "libft.h"
 #include "inputs.h"
 
-/*static inline void	check_click_try_mode(t_doom *data, int x)
+static inline void	check_click_try_mode(t_doom *data, int x)
 {
 	if (x >= 1178 && data->lib.event.button.y >= 1034
 		&& x <= 1225 && data->lib.event.button.y <= 1062)
 		if (check_map_validity(data) == 0)
-			
-}*/
+			switch_state(data, EDITOR, TEST_MODE);
+}
 
 static inline void	mouse_editor_commands3(t_doom *data, int *step)
 {
@@ -37,7 +37,7 @@ static inline void	mouse_editor_commands3(t_doom *data, int *step)
 		&& data->lib.event.button.x <= 1573 && data->lib.event.button.y <= 1005
 		&& *step > 0)
 		copy_step(data, *step);
-	//mouse_editor_commands4(data, data->lib.event.button.x);
+	check_click_try_mode(data, data->lib.event.button.x);
 }
 
 static inline void	mouse_editor_commands2(t_doom *data, int *step)
@@ -69,7 +69,6 @@ static inline void	mouse_editor_commands2(t_doom *data, int *step)
 void				mouse_editor_commands(t_doom *data, int *ok,
 	int *step, int button)
 {
-	printf("x = %d, y = %d\n", data->lib.event.button.x, data->lib.event.button.y);
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
 		pick_texture(data, data->lib.event.button.x, data->lib.event.button.y);
