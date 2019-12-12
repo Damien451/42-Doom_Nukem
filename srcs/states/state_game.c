@@ -116,20 +116,22 @@ int			state_game(t_doom *data)
 			data->lib.cam_keys &= ~DESTROY;
 		camera_press_key(&data->lib.event, data);
 	}
-	//	if (data->lib.cam_keys & DESTROY)
-	//		interaction(data);
-	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	put_health_bar(data);
 	raytracing(data);
+	int			i = 0;
+	while (i < WIDTH * HEIGHT)
+	{
+		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
+			data->lib.image[i] = ((unsigned int*)data->lib.hud_texture->pixels)[i];
+		i++;
+	}
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
-//	printf("end = data->player.camera.origin = [%.2f, %.2f, %.2f]\n", data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z);
 	if (data->photo)
 	{
 		data->photo = 0;
 		convert_to_ppm(data->lib.image);
 	}
-	//skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);

@@ -82,27 +82,28 @@ struct						s_bubble
 struct						s_light
 {
 	t_vec3d					position;
-	int						type;
 	t_light					*next;
+	int						type;
 };
 
 struct						s_ray
 {
+	t_vec3d					normal;
+	t_vec3d					intersect;
+	t_vec3d					origin;
+	t_vec3d					direction;
+	t_octree				*node;
+	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
 	int						color;
 	int						black;
 	unsigned char			c_color[4];
 	double					length;
-	t_vec3d					intersect;
-	t_vec3d					origin;
-	t_vec3d					direction;
 	int						face;
-	t_octree				*node;
-	t_vec3d					normal;
-	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
 };
 
 struct						s_thread
 {
+	t_ray					ray;
 	pthread_t				thread;
 	pthread_mutex_t			*mutex;
 	pthread_mutex_t			*game;
@@ -112,7 +113,6 @@ struct						s_thread
 	int						total_frame;
 	int						frame;
 	t_doom					*data;
-	t_ray					ray;
 };
 
 struct						s_doom
