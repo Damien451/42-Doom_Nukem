@@ -99,6 +99,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/compute_lights.c					\
 					$(RT)/launch_rays.c						\
 					$(RT)/locate_in_octree.c				\
+					$(RT)/print_octree.c					\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\
 					$(RT)/sun_animation.c					\

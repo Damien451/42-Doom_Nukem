@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:22:41 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/10 19:08:00 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/12 15:48:23 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		add_light_to_node(t_doom *data, int x, int y, int z, double tab[3], int type)
 {
 	t_light  *light;
-	static int	actual = 0;
 
 	if (data->light_array[x][y][z].type == 0)
 	{

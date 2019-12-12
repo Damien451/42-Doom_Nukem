@@ -6,11 +6,12 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:09:19 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/03 12:16:02 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:55:03 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec3.h"
+#include <math.h>
 
 unsigned int		print_octree(t_vec3d intersect)
 {

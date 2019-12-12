@@ -248,6 +248,7 @@ t_octree					*find_parent_y(t_vec3d position, t_octree *node, t_vec3d origin);
 t_octree					*find_parent_z(t_vec3d position, t_octree *node, t_vec3d origin);
 void						*launch_rays(void *ptr);
 void						sun(t_doom *data);
+unsigned int				print_octree(t_vec3d intersect);
 
 /*
 ** ====-* PHYSICS *-====
