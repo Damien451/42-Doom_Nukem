@@ -133,7 +133,6 @@ int			state_game(t_doom *data)
 		data->player.health = 1000;
 		switch_state(data, PLAYING, MAIN_MENU);
 	}
-	put_health_bar(data);
 	raytracing(data);
 	int			i = 0;
 	while (i < WIDTH * HEIGHT)
@@ -142,6 +141,8 @@ int			state_game(t_doom *data)
 			data->lib.image[i] = ((unsigned int*)data->lib.hud_texture->pixels)[i];
 		i++;
 	}
+	put_health_bar(data);
+	minimap(data->map_to_save, &data->player, &data->lib);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
 	if (data->photo)

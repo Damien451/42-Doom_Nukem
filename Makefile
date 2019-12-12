@@ -129,6 +129,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(UI)/convert_to_ppm.c					\
 					$(UI)/create_buttons_inputs.c			\
 					$(UI)/get_default_inputs.c				\
+					$(UI)/minimap.c							\
 					$(UI)/parse_input_file.c				\
 					$(UI)/put_buttons_names.c				\
 					$(UI)/put_buttons_on_img.c				\

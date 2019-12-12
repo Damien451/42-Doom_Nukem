@@ -24,10 +24,10 @@
 # define BAR_WIDTH_START	(WIDTH / 2 - BAR_WIDTH / 2)
 # define BAR_GAP			(HEIGHT / 7)
 
-# define HEALTH_BAR_HEIGHT_START 853
-# define HEALTH_BAR_WIDTH_START 584
-# define HEALTH_BAR_WIDTH 750
-# define HEALTH_BAR_HEIGHT 50
+# define HEALTH_BAR_HEIGHT_START 195
+# define HEALTH_BAR_WIDTH_START 70
+# define HEALTH_BAR_WIDTH 36
+# define HEALTH_BAR_HEIGHT 179
 
 # define SET_BUTTON_W (WIDTH / 5)
 # define SET_BUTTON_H (HEIGHT / 12)
@@ -40,6 +40,7 @@
 
 typedef struct s_doom	t_doom;
 typedef struct s_point	t_point;
+typedef struct s_player	t_player;
 typedef struct s_button	t_button;
 typedef struct s_img	t_img;
 typedef struct s_start	t_start;
@@ -87,6 +88,8 @@ t_point					add_points(t_point a, t_point b);
 void					create_buttons_inputs(t_doom *data, t_button *btab);
 
 int						draw_rectangle(t_graphic_lib *lib, t_point position, t_point dimensions, int color);
+
+void					minimap(char map[64][64][64], t_player *player, t_graphic_lib *lib);
 
 void					mouse_sound_commands(t_doom *data, int tab[3]);
 

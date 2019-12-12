@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/12 16:55:54 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/12 19:03:09 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 	int				sorted[3];
 	int				i;
 	t_octree		*tmp;
-	unsigned int	j;
+	//unsigned int	j;
 
 	max_absolute_between_three(ray.direction, sorted);
 	tmp = ray.node;
@@ -87,8 +87,8 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 			i++;
 		else if (ray.face == -3)
 		{
-			if ((j = print_octree(ray.intersect)))
-				return (j);
+			//if ((j = print_octree(ray.intersect)))
+				//return (j);
 			tmp = ray.node;
 			ray.origin = ray.intersect;
 			i = 0;
