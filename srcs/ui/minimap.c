@@ -3,16 +3,22 @@
 #include "graphic_lib.h"
 #include "menus.h"
 
-# define MINIMAP_WIDTH_START (WIDTH / 1.16)
-# define MINIMAP_HEIGHT_START (HEIGHT / 15)
+# define MINIMAP_WIDTH_START (WIDTH / 1.1585)
+# define MINIMAP_HEIGHT_START (HEIGHT / 14.57)
 
 static inline int	select_color(char map[64][64][64], int coords[3],
 	t_player *player)
 {
-	if (coords[0] == (int)player->camera.origin.z &&
-		coords[2] == (int)player->camera.origin.x)
-		return (0x009900);
-	return (0x00e6e6);
+	if (coords[0] == (int)player->camera.origin.x &&
+		coords[2] == (int)player->camera.origin.z)
+		return (0x006600);
+	if (map[coords[0]][coords[1]][coords[2]] == 0)
+	{
+		if (coords[1] > 0 && map[coords[0]][coords[1] - 1][coords[2]] != 0)
+			return (0x66ff66);
+		return (0xb3ffb3);
+	}
+	return (0x00cc00);
 }
 
 static void			draw_minimap(char map[64][64][64], t_player *player,
@@ -31,9 +37,8 @@ static void			draw_minimap(char map[64][64][64], t_player *player,
 		posx = MINIMAP_WIDTH_START;
 		while (++j <= coords[3])
 		{
-			if (map[i][coords[4]][j] != 0)
-				draw_rectangle(lib, (t_point){posx, posy}, (t_point){12, 12},
-					select_color(map, (int [3]){i, 0, j}, player));
+			draw_rectangle(lib, (t_point){posx, posy}, (t_point){12, 12},
+				select_color(map, (int [3]){i, coords[4], j}, player));
 			posx += 13;
 		}
 		posy += 13;
