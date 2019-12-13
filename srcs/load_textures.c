@@ -216,7 +216,7 @@ void			load_textures(t_doom *data)
 	data->lib.menu_texture[4] = IMG_Load("textures/background_menu.bmp");
 	data->lib.editor.texture[0] = IMG_Load("textures/editor.bmp");
 	data->lib.editor.texture[1] = IMG_Load("textures/editor2.bmp");
-	data->lib.hud_texture = IMG_Load("textures/hud.png");
+	data->lib.hud_texture = IMG_Load("textures/hud2.png");
 	load_binary_textures(data);
 	load_skybox(data);
 	load_textures_blocks(data->lib.textures);
