@@ -131,7 +131,7 @@ int			state_game(t_doom *data)
 		//ici on appellera la fonction de mort
 		printf("T'es mort mon gars\n");
 		data->player.health = 1000;
-		leave_state_game(&data->player);
+		//leave_state_game(&data->player);
 		switch_state(data, PLAYING, MAIN_MENU);
 	}
 	raytracing(data);

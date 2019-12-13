@@ -3,9 +3,6 @@
 #include "graphic_lib.h"
 #include "menus.h"
 
-# define MINIMAP_WIDTH_START (WIDTH / 1.1585)
-# define MINIMAP_HEIGHT_START (HEIGHT / 14.57)
-
 static inline int	select_color(char map[64][64][64], int coords[3],
 	t_player *player)
 {
