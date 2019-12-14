@@ -136,8 +136,8 @@ int			state_game(t_doom *data)
 	int			i = 0;
 	while (i < WIDTH * HEIGHT)
 	{
-		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78)
-			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i]);
+		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78 && ((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
+			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
 		i++;
 	}
 	put_health_bar(data);

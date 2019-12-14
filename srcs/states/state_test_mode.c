@@ -75,8 +75,7 @@ int					state_test_mode(t_doom *data)
 	check_events(data);
 	while (++i < WIDTH * HEIGHT)
 		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78)
-			data->lib.image[i] =
-				((unsigned int*)data->lib.hud_texture->pixels)[i];
+			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
 	minimap(data->map_to_save, &data->player, &data->lib);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
