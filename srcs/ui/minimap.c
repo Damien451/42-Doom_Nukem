@@ -12,6 +12,8 @@ static inline int	select_color(char map[64][64][64], int coords[3],
 	if (map[coords[0]][coords[1]][coords[2]] == 0)
 	{
 		if (coords[1] > 0 && map[coords[0]][coords[1] - 1][coords[2]] != 0)
+			return (0x1aff1a);
+		else if (coords[1] > 1 && map[coords[0]][coords[1] - 2][coords[2]] != 0)
 			return (0x66ff66);
 		return (0xb3ffb3);
 	}
