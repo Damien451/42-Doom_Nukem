@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/14 16:17:18 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:15:28 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,9 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 		{
 			while (++count.z < node->size >> 1)
 			{
-				if ((c = data->map_to_save[tester.x + count.x][tester.y + count.y]
-					[tester.z + count.z]) == 41 && node->size >> 1 > 1)
-					return (-1);
-				else if (c == 41)
-					return (-2);
-				else if (c)
+				c = data->fire_model[tester.x + count.x][tester.y + count.y]
+					[tester.z + count.z];
+				if (c)
 					nbr_node++;
 				else if (nbr_node)
 					return (-1);
@@ -107,8 +104,6 @@ void					check_if_child_is_leaf(t_doom *data, t_octree *node)
 			node->child[i]->leaf = EMPTY;
 		else if (ret == -1)
 			node->child[i]->leaf = INSIDE;
-		else if (ret == -2)
-			node->child[i]->leaf = BREAKABLE;
 		else
 			node->child[i]->leaf = FULL;
 		i++;

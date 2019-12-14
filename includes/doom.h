@@ -157,6 +157,7 @@ struct						s_doom
 	pthread_mutex_t			mutex;
 	t_zbuf					zbuf;
 	t_light					light_array[64][64][64];
+	unsigned int			fire_model[64][64][64];
 };
 
 /*

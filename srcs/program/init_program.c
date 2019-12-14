@@ -277,6 +277,10 @@ static void	init_func_pointer(t_doom *data)
 	data->normal[3] = vec3d(0, -1, 0);
 	data->normal[4] = vec3d(0, 0, 1);
 	data->normal[5] = vec3d(0, 0, -1);
+	int			fd;
+	fd = open("test_new_subdivision.binary", O_RDONLY);
+	read(fd, data->fire_model, 1048576);
+	close(fd);
 }
 
 #include <fcntl.h>

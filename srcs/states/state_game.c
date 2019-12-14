@@ -123,8 +123,6 @@ int			state_game(t_doom *data)
 			data->lib.cam_keys &= ~DESTROY;
 		camera_press_key(&data->lib.event, data);
 	}
-	//	if (data->lib.cam_keys & DESTROY)
-	//		interaction(data);
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	if (data->player.health <= 0)
 	{
@@ -138,8 +136,8 @@ int			state_game(t_doom *data)
 	int			i = 0;
 	while (i < WIDTH * HEIGHT)
 	{
-	 	if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78 && ((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
-	 	 	data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
+		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78)
+			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i]);
 		i++;
 	}
 	put_health_bar(data);

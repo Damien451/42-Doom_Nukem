@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/12 15:46:13 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/14 15:04:24 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,101 +57,53 @@ void				interaction(t_doom *data, t_vec3d pos)
 		else
 			data->map_to_save[new[0]][new[1]][new[2]] = 12;
 	}
-	create_octree(data);
+}
+
+void				actualize_torch(t_doom *data)
+{
+	static int	frame[4] = {0};
+	static int	nbr_frame[4] = {0};
+	int			i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (frame[i] == nbr_frame[i])
+		{
+			data->power[TORCH + i] = 2 + (rand() & 3);
+			frame[i] = 0;
+			nbr_frame[i] = data->power[TORCH + i] + (rand() & 3);
+		}
+		else
+			frame[i]++;
+		i++;
+	}
 }
 
 int					raytracing(t_doom *data)
 {
 	int				i;
-	static int		frame[4] = {0};
-	static int		nbr_frame[4] = {0};
-	t_doom			*cpy;
-		int	j;
-		int	k;
 
 	data->actual_i = 2;
 	data->sampling = 4;
 	if (data->lib.cam_keys & COURSE)
 		data->sampling = 1;
 	sun(data);
-	if (frame[0] == nbr_frame[0])
-	{
-		data->power[TORCH] = 2 + (rand() & 3);
-		frame[0] = 0;
-		nbr_frame[0] = data->power[TORCH] + (rand() & 3);
-	}
-	if (frame[1] == nbr_frame[1])
-	{
-		data->power[TORCH2] = 2 + (rand() & 3);
-		frame[1] = 0;
-		nbr_frame[1] = data->power[TORCH2] + (rand() & 3);
-	}
-	if (frame[2] == nbr_frame[2])
-	{
-		data->power[TORCH3] = 2 + (rand() & 3);
-		frame[2] = 0;
-		nbr_frame[2] = data->power[TORCH3] + (rand() & 3);
-	}
-	if (frame[3] == nbr_frame[3])
-	{
-		data->power[TORCH4] = 2 + (rand() & 3);
-		frame[3] = 0;
-		nbr_frame[3] = data->power[TORCH4] + (rand() & 3);
-	}
 	SDL_RenderClear(data->lib.renderer);
 	if (init_thread_structure(data) == 1)
 		return (1);
 	add_clipping_for_each_point(data, &data->player);
-	if (data->lib.cam_keys & DESTROY)
-	{
-		cpy = malloc(sizeof(t_doom));
-		i = 0;
-		while (i < 64)
-		{
-			j = 0;
-			while (j< 64)
-			{
-				k = 0;
-				while (k < 64)
-				{
-					cpy->map_to_save[i][j][k] = data->map_to_save[i][j][k];
-					k++;
-				}
-				j++;
-			}
-			i++;
-		}
-		interaction(cpy, vec3d_add(data->player.camera.origin, vec3d_scalar(data->player.camera.direction, 2)));
-	}
-	frame[0]++;
-	frame[1]++;
-	frame[2]++;
-	frame[3]++;
+	actualize_torch(data);
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(data->thread[i++].thread, NULL);
 	if (data->lib.cam_keys & DESTROY)
 	{
-		free_octree(data->octree);
-		data->octree = cpy->octree;
-		i = 0;
-		while (i < 64)
-		{
-			j = 0;
-			while (j< 64)
-			{
-				k = 0;
-				while (k < 64)
-				{
-					data->map_to_save[i][j][k] = cpy->map_to_save[i][j][k];
-					k++;
-				}
-				j++;
-			}
-			i++;
-		}
-		free(cpy);
+		interaction(data, vec3d_add(data->player.camera.origin
+			, vec3d_scalar(data->player.camera.direction, 2)));
 		data->lib.cam_keys &= ~DESTROY;
 	}
+	free_octree(data->octree);
+	create_octree(data);
 	return (0);
 }

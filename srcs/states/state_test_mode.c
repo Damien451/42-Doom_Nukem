@@ -74,7 +74,7 @@ int					state_test_mode(t_doom *data)
 		set_player_spawn(data->map_to_save, &data->player.camera.origin, data);
 	check_events(data);
 	while (++i < WIDTH * HEIGHT)
-		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
+		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78)
 			data->lib.image[i] =
 				((unsigned int*)data->lib.hud_texture->pixels)[i];
 	minimap(data->map_to_save, &data->player, &data->lib);
