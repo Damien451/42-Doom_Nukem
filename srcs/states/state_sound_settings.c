@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_sound_settings.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:25:53 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:25:57 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
@@ -67,6 +79,7 @@ int			state_sound_settings(t_doom *data)
 		HEIGHT_CENTER + (3 * DEF_BUTTON_H + 3 * BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LEAVING, "RESET");
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
+		, (WIDTH * HEIGHT) << 2);
 	return (state_sound_settings_2(data, tab, buttons));
 }

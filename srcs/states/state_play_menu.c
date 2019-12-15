@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_play_menu.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:01:58 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:04:14 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
 
-static void	check_inputs_play(t_doom *data, t_button *btab, int nbuttons)
+static void	check_inputs_play(t_doom *data, t_button *btab, int but)
 {
 	while (SDL_PollEvent(&data->lib.event))
 	{
@@ -11,21 +23,11 @@ static void	check_inputs_play(t_doom *data, t_button *btab, int nbuttons)
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
-			{
-				if (data->button == 0)
-					data->button = nbuttons - 1;
-				else
-					--data->button;
-			}
+				data->button = data->button ? data->button - 1 : but - 1;
 			if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
-			{
-				if (data->button == nbuttons - 1)
-					data->button = 0;
-				else
-					++data->button;
-			}
+				data->button = data->button == but - 1 ? 0 : data->button + 1;
 			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 				switch_state(data, PLAY_MENU, btab[data->button].state);
 		}
@@ -37,7 +39,8 @@ int			state_play_menu(t_doom *data)
 	t_button	buttons[3];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
+		, (WIDTH * HEIGHT) << 2);
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LEAVING, "CLASSIC MODE");

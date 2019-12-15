@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_editor_menu.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:10:04 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:16:03 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "doom.h"
 #include "libft.h"
@@ -28,17 +39,18 @@ static void	check_inputs_menu2(t_doom *data, int nbmaps, int *first)
 **	tab[0] -> nbuttons, tab[1] -> nbmaps
 */
 
-static void	check_inputs_menu(t_doom *data, t_button *btab,
-	int *first, int tab[2])
+static void	check_inputs_menu(t_doom *data, t_button *btab
+	, int *first, int tab[2])
 {
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)
- 		{
+		{
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
-				data->button = data->button == 0 ? tab[0] - 1 : data->button - 1;
+				data->button = data->button == 0 ?
+					tab[0] - 1 : data->button - 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])

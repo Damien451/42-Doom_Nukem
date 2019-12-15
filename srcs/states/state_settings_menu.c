@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_settings_menu.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:05:19 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:07:13 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
@@ -35,14 +47,12 @@ int			state_settings_menu(t_doom *data)
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels,
 		(WIDTH * HEIGHT) << 2);
-	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
-		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), SETTINGS_SOUND,
-			"SOUND SETTINGS");
+	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W, HEIGHT_CENTER
+			- (DEF_BUTTON_H + BUTTON_GAP_Y)), point(DEF_BUTTON_W * 2
+			, DEF_BUTTON_H), SETTINGS_SOUND, "SOUND SETTINGS");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
-		HEIGHT_CENTER),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), SETTINGS_INPUTS,
-			"INPUT SETTINGS");
+		HEIGHT_CENTER), point(DEF_BUTTON_W * 2, DEF_BUTTON_H)
+		, SETTINGS_INPUTS, "INPUT SETTINGS");
 	buttons[2] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER + (DEF_BUTTON_H + BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), MAIN_MENU, "RETURN");

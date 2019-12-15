@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_test_mode.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:27:33 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:27:51 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "player.h"
 #include <SDL.h>
@@ -75,15 +87,15 @@ int					state_test_mode(t_doom *data)
 	check_events(data);
 	while (++i < WIDTH * HEIGHT)
 		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78)
-			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
+			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)
+			[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)
+			[i] & 0xff) << (16))
+			+ ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00))
+			+ ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000)
+			>> 16);
 	minimap(data->map_to_save, &data->player, &data->lib);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
-	if (data->photo)
-	{
-		data->photo = 0;
-		convert_to_ppm(data->lib.image);
-	}
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
