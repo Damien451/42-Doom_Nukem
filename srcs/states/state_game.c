@@ -91,6 +91,13 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 
 int			state_game(t_doom *data)
 {
+	static int		test = 0;
+
+	if (test == 0)
+	{
+		create_light_array(data);
+		test = 1;
+	}
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	if (data->player.camera.origin.x == -1 && data->player.camera.origin.y == -1 &&
 			data->player.camera.origin.z == -1)
@@ -99,7 +106,7 @@ int			state_game(t_doom *data)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			leave_state_game(&data->player.camera.origin);
+			leave_state_game(&data->player);
 			switch_state(data, PLAYING, MAIN_MENU);
 			return (0);
 		}
@@ -116,19 +123,32 @@ int			state_game(t_doom *data)
 			data->lib.cam_keys &= ~DESTROY;
 		camera_press_key(&data->lib.event, data);
 	}
-	//	if (data->lib.cam_keys & DESTROY)
-	//		interaction(data);
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
+	if (data->player.health <= 0)
+	{
+		//ici on appellera la fonction de mort
+		printf("T'es mort mon gars\n");
+		data->player.health = 1000;
+		//leave_state_game(&data->player);
+		switch_state(data, PLAYING, MAIN_MENU);
+	}
 	raytracing(data);
+	int			i = 0;
+	while (i < WIDTH * HEIGHT)
+	{
+		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78 && ((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
+			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
+		i++;
+	}
+	put_health_bar(data);
+	minimap(data->map_to_save, &data->player, &data->lib);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
-//	printf("end = data->player.camera.origin = [%.2f, %.2f, %.2f]\n", data->player.camera.origin.x, data->player.camera.origin.y, data->player.camera.origin.z);
 	if (data->photo)
 	{
 		data->photo = 0;
 		convert_to_ppm(data->lib.image);
 	}
-	//skybox(data);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);

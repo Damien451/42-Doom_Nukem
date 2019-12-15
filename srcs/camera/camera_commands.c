@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/03 20:55:52 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/15 13:24:44 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void			camera_mouse_motion(t_camera *camera, int *x, int *y
 	double	move;
 
 	if (*x)
-		rotate_camera(camera, Y_AXIS, *sensitivity * (double)*x);
+		rotate_camera(camera, vec3d(0, 1, 0), *sensitivity * (double)*x);
 	if (*y)
 	{
 		move = *sensitivity * (double)*y;

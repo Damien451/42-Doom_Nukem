@@ -66,8 +66,8 @@ static void	state_editor_menu2(t_doom *data, t_button *btab,
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, btab, 4);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
-		label("EDITOR", RED), data->lib.ptrfont[1]);
-	put_buttons_names(data, btab, BLACK, 4);
+		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+	put_buttons_names(data, btab, (SDL_Color){0, 0, 0, 0}, 4);
 	check_inputs_menu(data, btab, first, tab);
 	SDL_RenderPresent(data->lib.renderer);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_hitbox.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:31:51 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/05 18:22:40 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:02:17 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void			add_clipping_for_each_point(t_doom *data, t_player *player)
 	{
 		new_offset = player->hitbox[i].vertex;
 		if (add_vertex_clipping_y_min(&new_acceleration, &new_offset, data->map_to_save
-					, hit[i].vertex))
+					, hit[i].vertex, &data->player))
 		{
 			new_pos.y = data->player.camera.origin.y;
 			create_hitbox_offset(player->hitbox, new_pos);

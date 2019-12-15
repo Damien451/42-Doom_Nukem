@@ -50,8 +50,8 @@ int			state_play_menu(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 3);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),
-		label("DOOM", RED), data->lib.ptrfont[0]);
-	put_buttons_names(data, buttons, BLACK, 3);
+		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
+	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 3);
 	check_inputs_play(data, buttons, 3);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);

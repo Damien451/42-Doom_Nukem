@@ -83,10 +83,10 @@ void		load_skybox(t_doom *data)
 
 void		init_camera(t_doom *data)
 {
-	data->player.camera.direction = Z_AXIS;
-	data->player.sensitivity = SENSITIVITY;
-	data->player.camera.right = X_AXIS;
-	data->player.camera.up = Y_AXIS;
+	data->player.camera.direction = vec3d(0, 0, 1);
+	data->player.sensitivity = M_PI / 90.0 / data->sensitivity;
+	data->player.camera.right = vec3d(1, 0, 0);
+	data->player.camera.up = vec3d(0, 1, 0);
 	data->player.camera.origin.x = -1;
 	data->player.camera.origin.y = -1;
 	data->player.camera.origin.z = -1;
@@ -237,6 +237,7 @@ static void	init_program2(t_doom *data)
 	data->button = 0;
 	data->load_page[0] = 0;
 	data->load_page[1] = 0;
+	data->player.health = 1000;
 	data->sensitivity = 100;
 	data->player.speed = 0;
 	parse_input_file(data, "./files/inputs");
@@ -245,6 +246,7 @@ static void	init_program2(t_doom *data)
 	data->lib.editor.alpha = 10;
 	data->map_to_show = 0;
 	data->map_name = "\0";
+	init_zbuf(&(data->zbuf));
 	init_camera(data);
 	pthread_mutex_init(&data->mutex, NULL);
 }
@@ -275,6 +277,10 @@ static void	init_func_pointer(t_doom *data)
 	data->normal[3] = vec3d(0, -1, 0);
 	data->normal[4] = vec3d(0, 0, 1);
 	data->normal[5] = vec3d(0, 0, -1);
+	int			fd;
+	fd = open("test_new_subdivision.binary", O_RDONLY);
+	read(fd, data->fire_model, 1048576);
+	close(fd);
 }
 
 #include <fcntl.h>
@@ -293,40 +299,12 @@ int			load_sampling(t_doom *data)
 	data->samplingt[0][0] = size;
 	read(fd, &data->samplingt[0][1], size * 8);
 	close(fd);
-	fd = open("sampling2.binary", O_RDONLY);
-	read(fd, sizec, 4);
-	size = *((int*)sizec);
-	data->samplingt[1] = malloc(sizeof(int) * (size * 2 + 1));
-	data->samplingt[1][0] = size;
-	read(fd, &data->samplingt[1][1], size * 8);
-	close(fd);
-	fd = open("sampling3.binary", O_RDONLY);
-	read(fd, sizec, 4);
-	size = *((int*)sizec);
-	data->samplingt[2] = malloc(sizeof(int) * (size * 2 + 1));
-	data->samplingt[2][0] = size;
-	read(fd, &data->samplingt[2][1], size * 8);
-	close(fd);
 	fd = open("sampling4.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
 	data->samplingt[3] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[3][0] = size;
 	read(fd, &data->samplingt[3][1], size * 8);
-	close(fd);
-	fd = open("sampling5.binary", O_RDONLY);
-	read(fd, sizec, 4);
-	size = *((int*)sizec);
-	data->samplingt[4] = malloc(sizeof(int) * (size * 2 + 1));
-	data->samplingt[4][0] = size;
-	read(fd, &data->samplingt[4][1], size * 8);
-	close(fd);
-	fd = open("sampling6.binary", O_RDONLY);
-	read(fd, sizec, 4);
-	size = *((int*)sizec);
-	data->samplingt[5] = malloc(sizeof(int) * (size * 2 + 1));
-	data->samplingt[5][0] = size;
-	read(fd, &data->samplingt[5][1], size * 8);
 	close(fd);
 	return (0);
 }

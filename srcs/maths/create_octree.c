@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/08 17:23:07 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:32:50 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 			while (++count.z < node->size >> 1)
 			{
 				if ((c = data->map_to_save[tester.x + count.x][tester.y + count.y]
-					[tester.z + count.z]) == 2 && node->size >> 1 > 1)
+					[tester.z + count.z]) == 41 && node->size >> 1 > 1)
 					return (-1);
-				else if (c == 2)
+				else if (c == 41)
 					return (-2);
-				else if (c && c != 41)
+				else if (c)
 					nbr_node++;
 				else if (nbr_node)
 					return (-1);
@@ -115,30 +115,11 @@ void					check_if_child_is_leaf(t_doom *data, t_octree *node)
 	}
 }
 
-void				aff_octree(t_octree *node, t_doom *data, int oct[3])
-{
-	int i;
-	i = 0;
-	while (i < 8)
-	{
-		if (node->child[i])
-			aff_octree(node->child[i], data, oct);
-		i++;
-	}
-	if (node->leaf == INSIDE)
-		oct[2]++;
-	else if (node->leaf == EMPTY)
-		oct[1]++;
-	else
-		oct[0]++;
-}
-
 int						create_octree(t_doom *data)
 {
 	t_octree	*actual;
 	int			size;
 	int			ret;
-	int			oct[3];
 
 	size = SIZE_MAP;
 	actual = create_node(size << 1, vec3l(size, size, size), NULL);
@@ -153,12 +134,6 @@ int						create_octree(t_doom *data)
 	if (actual->leaf == INSIDE)
 		breadth_first_create_octree(data, actual);
 	actual = data->octree;
-	oct[0] = 0;
-	oct[1] = 0;
-	oct[2] = 0;
-	aff_octree(actual, data, oct);
-	printf("empty = %d, full = %d, inside = %d, total = %d, total bytes used = %d\n"
-			, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[2], (oct[0] + oct[1] + oct[2]) * 65);
-	create_light_array(data);
+	create_octree_model(data);
 	return (0);
 }

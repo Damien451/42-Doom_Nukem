@@ -80,8 +80,8 @@ int				state_get_map_name(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, &input_field, 1);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
-		label("EDITOR", RED), data->lib.ptrfont[1]);
-	put_buttons_names(data, &input_field, BLACK, 1);
+		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+	put_buttons_names(data, &input_field, (SDL_Color){0, 0, 0, 0}, 1);
 	SDL_RenderPresent(data->lib.renderer);
 	data->map_name = map_name;
 	return (0);

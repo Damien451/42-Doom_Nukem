@@ -73,11 +73,11 @@ void		buttons_delmap(t_button buttons[2], char map_name[25])
 void		put_delmap_strings(t_doom *data)
 {
 	put_string_on_renderer(data, point(WIDTH / 1.99, HEIGHT / 3),
-		label("Be careful, the deletion is definitive !", BLACK), data->lib.ptrfont[2]);
+		label("Be careful, the deletion is definitive !", (SDL_Color){0, 0, 0, 0}), data->lib.ptrfont[2]);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 3),
-		label("Be careful, the deletion is definitive !", RED), data->lib.ptrfont[2]);
+		label("Be careful, the deletion is definitive !", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
-		label("EDITOR", RED), data->lib.ptrfont[1]);
+		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 }
 
 int			state_delete_map(t_doom *data)
@@ -88,7 +88,7 @@ int			state_delete_map(t_doom *data)
 	static int	nbmaps = 0;
 
 	if (!first)
-	{	
+	{
 		nbmaps = count_maps(&first);
 		ft_strcpy(map_name, get_map_name(data->map_to_show));
 	}
@@ -98,7 +98,7 @@ int			state_delete_map(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 2);
 	put_delmap_strings(data);
-	put_buttons_names(data, buttons, BLACK, 2);
+	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 2);
 	data->map_name = map_name;
 	check_inputs_delmap(data, nbmaps, &first);
 	SDL_RenderPresent(data->lib.renderer);

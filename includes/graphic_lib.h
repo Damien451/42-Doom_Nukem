@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/05 17:35:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/15 13:08:28 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define HEIGHT					1080
 # define SIZE_MAP				64
 # define SIZE_TEXTURE			64
-# define BLOCK_SIZE_EDITOR		((HEIGHT - 54) / 64)
+# define BLOCK_SIZE_EDITOR		16
 # define TEXTURE_SIZE			83
 
 # define NBR_TEXTURES_BLOCKS	41
@@ -38,14 +38,6 @@
 # define NB_IMG					2
 # define ID_START_BLOCK			30
 # define ID_FINISH_BLOCK		31
-
-# define WHITE					(SDL_Color){255, 255, 255, 0}
-# define BLACK					(SDL_Color){0, 0, 0, 0}
-# define RED					(SDL_Color){255, 0, 0, 0}
-# define DARK_RED				(SDL_Color){255, 30, 30, 0}
-# define BLUE					(SDL_Color){0, 0, 255, 0}
-# define GREEN					(SDL_Color){0, 255, 0, 0}
-# define YELLOW					(SDL_Color){255, 255, 0, 0}
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -97,7 +89,6 @@ struct							s_editor
 	unsigned int				blocktoremove;
 };
 
-
 struct							s_graphic_lib
 {
 	SDL_Surface					*character;
@@ -127,12 +118,14 @@ struct							s_graphic_lib
 ** ====-* PROTOTYPES *-====
 */
 
-t_label		label(char *str, SDL_Color color);
+t_label							label(char *str, SDL_Color color);
 
-void		load_textures(t_doom *data);
+void							load_textures(t_doom *data);
 
-void		put_string_on_renderer(t_doom *data, t_point pos, t_label label, TTF_Font *font);
+void							put_string_on_renderer(t_doom *data, t_point pos
+	, t_label label, TTF_Font *font);
 
-int			anim_main_menu(t_doom *data, int total_frame, int frame);
+int								anim_main_menu(t_doom *data, int total_frame
+	, int frame);
 
 #endif

@@ -15,10 +15,10 @@ static void	put_sound_bars_strings(t_doom *data, int coordy, int nbsoundbar)
 		ft_strcat(string, "Sound effects volume");
 	put_string_on_renderer(data, (t_point){WIDTH_CENTER * 1.005,
 		coordy - BUTTON_GAP_Y * 1.5},
-		label(string, RED), data->lib.ptrfont[2]);
+		label(string, (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
 	put_string_on_renderer(data, (t_point){WIDTH_CENTER ,
 		coordy - BUTTON_GAP_Y * 1.5},
-		label(string, WHITE), data->lib.ptrfont[2]);
+		label(string, (SDL_Color){255, 255, 255, 0}), data->lib.ptrfont[2]);
 }
 
 static void	put_filled_bars(t_doom *data, int *tab)

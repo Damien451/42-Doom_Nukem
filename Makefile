@@ -14,8 +14,8 @@ CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
 FSAN		= #-fsanitize=address
-DEBUG		= -g3
-OPTI		= -O2 -Ofast
+DEBUG		= #-Og3
+OPTI		= -Ofast -flto
 
 # **************************************************************************** #
 #                                 DIRECTORIES                                  #
@@ -75,6 +75,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/show_selected_params.c		\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
+					$(MATHS)/create_octree_model.c			\
 					$(MATHS)/max_absolute_between_three.c	\
 					$(MATHS)/octree_memory_management.c		\
 					$(MATHS)/quaternion.c					\
@@ -99,9 +100,11 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/compute_lights.c					\
 					$(RT)/launch_rays.c						\
 					$(RT)/locate_in_octree.c				\
+					$(RT)/print_octree.c					\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\
 					$(RT)/sun_animation.c					\
+					$(RT)/z_buffer.c						\
 					$(SHAPES)/draw_circle.c					\
 					$(SHAPES)/draw_rectangle.c				\
 					$(SOUND)/get_default_sounds.c			\
@@ -123,14 +126,17 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
 					$(STATES)/state_sound_settings.c		\
+					$(STATES)/state_test_mode.c				\
 					$(UI)/convert_to_ppm.c					\
 					$(UI)/create_buttons_inputs.c			\
 					$(UI)/get_default_inputs.c				\
+					$(UI)/minimap.c							\
 					$(UI)/parse_input_file.c				\
 					$(UI)/put_buttons_names.c				\
 					$(UI)/put_buttons_on_img.c				\
 					$(UI)/put_string_on_renderer.c			\
 					$(UI)/put_sound_bars.c					\
+					$(UI)/put_health_bar.c					\
 					add_points.c							\
 					load_textures.c							\
 					utils.c

@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:04:19 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/07 13:34:48 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/11 14:29:34 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,15 @@ void					*launch_rays(void *ptr)
 	i = catch_next_pixel_to_compute(data, ptr);
 	while (i < ((t_thread*)ptr)->frame)
 	{
-		j = -2;
-		while ((j += 2) < 32)
+		j = 0;
+		while (i + j < ((t_thread*)ptr)->frame && j < 32)
 		{
 			pos[0] = data->samplingt[data->sampling - 1][i + j];
 			pos[1] = data->samplingt[data->sampling - 1][i + 1 + j];
 			ray_create(pos, data->player.camera, &((t_thread*)ptr)->ray);
 			apply_sampling(data->lib.image, ray_intersect(((t_thread*)ptr)->ray
 				, data), data->sampling, pos[1] + pos[0] * WIDTH);
+			j += 2;
 		}
 		i = catch_next_pixel_to_compute(data, ptr);
 	}

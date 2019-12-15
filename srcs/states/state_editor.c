@@ -31,7 +31,7 @@ static inline int	display_info(t_doom *data, char *str, int step)
 		info[59] = '.';
 	}
 	put_string_on_renderer(data, point(510, 1045),
-		label(info, BLACK), data->lib.ptrfont[5]);
+		label(info, (SDL_Color){0, 0, 0, 0}), data->lib.ptrfont[5]);
 	free(str_step);
 	return (0);
 }
@@ -48,10 +48,9 @@ static inline void	set_quadrillage(t_doom *data, int step)
 	if (step > 0)
 		nbr = (1.0 / ((double)step + 1)) < 0.1 ? 0.1
 			: 1.0 / ((double)step + 1);
-	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_BLEND);
 	k = step - data->lib.editor.alpha < -1 ? -1
 		: step - data->lib.editor.alpha;
-	alpha = nbr;
+	alpha = (data->lib.editor.alpha == 10) ? nbr : 1;
 	while (++k <= step)
 	{
 		i = -1;
@@ -59,11 +58,11 @@ static inline void	set_quadrillage(t_doom *data, int step)
 		{
 			j = -1;
 			while (++j < SIZE_MAP)
-				color_rectangle(data, (t_vec3l){i, j, 0}, k, alpha);
+				if ((int)data->map_to_save[i][k][j] != 0)
+					color_rectangle(data, (t_vec3l){i, j, 0}, k, alpha);
 		}
 		alpha += nbr;
 	}
-	SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_NONE);
 }
 
 static inline int	parse_file(t_doom *data, char *str, int step)
@@ -78,14 +77,13 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 	if ((fd = open(full_path, O_RDONLY)) != -1)
 	{
 		ret = read(fd, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
-		{
-			close(fd);
-			return (1);
-		}
-		ft_memcpy(data->map_to_save, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-		set_quadrillage(data, step);
 		close(fd);
+		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
+			return (1);
+		ft_memcpy(data->map_to_save, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
+		SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_BLEND);
+		set_quadrillage(data, step);
+		SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_NONE);
 	}
 	else
 	{
@@ -112,7 +110,6 @@ int					state_editor(t_doom *data)
 
 	if (!first)
 	{
-		
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
 		parse_file(data, data->map_name, step);
 		init_editor(&data->lib.editor);

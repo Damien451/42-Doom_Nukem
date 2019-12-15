@@ -83,8 +83,8 @@ int			state_inputs_settings_menu(t_doom *data)
 	create_buttons_inputs(data, buttons);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 14);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13), label("SETTINGS", RED), data->lib.ptrfont[1]);
-	put_buttons_names(data, buttons, BLACK, 14);
+	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13), label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 14);
 	if (check_inputs_settings(data, 14) != 0)
 		return (1);
 	SDL_RenderPresent(data->lib.renderer);

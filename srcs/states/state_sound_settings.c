@@ -36,14 +36,14 @@ static int	state_sound_settings_2(t_doom *data, int tab[3], t_button *btab)
 {
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	SDL_ShowCursor(SDL_TRUE);
-	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	if (check_sound_settings(data, tab) != 0)
 		return (1);
 	put_buttons_on_img(data, btab, 2);
-	put_buttons_names(data, btab, BLACK, 2);
+	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_sound_bars(data, tab);
+	put_buttons_names(data, btab, (SDL_Color){0, 0, 0, 0}, 2);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
-		label("SETTINGS", RED), data->lib.ptrfont[1]);
+		label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }

@@ -71,8 +71,8 @@ int			state_main_menu(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 5);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),
-		label("DOOM", RED), data->lib.ptrfont[0]);
-	put_buttons_names(data, buttons, BLACK, 5);
+		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
+	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 5);
 	check_inputs_menu(data, buttons, 5);
 	SDL_RenderPresent(data->lib.renderer);
 	frame++;
