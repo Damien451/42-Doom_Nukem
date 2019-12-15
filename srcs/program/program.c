@@ -1,36 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   program.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 13:46:14 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 14:27:37 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "libft.h"
 
 static int	game_state(t_doom *data)
 {
-	if (data->state & START)
-		state_start(data);
-	else if (data->state & MAIN_MENU)
-		state_main_menu(data);
-	else if (data->state & EDITOR_MENU)
-		state_editor_menu(data);
-	else if (data->state & EDITOR)
-		state_editor(data);
-	else if (data->state & GET_MAP_NAME)
-		state_get_map_name(data);
-	else if (data->state & DELETE_MAP)
-		state_delete_map(data);
-	else if (data->state & SCORES)
-		state_scoreboard(data);
-	else if (data->state & SETTINGS)
-		state_settings_menu(data);
-	else if (data->state & SETTINGS_INPUTS)
-		state_inputs_settings_menu(data);
-	else if (data->state & SETTINGS_SOUND)
-		state_sound_settings(data);
-	else if (data->state & TEST_MODE)
-		state_test_mode(data);
-	else if (data->state & GET_INPUT)
-		state_get_input(data);
-	else if (data->state & LEAVING)
-		data->state &= ~RUNNING;
-	else if (data->state & PLAYING)
-		state_game(data);
+	data->state_f[data->state](data);
 	return (0);
 }
 
@@ -38,7 +23,7 @@ int			program(t_doom *data)
 {
 	int				pitch;
 
-	while (data->state & RUNNING)
+	while (data->running)
 	{
 		if (!SDL_LockTexture(data->lib.texture, NULL, (void**)&data->lib.image
 				, &pitch))

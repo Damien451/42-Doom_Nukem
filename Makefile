@@ -14,7 +14,7 @@ CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
 FSAN		= #-fsanitize=address
-DEBUG		= #-Og3
+DEBUG		= -Og3
 OPTI		= -Ofast -flto
 
 # **************************************************************************** #
@@ -60,7 +60,6 @@ LIBFT		= $(LIBDIR) -lft
 # **************************************************************************** #
 
 SRCS 		=		$(ANIM)/anim_main_menu.c				\
-					$(ANIM)/create_flame.c					\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/clipping.c					\
@@ -86,6 +85,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(MATHS)/vec3d_maths_2.c				\
 					$(PROG)/doom.c							\
 					$(PROG)/frame_calculator.c				\
+					$(PROG)/init_func_pointers.c			\
 					$(PROG)/init_program.c					\
 					$(PROG)/leave_program.c					\
 					$(PROG)/leave_state_game.c				\

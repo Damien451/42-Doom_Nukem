@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   anim_main_menu.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 13:39:10 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 14:25:31 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "graphic_lib.h"
 #include "thread.h"
@@ -80,37 +92,33 @@ static void	choose_animation_part1(t_doom *data, int frame)
 void		*thread_main_anim(void *thread)
 {
 	t_doom		*data;
-	int			frame;
 	int			total_frame;
 	int			i;
 	int			j;
 
 	data = ((t_thread*)thread)->data;
-	frame = ((t_thread*)thread)->frame;
-	total_frame = ((t_thread*)thread)->total_frame;
-	i = ((t_thread*)thread)->num;
-	total_frame++;
-	while (i < WIDTH)
+	total_frame = ((t_thread*)thread)->total_frame + 1;
+	i = ((t_thread*)thread)->num - NBR_THREAD;
+	while ((i += NBR_THREAD) < WIDTH)
 	{
-		j = 0;
-		while (j < (1 << 7))
+		j = -1;
+		while (++j < (1 << 7))
 		{
 			data->lib.image[i + j * WIDTH + (1 << 9) * WIDTH] =
-			((int*)data->lib.menu_texture[((i + total_frame) >> 8) & 1]->pixels)[(i + total_frame) % 192 + j * 192];
+			((int*)data->lib.menu_texture[((i + total_frame) >> 8) & 1]->pixels)
+			[(i + total_frame) % 192 + j * 192];
 			if (j < (1 << 6))
 			{
 				data->lib.image[i + j * (WIDTH - 2) + 640 * WIDTH] =
-				((int*)data->lib.menu_texture[((i + total_frame) >> 8) & 1]->pixels)[((i + total_frame) >> 1) % 192 +
-				j * 192 * 2] + 18;
+				((int*)data->lib.menu_texture[((i + total_frame) >> 8) & 1]
+				->pixels)[((i + total_frame) >> 1) % 192 + j * 192 * 2] + 18;
 			}
-			j++;
 		}
-		i += NBR_THREAD;
 	}
 	pthread_exit(0);
 }
 
-int					anim_main_menu(t_doom *data, int total_frame, int frame)
+int			anim_main_menu(t_doom *data, int total_frame, int frame)
 {
 	int				i;
 	t_thread		thread[NBR_THREAD];

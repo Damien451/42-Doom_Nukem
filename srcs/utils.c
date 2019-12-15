@@ -40,8 +40,12 @@ void		switch_state(t_doom *data, long actual_state, long new_state)
 {
 	if (new_state != GET_INPUT && actual_state != GET_INPUT)
 		data->button = 0;
-	data->state &= ~actual_state;
-	data->state |= new_state;
+	if (new_state == LEAVING)
+	{
+		data->running = 0;
+		return ;
+	}
+	data->state = new_state;
 	if (new_state == PLAYING || new_state == TEST_MODE)
 	{
 		free_octree(data->octree);

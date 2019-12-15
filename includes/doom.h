@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 13:08:36 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/15 14:40:47 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@
 # define FOV				1.047197551196598
 # define POV				0.593411945678072
 
-# define RUNNING			0x4000000000000000l
-# define START				0x1l
-# define PLAYING			0x2l
-# define PAUSE				0x4l
-# define MAIN_MENU			0x8l
-# define PLAY_MENU			0x10l
-# define EDITOR_MENU		0x20l
-# define EDITOR				0x40l
-# define GET_MAP_NAME		0x80l
-# define DELETE_MAP			0x100l
-# define SCORES				0x200l
-# define SETTINGS			0x400l
-# define SETTINGS_INPUTS	0x800l
-# define SETTINGS_SOUND		0x1000l
-# define TEST_MODE			0x2000l
-# define GET_INPUT			0x4000l
-# define LEAVING			0x8000l
+# define RUNNING			1
+# define START				0
+# define PLAYING			1
+# define PAUSE				2
+# define MAIN_MENU			3
+# define PLAY_MENU			4
+# define EDITOR_MENU		5
+# define EDITOR				6
+# define GET_MAP_NAME		7
+# define DELETE_MAP			8
+# define SCORES				9
+# define SETTINGS			10
+# define SETTINGS_INPUTS	11
+# define SETTINGS_SOUND		12
+# define TEST_MODE			13
+# define GET_INPUT			14
+# define LEAVING			15
 
 # define SUN				0
 # define PLAYER				1
@@ -65,10 +65,10 @@
 # define X_MIN				0
 # define X_MAX				1
 # define Y_MIN				2
-# define Y_MID				3
-# define Y_MAX				4
-# define Z_MIN				5
-# define Z_MAX				6
+# define Y_MAX				3
+# define Z_MIN				4
+# define Z_MAX				5
+# define Y_MID				6
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -142,6 +142,8 @@ struct						s_doom
 	unsigned int			**skybox;
 	long					button;
 	long					state;
+	int						running;
+	int						(*state_f[16])(t_doom *);
 	t_octree				*octree;
 	t_octree				*octree_model;
 	int						load_page[2];
@@ -271,6 +273,7 @@ void						*launch_rays(void *ptr);
 void						sun(t_doom *data);
 unsigned int				print_octree(t_vec3d intersect);
 int							create_octree_model(t_doom *data);
+void						init_func_pointer(t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====
