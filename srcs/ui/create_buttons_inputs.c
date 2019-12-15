@@ -1,9 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_buttons_inputs.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 16:41:28 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 16:41:33 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "menus.h"
 #include "libft.h"
 #include "inputs.h"
-
-#include <stdio.h>
 
 static void	init_desc(char desc[NB_MODIF_INPUTS][25])
 {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   put_sound_bars.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 16:44:59 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 16:45:19 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "menus.h"
 #include "libft.h"
@@ -16,7 +28,7 @@ static void	put_sound_bars_strings(t_doom *data, int coordy, int nbsoundbar)
 	put_string_on_renderer(data, (t_point){WIDTH_CENTER * 1.005,
 		coordy - BUTTON_GAP_Y * 1.5},
 		label(string, (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
-	put_string_on_renderer(data, (t_point){WIDTH_CENTER ,
+	put_string_on_renderer(data, (t_point){WIDTH_CENTER,
 		coordy - BUTTON_GAP_Y * 1.5},
 		label(string, (SDL_Color){255, 255, 255, 0}), data->lib.ptrfont[2]);
 }
@@ -49,7 +61,8 @@ void		put_sound_bars(t_doom *data, int *tab)
 	i = -1;
 	while (++i < 3)
 	{
-		draw_rectangle(&(data->lib), (t_point){BAR_WIDTH_START, BAR_HEIGHT_START + i * BAR_GAP},
+		draw_rectangle(&(data->lib), (t_point){BAR_WIDTH_START
+			, BAR_HEIGHT_START + i * BAR_GAP},
 			(t_point){BAR_WIDTH, BAR_HEIGHT}, 0xffffff);
 	}
 	put_filled_bars(data, tab);

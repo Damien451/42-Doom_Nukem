@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 16:42:04 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 16:42:57 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "player.h"
 #include "graphic_lib.h"
@@ -37,7 +49,7 @@ static void			draw_minimap(char map[64][64][64], t_player *player,
 		while (++j <= coords[3])
 		{
 			draw_rectangle(lib, (t_point){posx, posy}, (t_point){12, 12},
-				select_color(map, (int [3]){i, coords[4], j}, player));
+				select_color(map, (int[3]){i, coords[4], j}, player));
 			posx += 13;
 		}
 		posy += 13;
@@ -61,7 +73,7 @@ void				minimap(char map[64][64][64], t_player *player,
 	end_i += (start_i < 0 ? start_i * -1 : 0);
 	if (start_i < 0)
 		start_i = 0;
-	end_j += (start_j < 0 ? start_j * -1 : 0); 
+	end_j += (start_j < 0 ? start_j * -1 : 0);
 	if (start_j < 0)
 		start_j = 0;
 	start_i -= (end_i > 63 ? end_i - 63 : 0);
@@ -70,5 +82,6 @@ void				minimap(char map[64][64][64], t_player *player,
 	start_j -= (end_j > 63 ? end_j - 63 : 0);
 	if (end_j > 63)
 		end_j = 63;
-	draw_minimap(map, player, lib, (int [5]){start_i, end_i, start_j, end_j, step});
+	draw_minimap(map, player, lib, (int[5]){start_i, end_i, start_j
+		, end_j, step});
 }

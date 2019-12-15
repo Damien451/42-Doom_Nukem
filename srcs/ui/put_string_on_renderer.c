@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   put_string_on_renderer.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 16:41:11 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 16:41:15 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "menus.h"
 #include "graphic_lib.h"
 #include <SDL_ttf.h>
 #include <SDL.h>
 
-void	put_string_on_renderer(t_doom *data, t_point pos, t_label label, TTF_Font *font)
+void	put_string_on_renderer(t_doom *data, t_point pos, t_label label
+	, TTF_Font *font)
 {
 	SDL_Texture	*text;
 	SDL_Rect	src;
