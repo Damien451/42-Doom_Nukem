@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/14 16:17:18 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:32:50 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,30 +115,11 @@ void					check_if_child_is_leaf(t_doom *data, t_octree *node)
 	}
 }
 
-void				aff_octree(t_octree *node, t_doom *data, int oct[3])
-{
-	int i;
-	i = 0;
-	while (i < 8)
-	{
-		if (node->child[i])
-			aff_octree(node->child[i], data, oct);
-		i++;
-	}
-	if (node->leaf == INSIDE)
-		oct[2]++;
-	else if (node->leaf == EMPTY)
-		oct[1]++;
-	else
-		oct[0]++;
-}
-
 int						create_octree(t_doom *data)
 {
 	t_octree	*actual;
 	int			size;
 	int			ret;
-	int			oct[3];
 
 	size = SIZE_MAP;
 	actual = create_node(size << 1, vec3l(size, size, size), NULL);
@@ -153,11 +134,6 @@ int						create_octree(t_doom *data)
 	if (actual->leaf == INSIDE)
 		breadth_first_create_octree(data, actual);
 	actual = data->octree;
-	oct[0] = 0;
-	oct[1] = 0;
-	oct[2] = 0;
-	aff_octree(actual, data, oct);
-//	printf("empty = %d, full = %d, inside = %d, total = %d, total bytes used = %d\n"
-//			, oct[1], oct[0], oct[2], oct[0] + oct[1] + oct[2], (oct[0] + oct[1] + oct[2]) * 65);
+	create_octree_model(data);
 	return (0);
 }

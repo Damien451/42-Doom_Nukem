@@ -131,6 +131,7 @@ struct						s_doom
 	long					button;
 	long					state;
 	t_octree				*octree;
+	t_octree				*octree_model;
 	int						load_page[2];
 	double					sensitivity;
 	t_mixer					*mix;
@@ -250,6 +251,7 @@ t_octree					*find_parent_z(t_vec3d position, t_octree *node, t_vec3d origin);
 void						*launch_rays(void *ptr);
 void						sun(t_doom *data);
 unsigned int				print_octree(t_vec3d intersect);
+int							create_octree_model(t_doom *data);
 
 /*
 ** ====-* PHYSICS *-====
