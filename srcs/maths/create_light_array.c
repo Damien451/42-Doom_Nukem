@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:22:41 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 16:00:46 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/15 16:08:35 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,32 @@ int		add_light_to_node(t_doom *data, int cor[3], double tab[3]
 	return (0);
 }
 
-void	init_wait(int wait[3], int i, int j, int k)
+void	init_wait(int wait[3], int cor[3], double tab[3])
 {
-	tab[0] = i + 0.5;
-	tab[1] = j + 0.5;
-	tab[2] = k + 0.5;
-	wait[0] = i + 3;
+	tab[0] = cor[0] + 0.5;
+	tab[1] = cor[1] + 0.5;
+	tab[2] = cor[2] + 0.5;
+	wait[0] = cor[0] + 3;
 	if (wait[0] > 64)
 		wait[0] = 64;
-	wait[1] = j + 3;
+	wait[1] = cor[1] + 3;
 	if (wait[1] > 64)
 		wait[1] = 64;
-	wait[2] = k + 3;
+	wait[2] = cor[2] + 3;
 	if (wait[2] > 64)
 		wait[2] = 64;
-	wait[3] = i - 3;
+	wait[3] = cor[0] - 3;
 	if (wait[3] < 0)
 		wait[3] = 0;
-	wait[4] = j - 3;
+	wait[4] = cor[1] - 3;
 	if (wait[4] < 0)
 		wait[4] = 0;
-	wait[5] = k - 3;
+	wait[5] = cor[2] - 3;
 	if (wait[5] < 0)
 		wait[5] = 0;
 }
 
-int		add_light_to_array(int i, int j, int k, t_doom *data)
+int		add_light_to_array(int cor[3], t_doom *data)
 {
 	int			wait[6];
 	int			inc[3];
@@ -73,7 +73,7 @@ int		add_light_to_array(int i, int j, int k, t_doom *data)
 	int			type;
 
 	type = TORCH + (rand() & 3);
-	init_wait(wait, i, j, k);
+	init_wait(wait, cor, tab);
 	inc[0] = wait[3];
 	while (inc[0] < wait[0])
 	{
@@ -95,26 +95,24 @@ int		add_light_to_array(int i, int j, int k, t_doom *data)
 
 int		create_light_array(t_doom *data)
 {
-	int			i;
-	int			j;
-	int			k;
+	int			cor[3];
 
-	i = 0;
-	while (i < 64)
+	cor[0] = 0;
+	while (cor[0] < 64)
 	{
-		j = 0;
-		while (j < 64)
+		cor[1] = 0;
+		while (cor[1] < 64)
 		{
-			k = 0;
-			while (k < 64)
+			cor[2] = 0;
+			while (cor[2] < 64)
 			{
-				if (data->map_to_save[i][j][k] == 41)
-					add_light_to_array(i, j, k, data);
-				k++;
+				if (data->map_to_save[cor[0]][cor[1]][cor[2]] == 41)
+					add_light_to_array(cor, data);
+				cor[2]++;
 			}
-			j++;
+			cor[1]++;
 		}
-		i++;
+		cor[0]++;
 	}
 	return (0);
 }
