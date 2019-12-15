@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 14:40:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:47:25 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ struct						s_doom
 	t_zbuf					zbuf;
 	t_light					light_array[64][64][64];
 	unsigned int			fire_model[64][64][64];
+	int						tmp;
 };
 
 /*

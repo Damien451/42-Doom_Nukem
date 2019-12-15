@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/14 16:29:53 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:51:02 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,22 @@
 #include <math.h>
 #include "libft.h"
 
-static inline int		verify_inside_node(t_doom *data, t_octree *node)
+static inline void		init_all(t_vec3l *tester, t_doom *data, int *nbr_node
+		, t_octree *node)
 {
-	t_vec3l		tester;
+	data->tmp = 0;
+	*nbr_node = 0;
+	tester->x = (node->center.x >> 1) - (node->size >> 2);
+	tester->y = (node->center.y >> 1) - (node->size >> 2);
+	tester->z = (node->center.z >> 1) - (node->size >> 2);
+}
+
+static inline int		inside_loop(t_doom *data, t_octree *node, int *nbr_node
+	, t_vec3l tester)
+{
 	t_vec3l		count;
-	int			nbr_node;
-	int			total;
 	char		c;
 
-	total = 0;
-	nbr_node = 0;
-	tester.x = (node->center.x >> 1) - (node->size >> 2);
-	tester.y = (node->center.y >> 1) - (node->size >> 2);
-	tester.z = (node->center.z >> 1) - (node->size >> 2);
 	count.x = -1;
 	while (++count.x < node->size >> 1 && (count.y = -1))
 	{
@@ -39,14 +42,27 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 				c = data->fire_model[tester.x + count.x][tester.y + count.y]
 					[tester.z + count.z];
 				if (c)
-					nbr_node++;
-				else if (nbr_node)
+					(*nbr_node)++;
+				else if (*nbr_node)
 					return (-1);
-				total++;
+				data->tmp++;
 			}
 		}
 	}
-	if (nbr_node != 0 && total != nbr_node)
+	return (0);
+}
+
+static inline int		verify_inside_node(t_doom *data, t_octree *node)
+{
+	t_vec3l		tester;
+	int			ret;
+	int			nbr_node;
+
+	init_all(&tester, data, &nbr_node, node);
+	ret = inside_loop(data, node, &nbr_node, tester);
+	if (ret)
+		return (ret);
+	if (nbr_node != 0 && data->tmp != nbr_node)
 		return (-1);
 	return (nbr_node);
 }
