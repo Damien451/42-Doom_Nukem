@@ -38,7 +38,7 @@ typedef struct	s_zbuf
 ** ====-* PROTOTYPES *-====
 */
 
-void		create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture);
+void		create_entity(t_entity **entities, t_vec3d pos, SDL_Surface *texture);
 int			init_zbuf(t_zbuf *zbuf);
 void		z_buffer(t_entity *entities, t_player player, t_zbuf *zbuf);
 

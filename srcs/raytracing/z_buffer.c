@@ -14,20 +14,21 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 	t_vec3d rg;
 	t_vec3d pos;
 
-	dir = vec3d_sub(camera.origin, entity.pos);
+	dir = vec3d_unit(vec3d_sub(entity.pos, camera.origin));
+	// printf("%f, %f, %f\n", dir.x, dir.y, dir.z);
 	fr = camera.direction;
 	up = camera.up;
 	rg = camera.right;
-	pos = (t_vec3d){(int)(dir.x * (up.y * rg.z - rg.y * up.z)
-					+ dir.y * (rg.x * up.z - up.x * rg.z)
-					+ dir.z * (up.x * rg.y - rg.x * up.y)),
-					(int)(dir.x * (rg.y * fr.z - rg.z * fr.y)
-					+ dir.y * (fr.x * rg.z - fr.z * rg.x)
-					+ dir.z * (rg.x * fr.y - rg.y * fr.x)), 0};
+	pos = (t_vec3d){(int)((dir.x * (up.y * rg.z - rg.y * up.z)
+						+ dir.y * (rg.x * up.z - up.x * rg.z)
+						+ dir.z * (up.x * rg.y - rg.x * up.y)) * WIDTH),
+					(int)((dir.x * (rg.y * fr.z - rg.z * fr.y)
+						+ dir.y * (fr.x * rg.z - fr.z * rg.x)
+						+ dir.z * (rg.x * fr.y - rg.y * fr.x)) * HEIGHT), 0};
 	return (pos);
 }
 
-void		create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture)
+void		create_entity(t_entity **entities, t_vec3d pos, SDL_Surface *texture)
 {
 	t_entity *entity;
 
@@ -37,13 +38,13 @@ void		create_entity(t_entity *entities, t_vec3d pos, SDL_Surface *texture)
 	entity->pos = pos;
 	entity->texture = texture;
 	entity->id = 0;
-	if (!entities)
-		entities = entity;
+	if (!*entities)
+		*entities = entity;
 	else
 	{
-		entity->id = entities->id + 1;
-		entity->next = entities;
-		entities = entity;
+		entity->id = (*entities)->id + 1;
+		entity->next = *entities;
+		*entities = entity;
 	}
 }
 
@@ -63,7 +64,7 @@ int			init_zbuf(t_zbuf *zbuf)
 
 }
 
-static void	place_in_zbuf(t_entity entities, t_player player, t_zbuf *zbuf)
+static void	place_in_zbuf(t_entity *entities, t_player player, t_zbuf *zbuf)
 {
 	double	dist;
 	t_vec3d pos;
@@ -74,24 +75,27 @@ static void	place_in_zbuf(t_entity entities, t_player player, t_zbuf *zbuf)
 	int		*img;
 
 
-	img = (int*)entities.texture->pixels;
-	dist = distance(player.position, entities.pos);
-	text_height = entities.texture->h;
-	text_width = entities.texture->w;
-	pos = calculate_position(entities, player.camera);
+	img = (int*)entities->texture->pixels;
+	dist = distance(player.position, entities->pos);
+	text_height = entities->texture->h;
+	text_width = entities->texture->w;
+	pos = calculate_position(*entities, player.camera);
+	printf("%f, %f\n", pos.x, pos.y);
 	x = pos.x - text_width / 2;
+	printf("x %d\n", x);
 	while (x < pos.x + text_width / 2)
 	{
-		y = pos.y - text_height / 2;
-		while(y < pos.y + text_height / 2)
+		y = pos.y - text_height / 2 ;
+		while (y < pos.y + text_height / 2)
 		{
-
 			if (x <= WIDTH && x >= 0 && y <= HEIGHT && y >= 0 && (dist < zbuf->zdist[x + y * WIDTH] || zbuf->zdist[x + y * WIDTH] == 0.0))
 			{
 				zbuf->zdist[x + y * WIDTH] = dist,
 				zbuf->zcolor[x + y * WIDTH] = img[(int)((x - pos.x + text_width / 2) + (y - pos.y + text_height / 2) * text_width)]; 
 			}
+			y++;
 		}
+		x++;
 	}
 }
 
@@ -102,7 +106,7 @@ void		z_buffer(t_entity *entities, t_player player, t_zbuf *zbuf)
 	ptr = entities;
 	while (ptr)
 	{
-		place_in_zbuf(*ptr, player, zbuf);
+		place_in_zbuf(ptr, player, zbuf);
 		ptr = ptr->next;
 	}
 }

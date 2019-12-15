@@ -112,6 +112,7 @@ struct						s_ray
 	unsigned char			c_color[4];
 	double					length;
 	int						face;
+	int						pos[2];
 };
 
 struct						s_thread
@@ -171,6 +172,7 @@ struct						s_doom
 	t_thread				thread[NBR_THREAD];
 	pthread_mutex_t			mutex;
 	t_zbuf					zbuf;
+	t_entity				*entities;
 	t_light					light_array[64][64][64];
 	unsigned int			fire_model[64][64][64];
 	int						tmp;

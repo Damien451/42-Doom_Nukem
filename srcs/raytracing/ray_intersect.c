@@ -90,7 +90,12 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 			i = 0;
 		}
 		else if (ray.face >= 0)
-			return (compute_lights(ray, data, tmp));
+		{
+			if (!(ray.length < data->zbuf.zdist[ray.pos[1] + ray.pos[0] * WIDTH] || data->zbuf.zdist[ray.pos[0] + ray.pos[1] * WIDTH] == 0))
+				return (data->zbuf.zcolor[ray.pos[1] + ray.pos[0] * WIDTH]);
+			else 
+				return (compute_lights(ray, data, tmp));
+		}
 		else
 			return (add_skybox(ray.intersect, data->skybox));
 	}
