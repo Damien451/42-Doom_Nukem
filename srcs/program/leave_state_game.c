@@ -3,18 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   leave_state_game.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:36:05 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 14:36:06 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/15 18:13:05 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	leave_state_game(t_player *player)
+void		leave_state_game(t_doom *data, t_player *player)
 {
+	switch_state(data, PLAYING, MAIN_MENU);
 	player->camera.origin.x = -1;
 	player->camera.origin.y = -1;
 	player->camera.origin.z = -1;
+	player->acceleration.x = 0;
+	player->acceleration.y = 0;
+	player->acceleration.z = 0;
+	player->speed = 0;
+	player->health = 1000;
+	data->lib.cam_keys = 0;
 }

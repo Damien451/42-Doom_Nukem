@@ -14,8 +14,8 @@ CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
 FSAN		= #-fsanitize=address
-DEBUG		= -Og3
-OPTI		= -Ofast -flto
+DEBUG		= 
+OPTI		= -flto -Os -funsafe-math-optimizations
 
 # **************************************************************************** #
 #                                 DIRECTORIES                                  #

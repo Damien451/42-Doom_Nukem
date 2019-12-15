@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:47:25 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/15 18:05:36 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ struct						s_doom
 int							init_program(t_doom *data);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
-void						leave_state_game(t_player *player);
+void						leave_state_game(t_doom *data, t_player *player);
 void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
 char						*get_map_name(int map_to_show);
