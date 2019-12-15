@@ -1,9 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_get_map_name.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:16:29 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:19:25 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
 #include "inputs.h"
-
 #include <stdio.h>
 
 /*
@@ -40,7 +50,7 @@ static void		check_inputs_map_name(t_doom *data, char *map_name,
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)
- 		{
+		{
 			if (data->lib.event.key.keysym.sym == SDLK_RETURN &&
 				*nbinputs > 0)
 			{
@@ -75,7 +85,7 @@ int				state_get_map_name(t_doom *data)
 	check_inputs_map_name(data, map_name, &nbinputs);
 	input_field = button(point(WIDTH_CENTER - (DEF_BUTTON_W * 3 / 2),
 		HEIGHT_CENTER),
-		point(DEF_BUTTON_W * 3, DEF_BUTTON_H), EDITOR, 
+		point(DEF_BUTTON_W * 3, DEF_BUTTON_H), EDITOR,
 		(map_name[0] == '\0' ? "Enter new map name" : map_name));
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, &input_field, 1);

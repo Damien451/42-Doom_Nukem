@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_main_menu.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:24:58 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
 
-static void	check_inputs_menu(t_doom *data, t_button *btab, int nbuttons)
+static void	check_inputs_menu(t_doom *data, t_button *btab, int but)
 {
 	while (SDL_PollEvent(&data->lib.event))
 	{
@@ -11,21 +23,11 @@ static void	check_inputs_menu(t_doom *data, t_button *btab, int nbuttons)
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
-			{
-				if (data->button == 0)
-					data->button = nbuttons - 1;
-				else
-					--data->button;
-			}
+				data->button = data->button == 0 ? but - 1 : data->button - 1;
 			if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
-			{
-				if (data->button == nbuttons - 1)
-					data->button = 0;
-				else
-					++data->button;
-			}
+				data->button = data->button == but - 1 ? 0 : data->button + 1;
 			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 				switch_state(data, MAIN_MENU, btab[data->button].state);
 		}
@@ -64,10 +66,10 @@ int			state_main_menu(t_doom *data)
 		flag = 1;
 	}
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
-	anim_main_menu(data, total_frame, frame);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
+		, (WIDTH * HEIGHT) << 2);
+	anim_main_menu(data, total_frame++, frame);
 	buttons_main_menu(buttons);
-	//create_flame(data, data->lib.image);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 5);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),
@@ -75,9 +77,7 @@ int			state_main_menu(t_doom *data)
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 5);
 	check_inputs_menu(data, buttons, 5);
 	SDL_RenderPresent(data->lib.renderer);
-	frame++;
-	total_frame++;
-	if (frame == 1024)
+	if (++frame == 1024)
 		frame = 1;
 	return (0);
 }

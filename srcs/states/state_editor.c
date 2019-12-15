@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_editor.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:09:25 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:09:30 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "doom.h"
 #include "libft.h"
@@ -5,8 +16,6 @@
 #include <unistd.h>
 #include "vec3.h"
 #include "octree.h"
-
-#include <stdio.h>
 
 static inline int	display_info(t_doom *data, char *str, int step)
 {

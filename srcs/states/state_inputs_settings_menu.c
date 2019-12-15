@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_inputs_settings_menu.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 15:20:52 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/15 15:21:25 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
@@ -19,7 +31,7 @@ static int	save_inputs(t_doom *data)
 
 static int	check_inputs_settings2(t_doom *data, int nbuttons)
 {
-	if (data->lib.event.key.keysym.sym == SDLK_RIGHT || 
+	if (data->lib.event.key.keysym.sym == SDLK_RIGHT ||
 		(unsigned int)data->lib.event.key.keysym.sym ==
 		data->tabinputs.keycode[3])
 	{
@@ -51,7 +63,7 @@ static int	check_inputs_settings(t_doom *data, int nbuttons)
 		if (data->lib.event.type == SDL_KEYDOWN)
 		{
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
-				(unsigned int)data->lib.event.key.keysym.sym == 
+				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
 				data->button = data->button == 0 ? 0 : data->button - 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
@@ -59,7 +71,7 @@ static int	check_inputs_settings(t_doom *data, int nbuttons)
 				data->tabinputs.keycode[2])
 				data->button = (data->button == nbuttons - 1)
 				? nbuttons - 1 : data->button + 1;
-			else if (data->lib.event.key.keysym.sym == SDLK_LEFT || 
+			else if (data->lib.event.key.keysym.sym == SDLK_LEFT ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[1])
 			{
@@ -79,11 +91,13 @@ int			state_inputs_settings_menu(t_doom *data)
 	t_button	buttons[14];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
+		, (WIDTH * HEIGHT) << 2);
 	create_buttons_inputs(data, buttons);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 14);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13), label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13)
+		, label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 14);
 	if (check_inputs_settings(data, 14) != 0)
 		return (1);
