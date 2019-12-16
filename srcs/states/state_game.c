@@ -65,6 +65,7 @@ void		skybox(t_doom *data)
 
 static void	player_death(t_doom *data)
 {
+	data->player.camera.origin = vec3d(-1, -1, -1);
 	leave_state_game(data, &data->player);
 }
 
@@ -126,8 +127,6 @@ int			state_game(t_doom *data)
 		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
 			data->lib.cam_keys &= ~DESTROY;
 		camera_press_key(&data->lib.event, data);
-		if (data->player.health <= 0)
-			player_death(data);
 	}
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	raytracing(data);
@@ -150,5 +149,7 @@ int			state_game(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
+	if (data->player.health <= 0)
+		player_death(data);
 	return (0);
 }

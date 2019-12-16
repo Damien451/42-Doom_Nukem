@@ -54,23 +54,6 @@ static void		load_textures_blocks(SDL_Surface *textures[NBR_TEXTURES_BLOCKS])
 	load_textures_blocks2(textures);
 }
 
-static void		load_skybox(t_doom *data)
-{
-	int		i;
-	data->lib.skybox[0] = IMG_Load("textures/hell_rt.bmp");
-	data->lib.skybox[1] = IMG_Load("textures/hell_ft.bmp");
-	data->lib.skybox[2] = IMG_Load("textures/hell_lf.bmp");
-	data->lib.skybox[3] = IMG_Load("textures/hell_bk.bmp");
-	data->lib.skybox[4] = IMG_Load("textures/hell_up.bmp");
-	data->lib.skybox[5] = IMG_Load("textures/hell_dn.bmp");
-	i = 0;
-	while (i < 6)
-	{
-		data->lib.skybox_t[i] = SDL_CreateTextureFromSurface(data->lib.renderer, data->lib.skybox[i]);
-		i++;
-	}
-}
-
 void			load_binary_textures(t_doom *data)
 {
 	int		fd;
@@ -218,6 +201,5 @@ void			load_textures(t_doom *data)
 	data->lib.editor.texture[1] = IMG_Load("textures/editor2.bmp");
 	data->lib.hud_texture = IMG_Load("textures/hud2.png");
 	load_binary_textures(data);
-	load_skybox(data);
 	load_textures_blocks(data->lib.textures);
 }
