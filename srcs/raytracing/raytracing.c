@@ -25,6 +25,7 @@ static inline int	init_thread_structure(t_doom *data)
 
 	i = 0;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
+	z_buffer(data->entities, data->player, (t_zbuf*)&(data->zbuf));
 	while (i < NBR_THREAD)
 	{
 		data->thread[i].data = data;

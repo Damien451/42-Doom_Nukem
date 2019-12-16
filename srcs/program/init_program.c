@@ -224,7 +224,7 @@ static void	init_program2(t_doom *data)
 	data->lib.editor.alpha = 10;
 	data->map_to_show = 0;
 	data->map_name = "\0";
-	create_entity(&(data->entities), (t_vec3d){2, 2, 2}, IMG_Load("textures/eclair.bmp"));
+	create_entity(&(data->entities), (t_vec3d){10.5, 0.5, 10.5}, IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.bmp"));
 	init_zbuf(&(data->zbuf));
 	init_camera(data);
 	pthread_mutex_init(&data->mutex, NULL);

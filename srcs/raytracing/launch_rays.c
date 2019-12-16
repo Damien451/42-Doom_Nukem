@@ -77,7 +77,6 @@ void					*launch_rays(void *ptr)
 
 	data = ((t_thread*)ptr)->data;
 	i = catch_next_pixel_to_compute(data, ptr);
-	z_buffer(data->entities, data->player, (t_zbuf*)&(data->zbuf));
 	while (i < ((t_thread*)ptr)->frame)
 	{
 		j = 0;

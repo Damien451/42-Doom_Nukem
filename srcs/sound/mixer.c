@@ -34,6 +34,7 @@ int		init_mixer(t_doom *data)
 	}
 	if (load_sounds(data))
 		return (1);
+	change_volume(data->mix);
 	return (0);
 }
 
