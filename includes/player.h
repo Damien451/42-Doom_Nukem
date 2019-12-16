@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 13:36:27 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:25:23 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ struct						s_inventory
 {
 	int						weapons;
 	int						keys;
+	int						*blocks[40];
+	int						selected_block;
 };
 
 struct						s_player

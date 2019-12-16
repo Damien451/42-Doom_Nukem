@@ -63,6 +63,12 @@ void		skybox(t_doom *data)
 	//}
 }
 
+static void	player_death(t_doom *data)
+{
+	data->player.camera.origin = vec3d(-1, -1, -1);
+	leave_state_game(data, &data->player);
+}
+
 static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 {
 	int		x;
@@ -106,8 +112,7 @@ int			state_game(t_doom *data)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			leave_state_game(&data->player);
-			switch_state(data, PLAYING, MAIN_MENU);
+			leave_state_game(data, &data->player);
 			return (0);
 		}
 		else if (data->lib.event.type == SDL_MOUSEMOTION)
@@ -124,14 +129,6 @@ int			state_game(t_doom *data)
 		camera_press_key(&data->lib.event, data);
 	}
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
-	if (data->player.health <= 0)
-	{
-		//ici on appellera la fonction de mort
-		printf("T'es mort mon gars\n");
-		data->player.health = 1000;
-		//leave_state_game(&data->player);
-		switch_state(data, PLAYING, MAIN_MENU);
-	}
 	raytracing(data);
 	int			i = 0;
 	while (i < WIDTH * HEIGHT)
@@ -152,5 +149,7 @@ int			state_game(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
+	if (data->player.health <= 0)
+		player_death(data);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_test_mode.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:27:33 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:27:51 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/15 18:07:51 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static inline void	check_events(t_doom *data)
 		if (data->lib.event.type == SDL_KEYDOWN &&
 			data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			leave_state_game(&data->player);
+			leave_state_game(data, &data->player);
 			switch_state(data, TEST_MODE, EDITOR);
 			return ;
 		}

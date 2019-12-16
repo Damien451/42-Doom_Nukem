@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 13:24:44 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:28:06 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,10 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 			data->lib.cam_keys |= SQUAT;
 		else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
 			data->photo = 1;
+		else if (event->key.keysym.sym == SDLK_z && data->player.inventory.selected_block < 39)
+			data->player.inventory.selected_block++;
+		else if (event->key.keysym.sym == SDLK_x && data->player.inventory.selected_block > 1)
+			data->player.inventory.selected_block--;
 		data->sampling = 4;
 	}
 	camera_release_key(event, data);
