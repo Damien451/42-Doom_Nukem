@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_textures.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/16 23:33:10 by roduquen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "graphic_lib.h"
 #include <fcntl.h>
@@ -53,140 +65,28 @@ static void		load_textures_blocks(SDL_Surface *textures[NBR_TEXTURES_BLOCKS])
 	textures[23] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/gravel.bmp");
 	load_textures_blocks2(textures);
 }
+/*
+int				load_binary_textures(t_doom *data)
+{
+	int			ret;
 
+}
+*/
 void			load_binary_textures(t_doom *data)
 {
 	int		fd;
+	int		i;
 
-	fd = 0;
-	while (fd < NBR_TEXTURES_BLOCKS)
+	i = 0;
+	dictionnary_binary_tex(data);
+	while (i < NBR_TEXTURES_BLOCKS)
 	{
-		data->lib.textures_block[fd] = malloc(128 * 128 * 4);
-		fd++;
+		data->lib.textures_block[i] = malloc(128 * 128 * 4);
+		fd = open(data->lib.texture_dic[i], O_RDONLY);
+		read(fd, data->lib.textures_block[i], 128 * 128 * 4);
+		close(fd);
+		i++;
 	}
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/0.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[0], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/1.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[1], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/2.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[2], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/3.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[3], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/4.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[4], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/5.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[5], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/6.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[6], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/7.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[7], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/8.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[8], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/9.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[9], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/10.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[10], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/11.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[11], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/12.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[12], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/13.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[13], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/14.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[14], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/15.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[15], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/16.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[16], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/17.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[17], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/18.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[18], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/19.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[19], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/20.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[20], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/21.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[21], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/22.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[22], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/23.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[23], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/24.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[24], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/25.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[25], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/26.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[26], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/27.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[27], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/28.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[28], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/29.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[29], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/30.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[30], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/31.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[31], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/32.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[32], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/33.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[33], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/34.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[34], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/35.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[35], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/36.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[36], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/37.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[37], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/38.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[38], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/39.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[39], 128 * 4 * 128);
-	close(fd);
-	fd = open("/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/40.binary", O_RDONLY);
-	read(fd, data->lib.textures_block[40], 128 * 4 * 128);
-	close(fd);
 }
 
 void			load_textures(t_doom *data)

@@ -139,7 +139,9 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(UI)/put_health_bar.c					\
 					add_points.c							\
 					load_textures.c							\
-					utils.c
+					utils.c									\
+					dictionnary_binary_tex.c
+
 
 # **************************************************************************** #
 #                                   UTILS                                      #
