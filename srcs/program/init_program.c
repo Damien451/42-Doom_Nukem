@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_program.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 14:53:51 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:28:00 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ static void	init_program2(t_doom *data)
 	data->lib.editor.alpha = 10;
 	data->map_to_show = 0;
 	data->map_name = "\0";
+	data->player.inventory.selected_block = 1;
 	init_zbuf(&(data->zbuf));
 	init_camera(data);
 	pthread_mutex_init(&data->mutex, NULL);

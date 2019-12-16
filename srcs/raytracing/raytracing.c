@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/14 15:04:24 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:20:24 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void				interaction(t_doom *data, t_vec3d pos)
 		if (data->map_to_save[new[0]][new[1]][new[2]])
 			data->map_to_save[new[0]][new[1]][new[2]] = 0;
 		else
-			data->map_to_save[new[0]][new[1]][new[2]] = 12;
+			data->map_to_save[new[0]][new[1]][new[2]]
+				= data->player.inventory.selected_block;
 	}
 }
 
