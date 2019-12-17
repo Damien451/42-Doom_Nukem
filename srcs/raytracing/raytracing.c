@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 23:37:28 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/17 12:03:22 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,19 @@ void				interaction(t_doom *data, t_vec3d pos)
 
 void				actualize_torch(t_doom *data)
 {
-	static int	frame[4] = {0};
-	static int	nbr_frame[4] = {0};
-	int			i;
+	static double	value = 0.125;
 
-	i = 0;
-	while (i < 4)
+	if (data->power[TORCH] <= 2)
 	{
-		if (frame[i] == nbr_frame[i])
-		{
-			data->power[TORCH + i] = 2 + (rand() & 3);
-			frame[i] = 0;
-			nbr_frame[i] = data->power[TORCH + i] + (rand() & 3);
-		}
-		else
-			frame[i]++;
-		i++;
+		value = 0.125;
+		data->power[TORCH] = 2;
 	}
+	if (data->power[TORCH] >= 5)
+	{
+		value = -0.125;
+		data->power[TORCH] = 5;
+	}
+	data->power[TORCH] += value;
 }
 
 int					raytracing(t_doom *data)
@@ -102,7 +98,7 @@ int					raytracing(t_doom *data)
 	if (data->lib.cam_keys & DESTROY)
 	{
 		interaction(data, vec3d_add(data->player.camera.origin
-			, vec3d_scalar(data->player.camera.direction, 2)));
+					, vec3d_scalar(data->player.camera.direction, 2)));
 		data->lib.cam_keys &= ~DESTROY;
 	}
 	free_octree(data->octree);
