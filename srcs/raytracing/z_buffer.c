@@ -28,19 +28,18 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 	up = camera.up;
 	rg = camera.right;
 
-	printf("up %f, %f, %f\n", up.x, up.y, up.z);
-	printf("rg %f, %f, %f\n\n", rg.x, rg.y, rg.z);
+//	printf("up %f, %f, %f\n", up.x, up.y, up.z);
+//	printf("rg %f, %f, %f\n\n", rg.x, rg.y, rg.z);
 
 	dir = vec3d_sub(entity.pos, camera.origin);
 
-	proj_rg = vec3d_sub(dir, vec3d_scalar(rg, vec3d_dot(dir, rg)));
+	proj_rg = vec3d_unit(vec3d_sub(dir, vec3d_scalar(rg, vec3d_dot(dir, rg))));
 
-	proj_up = vec3d_sub(dir, vec3d_scalar(up, vec3d_dot(dir, up)));
+	proj_up = vec3d_unit(vec3d_sub(dir, vec3d_scalar(up, vec3d_dot(dir, up))));
 
 	// printf("dir = %f, %f, %f\n", dir.x, dir.y, dir.z);
 	theta = acos(vec3d_dot(proj_rg, fr));
 	phi = acos(vec3d_dot(proj_up, fr));
-	
 	// dir.x /= camera.origin.x;
 	// dir.y /= camera.origin.y;
 	// dir.z /= camera.origin.z;
@@ -55,10 +54,10 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 
 	if (phi > FOV)
 		return ((t_vec3d){-1,-1,-1});
-/*	if (theta > POV)
+	if (theta > POV)
 	 	return ((t_vec3d){-1,-1,-1});
-*/	printf("theta = %f\n", theta);
-	printf("phi = %f\n", phi);
+//	printf("theta = %f\n", theta);
+//	printf("phi = %f\n", phi);
 /*
 	rgs = vec3d_dot(dir, rg);
 	ups = vec3d_dot(dir, up);

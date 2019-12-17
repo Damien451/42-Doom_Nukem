@@ -103,6 +103,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/print_octree.c					\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\
+					$(RT)/sphere.c							\
 					$(RT)/sun_animation.c					\
 					$(RT)/z_buffer.c						\
 					$(SHAPES)/draw_circle.c					\

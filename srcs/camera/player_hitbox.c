@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:31:51 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 13:28:29 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/16 23:38:57 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		check_if_inside_map(t_doom *data, t_vec3d *position)
 	else if (position->y < 0.2)
 	{
 		data->player.acceleration.y = 0;
-		data->player.health = 0;
+//		data->player.health = 0;
 		position->y = 0.2;
 	}
 	if (position->z > 63.8)

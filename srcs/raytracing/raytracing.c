@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 23:34:37 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/16 23:37:28 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int					raytracing(t_doom *data)
 
 	data->actual_i = 2;
 	data->sampling = 4;
-	data->player.camera.origin = vec3d(10.5, 10.5,10.5);
 	if (data->lib.cam_keys & COURSE)
 		data->sampling = 1;
 	sun(data);
