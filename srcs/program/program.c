@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:46:14 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 14:27:37 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/19 23:31:49 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int			program(t_doom *data)
 			game_state(data);
 			frame_calculator();
 			SDL_UnlockTexture(data->lib.texture);
-			SDL_RenderClear(data->lib.renderer);
+			if (!(data->state & PAUSE))
+				SDL_RenderClear(data->lib.renderer);
 		}
 	}
 	return (0);

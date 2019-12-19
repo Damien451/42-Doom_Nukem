@@ -65,7 +65,7 @@ void		skybox(t_doom *data)
 
 static void	player_death(t_doom *data)
 {
-	leave_state_game(data, &data->player);
+	leave_game(data, &data->player);
 	switch_state(data, PLAYING, MAIN_MENU);
 }
 
@@ -112,8 +112,8 @@ int			state_game(t_doom *data)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			leave_state_game(data, &data->player);
-			switch_state(data, PLAYING, MAIN_MENU);
+			//leave_game(data, &data->player);
+			switch_state(data, PLAYING, PAUSE);
 			return (0);
 		}
 		else if (data->lib.event.type == SDL_MOUSEMOTION)

@@ -22,17 +22,16 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 
 	rg = camera.direction;
 	up = camera.up;
-<<<<<<< HEAD
 	fr = camera.right;
 
 	dir = vec3d_sub(entity.pos, camera.origin);
 
-	printf("camera.origin %f, %f, %f\n", camera.origin.x, camera.origin.y, camera.origin.z);
-	printf("entity.pos %f, %f, %f\n", entity.pos.x, entity.pos.y, entity.pos.z);
-	printf("dir %f, %f, %f\n", dir.x, dir.y, dir.z);
-	printf("fr %f, %f, %f\n", fr.x, fr.y, fr.z);
-	printf("up %f, %f, %f\n", up.x, up.y, up.z);
-	printf("rg %f, %f, %f\n\n", rg.x, rg.y, rg.z);
+	//printf("camera.origin %f, %f, %f\n", camera.origin.x, camera.origin.y, camera.origin.z);
+	//printf("entity.pos %f, %f, %f\n", entity.pos.x, entity.pos.y, entity.pos.z);
+	//printf("dir %f, %f, %f\n", dir.x, dir.y, dir.z);
+	//printf("fr %f, %f, %f\n", fr.x, fr.y, fr.z);
+	//printf("up %f, %f, %f\n", up.x, up.y, up.z);
+	//printf("rg %f, %f, %f\n\n", rg.x, rg.y, rg.z);
 
 
 	pos = (t_vec3d){((dir.x * (up.y * rg.z - rg.y * up.z)
@@ -45,9 +44,9 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 						+ dir.y * (fr.x * up.z - fr.z * up.x)
 						+ dir.z * (up.x * fr.y - up.y * fr.x))};
 
-	printf("%f %f %f\n", dir.x, dir.y, dir.z);
+	//printf("%f %f %f\n", dir.x, dir.y, dir.z);
 	dir = vec3d_add(vec3d_scalar(fr, pos.x), vec3d_add(vec3d_scalar(up, pos.y), vec3d_scalar(rg, pos.z)));
-	printf("%f %f %f\n", dir.x, dir.y, dir.z);
+	//printf("%f %f %f\n", dir.x, dir.y, dir.z);
 	
 	// if (pos.x < minmaxpos[0])
 	// 	minmaxpos[0] = pos.x;
@@ -61,30 +60,25 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 	// pos = (t_vec3d){1,1,1};
 
 	// tmp = pos.x;
-	// pos.x = pos.y;
-	// pos.y = pos.z;
-	// pos.z = tmp;
-	// tmp = pos.x;
 	// pos.x = pos.z;
 	// pos.z = tmp;
 
 	// dir.x =pos.x;
 	// dir.y =;
 	// dir.z = pos.x;
-	pos.y *= -1;
+	pos.z -= 1;
 	dir = vec3d_unit(pos);
-	printf("pos %f %f %f\n", pos.x, pos.y, pos.z);
-	printf("dir %f %f %f\n", dir.x, dir.y, dir.z);
-	printf("acos %f\n", (acos(dir.x) - M_PI / 2));
+	//printf("pos %f %f %f\n", pos.x, pos.y, pos.z);
+	//printf("dir %f %f %f\n", dir.x, dir.y, dir.z);
+	//printf("acos %f\n", (acos(dir.x) - M_PI / 2));
 
 	// printf("%f %f\n", tan((acos(dir.x) - M_PI / 2)), acos(dir.y));
 	// tmp = pos.x;
 	// uv = centerPoint + normalize(d) * atan(r * pi) * 1/3 / atan(pi/3)
 
-	 tmp = -(acos(dir.x) - M_PI / 2) * M_PI * WIDTH / 6  + WIDTH / 2;
-	 pos.y = -(acos(dir.y) - M_PI / 2) * M_PI * HEIGHT / 4 + HEIGHT / 2;
-	 pos.x = tmp;
-	printf("pos %f %f %f\n", pos.x, pos.y, pos.z);
+	pos.x = dir.x * WIDTH + (double)(WIDTH / 2);
+	pos.y = -dir.y * HEIGHT + (double)(HEIGHT / 2);
+	//printf("pos %f %f %f\n", pos.x, pos.y, pos.z);
 	return (pos);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 22:28:00 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:07:09 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ static void	init_program2(t_doom *data)
 	data->lib.editor.alpha = 10;
 	data->map_to_show = 0;
 	data->map_name = "\0";
-	create_entity(&(data->entities), (t_vec3d){10.5, 0.5, 10.5}, IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.bmp"));
+	create_entity(&(data->entities), (t_vec3d){10.5, 2.5, 10.5}, IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.bmp"));
 	data->player.inventory.selected_block = 1;
 	init_zbuf(&(data->zbuf));
 	init_camera(data);

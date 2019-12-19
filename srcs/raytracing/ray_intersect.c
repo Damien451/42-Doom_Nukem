@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/17 04:36:21 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/19 17:48:44 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,12 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 			i = 0;
 		}
 		else if (ray.face >= 0)
-			return (compute_lights(ray, data, tmp));
+		{
+			if (!(ray.length < data->zbuf.zdist[ray.pos[1] + ray.pos[0] * WIDTH] || data->zbuf.zdist[ray.pos[1] + ray.pos[0] * WIDTH] == 0) && data->zbuf.zcolor[ray.pos[1] + ray.pos[0] * WIDTH] != 0xff000000)
+				return (data->zbuf.zcolor[ray.pos[1] + ray.pos[0] * WIDTH]);
+			else 
+				return (compute_lights(ray, data, tmp));
+		}
 		else
 			return (add_skybox(ray.intersect, data->skybox));
 	}

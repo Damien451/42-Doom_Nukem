@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mixer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:19:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 13:20:51 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/19 23:40:59 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int							load_sound(char *path, Mix_Chunk **sound);
 int							play_sound(Mix_Chunk *sound);
 int							loop_sound(Mix_Chunk *sound);
 
+int							change_volume(t_mixer *mix);
 int							set_master_volume(t_mixer *mix, double a);
 int							set_music_volume(t_mixer *mix, double a);
 int							set_sound_effects_volume(t_mixer *mix, double a);

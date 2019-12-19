@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_func_pointers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:42:20 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 14:42:30 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/19 22:39:27 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void		init_func_pointer_game_state(t_doom *data)
 	data->state_f[SETTINGS_SOUND] = &state_sound_settings;
 	data->state_f[TEST_MODE] = &state_test_mode;
 	data->state_f[GET_INPUT] = &state_get_input;
+	data->state_f[PAUSE] = &state_pause;
 	data->state_f[PLAYING] = &state_game;
 	data->state_f[SETTINGS_SOUND] = &state_sound_settings;
 }

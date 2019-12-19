@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 23:35:53 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/19 20:53:41 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,7 @@ static void		load_textures_blocks(SDL_Surface *textures[NBR_TEXTURES_BLOCKS])
 	textures[23] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/gravel.bmp");
 	load_textures_blocks2(textures);
 }
-/*
-int				load_binary_textures(t_doom *data)
-{
-	int			ret;
 
-}
-*/
 void			load_binary_textures(t_doom *data)
 {
 	int		fd;

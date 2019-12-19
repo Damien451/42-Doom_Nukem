@@ -88,7 +88,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/init_func_pointers.c			\
 					$(PROG)/init_program.c					\
 					$(PROG)/leave_program.c					\
-					$(PROG)/leave_state_game.c				\
+					$(PROG)/leave_game.c					\
 					$(PROG)/program.c						\
 					$(RT)/add_texture_neg.c					\
 					$(RT)/add_texture_pos.c					\
@@ -121,6 +121,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_get_map_name.c			\
 					$(STATES)/state_inputs_settings_menu.c	\
 					$(STATES)/state_main_menu.c				\
+					$(STATES)/state_pause.c					\
 					$(STATES)/state_play_menu.c				\
 					$(STATES)/state_sound_settings.c		\
 					$(STATES)/state_start.c					\

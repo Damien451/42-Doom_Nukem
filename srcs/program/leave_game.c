@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   leave_state_game.c                                 :+:      :+:    :+:   */
+/*   leave_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:36:05 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/17 14:35:30 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/19 22:53:37 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void		leave_state_game(t_doom *data, t_player *player)
+void		leave_game(t_doom *data, t_player *player)
 {
 	player->camera.origin.x = -1;
 	player->camera.origin.y = -1;

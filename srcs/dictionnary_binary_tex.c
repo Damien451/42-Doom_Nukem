@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dictionnary_binary_tex.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:41:11 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 13:58:08 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/19 20:58:25 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			dictionnary_binary_tex(t_doom *data)
 	{
 		sprintf(data->lib.texture_dic[i]
 			, "/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/%d.binary", i);
-		printf("%s\n",data->lib.texture_dic[i]);
+		//printf("%s\n",data->lib.texture_dic[i]);
 		i++;
 	}
 }
