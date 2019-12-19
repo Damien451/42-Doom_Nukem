@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:36:05 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 18:13:05 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/17 14:35:30 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		leave_state_game(t_doom *data, t_player *player)
 {
-	switch_state(data, PLAYING, MAIN_MENU);
 	player->camera.origin.x = -1;
 	player->camera.origin.y = -1;
 	player->camera.origin.z = -1;

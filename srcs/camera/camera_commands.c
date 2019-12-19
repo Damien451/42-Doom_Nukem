@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 22:28:06 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/18 22:03:59 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@
 //	data->player.camera.origin = course;
 //	data->player.position = new_pos;
 //}
+
+void			print_selected_block(t_doom *data)
+{
+	printf("data->player.inventory.selected_block = %d\n", data->player.inventory.selected_block);
+}
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y
 		, double *sensitivity)
@@ -201,10 +206,16 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 			data->lib.cam_keys |= SQUAT;
 		else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
 			data->photo = 1;
-		else if (event->key.keysym.sym == SDLK_z && data->player.inventory.selected_block < 39)
+		else if (event->key.keysym.sym == SDLK_KP_PLUS && data->player.inventory.selected_block < 39)
+		{
+			print_selected_block(data);
 			data->player.inventory.selected_block++;
-		else if (event->key.keysym.sym == SDLK_x && data->player.inventory.selected_block > 1)
+		}
+		else if (event->key.keysym.sym == SDLK_KP_MINUS && data->player.inventory.selected_block > 1)
+		{
+			print_selected_block(data);
 			data->player.inventory.selected_block--;
+		}
 		data->sampling = 4;
 	}
 	camera_release_key(event, data);

@@ -65,8 +65,8 @@ void		skybox(t_doom *data)
 
 static void	player_death(t_doom *data)
 {
-	data->player.camera.origin = vec3d(-1, -1, -1);
 	leave_state_game(data, &data->player);
+	switch_state(data, PLAYING, MAIN_MENU);
 }
 
 static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
@@ -113,6 +113,7 @@ int			state_game(t_doom *data)
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
 			leave_state_game(data, &data->player);
+			switch_state(data, PLAYING, MAIN_MENU);
 			return (0);
 		}
 		else if (data->lib.event.type == SDL_MOUSEMOTION)
