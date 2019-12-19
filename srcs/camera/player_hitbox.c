@@ -33,7 +33,7 @@ void		check_if_inside_map(t_doom *data, t_vec3d *position)
 	else if (position->y < 0.2)
 	{
 		data->player.acceleration.y = 0;
-		data->player.health = 0;
+	//	data->player.health = 0;
 		position->y = 0.2;
 	}
 	if (position->z > 63.8)

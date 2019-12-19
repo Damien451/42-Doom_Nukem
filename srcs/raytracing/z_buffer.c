@@ -12,89 +12,45 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 {
 	static double minmaxpos[4] = {0,0,0,0};
 	t_vec3d dir;
+	
 	t_vec3d fr;
 	t_vec3d up;
 	t_vec3d rg;
+
 	t_vec3d pos;
-	double theta;
-	double phi;
-	double rgs;
-	double ups;
+	double tmp;
 
-	t_vec3d proj_rg;
-	t_vec3d proj_up;
-
-	fr = camera.direction;
+	rg = camera.direction;
 	up = camera.up;
-	rg = camera.right;
-
-	printf("up %f, %f, %f\n", up.x, up.y, up.z);
-	printf("rg %f, %f, %f\n\n", rg.x, rg.y, rg.z);
+	fr = camera.right;
 
 	dir = vec3d_sub(entity.pos, camera.origin);
 
-	proj_rg = vec3d_sub(dir, vec3d_scalar(rg, vec3d_dot(dir, rg)));
 
-	proj_up = vec3d_sub(dir, vec3d_scalar(up, vec3d_dot(dir, up)));
-
-	// printf("dir = %f, %f, %f\n", dir.x, dir.y, dir.z);
-	theta = acos(vec3d_dot(proj_rg, fr));
-	phi = acos(vec3d_dot(proj_up, fr));
 	
-	// dir.x /= camera.origin.x;
-	// dir.y /= camera.origin.y;
-	// dir.z /= camera.origin.z;
-	// printf("camera = %f, %f, %f\n", camera.origin.x, camera.origin.y, camera.origin.z);
-	// printf("dir = %f, %f, %f\n", dir.x, dir.y, dir.z);
-	// dir = vec3d_unit(dir);
-	// printf("dir unit = %f, %f, %f\n", dir.x, dir.y, dir.z);
-	// dir = vec3d_unit(dir);
-	// phi = acos(vec3d_dot(vec3d_unit(vec3d(vec3d_dot(pos, fr), 0, vec3d_dot(pos, rg))), vec3d_unit(vec3d(fr.x, fr.y, fr.z))));
 
-//	printf("phi = %f\n", phi);
-
-	if (phi > FOV)
-		return ((t_vec3d){-1,-1,-1});
-/*	if (theta > POV)
-	 	return ((t_vec3d){-1,-1,-1});
-*/	printf("theta = %f\n", theta);
-	printf("phi = %f\n", phi);
-/*
-	rgs = vec3d_dot(dir, rg);
-	ups = vec3d_dot(dir, up);
-
-	printf("ups = %f; rgs = %f\n", ups, rgs);
-
-	if (rgs > 0)
-		pos.x = WIDTH * phi / (FOV);
-	else
-		pos.x = -WIDTH * phi / (FOV);
-	if (ups > 0)
-		pos.y = HEIGHT * theta / (POV);
-	else
-		pos.y = -HEIGHT * theta / (POV);
-
-*/
-/*	printf("camera.origin %f, %f, %f\n", camera.origin.x, camera.origin.y, camera.origin.z);
+	printf("camera.origin %f, %f, %f\n", camera.origin.x, camera.origin.y, camera.origin.z);
 	printf("entity.pos %f, %f, %f\n", entity.pos.x, entity.pos.y, entity.pos.z);
 	printf("dir %f, %f, %f\n", dir.x, dir.y, dir.z);
 	printf("fr %f, %f, %f\n", fr.x, fr.y, fr.z);
 	printf("up %f, %f, %f\n", up.x, up.y, up.z);
 	printf("rg %f, %f, %f\n\n", rg.x, rg.y, rg.z);
-*/
 
-	// pos = (t_vec3d){((dir.x * (rg.y * fr.z - rg.z * fr.y)
-	// 					+ dir.y * (fr.x * rg.z - fr.z * rg.x)
-	// 					+ dir.z * (rg.x * fr.y - rg.y * fr.x))),
-	// 				(dir.x * (up.y * fr.z - up.z * fr.y)
-	// 					+ dir.y * (fr.x * up.z - fr.z * up.x)
-	// 					+ dir.z * (up.x * fr.y - up.y * fr.x)), 
-	// 				((dir.x * (up.y * rg.z - rg.y * up.z)
-	// 					+ dir.y * (rg.x * up.z - up.x * rg.z)
-	// 					+ dir.z * (up.x * rg.y - rg.x * up.y)))};
+
+	pos = (t_vec3d){((dir.x * (up.y * rg.z - rg.y * up.z)
+						+ dir.y * (rg.x * up.z - up.x * rg.z)
+						+ dir.z * (up.x * rg.y - rg.x * up.y))), 
+					((dir.x * (rg.y * fr.z - rg.z * fr.y)
+						+ dir.y * (fr.x * rg.z - fr.z * rg.x)
+						+ dir.z * (rg.x * fr.y - rg.y * fr.x))),
+					-(dir.x * (up.y * fr.z - up.z * fr.y)
+						+ dir.y * (fr.x * up.z - fr.z * up.x)
+						+ dir.z * (up.x * fr.y - up.y * fr.x))};
+
+	printf("%f %f %f\n", dir.x, dir.y, dir.z);
+	dir = vec3d_add(vec3d_scalar(fr, pos.x), vec3d_add(vec3d_scalar(up, pos.y), vec3d_scalar(rg, pos.z)));
+	printf("%f %f %f\n", dir.x, dir.y, dir.z);
 	
-//	printf("pos %f, %f, %f\n", pos.x, pos.y, pos.z);
-
 	// if (pos.x < minmaxpos[0])
 	// 	minmaxpos[0] = pos.x;
 	// if (pos.x > minmaxpos[1])
@@ -106,10 +62,31 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 	// printf("posx min %f posx max %f posy min %f posy max %f\n", minmaxpos[0], minmaxpos[1], minmaxpos[2], minmaxpos[3]);
 	// pos = (t_vec3d){1,1,1};
 
-	//pos = vec3d_unit(pos);
+	// tmp = pos.x;
+	// pos.x = pos.y;
+	// pos.y = pos.z;
+	// pos.z = tmp;
+	// tmp = pos.x;
+	// pos.x = pos.z;
+	// pos.z = tmp;
 
-	// pos.x = (pos.x + 1) * 2 * WIDTH / M_PI;
-	// pos.y = (pos.y + 1) * HEIGHT / M_PI;
+	// dir.x =pos.x;
+	// dir.y =;
+	// dir.z = pos.x;
+	pos.y *= -1;
+	dir = vec3d_unit(pos);
+	printf("pos %f %f %f\n", pos.x, pos.y, pos.z);
+	printf("dir %f %f %f\n", dir.x, dir.y, dir.z);
+	printf("acos %f\n", (acos(dir.x) - M_PI / 2));
+
+	// printf("%f %f\n", tan((acos(dir.x) - M_PI / 2)), acos(dir.y));
+	// tmp = pos.x;
+	// uv = centerPoint + normalize(d) * atan(r * pi) * 1/3 / atan(pi/3)
+
+	 tmp = -(acos(dir.x) - M_PI / 2) * M_PI * WIDTH / 6  + WIDTH / 2;
+	 pos.y = -(acos(dir.y) - M_PI / 2) * M_PI * HEIGHT / 4 + HEIGHT / 2;
+	 pos.x = tmp;
+	printf("pos %f %f %f\n", pos.x, pos.y, pos.z);
 	return (pos);
 }
 
@@ -168,8 +145,8 @@ static void	place_in_zbuf(t_entity *entities, t_player player, t_zbuf *zbuf)
 	text_width = entities->texture->w;
 	pos = calculate_position(*entities, player.camera);
 
-	if (pos.z > 0)
-		return;
+	// if (pos.z > 0)
+	// 	return;
 	//pos = (t_vec3d){text_width / 2, text_height / 2,0};
 	//printf("%f, %f, %f\n", pos.x, pos.y, pos.z);
 	x = pos.x - text_width / 2;
