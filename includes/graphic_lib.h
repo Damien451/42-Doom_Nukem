@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 13:08:28 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/16 13:57:09 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ struct							s_graphic_lib
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
 	SDL_Surface					*textures[NBR_TEXTURES_BLOCKS];
+	char						texture_dic[NBR_TEXTURES_BLOCKS][100];
 	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
 	SDL_Window					*window;
@@ -127,5 +128,7 @@ void							put_string_on_renderer(t_doom *data, t_point pos
 
 int								anim_main_menu(t_doom *data, int total_frame
 	, int frame);
+
+void							dictionnary_binary_tex(t_doom *data);
 
 #endif

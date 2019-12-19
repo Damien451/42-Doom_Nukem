@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_points.c                                       :+:      :+:    :+:   */
+/*   dictionnary_binary_tex.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/16 13:32:47 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 13:32:47 by roduquen         ###   ########.fr       */
+/*   Created: 2019/12/16 13:41:11 by roduquen          #+#    #+#             */
+/*   Updated: 2019/12/16 13:58:08 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "menus.h"
+#include "doom.h"
+#include <stdio.h>
 
-t_point		add_points(t_point a, t_point b)
+void			dictionnary_binary_tex(t_doom *data)
 {
-	a.x += b.x;
-	a.y += b.y;
-	return (a);
+	int			i;
+
+	i = 0;
+	while (i < NBR_TEXTURES_BLOCKS)
+	{
+		sprintf(data->lib.texture_dic[i]
+			, "/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/%d.binary", i);
+		printf("%s\n",data->lib.texture_dic[i]);
+		i++;
+	}
 }

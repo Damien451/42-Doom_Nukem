@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 18:05:36 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/17 11:57:49 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ struct						s_doom
 	t_vec3d					sun;
 	t_light					*sun_light;
 	t_light					*player_light;
-	int						power[6];
+	double					power[6];
 	char					photo;
 	int						actual_i;
 	int						actual_j;
@@ -335,4 +335,5 @@ int							state_editor_menu(t_doom *data);
 
 int							state_game(t_doom *data);
 
+double			hit_sphere(t_ray *ray, t_doom *data);
 #endif

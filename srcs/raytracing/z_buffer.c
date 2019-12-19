@@ -22,12 +22,10 @@ static t_vec3d	calculate_position(t_entity entity, t_camera camera)
 
 	rg = camera.direction;
 	up = camera.up;
+<<<<<<< HEAD
 	fr = camera.right;
 
 	dir = vec3d_sub(entity.pos, camera.origin);
-
-
-	
 
 	printf("camera.origin %f, %f, %f\n", camera.origin.x, camera.origin.y, camera.origin.z);
 	printf("entity.pos %f, %f, %f\n", entity.pos.x, entity.pos.y, entity.pos.z);

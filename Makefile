@@ -103,6 +103,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/print_octree.c					\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\
+					$(RT)/sphere.c							\
 					$(RT)/sun_animation.c					\
 					$(RT)/z_buffer.c						\
 					$(SHAPES)/draw_circle.c					\
@@ -139,7 +140,9 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(UI)/put_health_bar.c					\
 					add_points.c							\
 					load_textures.c							\
-					utils.c
+					utils.c									\
+					dictionnary_binary_tex.c
+
 
 # **************************************************************************** #
 #                                   UTILS                                      #

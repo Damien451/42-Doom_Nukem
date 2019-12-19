@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:22:41 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 16:08:35 by roduquen         ###   ########.fr       */
+/*   Updated: 2019/12/17 11:57:00 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		add_light_to_node(t_doom *data, int cor[3], double tab[3]
 
 	if (data->light_array[cor[0]][cor[1]][cor[2]].type == 0)
 	{
-		data->light_array[cor[0]][cor[1]][cor[2]].type = type;
+		data->light_array[cor[0]][cor[1]][cor[2]].type = TORCH;
 		data->light_array[cor[0]][cor[1]]
 			[cor[2]].next = malloc(sizeof(t_light));
 		light = data->light_array[cor[0]][cor[1]][cor[2]].next;
@@ -36,7 +36,7 @@ int		add_light_to_node(t_doom *data, int cor[3], double tab[3]
 	light->position.y = tab[1];
 	light->position.z = tab[2];
 	light->next = NULL;
-	light->type = type;
+	light->type = TORCH;
 	return (0);
 }
 
