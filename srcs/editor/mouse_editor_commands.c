@@ -2,9 +2,13 @@
 #include "libft.h"
 #include "inputs.h"
 
-static inline void	check_click_try_mode(t_doom *data, int x)
+static inline void	mouse_editor_commands4(t_doom *data, int x, int *step)
 {
-	if (x >= 1178 && data->lib.event.button.y >= 1034
+	if (data->lib.event.button.x >= 1541 && data->lib.event.button.y >= 970
+		&& data->lib.event.button.x <= 1573 && data->lib.event.button.y <= 1005
+		&& *step > 0)
+		copy_step(data, *step);
+	else if (x >= 1178 && data->lib.event.button.y >= 1034
 		&& x <= 1225 && data->lib.event.button.y <= 1062)
 		if (check_map_validity(data) == 0)
 			switch_state(data, EDITOR, TEST_MODE);
@@ -33,11 +37,7 @@ static inline void	mouse_editor_commands3(t_doom *data, int *step)
 	else if (data->lib.event.button.x >= 1277 && data->lib.event.button.y >= 640
 		&& data->lib.event.button.x <= 1313 && data->lib.event.button.y <= 671)
 		remove_type_block(data);
-	else if (data->lib.event.button.x >= 1541 && data->lib.event.button.y >= 970
-		&& data->lib.event.button.x <= 1573 && data->lib.event.button.y <= 1005
-		&& *step > 0)
-		copy_step(data, *step);
-	check_click_try_mode(data, data->lib.event.button.x);
+	mouse_editor_commands4(data, data->lib.event.button.x, step);
 }
 
 static inline void	mouse_editor_commands2(t_doom *data, int *step)
@@ -66,6 +66,13 @@ static inline void	mouse_editor_commands2(t_doom *data, int *step)
 	mouse_editor_commands3(data, step);
 }
 
+static void			check_switch_mode(t_doom *data)
+{
+	if (data->lib.event.button.x >= 1859 && data->lib.event.button.y >= 573
+		&& data->lib.event.button.x <= 1910 && data->lib.event.button.y <= 1070)
+		data->lib.editor.mode = (data->lib.editor.mode == 0 ? 1 : 0);
+}
+
 void				mouse_editor_commands(t_doom *data, int *ok,
 	int *step, int button)
 {
@@ -91,6 +98,7 @@ void				mouse_editor_commands(t_doom *data, int *ok,
 		erase_block(data, data->lib.event.button.x,
 			data->lib.event.button.y, *step);
 	}
+	check_switch_mode(data);
 	if (data->lib.editor.mode == 0)
 		mouse_editor_commands2(data, step);
 }

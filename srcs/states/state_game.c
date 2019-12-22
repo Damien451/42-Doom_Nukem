@@ -112,7 +112,7 @@ int			state_game(t_doom *data)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			//leave_game(data, &data->player);
+			//leave_game(data, &data->player)put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
 			switch_state(data, PLAYING, PAUSE);
 			return (0);
 		}
@@ -127,7 +127,7 @@ int			state_game(t_doom *data)
 		}
 		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
 			data->lib.cam_keys &= ~DESTROY;
-		camera_press_key(&data->lib.event, data);
+		camera_press_key(&data->lib.event, &data->tabinputs, data);
 	}
 	ft_memcpy(data->lib.image, data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
 	raytracing(data);

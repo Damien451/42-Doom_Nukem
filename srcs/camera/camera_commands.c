@@ -6,12 +6,13 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/19 22:53:09 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/21 20:01:01 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "player.h"
 #include "doom.h"
+#include "inputs.h"
 #include "vec3.h"
 #include <math.h>
 
@@ -159,41 +160,42 @@ void		camera_event_translate(t_doom *data)
 	data->player.acceleration = tmp;
 }
 
-static void	camera_release_key(SDL_Event *event, t_doom *data)
+static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 {
 	if (event->key.type == SDL_KEYUP)
 	{
-		if (event->key.keysym.sym == SDLK_a)
+		if ((unsigned int)event->key.keysym.sym == inputs->keycode[1])
 			data->lib.cam_keys &= ~CAMERA_TR_LEFT;
-		else if (event->key.keysym.sym == SDLK_d)
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[3])
 			data->lib.cam_keys &= ~CAMERA_TR_RIGHT;
-		else if (event->key.keysym.sym == SDLK_w)
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[0])
 			data->lib.cam_keys &= ~CAMERA_TR_FRONT;
-		else if (event->key.keysym.sym == SDLK_s)
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[2])
 			data->lib.cam_keys &= ~CAMERA_TR_BACK;
-		else if (event->key.keysym.sym == SDLK_LSHIFT)
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[6])
 			data->lib.cam_keys &= ~COURSE;
 		else if (event->key.keysym.sym == SDLK_LCTRL)
 			data->lib.cam_keys &= ~SQUAT;
 	}
 }
 
-void		camera_press_key(SDL_Event *event, t_doom *data)
+void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 {
 	data->player.speed = 0.025 * (data->lib.cam_keys & COURSE ? 1.5 : 1) * (data->lib.cam_keys & SQUAT ? 0.2 : 1);
 	if (event->key.type == SDL_KEYDOWN)
 	{
-		if (event->key.keysym.sym == SDLK_a)
+		if ((unsigned int)event->key.keysym.sym == inputs->keycode[1])
 			data->lib.cam_keys |= CAMERA_TR_LEFT;
-		else if (event->key.keysym.sym == SDLK_d)
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[3])
 			data->lib.cam_keys |= CAMERA_TR_RIGHT;
-		else if (event->key.keysym.sym == SDLK_w)
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[0])
 			data->lib.cam_keys |= CAMERA_TR_FRONT;
-		else if (event->key.keysym.sym == SDLK_s)
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[2])
 			data->lib.cam_keys |= CAMERA_TR_BACK;
-		else if (event->key.keysym.sym == SDLK_LSHIFT)
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[6])
 			data->lib.cam_keys |= COURSE;
-		else if (event->key.keysym.sym == SDLK_SPACE && data->player.acceleration.y == 0 && !(data->lib.cam_keys & WATER))
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[9]
+			&& data->player.acceleration.y == 0 && !(data->lib.cam_keys & WATER))
 			data->player.acceleration.y = 0.28;
 		else if (event->key.keysym.sym == SDLK_p)
 		{
@@ -206,7 +208,7 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 			data->lib.cam_keys |= SQUAT;
 		else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
 			data->photo = 1;
-		else if (event->key.keysym.sym == SDLK_KP_PLUS && data->player.inventory.selected_block < 39)
+		else if (event->key.keysym.sym == SDLK_KP_PLUS && data->player.inventory.selected_block < 40)
 		{
 			print_selected_block(data);
 			data->player.inventory.selected_block++;
@@ -218,5 +220,5 @@ void		camera_press_key(SDL_Event *event, t_doom *data)
 		}
 		data->sampling = 4;
 	}
-	camera_release_key(event, data);
+	camera_release_key(event, inputs, data);
 }

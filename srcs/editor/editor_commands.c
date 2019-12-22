@@ -53,10 +53,6 @@ void				editor_commands(t_doom *data, char map_name[50],
 {
 	static int		ok = 0;
 
-	if (data->lib.event.button.x >= 1859 && data->lib.event.button.y >= 573
-		&& data->lib.event.button.x <= 1910 && data->lib.event.button.y <= 1070
-		&& data->lib.event.type == SDL_MOUSEBUTTONDOWN)
-		data->lib.editor.mode = (data->lib.editor.mode == 0 ? 1 : 0);
 	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
 		mouse_editor_commands(data, &ok, step, data->lib.event.button.button);
 	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
@@ -71,7 +67,7 @@ void				editor_commands(t_doom *data, char map_name[50],
 		if (data->lib.event.button.button == SDL_BUTTON_LEFT)
 			draw_block(data, data->lib.event.button.x,
 				data->lib.event.button.y, *step);
-		if (data->lib.event.button.button == SDL_BUTTON_RIGHT)
+		else if (data->lib.event.button.button == SDL_BUTTON_RIGHT)
 			erase_block(data, data->lib.event.button.x,
 				data->lib.event.button.y, *step);
 	}

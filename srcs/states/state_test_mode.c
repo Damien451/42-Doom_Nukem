@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:27:33 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/19 22:57:21 by dacuvill         ###   ########.fr       */
+/*   Updated: 2019/12/21 19:56:23 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static inline void	check_events(t_doom *data)
 			data->lib.cam_keys |= DESTROY;
 		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
 			data->lib.cam_keys &= ~DESTROY;
-		camera_press_key(&data->lib.event, data);
+		camera_press_key(&data->lib.event, &data->tabinputs, data);
 	}
 	ft_memcpy(data->lib.image,
 		data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);

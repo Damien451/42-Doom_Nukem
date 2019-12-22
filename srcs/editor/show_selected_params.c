@@ -82,11 +82,9 @@ static void			show_brush_selection_and_selected_blocks(t_doom *data,
 	unsigned int block1, unsigned int block2, unsigned int blocktoremove)
 {
 	int			x;
-	int			y;
 	int			tmpbrush;
 	int			size;
 
-	y = 705;
 	tmpbrush = data->lib.editor.brush_size;
 	size = BLOCK_SIZE_EDITOR;
 	if (tmpbrush == 1)
@@ -99,14 +97,14 @@ static void			show_brush_selection_and_selected_blocks(t_doom *data,
 		x = 1611;
 	else
 		x = 1720;
-	draw_select_rectangle(&data->lib, (t_point){x, y},
+	draw_select_rectangle(&data->lib, (t_point){x, 705},
 			(t_point){65, 35}, 0x000000);
 	draw_textures_square(&data->lib, (t_point){1234, 581},
-		(t_point){size, size}, (int [2]){1, (int)block1});
+		(t_point){size, size}, (int[2]){1, (int)block1});
 	draw_textures_square(&data->lib, (t_point){1341, 581},
-		(t_point){size, size}, (int [2]){2, (int)block2});
+		(t_point){size, size}, (int[2]){2, (int)block2});
 	draw_textures_square(&data->lib, (t_point){1223, 647},
-		(t_point){size, size}, (int [2]){3, (int)blocktoremove});
+		(t_point){size, size}, (int[2]){3, (int)blocktoremove});
 }
 
 void				show_selected_params(t_doom *data)
