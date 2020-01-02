@@ -48,29 +48,42 @@ static inline void	keydown_editor_commands(t_doom *data, int *step, int *first,
 		copy_step(data, *step);
 }
 
+static inline void	mouse_button_up(SDL_Event *event, t_editor *editor)
+{
+	if (event->button.button == SDL_BUTTON_LEFT)
+		editor->mouseinputs &= ~L_INPUT_EDITOR;
+	else if (event->button.button == SDL_BUTTON_RIGHT)
+		editor->mouseinputs &= ~R_INPUT_EDITOR;
+}
+
+static inline void	mouse_button_down(t_doom *data, int *step,
+	SDL_Event *event, t_editor *editor)
+{
+	if (event->button.button == SDL_BUTTON_LEFT)
+		editor->mouseinputs |= L_INPUT_EDITOR;
+	else if (event->button.button == SDL_BUTTON_RIGHT)
+		editor->mouseinputs |= R_INPUT_EDITOR;
+	mouse_editor_commands(data, step);
+}
+
 void				editor_commands(t_doom *data, char map_name[50],
 	int *step, int *first)
 {
-	static int		ok = 0;
-
 	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
-		mouse_editor_commands(data, &ok, step, data->lib.event.button.button);
+		mouse_button_down(data, step, &data->lib.event, &data->lib.editor);
 	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
 		&& data->lib.editor.mode == 0
 		&& data->lib.event.button.x >= 1197 && data->lib.event.button.y >= 773
 		&& data->lib.event.button.x <= 1226 && data->lib.event.button.y <= 802)
 		save_map_to_file(data, map_name);
 	if (data->lib.event.type == SDL_MOUSEBUTTONUP)
-		ok = 0;
-	if (ok == 1)
-	{
-		if (data->lib.event.button.button == SDL_BUTTON_LEFT)
-			draw_block(data, data->lib.event.button.x,
-				data->lib.event.button.y, *step);
-		else if (data->lib.event.button.button == SDL_BUTTON_RIGHT)
-			erase_block(data, data->lib.event.button.x,
-				data->lib.event.button.y, *step);
-	}
+		mouse_button_up(&data->lib.event, &data->lib.editor);
+	if (data->lib.editor.mouseinputs & L_INPUT_EDITOR)
+		draw_block(data, data->lib.event.button.x,
+			data->lib.event.button.y, *step);
+	else if (data->lib.editor.mouseinputs & R_INPUT_EDITOR)
+		erase_block(data, data->lib.event.button.x,
+			data->lib.event.button.y, *step);
 	else if (data->lib.event.type == SDL_KEYDOWN)
 		keydown_editor_commands(data, step, first, map_name);
 }

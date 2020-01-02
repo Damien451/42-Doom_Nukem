@@ -66,15 +66,15 @@ static inline void	mouse_editor_commands2(t_doom *data, int *step)
 	mouse_editor_commands3(data, step);
 }
 
-static void			check_switch_mode(t_doom *data)
+static inline void	check_switch_mode(t_doom *data)
 {
 	if (data->lib.event.button.x >= 1859 && data->lib.event.button.y >= 573
-		&& data->lib.event.button.x <= 1910 && data->lib.event.button.y <= 1070)
+		&& data->lib.event.button.x <= 1910
+		&& data->lib.event.button.y <= 1070)
 		data->lib.editor.mode = (data->lib.editor.mode == 0 ? 1 : 0);
 }
 
-void				mouse_editor_commands(t_doom *data, int *ok,
-	int *step, int button)
+void				mouse_editor_commands(t_doom *data, int *step)
 {
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
@@ -84,20 +84,14 @@ void				mouse_editor_commands(t_doom *data, int *ok,
 		pick_element(data, data->lib.event.button.x, data->lib.event.button.y);
 	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
 		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030
-		&& button == SDL_BUTTON_LEFT)
-	{
-		*ok = 1;
+		&& data->lib.editor.mouseinputs & L_INPUT_EDITOR)
 		draw_block(data, data->lib.event.button.x,
 			data->lib.event.button.y, *step);
-	}
 	else if (data->lib.event.button.x >= 15 && data->lib.event.button.y >= 15
 		&& data->lib.event.button.x <= 1030 && data->lib.event.button.y <= 1030
-		&& button == SDL_BUTTON_RIGHT)
-	{
-		*ok = 1;
+		&& data->lib.editor.mouseinputs & R_INPUT_EDITOR)
 		erase_block(data, data->lib.event.button.x,
 			data->lib.event.button.y, *step);
-	}
 	check_switch_mode(data);
 	if (data->lib.editor.mode == 0)
 		mouse_editor_commands2(data, step);

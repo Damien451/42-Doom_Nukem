@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 13:57:09 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/02 17:13:24 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define NB_IMG					2
 # define ID_START_BLOCK			30
 # define ID_FINISH_BLOCK		31
+
+# define L_INPUT_EDITOR			1
+# define R_INPUT_EDITOR			2
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -80,6 +83,7 @@ struct							s_editor
 {
 	SDL_Surface					*texture[2];
 	unsigned int				picked_texture;
+	unsigned int				mouseinputs;
 	int							mode;
 	int							alpha;
 	int							brush_size;

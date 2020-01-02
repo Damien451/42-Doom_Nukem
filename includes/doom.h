@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/19 22:53:31 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/02 18:06:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,8 +297,7 @@ void						editor_commands(t_doom *data, char map_name[50]
 
 int							check_map_validity(t_doom *data);
 
-void						mouse_editor_commands(t_doom *data, int *ok
-	, int *step, int button);
+void						mouse_editor_commands(t_doom *data, int *step);
 
 /*
 ** ====-* GAMESTATES *-====
