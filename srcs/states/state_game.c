@@ -129,9 +129,11 @@ int			state_game(t_doom *data)
 		set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	}
 	raytracing(data);
+	wait = SDL_GetTicks();
 	add_hud(data);
 	put_health_bar(data);
 	update_physics(data);
+	printf("blabla = %ld\n", SDL_GetTicks() - wait);
 	//minimap(data->map_to_save, &data->player, &data->lib);
 	if (data->photo)
 	{

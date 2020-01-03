@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 21:00:20 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 23:32:40 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,13 @@ int			load_sampling(t_doom *data)
 	data->samplingt[3] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[3][0] = size;
 	read(fd, &data->samplingt[3][1], size * 8);
+	close(fd);
+	fd = open("hud.binary", O_RDONLY);
+	read(fd, sizec, 4);
+	size = *((int*)sizec);
+	data->samplingt[6] = malloc(sizeof(int) * (size * 2 + 1));
+	data->samplingt[6][0] = size;
+	read(fd, &data->samplingt[6][1], size * 8);
 	close(fd);
 	return (0);
 }

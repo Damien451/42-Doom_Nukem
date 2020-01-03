@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 21:54:44 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 23:31:57 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ struct						s_doom
 	char					photo;
 	int						actual_i;
 	int						actual_j;
-	int						*samplingt[6];
+	int						*samplingt[7];
 	t_vec3d					normal[6];
 	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
 	t_thread				thread[NBR_THREAD];
