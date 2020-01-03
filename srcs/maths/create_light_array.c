@@ -6,14 +6,46 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:22:41 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/17 11:57:00 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 18:25:40 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		add_light_to_node(t_doom *data, int cor[3], double tab[3]
-	, int type)
+int		free_light_map(t_doom *data)
+{
+	int		cnt[3];
+	t_light	*tmp;
+
+	cnt[0] = 0;
+	while (cnt[0] < SIZE_MAP)
+	{
+		cnt[1] = 0;
+		while (cnt[1] < SIZE_MAP)
+		{
+			cnt[2] = 0;
+			while (cnt[2] < SIZE_MAP)
+			{
+				if (data->light_array[cnt[0]][cnt[1]][cnt[2]].type)
+				{
+					data->light_array[cnt[0]][cnt[1]][cnt[2]].type = 0;
+					while (data->light_array[cnt[0]][cnt[1]][cnt[2]].next)
+					{
+						tmp = data->light_array[cnt[0]][cnt[1]][cnt[2]].next->next;
+						free(data->light_array[cnt[0]][cnt[1]][cnt[2]].next);
+						data->light_array[cnt[0]][cnt[1]][cnt[2]].next = tmp;
+					}
+				}
+				cnt[2]++;
+			}
+			cnt[1]++;
+		}
+		cnt[0]++;
+	}
+	return (0);
+}
+
+int		add_light_to_node(t_doom *data, int cor[3], double tab[3])
 {
 	t_light	*light;
 
@@ -70,9 +102,7 @@ int		add_light_to_array(int cor[3], t_doom *data)
 	int			wait[6];
 	int			inc[3];
 	double		tab[3];
-	int			type;
 
-	type = TORCH + (rand() & 3);
 	init_wait(wait, cor, tab);
 	inc[0] = wait[3];
 	while (inc[0] < wait[0])
@@ -83,7 +113,7 @@ int		add_light_to_array(int cor[3], t_doom *data)
 			inc[2] = wait[5];
 			while (inc[2] < wait[2])
 			{
-				add_light_to_node(data, inc, tab, type);
+				add_light_to_node(data, inc, tab);
 				inc[2]++;
 			}
 			inc[1]++;
@@ -97,6 +127,7 @@ int		create_light_array(t_doom *data)
 {
 	int			cor[3];
 
+	free_light_map(data);
 	cor[0] = 0;
 	while (cor[0] < 64)
 	{

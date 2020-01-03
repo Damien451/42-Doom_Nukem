@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:51:08 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 17:18:13 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,6 @@ int						create_octree(t_doom *data)
 		breadth_first_create_octree(data, actual);
 	actual = data->octree;
 	create_octree_model(data);
+	create_light_array(data);
 	return (0);
 }
