@@ -3,73 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:42:04 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 16:42:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 21:37:45 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "player.h"
+#include "vec3.h"
 #include "graphic_lib.h"
 #include "menus.h"
 
-static inline int	select_color(char map[64][64][64], int coords[3],
-	t_player *player)
+/*static inline void	draw_player_pos(t_graphic_lib *lib, t_player *player)
 {
-	if (coords[0] == (int)player->camera.origin.x &&
-		coords[2] == (int)player->camera.origin.z)
-		return (0x006600);
+	bresenham(lib->image, (t_vec3l){MINIMAP_WIDTH_START +
+		player->camera.origin.x, MINIMAP_HEIGHT_START +
+		player->camera.origin.z, 3}, 0xff0000);
+}*/
+
+static inline int	select_color(char map[64][64][64], t_graphic_lib *lib,
+	int coords[3], double pos[2])
+{
 	if (map[coords[0]][coords[1]][coords[2]] == 0)
 	{
 		if (coords[1] > 0 && map[coords[0]][coords[1] - 1][coords[2]] != 0)
-			return (0x1aff1a);
+			return (lib->textures_block[(int)map[coords[0]][coords[1] - 1][coords[2]] - 1][(int)(pos[1] * 128 + pos[0])]);
 		else if (coords[1] > 1 && map[coords[0]][coords[1] - 2][coords[2]] != 0)
-			return (0x66ff66);
-		return (0xb3ffb3);
+			return (lib->textures_block[(int)map[coords[0]][coords[1] - 2][coords[2]] - 1][(int)(pos[1] * 128 + pos[0])]);
+		return (0xffffff);
 	}
-	return (0x00cc00);
+	return (lib->textures_block[(int)map[coords[0]][coords[1]][coords[2]] - 1][(int)(pos[1] * 128 + pos[0])]);
 }
 
 static void			draw_minimap(char map[64][64][64], t_player *player,
-	t_graphic_lib *lib, int coords[5])
+	t_graphic_lib *lib, double coords[5])
 {
-	int		i;
-	int		j;
+	double		i;
+	double		j;
 	int		posx;
 	int		posy;
 
 	i = coords[0] - 1;
 	posy = MINIMAP_HEIGHT_START;
-	while (++i <= coords[1])
+	while ((i += 0.07692) <= coords[1])
 	{
 		j = coords[2] - 1;
 		posx = MINIMAP_WIDTH_START;
-		while (++j <= coords[3])
+		while ((j += 0.07692) <= coords[3])
 		{
-			draw_rectangle(lib, (t_point){posx, posy}, (t_point){12, 12},
-				select_color(map, (int[3]){i, coords[4], j}, player));
-			posx += 13;
+			lib->image[posy * WIDTH + posx] =
+				select_color(map, lib, (int[3]){i, (int)coords[4], j},
+				(double[2]){i, j});
+			posx++;
 		}
-		posy += 13;
+		posy++;
 	}
+	//draw_player_pos(lib, player);
 }
 
 void				minimap(char map[64][64][64], t_player *player,
 	t_graphic_lib *lib)
 {
-	int		start_i;
-	int		start_j;
-	int		end_i;
-	int		end_j;
-	int		step;
+	double	start_i;
+	double	start_j;
+	double	end_i;
+	double	end_j;
+	double	step;
 
-	step = (int)(player->camera.origin.y - 1.5);
-	start_i = (int)player->camera.origin.x - 8;
-	end_i = (int)player->camera.origin.x + 8;
-	start_j = (int)player->camera.origin.z - 8;
-	end_j = (int)player->camera.origin.z + 8;
+	step = player->camera.origin.y - 1.5;
+	start_i = player->camera.origin.x - 8;
+	end_i = player->camera.origin.x + 8;
+	start_j = player->camera.origin.z - 8;
+	end_j = player->camera.origin.z + 8;
 	end_i += (start_i < 0 ? start_i * -1 : 0);
 	if (start_i < 0)
 		start_i = 0;
@@ -82,6 +89,6 @@ void				minimap(char map[64][64][64], t_player *player,
 	start_j -= (end_j > 63 ? end_j - 63 : 0);
 	if (end_j > 63)
 		end_j = 63;
-	draw_minimap(map, player, lib, (int[5]){start_i, end_i, start_j
+	draw_minimap(map, player, lib, (double[5]){start_i, end_i, start_j
 		, end_j, step});
 }

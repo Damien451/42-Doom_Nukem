@@ -138,7 +138,7 @@ int			state_game(t_doom *data)
 		i++;
 	}
 	put_health_bar(data);
-	minimap(data->map_to_save, &data->player, &data->lib);
+	//minimap(data->map_to_save, &data->player, &data->lib);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
 	if (data->photo)

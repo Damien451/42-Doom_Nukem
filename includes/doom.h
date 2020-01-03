@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 18:51:55 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 20:13:25 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ void						free_octree(t_octree *node);
 ** ====-* GRAPHICS *-====
 */
 
+void						bresenham(unsigned int *image, t_vec3l circle, int color);
 void						draw_block(t_doom *data, int x, int y, int step);
 void						erase_block(t_doom *data, int x, int y, int step);
 void						fill_step(t_doom *data, int step);
@@ -337,5 +338,7 @@ int							state_editor_menu(t_doom *data);
 int							state_game(t_doom *data);
 
 double						hit_sphere(t_ray *ray, t_doom *data);
+
 double						hit_cylinder(t_ray *ray, t_doom *data);
+
 #endif

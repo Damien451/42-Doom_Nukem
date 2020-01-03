@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:39:37 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/22 16:38:05 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/03 19:20:26 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static inline void	draw_circle(unsigned int *image, t_vec3l circle, int x
 	putpixel(image, circle.x - y, circle.y - x, circle.z);
 }
 
-static inline void	bresenheim(unsigned int *image, t_vec3l circle, int color)
+void				bresenham(unsigned int *image, t_vec3l circle, int color)
 {
 	int x;
 	int	y;
@@ -67,7 +67,7 @@ void				start_drawing_circle(t_doom *data, int i
 	circle.x = data->tab[i].pos % WIDTH;
 	circle.y = data->tab[i].pos / WIDTH;
 	circle.z = data->tab[i].size;
-	bresenheim(image, circle, data->tab[i].color);
+	bresenham(image, circle, data->tab[i].color);
 	circle.z = data->tab[i].size / (i % 3 + 3);
 	if (data->tab[i].pos / WIDTH > 273)
 		circle.y -= data->tab[i].size / 4;
@@ -77,7 +77,7 @@ void				start_drawing_circle(t_doom *data, int i
 		circle.x -= data->tab[i].size / 4;
 	else
 		circle.x += data->tab[i].size / 4;
-	bresenheim(image, circle, data->tab[i].color
+	bresenham(image, circle, data->tab[i].color
 			+ ((data->tab[i].color >> 17) << 8) + (data->tab[i].color >> 17));
 	data->tab[i].pos += (data->tab[i].speed * WIDTH);
 }
