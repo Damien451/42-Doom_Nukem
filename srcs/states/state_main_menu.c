@@ -6,13 +6,14 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:24:58 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 22:01:19 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "libft.h"
 #include "menus.h"
+#include <unistd.h>
 
 static void	check_inputs_menu(t_doom *data, t_button *btab, int but)
 {
@@ -59,7 +60,11 @@ int			state_main_menu(t_doom *data)
 	static int	total_frame = 0;
 	static int	frame = 0;
 	static int	flag = 0;
+	static unsigned long	time = 0;
+	long					wait;
 
+	if (!time)
+		time = SDL_GetTicks();
 	if (flag == 0)
 	{
 		loop_sound(data->mix->sounds[4]);
@@ -76,6 +81,9 @@ int			state_main_menu(t_doom *data)
 		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 5);
 	check_inputs_menu(data, buttons, 5);
+	if ((wait = (SDL_GetTicks() - time)) < 17)
+		usleep(17000 - (wait * 1000));
+	time = SDL_GetTicks();
 	SDL_RenderPresent(data->lib.renderer);
 	if (++frame == 1024)
 		frame = 1;

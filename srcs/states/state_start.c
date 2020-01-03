@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:07:55 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 22:01:36 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 #include <time.h>
 #include "vec3.h"
+#include <unistd.h>
 
 int					color_percent(int color1, int color2, int percent)
 {
@@ -130,6 +131,11 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 
 static inline void	create_start_renderer(t_doom *data)
 {
+	static unsigned long	time = 0;
+	long					wait;
+
+	if (!time)
+		time = SDL_GetTicks();
 	draw_on_texture(data, data->lib.image);
 	if (!data->load_page[0])
 	{
@@ -143,6 +149,9 @@ static inline void	create_start_renderer(t_doom *data)
 			data->load_page[0] = 1;
 	}
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
+	if ((wait = (SDL_GetTicks() - time)) < 17)
+		usleep(17000 - (wait * 1000));
+	time = SDL_GetTicks();
 	SDL_RenderPresent(data->lib.renderer);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 20:10:54 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 23:15:12 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,46 @@ void				actualize_torch(t_doom *data)
 	data->power[TORCH] += value;
 }
 
+static void			event_loop(t_doom *data)
+{
+	data->player.physics.camera.direction = data->player.camera.direction;
+	data->player.physics.camera.right = data->player.camera.right;
+	data->player.physics.camera.up = data->player.camera.up;
+	while (SDL_PollEvent(&data->lib.event))
+	{
+		if (data->lib.event.type == SDL_KEYDOWN
+			&& data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+			switch_state(data, PLAYING, PAUSE);
+		else if (data->lib.event.type == SDL_MOUSEMOTION)
+			camera_mouse_motion(&data->player.physics.camera
+					, &data->lib.event.motion.xrel
+					, &data->lib.event.motion.yrel
+					, &data->player.sensitivity);
+		else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
+			data->lib.cam_keys |= DESTROY;
+		camera_press_key(&data->lib.event, &data->tabinputs, data);
+	}
+}
+
 int					raytracing(t_doom *data)
 {
 	int				i;
-	unsigned long	time;
+//	unsigned long	time;
+//	long			wait;
 
 	data->actual_i = 2;
-	data->sampling = 4;
-	if (data->lib.cam_keys & COURSE)
-		data->sampling = 1;
 	sun(data);
 	if (init_thread_structure(data) == 1)
 		return (1);
+//	time = SDL_GetTicks();
+	event_loop(data);
 	add_clipping_for_each_point(data, &data->player);
 	actualize_torch(data);
+//	printf("time to compute non-image during the frame = %ld\n", (wait = SDL_GetTicks() - time));
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(data->thread[i++].thread, NULL);
+//	printf("time to finish the frame = %lu\n", SDL_GetTicks() - time);
 	if (data->lib.cam_keys & DESTROY)
 	{
 		interaction(data, vec3d_add(data->player.camera.origin

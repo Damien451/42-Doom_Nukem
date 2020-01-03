@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 02:04:23 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 18:48:50 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 21:55:17 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "vec3.h"
 #include "octree.h"
 
-double			hit_sphere(t_ray *ray, t_doom *data)
+double			hit_sphere(t_ray *ray, const t_doom *const data)
 {
 	t_vec3d		quad;
 	double		delta;

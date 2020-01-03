@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/21 19:52:22 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/03 22:39:46 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,6 @@ struct						s_hitbox
 	t_vec3d					vertex;
 };
 
-struct						s_physics
-{
-	t_vec3d					origin;
-	t_vec3d					acceleration;
-	t_octree				*octree;
-};
-
 struct						s_camera
 {
 	t_vec3d					origin;
@@ -78,6 +71,14 @@ struct						s_camera
 	t_vec3d					up;
 	t_vec3d					right;
 	double					x_angle;
+};
+
+struct						s_physics
+{
+	t_vec3d					origin;
+	t_vec3d					acceleration;
+	t_camera				camera;
+	t_octree				*octree;
 };
 
 struct						s_inventory
