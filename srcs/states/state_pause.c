@@ -37,6 +37,7 @@ int			state_pause(t_doom *data)
 			label("Press Escape to continue or Q to quit the game.",
 			(SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
 		SDL_RenderPresent(data->lib.renderer);
+		SDL_RenderClear(data->lib.renderer);
 		ok--;
 	}
 	check_pause_inputs(data, &ok);

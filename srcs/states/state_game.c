@@ -112,9 +112,8 @@ int			state_game(t_doom *data)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN && data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			//leave_game(data, &data->player)put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
 			switch_state(data, PLAYING, PAUSE);
-			return (0);
+//			return (0);
 		}
 		else if (data->lib.event.type == SDL_MOUSEMOTION)
 			camera_mouse_motion(&data->player.camera

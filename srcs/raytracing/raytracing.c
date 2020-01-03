@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/17 12:03:22 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 18:01:07 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int					raytracing(t_doom *data)
 	if (data->lib.cam_keys & COURSE)
 		data->sampling = 1;
 	sun(data);
-	SDL_RenderClear(data->lib.renderer);
 	if (init_thread_structure(data) == 1)
 		return (1);
 	add_clipping_for_each_point(data, &data->player);
