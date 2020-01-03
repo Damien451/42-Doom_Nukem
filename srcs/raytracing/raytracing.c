@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 18:01:07 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 20:10:54 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				actualize_torch(t_doom *data)
 int					raytracing(t_doom *data)
 {
 	int				i;
+	unsigned long	time;
 
 	data->actual_i = 2;
 	data->sampling = 4;
@@ -99,8 +100,8 @@ int					raytracing(t_doom *data)
 		interaction(data, vec3d_add(data->player.camera.origin
 					, vec3d_scalar(data->player.camera.direction, 2)));
 		data->lib.cam_keys &= ~DESTROY;
+		free_octree(data->octree);
+		create_octree(data);
 	}
-	free_octree(data->octree);
-	create_octree(data);
 	return (0);
 }

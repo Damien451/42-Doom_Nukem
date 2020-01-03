@@ -98,6 +98,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/check_which_face_is_touched_neg.c	\
 					$(RT)/check_which_face_is_touched_pos.c	\
 					$(RT)/compute_lights.c					\
+					$(RT)/cylinder.c						\
 					$(RT)/launch_rays.c						\
 					$(RT)/locate_in_octree.c				\
 					$(RT)/print_octree.c					\

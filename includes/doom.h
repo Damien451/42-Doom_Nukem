@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/02 18:06:14 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/03 18:51:55 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,5 +336,6 @@ int							state_editor_menu(t_doom *data);
 
 int							state_game(t_doom *data);
 
-double			hit_sphere(t_ray *ray, t_doom *data);
+double						hit_sphere(t_ray *ray, t_doom *data);
+double						hit_cylinder(t_ray *ray, t_doom *data);
 #endif

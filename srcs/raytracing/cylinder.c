@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.c                                           :+:      :+:    :+:   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 02:04:23 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 18:48:50 by roduquen         ###   ########.fr       */
+/*   Created: 2020/01/03 18:41:55 by roduquen          #+#    #+#             */
+/*   Updated: 2020/01/03 20:06:49 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,21 @@
 #include "vec3.h"
 #include "octree.h"
 
-double			hit_sphere(t_ray *ray, t_doom *data)
+double			hit_cylinder(t_ray *ray, t_doom *data)
 {
 	t_vec3d		quad;
 	double		delta;
 	t_vec3d		position;
-	double		size;
 	t_vec3d		node;
-	int			type;
+	double		value[2];
 
 	node = vec3d(ray->node->center.x / 2.0, ray->node->center.y / 2.0, ray->node->center.z / 2.0);
-	type = data->light_array[(int)node.x][(int)node.y][(int)node.z].type;
-	size = data->power[type] / 100.0;
 	position = vec3d_sub(data->player.camera.origin, node);
-	quad.x = vec3d_length2(ray->direction);
-	quad.y = 2 * vec3d_dot(position, ray->direction);
-	quad.z = vec3d_length2(position) - size;
+	value[0] = vec3d_dot(ray->direction, vec3d(0, 1, 0));
+	value[1] = vec3d_dot(position, vec3d(0, 1, 0));
+	quad.x = vec3d_dot(ray->direction, ray->direction) - value[0] * value[0];
+	quad.y = 2 * (vec3d_dot(ray->direction, position) - value[1] * value[0]);
+	quad.z = vec3d_dot(position, position) - value[1] * value[1] - 0.1;
 	delta = (quad.y * quad.y) - 4 * quad.x * quad.z;
 	if (delta < 0)
 		return (200);
@@ -42,10 +41,21 @@ double			hit_sphere(t_ray *ray, t_doom *data)
 	{
 		if (delta < 0)
 			return (200);
-		return (delta);
+		value[0] = data->player.camera.origin.y + delta * ray->direction.y;
+		if ((int)node.y == (int)value[0])
+			return (delta);
+		return (200);
 	}
 	if (delta >= 0 && delta < quad.z)
-		return (delta);
+	{
+		value[0] = data->player.camera.origin.y + delta * ray->direction.y;
+		if ((int)node.y == (int)value[0])
+			return (delta);
+		return (200);
+	}
 	delta = quad.z;
-	return (delta);
+	value[0] = data->player.camera.origin.y + delta * ray->direction.y;
+	if ((int)node.y == (int)value[0])
+		return (delta);
+	return (200);
 }
