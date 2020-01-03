@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 19:59:45 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 20:29:13 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 	while (i < 3)
 	{
 		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin
-				, &ray, &ray.node);
+			, &ray, &ray.node);
 		if (ray.face == -1)
 			i++;
 		else if (ray.face == -3)
@@ -96,12 +96,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 			i = 0;
 		}
 		else if (ray.face >= 0)
-		{
-			/*if (!(ray.length < data->zbuf.zdist[ray.pos[1] + ray.pos[0] * WIDTH] || data->zbuf.zdist[ray.pos[1] + ray.pos[0] * WIDTH] == 0) && data->zbuf.zcolor[ray.pos[1] + ray.pos[0] * WIDTH] != 0xff000000)
-				return (data->zbuf.zcolor[ray.pos[1] + ray.pos[0] * WIDTH]);
-			else */
-				return (compute_lights(ray, data, tmp));
-		}
+			return (compute_lights(ray, data, tmp));
 		else
 			return (add_skybox(ray.intersect, data->skybox));
 	}

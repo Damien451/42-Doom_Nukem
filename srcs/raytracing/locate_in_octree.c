@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:59:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/11 13:05:04 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 20:34:50 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_octree	*find_actual_position(t_vec3d *position, t_octree *node)
 {
 	int			child;
 
-	while (node->leaf != EMPTY)
+	while (node->leaf != EMPTY && node->leaf != BREAKABLE)
 	{
 		child = 0;
 		if (position->x >= (double)(node->center.x >> 1))

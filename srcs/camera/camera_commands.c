@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 18:29:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 20:57:03 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *da
 
 void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 {
-	data->player.speed = 0.025 * (data->lib.cam_keys & COURSE ? 1.5 : 1) * (data->lib.cam_keys & SQUAT ? 0.2 : 1);
+	data->player.speed = 0.0375 * (data->lib.cam_keys & COURSE ? 1.5 : 1) * (data->lib.cam_keys & SQUAT ? 0.2 : 1);
 	if (event->key.type == SDL_KEYDOWN)
 	{
 		if ((unsigned int)event->key.keysym.sym == inputs->keycode[1])
