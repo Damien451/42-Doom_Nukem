@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/19 18:07:09 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/03 21:00:20 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,7 +294,7 @@ int			init_sdl(t_doom *data)
 		return (1);
 	}
 	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1
-					, SDL_RENDERER_PRESENTVSYNC)))
+					, SDL_RENDERER_ACCELERATED)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION
 				, "Couldn't create renderer: %s", SDL_GetError());

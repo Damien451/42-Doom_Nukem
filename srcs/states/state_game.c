@@ -97,13 +97,11 @@ static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 
 int			state_game(t_doom *data)
 {
-	static int		test = 0;
+	static unsigned long	time = 0;
+	long					wait;
 
-	if (test == 0)
-	{
-		create_light_array(data);
-		test = 1;
-	}
+	if (!time)
+		time = SDL_GetTicks();
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	if (data->player.camera.origin.x == -1 && data->player.camera.origin.y == -1 &&
 			data->player.camera.origin.z == -1)
@@ -147,6 +145,9 @@ int			state_game(t_doom *data)
 		convert_to_ppm(data->lib.image);
 	}
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
+	if ((wait = (SDL_GetTicks() - time)) < 50)
+		usleep(50000 - (wait * 1000));
+	time = SDL_GetTicks();
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
 	if (data->player.health <= 0)
