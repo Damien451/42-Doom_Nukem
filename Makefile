@@ -86,6 +86,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/doom.c							\
 					$(PROG)/frame_calculator.c				\
 					$(PROG)/init_func_pointers.c			\
+					$(PROG)/init_map_colors.c				\
 					$(PROG)/init_program.c					\
 					$(PROG)/leave_program.c					\
 					$(PROG)/leave_game.c					\

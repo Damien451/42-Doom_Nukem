@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/02 17:13:24 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/04 20:41:51 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ struct							s_graphic_lib
 	unsigned int				*image;
 	unsigned int				cam_keys;
 	unsigned int				*textures_block[NBR_TEXTURES_BLOCKS];
+	unsigned int				map_colors[NBR_TEXTURES_BLOCKS];
 };
 
 /*
@@ -134,5 +135,7 @@ int								anim_main_menu(t_doom *data, int total_frame
 	, int frame);
 
 void							dictionnary_binary_tex(t_doom *data);
+
+void							init_map_colors(t_graphic_lib *lib);
 
 #endif

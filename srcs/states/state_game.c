@@ -106,10 +106,8 @@ static void	add_hud(t_doom *data)
 			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
 		i++;
 	}
-}
-
-static void	update_physics(t_doom *data)
-{
+	put_health_bar(data);
+	minimap(data->map_to_save, &data->player, &data->lib);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
 	data->player.camera.direction = data->player.physics.camera.direction;
