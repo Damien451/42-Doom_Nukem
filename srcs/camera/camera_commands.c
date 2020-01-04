@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 22:41:41 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/04 15:05:14 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,6 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 			else
 				data->player.inventory.selected_block = 41;
 		}
-		data->sampling = 4;
 	}
 	camera_release_key(event, inputs, data);
 }

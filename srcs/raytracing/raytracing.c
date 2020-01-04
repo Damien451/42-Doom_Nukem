@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 23:15:12 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/04 15:06:31 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int					raytracing(t_doom *data)
 
 	data->actual_i = 2;
 	sun(data);
+	data->sampling = 4;
 	if (init_thread_structure(data) == 1)
 		return (1);
 //	time = SDL_GetTicks();
