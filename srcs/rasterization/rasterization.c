@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 14:01:14 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/04 21:39:38 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/04 21:54:20 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,12 @@ int			loop_over_bounding_box(t_vec3d vertices[3], t_vec2d bbox[2]
 			bary.y = min.y;
 			if (!is_inside_triangle(&bary, vertices))
 			{
-				distance = FIND_DISTANCE_TO_POINT;
+				distance = vertices[0].z * bary.x + vertices[1].z * bary.y
+					+ vertices[2].z * bary.z;
 				if (distance < z_buffer[min.x * WIDTH + min.y])
 				{
 					z_buffer[min.x * WIDTH + min.y] = distance;
-					image[min.x * WIDTH + min.y] = FIND_COLOR_IN_TRIANGLE;
+					image[min.x * WIDTH + min.y] = 0x151561;
 				}
 			}
 			min.y++;
