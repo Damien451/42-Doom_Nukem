@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/04 15:05:14 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/05 17:41:42 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,6 @@
 //	data->player.camera.origin = course;
 //	data->player.position = new_pos;
 //}
-
-void			print_selected_block(t_doom *data)
-{
-	printf("data->player.inventory.selected_block = %d\n", data->player.inventory.selected_block);
-}
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y
 		, double *sensitivity)

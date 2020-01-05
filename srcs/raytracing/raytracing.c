@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 17:22:46 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/05 20:16:32 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static inline int	init_thread_structure(t_doom *data)
 
 	i = 0;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
-//	z_buffer(data->entities, data->player, (t_zbuf*)&(data->zbuf));
+	//z_buffer(data->entities, data->player, (t_zbuf*)&(data->zbuf));
 	while (i < NBR_THREAD)
 	{
 		data->thread[i].data = data;
@@ -113,6 +113,7 @@ int					raytracing(t_doom *data)
 //	time = SDL_GetTicks();
 	event_loop(data);
 	add_clipping_for_each_point(data, &data->player);
+	minimap(data->map_to_save, &data->player, &data->lib);
 	actualize_torch(data);
 //	printf("time to compute non-image during the frame = %ld\n", (wait = SDL_GetTicks() - time));
 	i = 0;

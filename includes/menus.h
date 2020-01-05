@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menus.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:19:42 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 13:26:08 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/05 19:41:33 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@
 
 # define MINIMAP_WIDTH_START		1657
 # define MINIMAP_HEIGHT_START		74
+
+# define INV_BLOCK_SIZE				48
+# define BLOCK_POS_X				270
+# define BLOCK_POS_Y				960
 
 # define SET_BUTTON_W				384
 # define SET_BUTTON_H				80

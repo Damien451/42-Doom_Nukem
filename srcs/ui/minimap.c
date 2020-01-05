@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:42:04 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/04 21:41:25 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/05 18:24:57 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,29 @@
 #include "graphic_lib.h"
 #include "menus.h"
 
-static inline unsigned int	select_color(char map[64][64][64], t_graphic_lib *lib,
-	t_player *player, double coords[3])
+static inline unsigned int	select_color(char map[64][64][64],
+	t_graphic_lib *lib, t_player *player, double coords[3])
 {
-	if (coords[0] >= player->camera.origin.x - 0.3 && coords[0] <= player->camera.origin.x + 0.3
-		&& coords[2] >= player->camera.origin.z - 0.3 && coords[2] <= player->camera.origin.z + 0.3)
-		return (0xff0000);
+	if (coords[0] >= player->camera.origin.x - 0.3
+		&& coords[0] <= player->camera.origin.x + 0.3
+		&& coords[2] >= player->camera.origin.z - 0.3
+		&& coords[2] <= player->camera.origin.z + 0.3)
+		return (0x040fe5);
 	if (map[(int)coords[0]][(int)coords[1]][(int)coords[2]] == 0)
 	{
-		if (coords[1] > 0 && map[(int)coords[0]][(int)coords[1] - 1][(int)coords[2]] != 0)
-			return (lib->map_colors[map[(int)coords[0]][(int)coords[1] - 1][(int)coords[2]] - 1]);
-		else if (coords[1] > 1 && map[(int)coords[0]][(int)coords[1] - 2][(int)coords[2]] != 0)
-			return (lib->map_colors[map[(int)coords[0]][(int)coords[1] - 2][(int)coords[2]] - 1]);
-		return (0xffffff);
+		if (coords[1] > 0 && map[(int)coords[0]]
+			[(int)coords[1] - 1][(int)coords[2]] != 0)
+			return (lib->map_colors[map[(int)coords[0]]
+				[(int)coords[1] - 1][(int)coords[2]] - 1]);
+		else if (coords[1] > 1 && map[(int)coords[0]]
+			[(int)coords[1] - 2][(int)coords[2]] != 0)
+			return (lib->map_colors[map[(int)coords[0]]
+				[(int)coords[1] - 2][(int)coords[2]] - 1]);
+		else
+			return (0xb30000);
 	}
-	return (lib->map_colors[map[(int)coords[0]][(int)coords[1]][(int)coords[2]] - 1]);
+	return (lib->map_colors[map[(int)coords[0]]
+		[(int)coords[1]][(int)coords[2]] - 1]);
 }
 
 static void					draw_minimap(char map[64][64][64], t_player *player,
@@ -41,13 +49,13 @@ static void					draw_minimap(char map[64][64][64], t_player *player,
 	int			posx;
 	int			posy;
 
-	i = coords[0] - 1;
+	i = coords[0];
 	posy = MINIMAP_HEIGHT_START;
-	while ((i += 0.07692) <= coords[1])
+	while ((i += 0.0727272) <= coords[1])
 	{
-		j = coords[2] - 1;
+		j = coords[2];
 		posx = MINIMAP_WIDTH_START;
-		while ((j += 0.07692) <= coords[3])
+		while ((j += 0.0727272) <= coords[3])
 		{
 			lib->image[posy * WIDTH + posx] =
 				select_color(map, lib, player, (double[3]){i, coords[4], j});
@@ -77,12 +85,12 @@ void						minimap(char map[64][64][64], t_player *player,
 	end_j += (start_j < 0 ? start_j * -1 : 0);
 	if (start_j < 0)
 		start_j = 0;
-	start_i -= (end_i > 63 ? end_i - 63 : 0);
-	if (end_i > 63)
-		end_i = 63;
-	start_j -= (end_j > 63 ? end_j - 63 : 0);
-	if (end_j > 63)
-		end_j = 63;
+	start_i -= (end_i > 64 ? end_i - 64 : 0);
+	if (end_i > 64)
+		end_i = 64;
+	start_j -= (end_j > 64 ? end_j - 64 : 0);
+	if (end_j > 64)
+		end_j = 64;
 	draw_minimap(map, player, lib, (double[5]){start_i, end_i, start_j
 		, end_j, step});
 }

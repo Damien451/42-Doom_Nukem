@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:39:37 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 19:20:26 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/05 20:07:38 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void				bresenham(unsigned int *image, t_vec3l circle, int color)
 	}
 }
 
-void				start_drawing_circle(t_doom *data, int i
-		, unsigned int *image)
+void				start_drawing_circle(t_doom *data, int i,
+	unsigned int *image)
 {
 	t_vec3l		circle;
 
