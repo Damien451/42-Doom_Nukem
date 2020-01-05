@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 15:44:00 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/04 15:47:28 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/05 11:37:31 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,12 @@
 **	TYPEDEFS
 */
 
+#include "vec3.h"
+
+int		matrix44_multiply(const double a[4][4], const double b[4][4]
+	, double result[4][4]);
+
+int		matrix44_vec3d_mul(double matrix[4][4], t_vec3d src, t_vec3d *result);
+int		matrix44_identity(double result[4][4]);
+int		matrix44_inverse(const double matrix[4][4], double result[4][4]);
 #endif

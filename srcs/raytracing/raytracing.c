@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/04 15:06:31 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/05 17:22:46 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static inline int	init_thread_structure(t_doom *data)
 
 	i = 0;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
-	z_buffer(data->entities, data->player, (t_zbuf*)&(data->zbuf));
+//	z_buffer(data->entities, data->player, (t_zbuf*)&(data->zbuf));
 	while (i < NBR_THREAD)
 	{
 		data->thread[i].data = data;
@@ -127,5 +127,6 @@ int					raytracing(t_doom *data)
 		free_octree(data->octree);
 		create_octree(data);
 	}
+	rasterization(data, data->meshes);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 23:31:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/05 11:22:04 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "entities.h"
 # include "vec3.h"
 # include "thread.h"
+# include "mesh.h"
 # include <pthread.h>
 
 /*
@@ -176,6 +177,9 @@ struct						s_doom
 	t_light					light_array[64][64][64];
 	unsigned int			fire_model[64][64][64];
 	int						tmp;
+	double					*z_buffer;
+	unsigned int			*frame_buffer;
+	t_mesh					*meshes;
 };
 
 /*

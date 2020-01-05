@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/04 20:51:17 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/05 19:12:29 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <pthread.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "mesh.h"
 
 void		load_skybox(t_doom *data)
 {
@@ -311,11 +312,41 @@ int			init_sdl(t_doom *data)
 	return (0);
 }
 
+int			init_z_buffer(t_doom *data)
+{
+	data->z_buffer = (double*)malloc(sizeof(double) * WIDTH * HEIGHT);
+	if (data->z_buffer == NULL)
+		return (1);
+	data->frame_buffer = (unsigned int*)malloc(sizeof(unsigned int) * WIDTH * HEIGHT);
+	if (data->frame_buffer == NULL)
+		return (1);
+	return (0);
+}
+
+int			init_meshes(t_doom *data)
+{
+	data->meshes = (t_mesh*)malloc(sizeof(t_mesh));
+	data->meshes->next = NULL;
+	data->meshes->triangle = (t_triangle*)malloc(sizeof(t_triangle));
+	data->meshes->triangle->vertices[0].x = 10;
+	data->meshes->triangle->vertices[0].y = 0;
+	data->meshes->triangle->vertices[0].z = 0;
+	data->meshes->triangle->vertices[1].x = 10;
+	data->meshes->triangle->vertices[1].y = 10;
+	data->meshes->triangle->vertices[1].z = 0;
+	data->meshes->triangle->vertices[2].x = 10;
+	data->meshes->triangle->vertices[2].y = 0;
+	data->meshes->triangle->vertices[2].z = 10;
+	data->meshes->triangle->next = NULL;
+}
+
 int			init_program(t_doom *data)
 {
 	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);
+	init_z_buffer(data);
+	init_meshes(data);
 	if (init_sdl(data))
 		return (1);
 	if (init_mixer(data))

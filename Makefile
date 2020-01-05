@@ -13,8 +13,8 @@ NAME		= doom-nukem
 CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
-FSAN		= #-fsanitize=address
-DEBUG		= #-Og3
+FSAN		= -fsanitize=address
+DEBUG		= -g3
 OPTI		= -Ofast
 
 # **************************************************************************** #
@@ -32,6 +32,7 @@ CAMERA		= camera
 EDITOR		= editor
 MATHS		= maths
 PROG		= program
+RAST		= rasterization
 RT			= raytracing
 SHAPES		= shapes
 SOUND		= sound
@@ -75,6 +76,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/create_octree_model.c			\
+					$(MATHS)/matrix.c						\
 					$(MATHS)/max_absolute_between_three.c	\
 					$(MATHS)/octree_memory_management.c		\
 					$(MATHS)/quaternion.c					\
@@ -91,6 +93,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/leave_program.c					\
 					$(PROG)/leave_game.c					\
 					$(PROG)/program.c						\
+					$(RAST)/rasterization.c					\
 					$(RT)/add_texture_neg.c					\
 					$(RT)/add_texture_pos.c					\
 					$(RT)/add_textures.c					\
@@ -184,6 +187,7 @@ $(OBJDIR)		:
 	@mkdir -p $@/$(EDITOR)	2> /dev/null || true
 	@mkdir -p $@/$(MATHS)	2> /dev/null || true
 	@mkdir -p $@/$(PROG)	2> /dev/null || true
+	@mkdir -p $@/$(RAST)	2> /dev/null || true
 	@mkdir -p $@/$(RT)		2> /dev/null || true
 	@mkdir -p $@/$(SHAPES)	2> /dev/null || true
 	@mkdir -p $@/$(SOUND)	2> /dev/null || true
