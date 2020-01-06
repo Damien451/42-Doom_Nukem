@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_buttons_inputs.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:41:28 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 16:41:33 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/06 19:54:11 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,45 +15,47 @@
 #include "libft.h"
 #include "inputs.h"
 
-static void	init_desc(char desc[NB_MODIF_INPUTS][25])
+static void	init_desc(t_doom *data, 
+	char titles[NB_MODIF_INPUTS][40], int *first)
 {
 	int			i;
 
 	i = -1;
 	while (++i < NB_MODIF_INPUTS)
-		ft_bzero(desc[i], 25);
-	ft_strcat(desc[0], "Move forward - ");
-	ft_strcat(desc[1], "Move left - ");
-	ft_strcat(desc[2], "Move backward - ");
-	ft_strcat(desc[3], "Move right - ");
-	ft_strcat(desc[4], "Pick obj - ");
-	ft_strcat(desc[5], "Reload - ");
-	ft_strcat(desc[6], "Sprint - ");
-	ft_strcat(desc[7], "Zoom - ");
-	ft_strcat(desc[8], "Couch - ");
-	ft_strcat(desc[9], "Jump - ");
-	ft_strcat(desc[10], "Inventory - ");
-	ft_strcat(desc[11], "Screenshot - ");
+		ft_bzero(titles[i], 40);
+	ft_strcpy(titles[0], "Move forward - ");
+	ft_strcpy(titles[1], "Move left - ");
+	ft_strcpy(titles[2], "Move backward - ");
+	ft_strcpy(titles[3], "Move right - ");
+	ft_strcpy(titles[4], "Pick obj - ");
+	ft_strcpy(titles[5], "Reload - ");
+	ft_strcpy(titles[6], "Sprint - ");
+	ft_strcpy(titles[7], "Zoom - ");
+	ft_strcpy(titles[8], "Couch - ");
+	ft_strcpy(titles[9], "Jump - ");
+	ft_strcpy(titles[10], "Inventory - ");
+	ft_strcpy(titles[11], "Screenshot - ");
+	i = -1;
+	while (++i < NB_MODIF_INPUTS)
+		ft_strcat(titles[i], SDL_GetKeyName(data->tabinputs.keycode[i]));
+	*first = 1;
 }
 
 static void	create_buttons_inputs2(t_doom *data, t_button *btab,
-	int coords[NB_MODIF_INPUTS + 2][2])
+	int coords[NB_MODIF_INPUTS + 2][2], int *first)
 {
 	int			i;
 	static char	titles[NB_MODIF_INPUTS][40];
-	static char	desc[NB_MODIF_INPUTS][25];
 
 	i = -1;
-	init_desc(desc);
+	if (*first == 0)
+		init_desc(data, titles, first);
 	while (++i < NB_MODIF_INPUTS + 2)
 	{
-		ft_bzero(&titles[i], 40);
 		if (i != 8 && i != 13)
 			btab[i] = button(point(coords[i][0], coords[i][1]),
 				point(SET_BUTTON_W, SET_BUTTON_H), 0,
-				ft_strcat(ft_strcpy(titles[(i > 8 ? i - 1 : i)],
-				desc[(i > 8 ? i - 1 : i)]),
-				SDL_GetKeyName(data->tabinputs.keycode[(i > 8 ? i - 1 : i)])));
+				titles[(i > 8 ? i - 1 : i)]);
 		else if (i == 8)
 			btab[8] = button(point(coords[i][0], coords[i][1]),
 			point(SET_BUTTON_W, SET_BUTTON_H), 0, "Save & quit");
@@ -63,7 +65,7 @@ static void	create_buttons_inputs2(t_doom *data, t_button *btab,
 	}
 }
 
-void		create_buttons_inputs(t_doom *data, t_button *btab)
+void		create_buttons_inputs(t_doom *data, t_button *btab, int *first)
 {
 	int			posy[5];
 	int			coords[NB_MODIF_INPUTS + 2][2];
@@ -86,5 +88,5 @@ void		create_buttons_inputs(t_doom *data, t_button *btab)
 			coords[i][0] = coords[8][0] + BUTTON_GAP_X + SET_BUTTON_W;
 		coords[i][1] = (i < 4 ? posy[i] : posy[(i + 1) % 5]);
 	}
-	create_buttons_inputs2(data, btab, coords);
+	create_buttons_inputs2(data, btab, coords, first);
 }

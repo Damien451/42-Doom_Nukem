@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_editor_menu.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:10:04 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:16:03 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/06 17:13:04 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,6 @@ static void	check_inputs_menu(t_doom *data, t_button *btab
 	}
 }
 
-static void	state_editor_menu2(t_doom *data, t_button *btab,
-	int *first, int nbmaps)
-{
-	int			tab[2];
-
-	tab[0] = 4;
-	tab[1] = nbmaps;
-	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-	put_buttons_on_img(data, btab, 4);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
-		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
-	put_buttons_names(data, btab, (SDL_Color){0, 0, 0, 0}, 4);
-	check_inputs_menu(data, btab, first, tab);
-	SDL_RenderPresent(data->lib.renderer);
-}
-
 static void	buttons_editor_menu(t_button buttons[4], char map_name[25])
 {
 	buttons[0] = button(point(WIDTH_CENTER - (DEF_BUTTON_W * 3 / 2),
@@ -117,6 +101,12 @@ int			state_editor_menu(t_doom *data)
 	}
 	buttons_editor_menu(buttons, map_name);
 	data->map_name = map_name;
-	state_editor_menu2(data, buttons, &first, nbmaps);
+	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
+	put_buttons_on_img(data, buttons, 4);
+	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
+		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 4);
+	check_inputs_menu(data, buttons, &first, (int[2]){4, nbmaps});
+	SDL_RenderPresent(data->lib.renderer);
 	return (0);
 }

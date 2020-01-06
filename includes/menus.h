@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:19:42 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 19:41:33 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/06 19:43:40 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ struct								s_img
 t_point								add_points(t_point a, t_point b);
 
 void								create_buttons_inputs(t_doom *data
-		, t_button *btab);
+		, t_button *btab, int *first);
 
 int									draw_rectangle(t_graphic_lib *lib
 		, t_point position, t_point dimensions, int color);
