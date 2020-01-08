@@ -13,8 +13,8 @@ NAME		= doom-nukem
 CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
-FSAN		= -fsanitize=address
-DEBUG		= -g3
+FSAN		= #-fsanitize=address
+DEBUG		= #-g3
 OPTI		= -Ofast
 
 # **************************************************************************** #

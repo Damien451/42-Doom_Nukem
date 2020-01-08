@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 14:01:14 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 19:30:32 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/06 06:44:31 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,13 @@ t_vec3d			perspective_proj(t_vec3d *vertex, double matrix[4][4])
 	t_vec3d	new;
 
 	matrix44_vec3d_mul(matrix, *vertex, &new);
-	printf("projected1: x = %.2f, y = %.2f, z = %.2f\n", new.x, new.y, new.z);
 	projected.x = new.x / -new.z;
 	projected.y = new.y / -new.z;
-	projected.z = -new.z;
-	projected.x += tan(FOV / 2.0);
-	projected.y += tan(POV / 2.0);
-	projected.x /= (2 * tan(FOV / 2.0));
-	projected.y /= (2 * tan(POV / 2.0));
-	projected.x *= WIDTH;
-	projected.y = (1 - projected.y) * HEIGHT;
+	projected.z = 1.0 / -new.z;
+	projected.x = 2.0 * projected.x / (tan(FOV / 2.0) * 2.0);
+	projected.y = 2.0 * projected.y / (tan(POV / 2.0) * 2.0);
+	projected.x = (projected.x + 1.0) / 2.0 * WIDTH;
+	projected.y = (1.0 - projected.y) / 2.0 * HEIGHT;
 	return (projected);
 }
 
@@ -117,9 +114,10 @@ int			loop_over_bounding_box(t_vec3d vertices[3], t_vec3d bbox[2]
 			{
 				distance = vertices[0].z * bary.x + vertices[1].z * bary.y
 					+ vertices[2].z * bary.z;
-				if (distance > 0)
+				distance = 1 / distance;
+				if (distance > 0 && distance < z_buffer[min.x + min.y * WIDTH])
 				{
-					z_buffer[min.x + min.y * WIDTH] = 0;
+					z_buffer[min.x + min.y * WIDTH] = distance;
 					image[min.x + min.y * WIDTH] = 0x151561;
 				}
 			}
@@ -188,6 +186,7 @@ int			rasterization(t_doom *data, t_mesh *meshes)
 
 	convert_camera_to_matrix44(data, camera_to_world);
 	matrix44_inverse(camera_to_world, world_to_camera);
+//	matrix44_identity(world_to_camera);
 	set_z_buffer(data->z_buffer);
 /*	i = 0;
 	while (i < 4)

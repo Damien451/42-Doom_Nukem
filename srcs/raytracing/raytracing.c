@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/06 16:27:34 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:54:49 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,5 @@ int					raytracing(t_doom *data)
 		free_octree(data->octree);
 		create_octree(data);
 	}
-	rasterization(data, data->meshes);
 	return (0);
 }
