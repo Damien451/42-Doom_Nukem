@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:27:33 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/09 20:39:22 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:52:02 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <fcntl.h>
 #include "octree.h"
 
-static inline void	set_player_spawn(char map[64][64][64], t_vec3d *position,
+static void	set_player_spawn(char map[64][64][64], t_vec3d *position,
 	t_doom *data)
 {
 	int		x;
@@ -47,57 +47,56 @@ static inline void	set_player_spawn(char map[64][64][64], t_vec3d *position,
 	data->lib.cam_keys |= WATER;
 }
 
-static inline void	check_events(t_doom *data)
+static void	add_hud(t_doom *data)
 {
-	while (SDL_PollEvent(&data->lib.event))
+	int			i;
+
+	i = 0;
+	while (i < WIDTH * HEIGHT)
 	{
-		if (data->lib.event.type == SDL_KEYDOWN &&
-			data->lib.event.key.keysym.sym == SDLK_ESCAPE)
-		{
-			leave_game(data, &data->player);
-			switch_state(data, TEST_MODE, EDITOR);
-			return ;
-		}
-		else if (data->lib.event.type == SDL_MOUSEMOTION)
-			camera_mouse_motion(&data->player.camera
-					, &data->lib.event.motion.xrel, &data->lib.event.motion.yrel
-					, &data->player.sensitivity);
-		else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
-			data->lib.cam_keys |= DESTROY;
-		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
-			data->lib.cam_keys &= ~DESTROY;
-		camera_press_key(&data->lib.event, &data->tabinputs, data);
+		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78 && ((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
+			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
+		i++;
 	}
-	ft_memcpy(data->lib.image,
-		data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
-	put_health_bar(data);
-	raytracing(data);
 }
 
-int					state_test_mode(t_doom *data)
+static void	update_physics(t_doom *data)
 {
-	int		i;
-
-	i = -1;
-	SDL_SetRelativeMouseMode(SDL_TRUE);
-	if (data->player.camera.origin.x == -1
-		&& data->player.camera.origin.y == -1 &&
-		data->player.camera.origin.z == -1)
-		set_player_spawn(data->map_to_save, &data->player.camera.origin, data);
-	check_events(data);
-	while (++i < WIDTH * HEIGHT)
-		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78)
-			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)
-			[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)
-			[i] & 0xff) << (16))
-			+ ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00))
-			+ ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000)
-			>> 16);
-	minimap(data->map_to_save, &data->player, &data->lib);
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
+	data->player.camera.direction = data->player.physics.camera.direction;
+	data->player.camera.up = data->player.physics.camera.up;
+	data->player.camera.right = data->player.physics.camera.right;
+}
+
+int			state_test_mode(t_doom *data)
+{
+	unsigned long	time;
+	long			wait;
+
+	time = SDL_GetTicks();
+	if (data->player.camera.origin.x == -1)
+	{
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+		set_player_spawn(data->map_to_save, &data->player.camera.origin, data);
+	}
+	raytracing(data);
+	wait = SDL_GetTicks();
+	add_hud(data);
+	data->player.health = 1000;
+	put_health_bar(data);
+	display_inventory(&data->lib, &data->player);
+	update_physics(data);
+	minimap(data->map_to_save, &data->player, &data->lib);
+	if (data->photo)
+	{
+		data->photo = 0;
+		convert_to_ppm(data->lib.image);
+	}
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
+	if ((wait = (SDL_GetTicks() - time)) < 50)
+		usleep(50000 - (wait * 1000));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:42:04 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 18:24:57 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:02:38 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 #include "graphic_lib.h"
 #include "menus.h"
 
+static inline int			check_block(char block)
+{
+	if (block == 41 || block == 0)
+		return (0);
+	return (1);
+}
+
 static inline unsigned int	select_color(char map[64][64][64],
 	t_graphic_lib *lib, t_player *player, double coords[3])
 {
@@ -24,14 +31,14 @@ static inline unsigned int	select_color(char map[64][64][64],
 		&& coords[2] >= player->camera.origin.z - 0.3
 		&& coords[2] <= player->camera.origin.z + 0.3)
 		return (0x040fe5);
-	if (map[(int)coords[0]][(int)coords[1]][(int)coords[2]] == 0)
+	if (check_block(map[(int)coords[0]][(int)coords[1]][(int)coords[2]]) == 0)
 	{
-		if (coords[1] > 0 && map[(int)coords[0]]
-			[(int)coords[1] - 1][(int)coords[2]] != 0)
+		if (coords[1] > 0 && check_block(map[(int)coords[0]]
+			[(int)coords[1] - 1][(int)coords[2]]) != 0)
 			return (lib->map_colors[map[(int)coords[0]]
 				[(int)coords[1] - 1][(int)coords[2]] - 1]);
-		else if (coords[1] > 1 && map[(int)coords[0]]
-			[(int)coords[1] - 2][(int)coords[2]] != 0)
+		else if (coords[1] > 1 && check_block(map[(int)coords[0]]
+			[(int)coords[1] - 2][(int)coords[2]]) != 0)
 			return (lib->map_colors[map[(int)coords[0]]
 				[(int)coords[1] - 2][(int)coords[2]] - 1]);
 		else

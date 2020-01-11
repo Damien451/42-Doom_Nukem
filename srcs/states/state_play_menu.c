@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:01:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/10 20:36:27 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/11 13:28:59 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			state_play_menu(t_doom *data)
 		, (WIDTH * HEIGHT) << 2);
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LEAVING, "CLASSIC MODE");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_MENU, "CLASSIC MODE");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_EDIT_MAP, "CUSTOM MAPS");
