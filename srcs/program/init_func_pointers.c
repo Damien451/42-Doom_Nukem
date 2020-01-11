@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:42:20 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/10 20:32:33 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/11 17:58:15 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void		init_func_pointer_game_state(t_doom *data)
 	data->state_f[PAUSE] = &state_pause;
 	data->state_f[PLAYING] = &state_game;
 	data->state_f[SETTINGS_SOUND] = &state_sound_settings;
+	data->state_f[DEATH] = &state_death;
 }
 
 void			init_func_pointer(t_doom *data)

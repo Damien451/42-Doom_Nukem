@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 18:48:38 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/11 17:36:12 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ struct						s_player
 	double					gravity;
 	double					sensitivity;
 	int						health;
+	int						score;
+	int						lifes;
 	t_vec3d					position;
 	t_vec3d					acceleration;
 	t_hitbox				hitbox[12];

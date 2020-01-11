@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/10 20:30:51 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/11 17:57:24 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,21 @@
 # define START				0
 # define PLAYING			1
 # define PAUSE				2
-# define MAIN_MENU			3
-# define PLAY_MENU			4
-# define PLAY_EDIT_MAP		5
-# define EDITOR_MENU		6
-# define EDITOR				7
-# define GET_MAP_NAME		8
-# define DELETE_MAP			9
-# define SCORES				10
-# define SETTINGS			11
-# define SETTINGS_INPUTS	12
-# define SETTINGS_SOUND		13
-# define TEST_MODE			14
-# define GET_INPUT			15
-# define LEAVING			16
+# define DEATH				3
+# define MAIN_MENU			4
+# define PLAY_MENU			5
+# define PLAY_EDIT_MAP		6
+# define EDITOR_MENU		7
+# define EDITOR				8
+# define GET_MAP_NAME		9
+# define DELETE_MAP			10
+# define SCORES				11
+# define SETTINGS			12
+# define SETTINGS_INPUTS	13
+# define SETTINGS_SOUND		14
+# define TEST_MODE			15
+# define GET_INPUT			16
+# define LEAVING			17
 
 # define SUN				0
 # define PLAYER				1
@@ -146,7 +147,7 @@ struct						s_doom
 	long					button;
 	long					state;
 	int						running;
-	int						(*state_f[17])(t_doom *);
+	int						(*state_f[18])(t_doom *);
 	t_octree				*octree;
 	t_octree				*octree_model;
 	int						load_page[2];
@@ -343,6 +344,8 @@ int							state_editor(t_doom *data);
 int							state_editor_menu(t_doom *data);
 
 int							state_game(t_doom *data);
+
+int							state_death(t_doom *data);
 
 double						hit_sphere(t_ray *ray, const t_doom *const data);
 

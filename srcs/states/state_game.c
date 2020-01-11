@@ -63,12 +63,6 @@ void		skybox(t_doom *data)
 	//}
 }
 
-static void	player_death(t_doom *data)
-{
-	leave_game(data, &data->player);
-	switch_state(data, PLAYING, MAIN_MENU);
-}
-
 static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
 {
 	int		x;
@@ -144,7 +138,7 @@ int			state_game(t_doom *data)
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
 	if (data->player.health <= 0)
-		player_death(data);
+		switch_state(data, PLAYING, DEATH);
 	if ((wait = (SDL_GetTicks() - time)) < 50)
 		usleep(50000 - (wait * 1000));
 	return (0);
