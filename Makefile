@@ -14,7 +14,7 @@ CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
 FSAN		= #-fsanitize=address
-DEBUG		= #-g3
+DEBUG		= -g3
 OPTI		= -Ofast
 
 # **************************************************************************** #
@@ -127,6 +127,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_inputs_settings_menu.c	\
 					$(STATES)/state_main_menu.c				\
 					$(STATES)/state_pause.c					\
+					$(STATES)/state_play_edit_map.c			\
 					$(STATES)/state_play_menu.c				\
 					$(STATES)/state_sound_settings.c		\
 					$(STATES)/state_start.c					\

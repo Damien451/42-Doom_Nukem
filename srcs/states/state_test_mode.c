@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:27:33 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/21 19:56:23 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/09 20:39:22 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "octree.h"
-
-static inline void	check_events(t_doom *data)
-{
-	while (SDL_PollEvent(&data->lib.event))
-	{
-		if (data->lib.event.type == SDL_KEYDOWN &&
-			data->lib.event.key.keysym.sym == SDLK_ESCAPE)
-		{
-			leave_game(data, &data->player);
-			switch_state(data, TEST_MODE, EDITOR);
-			return ;
-		}
-		else if (data->lib.event.type == SDL_MOUSEMOTION)
-			camera_mouse_motion(&data->player.camera
-					, &data->lib.event.motion.xrel, &data->lib.event.motion.yrel
-					, &data->player.sensitivity);
-		else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
-			data->lib.cam_keys |= DESTROY;
-		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
-			data->lib.cam_keys &= ~DESTROY;
-		camera_press_key(&data->lib.event, &data->tabinputs, data);
-	}
-	ft_memcpy(data->lib.image,
-		data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
-	put_health_bar(data);
-	raytracing(data);
-}
 
 static inline void	set_player_spawn(char map[64][64][64], t_vec3d *position,
 	t_doom *data)
@@ -72,6 +45,33 @@ static inline void	set_player_spawn(char map[64][64][64], t_vec3d *position,
 		}
 	}
 	data->lib.cam_keys |= WATER;
+}
+
+static inline void	check_events(t_doom *data)
+{
+	while (SDL_PollEvent(&data->lib.event))
+	{
+		if (data->lib.event.type == SDL_KEYDOWN &&
+			data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+		{
+			leave_game(data, &data->player);
+			switch_state(data, TEST_MODE, EDITOR);
+			return ;
+		}
+		else if (data->lib.event.type == SDL_MOUSEMOTION)
+			camera_mouse_motion(&data->player.camera
+					, &data->lib.event.motion.xrel, &data->lib.event.motion.yrel
+					, &data->player.sensitivity);
+		else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
+			data->lib.cam_keys |= DESTROY;
+		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
+			data->lib.cam_keys &= ~DESTROY;
+		camera_press_key(&data->lib.event, &data->tabinputs, data);
+	}
+	ft_memcpy(data->lib.image,
+		data->lib.hud_texture->pixels, (WIDTH * HEIGHT) << 2);
+	put_health_bar(data);
+	raytracing(data);
 }
 
 int					state_test_mode(t_doom *data)

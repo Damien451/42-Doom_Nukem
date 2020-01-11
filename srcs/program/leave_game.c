@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:36:05 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/19 22:53:37 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/09 20:32:19 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void		leave_game(t_doom *data, t_player *player)
 	player->camera.origin.x = -1;
 	player->camera.origin.y = -1;
 	player->camera.origin.z = -1;
+	player->camera.direction = vec3d(0, 0, 1);
+	player->camera.right = vec3d(1, 0, 0);
+	player->camera.up = vec3d(0, 1, 0);
 	player->acceleration.x = 0;
 	player->acceleration.y = 0;
 	player->acceleration.z = 0;

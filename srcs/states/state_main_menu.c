@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_main_menu.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 22:01:19 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:02:20 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	buttons_main_menu(t_button buttons[5])
 {
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAYING, "PLAY");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_MENU, "PLAY");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), EDITOR_MENU, "MAP EDITOR");

@@ -59,7 +59,9 @@ static inline void	mouse_button_up(SDL_Event *event, t_editor *editor)
 static inline void	mouse_button_down(t_doom *data, int *step,
 	SDL_Event *event, t_editor *editor)
 {
-	if (event->button.button == SDL_BUTTON_LEFT)
+	if (event->button.x >= 15 && event->button.y >= 15
+		&& event->button.x <= 1030 && event->button.y <= 1030 &&
+		event->button.button == SDL_BUTTON_LEFT)
 		editor->mouseinputs |= L_INPUT_EDITOR;
 	else if (event->button.button == SDL_BUTTON_RIGHT)
 		editor->mouseinputs |= R_INPUT_EDITOR;

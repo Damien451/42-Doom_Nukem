@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:42:20 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/19 22:39:27 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/10 20:32:33 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void		init_func_pointer_game_state(t_doom *data)
 	data->state_f[START] = &state_start;
 	data->state_f[MAIN_MENU] = &state_main_menu;
 	data->state_f[EDITOR_MENU] = &state_editor_menu;
+	data->state_f[PLAY_MENU] = &state_play_menu;
+	data->state_f[PLAY_EDIT_MAP] = &state_play_edit_map;
 	data->state_f[EDITOR] = &state_editor;
 	data->state_f[GET_MAP_NAME] = &state_get_map_name;
 	data->state_f[DELETE_MAP] = &state_delete_map;

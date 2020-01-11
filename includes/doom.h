@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 11:22:04 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/10 20:30:51 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,18 @@
 # define PAUSE				2
 # define MAIN_MENU			3
 # define PLAY_MENU			4
-# define EDITOR_MENU		5
-# define EDITOR				6
-# define GET_MAP_NAME		7
-# define DELETE_MAP			8
-# define SCORES				9
-# define SETTINGS			10
-# define SETTINGS_INPUTS	11
-# define SETTINGS_SOUND		12
-# define TEST_MODE			13
-# define GET_INPUT			14
-# define LEAVING			15
+# define PLAY_EDIT_MAP		5
+# define EDITOR_MENU		6
+# define EDITOR				7
+# define GET_MAP_NAME		8
+# define DELETE_MAP			9
+# define SCORES				10
+# define SETTINGS			11
+# define SETTINGS_INPUTS	12
+# define SETTINGS_SOUND		13
+# define TEST_MODE			14
+# define GET_INPUT			15
+# define LEAVING			16
 
 # define SUN				0
 # define PLAYER				1
@@ -145,7 +146,7 @@ struct						s_doom
 	long					button;
 	long					state;
 	int						running;
-	int						(*state_f[16])(t_doom *);
+	int						(*state_f[17])(t_doom *);
 	t_octree				*octree;
 	t_octree				*octree_model;
 	int						load_page[2];
@@ -320,6 +321,8 @@ int							state_main_menu(t_doom *data);
 int							state_pause(t_doom *data);
 
 int							state_play_menu(t_doom *data);
+
+int							state_play_edit_map(t_doom *data);
 
 int							state_scoreboard(t_doom *data);
 
