@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/11 02:12:53 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/13 20:28:52 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	load_map(t_doom *data)
 	}
 	else
 		return (1);
+	data->player.gamemode = FREEPLAY_MODE;
 	return (0);
 }
 

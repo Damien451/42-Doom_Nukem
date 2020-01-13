@@ -6,28 +6,33 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 19:03:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/11 19:50:08 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/13 20:52:29 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void	check_death_inputs(t_doom *data, int *ok)
+static void	check_death_inputs(t_doom *data, int gamemode, int *ok)
 {
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)
 		{
+			if (data->player.lifes == 0 && gamemode == CLASSIC_MODE)
+			{
+				*ok = 1;
+				switch_state(data, DEATH, PLAY_MENU);
+			}
 			if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 			{
 				*ok = 1;
-				switch_state(data, PAUSE, PLAYING);
+				switch_state(data, DEATH, PLAYING);
 			}
 			else if (data->lib.event.key.keysym.sym == SDLK_q)
 			{
 				*ok = 1;
 				leave_game(data, &data->player);
-				switch_state(data, PAUSE, MAIN_MENU);
+				switch_state(data, DEATH, PLAY_MENU);
 			}
 		}
 	}
@@ -35,8 +40,7 @@ static void	check_death_inputs(t_doom *data, int *ok)
 
 static void	put_death_strings(t_doom *data, t_player *player)
 {
-	player->lifes--;
-	if (player->lifes > 0)
+	if (player->lifes > 0 || data->player.gamemode == FREEPLAY_MODE)
 	{
 		put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
 			label("YOU ARE DEAD", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
@@ -73,6 +77,6 @@ int			state_death(t_doom *data)
 		data->player.lifes--;
 		ok--;
 	}
-	check_death_inputs(data, &ok);
+	check_death_inputs(data, data->player.gamemode, &ok);
 	return (0);
 }

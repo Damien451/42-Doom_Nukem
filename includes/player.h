@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/11 17:36:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/13 20:28:44 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@
 
 # define WIDTH_PLAYER		0.2
 # define SIZE_PLAYER		1.5
+
+# define CLASSIC_MODE		0
+# define FREEPLAY_MODE		1
+# define EDIT_MODE			2
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -103,6 +107,7 @@ struct						s_player
 	int						health;
 	int						score;
 	int						lifes;
+	int						gamemode;
 	t_vec3d					position;
 	t_vec3d					acceleration;
 	t_hitbox				hitbox[12];

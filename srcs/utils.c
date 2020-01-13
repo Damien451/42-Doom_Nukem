@@ -46,8 +46,10 @@ void		switch_state(t_doom *data, long actual_state, long new_state)
 		return ;
 	}
 	data->state = new_state;
-	if (new_state == PLAYING || new_state == TEST_MODE)
+	if ((new_state == PLAYING || new_state == TEST_MODE)
+		&& (actual_state != PAUSE || actual_state != DEATH))
 	{
+		init_game(data, &data->player);
 		free_octree(data->octree);
 		create_octree(data);
 	}
