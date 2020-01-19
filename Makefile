@@ -105,6 +105,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/cylinder.c						\
 					$(RT)/launch_rays.c						\
 					$(RT)/locate_in_octree.c				\
+					$(RT)/plane.c							\
 					$(RT)/print_octree.c					\
 					$(RT)/ray_intersect.c					\
 					$(RT)/raytracing.c						\

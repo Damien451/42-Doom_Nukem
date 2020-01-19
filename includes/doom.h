@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/11 17:57:24 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/12 05:57:17 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,6 +280,7 @@ t_octree					*find_parent_y(t_vec3d position, t_octree *node
 t_octree					*find_parent_z(t_vec3d position, t_octree *node
 		, t_vec3d origin);
 void						*launch_rays(void *ptr);
+void						*launch_rays2(void *ptr);
 void						sun(t_doom *data);
 unsigned int				print_octree(t_vec3d intersect);
 int							create_octree_model(t_doom *data);
@@ -350,5 +351,7 @@ int							state_death(t_doom *data);
 double						hit_sphere(t_ray *ray, const t_doom *const data);
 
 double						hit_cylinder(t_ray *ray, const t_doom *const data);
+
+double						hit_plane(t_ray *ray, const t_doom *const data);
 
 #endif

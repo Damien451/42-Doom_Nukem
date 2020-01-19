@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/08 18:54:49 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:46:48 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,11 @@
 #include <pthread.h>
 #include <math.h>
 
-static inline int	init_thread_structure(t_doom *data)
+static inline int	init_thread_structure(t_doom *data, t_octree *position)
 {
-	t_octree		*position;
 	int				i;
 
 	i = 0;
-	position = find_actual_position(&data->player.camera.origin, data->octree);
-	//z_buffer(data->entities, data->player, (t_zbuf*)&(data->zbuf));
 	while (i < NBR_THREAD)
 	{
 		data->thread[i].data = data;
@@ -99,27 +96,49 @@ static void			event_loop(t_doom *data)
 	}
 }
 
+#include <sys/time.h>
+
 int					raytracing(t_doom *data)
 {
+	t_octree		*position;
+	t_thread		thread;
+	struct timeval	time;
+	long			wait;
 	int				i;
-//	unsigned long	time;
-//	long			wait;
+	static long		max = 0;
 
+	gettimeofday(&time, NULL);
+	wait = time.tv_sec * 1000000 + time.tv_usec;
+	position = find_actual_position(&data->player.camera.origin, data->octree);
 	data->actual_i = 2;
 	sun(data);
 	data->sampling = 4;
-	if (init_thread_structure(data) == 1)
+	rasterization(data, data->meshes);
+	if (init_thread_structure(data, position) == 1)
 		return (1);
-//	time = SDL_GetTicks();
 	event_loop(data);
 	add_clipping_for_each_point(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
 	actualize_torch(data);
-//	printf("time to compute non-image during the frame = %ld\n", (wait = SDL_GetTicks() - time));
+	thread.data = data;
+	thread.frame = data->samplingt[data->sampling - 1][0] * 2 - 4;
+	thread.mutex = &data->mutex;
+	thread.ray.node = position;
+	thread.ray.origin = data->player.camera.origin;
+	thread.ray.find_parent[0] = &find_parent_x;
+	thread.ray.find_parent[1] = &find_parent_y;
+	thread.ray.find_parent[2] = &find_parent_z;
+	launch_rays2(&thread);
+	gettimeofday(&time, NULL);
+	wait = time.tv_sec * 1000000 + time.tv_usec - wait;
+	if (wait > max)
+	{
+		printf("time to compute everything = %ld microseconds\n", wait);
+		max = wait;
+	}
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(data->thread[i++].thread, NULL);
-//	printf("time to finish the frame = %lu\n", SDL_GetTicks() - time);
 	if (data->lib.cam_keys & DESTROY)
 	{
 		interaction(data, vec3d_add(data->player.camera.origin

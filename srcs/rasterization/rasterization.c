@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 14:01:14 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/06 06:44:31 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/12 07:43:35 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ t_vec3d			perspective_proj(t_vec3d *vertex, double matrix[4][4])
 	t_vec3d	new;
 
 	matrix44_vec3d_mul(matrix, *vertex, &new);
+	if (new.z > 0)
+		new.z *= -1;
 	projected.x = new.x / -new.z;
 	projected.y = new.y / -new.z;
-	projected.z = 1.0 / -new.z;
+	projected.z = -new.z;
 	projected.x = 2.0 * projected.x / (tan(FOV / 2.0) * 2.0);
 	projected.y = 2.0 * projected.y / (tan(POV / 2.0) * 2.0);
 	projected.x = (projected.x + 1.0) / 2.0 * WIDTH;
@@ -214,7 +216,7 @@ int			rasterization(t_doom *data, t_mesh *meshes)
 	*/		vertices[0] = perspective_proj(&triangle->vertices[0], world_to_camera);
 			vertices[1] = perspective_proj(&triangle->vertices[1], world_to_camera);
 			vertices[2] = perspective_proj(&triangle->vertices[2], world_to_camera);
-			printf("\n\n");
+		//	printf("\n\n");
 	//		printf("projected1: x = %.2f, y = %.2f\n", vertices[0].x, vertices[0].y);
 	//		printf("projected2: x = %.2f, y = %.2f\n", vertices[1].x, vertices[1].y);
 	//		printf("projected3: x = %.2f, y = %.2f\n", vertices[2].x, vertices[2].y);

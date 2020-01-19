@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:04:19 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/11 14:29:34 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/08 21:53:23 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,30 @@ static inline int		catch_next_pixel_to_compute(t_doom *data, void *ptr)
 	data->actual_i += (32);
 	pthread_mutex_unlock(((t_thread*)ptr)->mutex);
 	return (i);
+}
+
+void					*launch_rays2(void *ptr)
+{
+	t_doom			*data;
+	int				i;
+	int				j;
+
+	data = ((t_thread*)ptr)->data;
+	i = catch_next_pixel_to_compute(data, ptr);
+	while (i < ((t_thread*)ptr)->frame)
+	{
+		j = 0;
+		while (i + j < ((t_thread*)ptr)->frame && j < 32)
+		{
+			((t_thread*)ptr)->ray.pos[0] = data->samplingt[data->sampling - 1][i + j];
+			((t_thread*)ptr)->ray.pos[1] = data->samplingt[data->sampling - 1][i + 1 + j];
+			ray_create(((t_thread*)ptr)->ray.pos, data->player.camera, &((t_thread*)ptr)->ray);
+			apply_sampling(data->lib.image, ray_intersect(((t_thread*)ptr)->ray
+				, data), data->sampling, ((t_thread*)ptr)->ray.pos[1] + ((t_thread*)ptr)->ray.pos[0] * WIDTH);
+			j += 2;
+		}
+		i = catch_next_pixel_to_compute(data, ptr);
+	}
 }
 
 void					*launch_rays(void *ptr)

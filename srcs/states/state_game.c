@@ -111,24 +111,26 @@ static void	update_physics(t_doom *data)
 	data->player.camera.right = data->player.physics.camera.right;
 }
 
+#include <sys/time.h>
+
 int			state_game(t_doom *data)
 {
-	unsigned long	time;
+	struct timeval	time;
 	long			wait;
+	long			sleep;
 
-	time = SDL_GetTicks();
+	gettimeofday(&time, NULL);
+	wait = time.tv_sec * 1000000 + time.tv_usec;
 	if (data->player.camera.origin.x == -1)
 	{
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 		set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	}
 	raytracing(data);
-	wait = SDL_GetTicks();
 	add_hud(data);
 	put_health_bar(data);
 	display_inventory(&data->lib, &data->player);
 	update_physics(data);
-	minimap(data->map_to_save, &data->player, &data->lib);
 	if (data->photo)
 	{
 		data->photo = 0;
@@ -139,7 +141,8 @@ int			state_game(t_doom *data)
 	SDL_RenderClear(data->lib.renderer);
 	if (data->player.health <= 0)
 		switch_state(data, PLAYING, DEATH);
-	if ((wait = (SDL_GetTicks() - time)) < 50)
-		usleep(50000 - (wait * 1000));
+	gettimeofday(&time, NULL);
+	if ((sleep = time.tv_sec * 1000000 + time.tv_usec - wait) < 50000)
+		usleep(50000 - sleep);
 	return (0);
 }

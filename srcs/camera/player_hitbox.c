@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:31:51 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/16 23:38:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/12 13:10:01 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,165 +15,157 @@
 
 void		check_if_inside_map(t_doom *data, t_vec3d *position)
 {
-	if (position->x > 63.8)
+	if (position->x > 63.5)
 	{
 		data->player.acceleration.x = 0;
-		position->x = 63.8;
+		position->x = 63.5;
 	}
-	else if (position->x < 0.2)
+	else if (position->x < 0.5)
 	{
 		data->player.acceleration.x = 0;
-		position->x = 0.2;
+		position->x = 0.5;
 	}
-	if (position->y > 63.8)
+	if (position->y > 63.5)
 	{
 		data->player.acceleration.y = 0;
-		position->y = 63.8;
+		position->y = 63.5;
 	}
-	else if (position->y < 0.2)
+	else if (position->y < 0.5)
 	{
 		data->player.acceleration.y = 0;
-//		data->player.health = 0;
-		position->y = 0.2;
+		data->player.health = 0;
+		position->y = 0.5;
 	}
-	if (position->z > 63.8)
+	if (position->z > 63.5)
 	{
 		data->player.acceleration.z = 0;
-		position->z = 63.8;
+		position->z = 63.5;
 	}
-	else if (position->z < 0.2)
+	else if (position->z < 0.5)
 	{
 		data->player.acceleration.z = 0;
-		position->z = 0.2;
+		position->z = 0.5;
 	}
 }
 
-void			create_hitbox_offset(t_hitbox hitbox[12], t_vec3d origin)
+int				clipping_between_hitbox_and_voxels(t_vec3d voxel[2]
+	, t_vec3d hitbox[2])
 {
-	hitbox[0].vertex = vec3d_add(origin, vec3d(-WIDTH_PLAYER, WIDTH_PLAYER, -WIDTH_PLAYER));
-	hitbox[1].vertex = vec3d_add(origin, vec3d(-WIDTH_PLAYER, WIDTH_PLAYER, WIDTH_PLAYER));
-	hitbox[2].vertex = vec3d_add(origin, vec3d(-WIDTH_PLAYER, -0.65, -WIDTH_PLAYER));
-	hitbox[3].vertex = vec3d_add(origin, vec3d(-WIDTH_PLAYER, -0.65, WIDTH_PLAYER));
-	hitbox[4].vertex = vec3d_add(origin, vec3d(-WIDTH_PLAYER, -SIZE_PLAYER, -WIDTH_PLAYER));
-	hitbox[5].vertex = vec3d_add(origin, vec3d(-WIDTH_PLAYER, -SIZE_PLAYER, WIDTH_PLAYER));
-	hitbox[6].vertex = vec3d_add(origin, vec3d(WIDTH_PLAYER, -SIZE_PLAYER, WIDTH_PLAYER));
-	hitbox[7].vertex = vec3d_add(origin, vec3d(WIDTH_PLAYER, -SIZE_PLAYER, -WIDTH_PLAYER));
-	hitbox[8].vertex = vec3d_add(origin, vec3d(WIDTH_PLAYER, -0.65, WIDTH_PLAYER));
-	hitbox[9].vertex = vec3d_add(origin, vec3d(WIDTH_PLAYER, -0.65, -WIDTH_PLAYER));
-	hitbox[10].vertex = vec3d_add(origin, vec3d(WIDTH_PLAYER, WIDTH_PLAYER, WIDTH_PLAYER));
-	hitbox[11].vertex = vec3d_add(origin, vec3d(WIDTH_PLAYER, WIDTH_PLAYER, -WIDTH_PLAYER));
+	if (voxel[0].x <= hitbox[1].x && voxel[1].x >= hitbox[0].x)
+		if (voxel[0].y <= hitbox[1].y && voxel[1].y >= hitbox[0].y)
+			if (voxel[0].z <= hitbox[1].z && voxel[1].z >= hitbox[0].z)
+				return (1);
+	return (0);
 }
 
 void			add_clipping_for_each_point(t_doom *data, t_player *player)
 {
 	int		i;
+	int		j;
+	int		k;
 	t_vec3d	new_pos;
 	t_vec3d	new_acceleration;
-	t_vec3d	new_offset;
-	t_hitbox	hit[12];
+	t_vec3d		hitbox[2];
+	t_vec3l		voxels;
+	t_vec3d		vox[2];
+	int			tmp;
 
 	i = 0;
 	camera_event_translate(data);
 	new_pos = vec3d_add(data->player.camera.origin, data->player.acceleration);
 	check_if_inside_map(data, &new_pos);
+	hitbox[0].x = new_pos.x - 0.2;
+	hitbox[0].y = new_pos.y - 1.5;
+	hitbox[0].z = new_pos.z - 0.2;
+	if (hitbox[0].x < 0)
+		hitbox[0].x = 0;
+	if (hitbox[0].y < 0)
+		hitbox[0].y = 0;
+	if (hitbox[0].z < 0)
+		hitbox[0].z = 0;
+	hitbox[1].x = hitbox[0].x + 0.4;
+	hitbox[1].y = hitbox[0].y + 1.7;
+	hitbox[1].z = hitbox[0].z + 0.4;
+	voxels.x = hitbox[0].x;
+	voxels.y = hitbox[0].y;
+	voxels.z = hitbox[0].z;
 	new_acceleration = player->acceleration;
-	create_hitbox_offset(player->hitbox, new_pos);
-	create_hitbox_offset(hit, data->player.camera.origin);
-	while (i < 6)
+	while (i < 3)
 	{
-		new_offset = player->hitbox[i].vertex;
-		if (add_vertex_clipping_x_min(&new_acceleration, &new_offset, data->map_to_save
-			, hit[i].vertex))
+		j = 0;
+		while (j < 3)
 		{
-			new_pos.x = data->player.camera.origin.x;
-			create_hitbox_offset(player->hitbox, new_pos);
-		}
-		if (i == 0 || i == 1)
-		{
-			new_offset = player->hitbox[i].vertex;
-			if (add_vertex_clipping_y_max(&new_acceleration, &new_offset, data->map_to_save
-						, hit[i].vertex))
+			k = 0;
+			while (k < 3)
 			{
-				new_pos.y = data->player.camera.origin.y;
-				create_hitbox_offset(player->hitbox, new_pos);
+				if (data->map_to_save[voxels.x + i][voxels.y + j][voxels.z + k])
+				{
+					tmp = 0;
+					vox[0].x = voxels.x + i;
+					vox[0].y = voxels.y + j;
+					vox[0].z = voxels.z + k;
+					vox[1].x = vox[0].x + 1;
+					vox[1].y = vox[0].y + 1;
+					vox[1].z = vox[0].z + 1;
+					if (clipping_between_hitbox_and_voxels(vox, hitbox))
+					{
+						if (vox[1].y > hitbox[0].y && j == 0)
+						{
+							new_acceleration.y = 0;
+							hitbox[0].y = vox[1].y;
+							hitbox[1].y = hitbox[0].y + 1.7;
+							tmp = 1;
+						}
+						if (vox[0].y < hitbox[1].y && j == 2)
+						{
+							new_acceleration.y = 0;
+							hitbox[1].y = vox[0].y;
+							hitbox[0].y = hitbox[1].y - 1.7;
+							tmp = 1;
+						}
+						if (vox[1].x > hitbox[0].x && i == 0)
+						{
+							new_acceleration.x = 0;
+							hitbox[0].x = vox[1].x;
+							hitbox[1].x = hitbox[0].x + 0.4;
+							tmp = 1;
+						}
+						if (vox[0].x < hitbox[1].x && i == 2)
+						{
+							new_acceleration.x = 0;
+							hitbox[1].x = vox[0].x;
+							hitbox[0].x = hitbox[1].x - 0.4;
+							tmp = 1;
+						}
+						if (vox[1].z > hitbox[0].z && k == 0)
+						{
+							new_acceleration.z = 0;
+							hitbox[0].z = vox[1].z;
+							hitbox[1].z = hitbox[0].z + 0.4;
+							tmp = 1;
+						}
+						if (vox[0].z < hitbox[1].z && k == 2)
+						{
+							new_acceleration.z = 0;
+							hitbox[1].z = vox[0].z;
+							hitbox[0].z = hitbox[1].z - 0.4;
+							tmp = 1;
+						}
+						if (tmp)
+						{
+							k = k;
+						}
+					}
+				}
+				k++;
 			}
-		}
-		if (i % 2 == 1)
-		{
-			new_offset = player->hitbox[i].vertex;
-			if (add_vertex_clipping_z_max(&new_acceleration, &new_offset, data->map_to_save
-						, hit[i].vertex))
-			{
-				new_pos.z = data->player.camera.origin.z;
-				create_hitbox_offset(player->hitbox, new_pos);
-			}
-		}
-		else
-		{
-			new_offset = player->hitbox[i].vertex;
-			if (add_vertex_clipping_z_min(&new_acceleration, &new_offset, data->map_to_save
-						, hit[i].vertex))
-			{
-				new_pos.z = data->player.camera.origin.z;
-				create_hitbox_offset(player->hitbox, new_pos);
-			}
+			j++;
 		}
 		i++;
 	}
-	while (i < 12)
-	{
-		new_offset = player->hitbox[i].vertex;
-		if (add_vertex_clipping_x_max(&new_acceleration, &new_offset, data->map_to_save
-					, hit[i].vertex))
-		{
-			new_pos.x = data->player.camera.origin.x;
-			create_hitbox_offset(player->hitbox, new_pos);
-		}
-		if (i == 10 || i == 11)
-		{
-			new_offset = player->hitbox[i].vertex;
-			if (add_vertex_clipping_y_max(&new_acceleration, &new_offset, data->map_to_save
-						, hit[i].vertex))
-			{
-				new_pos.y = data->player.camera.origin.y;
-				create_hitbox_offset(player->hitbox, new_pos);
-			}
-		}
-		if (i % 2 == 0)
-		{
-			new_offset = player->hitbox[i].vertex;
-			if (add_vertex_clipping_z_max(&new_acceleration, &new_offset, data->map_to_save
-						, hit[i].vertex))
-			{
-				new_pos.z = data->player.camera.origin.z;
-				create_hitbox_offset(player->hitbox, new_pos);
-			}
-		}
-		else
-		{
-			new_offset = player->hitbox[i].vertex;
-			if (add_vertex_clipping_z_min(&new_acceleration, &new_offset, data->map_to_save
-						, hit[i].vertex))
-			{
-				new_pos.z = data->player.camera.origin.z;
-				create_hitbox_offset(player->hitbox, new_pos);
-			}
-		}
-		i++;
-	}
-	i = 4;
-	while (i < 8)
-	{
-		new_offset = player->hitbox[i].vertex;
-		if (add_vertex_clipping_y_min(&new_acceleration, &new_offset, data->map_to_save
-					, hit[i].vertex, &data->player))
-		{
-			new_pos.y = data->player.camera.origin.y;
-			create_hitbox_offset(player->hitbox, new_pos);
-		}
-		i++;
-	}
-
+	new_pos.x = hitbox[0].x + 0.2;
+	new_pos.y = hitbox[0].y + 1.5;
+	new_pos.z = hitbox[0].z + 0.2;
 	data->player.physics.acceleration = new_acceleration;
 	data->player.physics.origin = new_pos;
 }
