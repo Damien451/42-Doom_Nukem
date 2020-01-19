@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/12 05:57:17 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/19 22:05:10 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ struct						s_doom
 */
 
 int							init_program(t_doom *data);
+void						init_game(t_doom *data, t_player *player);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
 void						leave_game(t_doom *data, t_player *player);

@@ -6,11 +6,12 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:01:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/11 13:28:59 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/13 20:17:15 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include "player.h"
 #include "libft.h"
 #include "menus.h"
 
@@ -29,7 +30,11 @@ static void	check_inputs_play(t_doom *data, t_button *btab, int but)
 				data->tabinputs.keycode[2])
 				data->button = data->button == but - 1 ? 0 : data->button + 1;
 			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
+			{
+				if (data->button == 0)
+					data->player.gamemode = CLASSIC_MODE;
 				switch_state(data, PLAY_MENU, btab[data->button].state);
+			}
 		}
 	}
 }

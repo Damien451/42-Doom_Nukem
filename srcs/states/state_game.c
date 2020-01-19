@@ -63,32 +63,6 @@ void		skybox(t_doom *data)
 	//}
 }
 
-static void	set_player_spawn(char map[64][64][64], t_vec3d *position)
-{
-	int		x;
-	int		y;
-	int		z;
-
-	z = -1;
-	while (++z < 64)
-	{
-		y = -1;
-		while (++y < 64)
-		{
-			x = -1;
-			while (++x < 64)
-			{
-				if (map[z][y][x] == SPAWNBLOCK)
-				{
-					position->x = z + 0.5;
-					position->y = y + 2.5;
-					position->z = x + 0.5;
-				}
-			}
-		}
-	}
-}
-
 static void	add_hud(t_doom *data)
 {
 	int			i;
