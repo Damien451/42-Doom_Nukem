@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/19 22:05:10 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/20 01:12:47 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,6 +292,12 @@ void						init_func_pointer(t_doom *data);
 */
 
 void						apply_motion(t_doom *data);
+void			check_y_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_y_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_x_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_x_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_z_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_z_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
 
 /*
 ** ====-* GAMEPLAY *-====

@@ -64,6 +64,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/clipping.c					\
+					$(CAMERA)/clipping2.c					\
 					$(CAMERA)/player_hitbox.c				\
 					$(EDITOR)/check_map_validity.c			\
 					$(EDITOR)/color_rectangle.c				\

@@ -98,7 +98,7 @@ int			state_game(t_doom *data)
 	if (data->player.camera.origin.x == -1)
 	{
 		SDL_SetRelativeMouseMode(SDL_TRUE);
-		set_player_spawn(data->map_to_save, &data->player.camera.origin);
+	//	set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	}
 	raytracing(data);
 	add_hud(data);
