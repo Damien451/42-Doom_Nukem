@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/04 20:41:51 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/21 19:29:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_text			t_text;
 typedef struct s_label			t_label;
 typedef struct s_point			t_point;
 typedef struct s_mixer			t_mixer;
+typedef struct s_scoreboard		t_scoreboard;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -128,8 +129,11 @@ t_label							label(char *str, SDL_Color color);
 
 void							load_textures(t_doom *data);
 
-void							put_string_on_renderer(t_doom *data, t_point pos
-	, t_label label, TTF_Font *font);
+void							put_string_on_renderer(t_doom *data,
+	t_point pos, t_label label, TTF_Font *font);
+
+void							put_string_with_shadow(t_doom *data,
+	t_point pos, t_label label, TTF_Font *font);
 
 int								anim_main_menu(t_doom *data, int total_frame
 	, int frame);
@@ -137,5 +141,8 @@ int								anim_main_menu(t_doom *data, int total_frame
 void							dictionnary_binary_tex(t_doom *data);
 
 void							init_map_colors(t_graphic_lib *lib);
+
+int								display_scores(t_doom *data,
+	t_scoreboard *scores, int frame);
 
 #endif

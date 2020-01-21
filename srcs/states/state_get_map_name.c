@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_get_map_name.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:16:29 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:19:25 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:14:41 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int				state_get_map_name(t_doom *data)
 		(map_name[0] == '\0' ? "Enter new map name" : map_name));
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, &input_field, 1);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
+	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
 		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	put_buttons_names(data, &input_field, (SDL_Color){0, 0, 0, 0}, 1);
 	SDL_RenderPresent(data->lib.renderer);

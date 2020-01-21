@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/10 18:02:20 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:15:34 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ static void	buttons_main_menu(t_button buttons[5])
 
 int			state_main_menu(t_doom *data)
 {
-	t_button	buttons[5];
-	static int	total_frame = 0;
-	static int	frame = 0;
-	static int	flag = 0;
+	t_button				buttons[5];
+	static int				total_frame = 0;
+	static int				frame = 0;
+	static int				flag = 0;
 	static unsigned long	time = 0;
 	long					wait;
 

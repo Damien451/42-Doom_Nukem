@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/20 01:12:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/21 12:43:22 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@
 # define Z_MAX				5
 # define Y_MID				6
 
+# define PLAYERS_SCOREBOARD	10
+
 /*
 ** ====-* TYPEDEFS *-====
 */
@@ -83,6 +85,7 @@ typedef struct s_bubble			t_bubble;
 typedef struct s_octree			t_octree;
 typedef struct s_light			t_light;
 typedef struct s_ray			t_ray;
+typedef struct s_scoreboard		t_scoreboard;
 typedef struct s_thread			t_thread;
 
 /*
@@ -100,6 +103,12 @@ struct						s_light
 	t_vec3d					position;
 	t_light					*next;
 	int						type;
+};
+
+struct						s_scoreboard
+{
+	char					playertags[PLAYERS_SCOREBOARD][15];
+	int						scores[PLAYERS_SCOREBOARD];
 };
 
 struct						s_ray
@@ -141,6 +150,7 @@ struct						s_doom
 	t_bubble				*bubble_list;
 	t_bubble				*lightning_list;
 	t_bubble				*lightning_list2;
+	t_scoreboard			scoreboard;
 	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					*map_name;
 	unsigned int			**skybox;
@@ -198,6 +208,7 @@ int							load_sounds(t_doom *data);
 char						*get_map_name(int map_to_show);
 int							count_maps(int *first);
 void						free_octree(t_octree *node);
+int							parse_scores_file(t_doom *data, int *first);
 
 /*
 ** ====-* GRAPHICS *-====

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_sound_settings.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:53 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:25:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:19:19 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	state_sound_settings_2(t_doom *data, int tab[3], t_button *btab)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_sound_bars(data, tab);
 	put_buttons_names(data, btab, (SDL_Color){0, 0, 0, 0}, 2);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
+	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
 		label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);
