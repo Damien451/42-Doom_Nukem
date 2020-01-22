@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:09:25 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/21 18:13:43 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:28:18 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static inline int	display_info(t_doom *data, char *str, int step)
 		info[59] = '.';
 	}
 	put_string_on_renderer(data, point(510, 1045),
-		label(info, (SDL_Color){0, 0, 0, 0}), data->lib.ptrfont[5]);
+		label(info, (SDL_Color){0, 0, 0, 0}), data->lib.ptrfont[4]);
 	free(str_step);
 	return (0);
 }

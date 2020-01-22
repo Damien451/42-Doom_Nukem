@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/21 19:29:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:27:42 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 # define NBR_TEXTURES_BLOCKS	41
 # define NBR_TEXTURES_MENU		5
-# define NBR_FONTS				6
+# define NBR_FONTS				5
 # define NB_IMG					2
 # define ID_START_BLOCK			30
 # define ID_FINISH_BLOCK		31
@@ -143,6 +143,6 @@ void							dictionnary_binary_tex(t_doom *data);
 void							init_map_colors(t_graphic_lib *lib);
 
 int								display_scores(t_doom *data,
-	t_scoreboard *scores, int frame);
+	t_scoreboard *scores, int frame, int *curr_score);
 
 #endif
