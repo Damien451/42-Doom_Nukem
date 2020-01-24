@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/19 23:20:18 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:35:20 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "octree.h"
 #include <pthread.h>
 #include <math.h>
+#include <sys/time.h>
 
 static inline int	init_thread_structure(t_doom *data, t_octree *position)
 {
@@ -83,8 +84,12 @@ static void			event_loop(t_doom *data)
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN
-			&& data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+			&& data->lib.event.key.keysym.sym == SDLK_ESCAPE
+			&& data->state == PLAYING)
 			switch_state(data, PLAYING, PAUSE);
+		else if(data->lib.event.type == SDL_KEYDOWN
+			&& data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+			switch_state(data, TEST_MODE, EDITOR);
 		else if (data->lib.event.type == SDL_MOUSEMOTION)
 			camera_mouse_motion(&data->player.physics.camera
 					, &data->lib.event.motion.xrel
@@ -95,8 +100,6 @@ static void			event_loop(t_doom *data)
 		camera_press_key(&data->lib.event, &data->tabinputs, data);
 	}
 }
-
-#include <sys/time.h>
 
 int					raytracing(t_doom *data)
 {
@@ -118,7 +121,6 @@ int					raytracing(t_doom *data)
 		return (1);
 	event_loop(data);
 	add_clipping_for_each_point(data, &data->player);
-	minimap(data->map_to_save, &data->player, &data->lib);
 	actualize_torch(data);
 	thread.data = data;
 	thread.frame = data->samplingt[data->sampling - 1][0] * 2 - 4;

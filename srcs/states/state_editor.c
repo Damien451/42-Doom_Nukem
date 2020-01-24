@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:09:25 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/22 18:28:18 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/23 18:04:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static inline void	set_quadrillage(t_doom *data, int step)
 	}
 }
 
-static inline int	parse_file(t_doom *data, char *str, int step)
+static inline int	parse_file(t_doom *data, char *str)
 {
 	int		fd;
 	int		ret;
@@ -90,9 +90,6 @@ static inline int	parse_file(t_doom *data, char *str, int step)
 		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
 			return (1);
 		ft_memcpy(data->map_to_save, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-		SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_BLEND);
-		set_quadrillage(data, step);
-		SDL_SetTextureBlendMode(data->lib.texture, SDL_BLENDMODE_NONE);
 	}
 	else
 	{
@@ -120,7 +117,7 @@ int					state_editor(t_doom *data)
 	if (!first)
 	{
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
-		parse_file(data, data->map_name, step);
+		parse_file(data, data->map_name);
 		init_editor(&data->lib.editor);
 		first++;
 	}

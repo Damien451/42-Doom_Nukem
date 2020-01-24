@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:37 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/22 18:48:34 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/23 14:14:06 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			state_scoreboard(t_doom *data)
 	if (!time)
 		time = SDL_GetTicks();
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels,
+	ft_memcpy(data->lib.image, data->lib.menu_texture[5]->pixels,
 		(WIDTH * HEIGHT) << 2);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),

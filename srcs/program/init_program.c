@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/22 18:21:58 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:59:15 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ static void	init_tab(t_doom *data)
 		i++;
 	}
 	SDL_FreeSurface(surface);
-	load_textures(data);
 }
 
 static int	init_fonts(t_doom *data)
@@ -299,6 +298,7 @@ int			init_sdl(t_doom *data)
 				, SDL_GetError());
 		return (1);
 	}
+	SDL_SetWindowIcon(data->lib.window, data->lib.menu_texture[6]);
 	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1
 					, SDL_RENDERER_ACCELERATED)))
 	{
@@ -344,6 +344,7 @@ int			init_program(t_doom *data)
 	init_func_pointer(data);
 	init_z_buffer(data);
 	init_meshes(data);
+	load_textures(data);
 	if (init_sdl(data))
 		return (1);
 	if (init_mixer(data))
