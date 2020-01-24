@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 15:40:44 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 18:50:35 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/20 06:52:57 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int		matrix44_vec3d_mul(double matrix[4][4], t_vec3d src, t_vec3d *result)
 		+ matrix[3][2];
 	tmp[3] = src.x * matrix[0][3] + src.y * matrix[1][3] + src.z * matrix[2][3]
 		+ matrix[3][3];
-	result->x = tmp[0];
-	result->y = tmp[1];
-	result->z = tmp[2];
+	result->x = tmp[0] / tmp[3];
+	result->y = tmp[1] / tmp[3];
+	result->z = tmp[2] / tmp[3];
 	return (0);
 }
 

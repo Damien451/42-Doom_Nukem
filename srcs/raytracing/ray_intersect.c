@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/10 14:48:19 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/20 06:46:19 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 		}
 		else if (ray.face >= 0)
 		{
+			if (data->z_buffer[ray.pos[0] * WIDTH + ray.pos[1]] != INFINITY)
+				return (0);
 			return (compute_lights(ray, data, tmp));
 		}
 		else

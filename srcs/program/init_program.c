@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 21:47:01 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/20 06:45:59 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,13 +328,13 @@ int			init_meshes(t_doom *data)
 	data->meshes = (t_mesh*)malloc(sizeof(t_mesh));
 	data->meshes->next = NULL;
 	data->meshes->triangle = (t_triangle*)malloc(sizeof(t_triangle));
-	data->meshes->triangle->vertices[0].x = 10;
+	data->meshes->triangle->vertices[0].x = -5;
 	data->meshes->triangle->vertices[0].y = 0;
-	data->meshes->triangle->vertices[0].z = 0;
-	data->meshes->triangle->vertices[1].x = 10;
+	data->meshes->triangle->vertices[0].z = 10;
+	data->meshes->triangle->vertices[1].x = 0;
 	data->meshes->triangle->vertices[1].y = 10;
-	data->meshes->triangle->vertices[1].z = 0;
-	data->meshes->triangle->vertices[2].x = 10;
+	data->meshes->triangle->vertices[1].z = 10;
+	data->meshes->triangle->vertices[2].x = 5;
 	data->meshes->triangle->vertices[2].y = 0;
 	data->meshes->triangle->vertices[2].z = 10;
 	data->meshes->triangle->next = NULL;

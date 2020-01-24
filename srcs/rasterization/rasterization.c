@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 14:01:14 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/12 07:43:35 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/20 06:54:45 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,10 @@ t_vec3d			perspective_proj(t_vec3d *vertex, double matrix[4][4])
 	t_vec3d	new;
 
 	matrix44_vec3d_mul(matrix, *vertex, &new);
-	if (new.z > 0)
-		new.z *= -1;
+	printf("new : x = %.2f, y = %.2f, z = %.2f\n", new.x, new.y, new.z);
 	projected.x = new.x / -new.z;
 	projected.y = new.y / -new.z;
 	projected.z = -new.z;
-	projected.x = 2.0 * projected.x / (tan(FOV / 2.0) * 2.0);
-	projected.y = 2.0 * projected.y / (tan(POV / 2.0) * 2.0);
-	projected.x = (projected.x + 1.0) / 2.0 * WIDTH;
-	projected.y = (1.0 - projected.y) / 2.0 * HEIGHT;
 	return (projected);
 }
 
@@ -148,20 +143,6 @@ int			convert_camera_to_matrix44(t_doom *data, double matrix[4][4])
 	matrix[1][3] = 0;
 	matrix[2][3] = 0;
 	matrix[3][3] = 1;
-/*
-	matrix[0][0] = 0.718762;
-	matrix[0][1] = 0.615033;
-	matrix[0][2] = -0.324214;
-	matrix[1][0] = -0.393732;
-	matrix[1][1] = 0.744416;
-	matrix[1][2] = 0.539277;
-	matrix[2][0] = 0.573024;
-	matrix[2][1] = -0.259959;
-	matrix[2][2] = 0.777216;
-	matrix[3][0] = 0.526967;
-	matrix[3][1] = 1.254234;
-	matrix[3][2] = -2.53215;
-*/
 	return (0);
 }
 
@@ -186,40 +167,24 @@ int			rasterization(t_doom *data, t_mesh *meshes)
 	double			camera_to_world[4][4];
 	int				j;
 
-	convert_camera_to_matrix44(data, camera_to_world);
-	matrix44_inverse(camera_to_world, world_to_camera);
-//	matrix44_identity(world_to_camera);
+//	convert_camera_to_matrix44(data, camera_to_world);
+//	matrix44_inverse(camera_to_world, world_to_camera);
+	matrix44_identity(world_to_camera);
+	world_to_camera[0][0] = 0;
+	world_to_camera[1][1] = 0;
 	set_z_buffer(data->z_buffer);
-/*	i = 0;
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			printf("i = %d, j = %d, norm = %f, inverse = %f\n", i, j, world_to_camera[i][j], camera_to_world[i][j]);
-			j++;
-		}
-		i++;
-	}
-*/	obj = meshes;
+	obj = meshes;
 	while (obj)
 	{
 		triangle = obj->triangle;
 		while (triangle)
 		{
-	/*		triangle->vertices[0].x = -0.315792;
-			triangle->vertices[0].y = 1.4489;
-			triangle->vertices[0].z = -2.48901;
-			triangle->vertices[2].x = -0.5;
-			triangle->vertices[2].y = 0.5;
-			triangle->vertices[2].z = -0.5;
-	*/		vertices[0] = perspective_proj(&triangle->vertices[0], world_to_camera);
+			vertices[0] = perspective_proj(&triangle->vertices[0], world_to_camera);
 			vertices[1] = perspective_proj(&triangle->vertices[1], world_to_camera);
 			vertices[2] = perspective_proj(&triangle->vertices[2], world_to_camera);
-		//	printf("\n\n");
-	//		printf("projected1: x = %.2f, y = %.2f\n", vertices[0].x, vertices[0].y);
-	//		printf("projected2: x = %.2f, y = %.2f\n", vertices[1].x, vertices[1].y);
-	//		printf("projected3: x = %.2f, y = %.2f\n", vertices[2].x, vertices[2].y);
+//			printf("projected1: x = %.2f, y = %.2f\n", vertices[0].x, vertices[0].y);
+//			printf("projected2: x = %.2f, y = %.2f\n", vertices[1].x, vertices[1].y);
+//			printf("projected3: x = %.2f, y = %.2f\n", vertices[2].x, vertices[2].y);
 			create_bounding_box(vertices, bbox);
 			loop_over_bounding_box(vertices, bbox, data->z_buffer, data->frame_buffer);
 			triangle = triangle->next;

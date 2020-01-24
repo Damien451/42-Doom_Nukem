@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:09:25 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:09:30 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/24 21:13:36 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,18 @@ static inline int	display_info(t_doom *data, char *str, int step)
 	return (0);
 }
 
-static inline void	set_quadrillage(t_doom *data, int step)
+void					*set_quadrillage2(void *thread)
 {
 	int			i;
 	int			j;
 	int			k;
 	double		alpha;
 	double		nbr;
+	int			step;
+	t_doom		*data;
 
+	step = ((t_thread*)thread)->frame;
+	data = ((t_thread*)thread)->data;
 	nbr = 1.0;
 	if (step > 0)
 		nbr = (1.0 / ((double)step + 1)) < 0.1 ? 0.1
@@ -62,16 +66,38 @@ static inline void	set_quadrillage(t_doom *data, int step)
 	alpha = (data->lib.editor.alpha == 10) ? nbr : 1;
 	while (++k <= step)
 	{
-		i = -1;
-		while (++i < SIZE_MAP)
+		i = ((t_thread*)thread)->num;
+		while (i < SIZE_MAP)
 		{
 			j = -1;
 			while (++j < SIZE_MAP)
 				if ((int)data->map_to_save[i][k][j] != 0)
 					color_rectangle(data, (t_vec3l){i, j, 0}, k, alpha);
+			i += NBR_THREAD;
 		}
 		alpha += nbr;
 	}
+	pthread_exit(0);
+}
+
+void				set_quadrillage(t_doom *data, int step)
+{
+	int			i;
+	t_thread	thread[NBR_THREAD];
+
+	i = 0;
+	while (i < NBR_THREAD)
+	{
+		thread[i].num = i;
+		thread[i].data = data;
+		thread[i].frame = step;
+		if (pthread_create(&thread[i].thread, NULL, (*set_quadrillage2), &thread[i]) < 0)
+			return ;
+		i++;
+	}
+	i = 0;
+	while (i < NBR_THREAD)
+		pthread_join(thread[i++].thread, NULL);
 }
 
 static inline int	parse_file(t_doom *data, char *str, int step)

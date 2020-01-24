@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/20 01:12:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/24 20:50:36 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ struct						s_thread
 	int						total_frame;
 	int						frame;
 	t_doom					*data;
+	t_vec3l					rectangle;
+	double					alpha;
 };
 
 struct						s_doom
