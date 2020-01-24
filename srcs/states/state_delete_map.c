@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_delete_map.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:08:27 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:09:11 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:08:06 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,10 @@ void		buttons_delmap(t_button buttons[2], char map_name[25])
 
 void		put_delmap_strings(t_doom *data)
 {
-	put_string_on_renderer(data, point(WIDTH / 1.99, HEIGHT / 3),
-		label("Be careful, the deletion is definitive !", (SDL_Color){0, 0, 0
-		, 0}), data->lib.ptrfont[2]);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 3),
+	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 3),
 		label("Be careful, the deletion is definitive !", (SDL_Color){255, 0, 0
 		, 0}), data->lib.ptrfont[2]);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
+	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
 		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 }
 

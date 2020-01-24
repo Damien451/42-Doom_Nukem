@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:20:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/06 19:42:43 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:15:09 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int			state_inputs_settings_menu(t_doom *data)
 	create_buttons_inputs(data, buttons, &first);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 14);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13)
+	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13)
 		, label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 14);
 	if (check_inputs_settings(data, 14, &first) != 0)

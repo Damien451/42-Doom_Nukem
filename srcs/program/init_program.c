@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/20 06:45:59 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/24 21:16:24 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ static void	init_tab(t_doom *data)
 		i++;
 	}
 	SDL_FreeSurface(surface);
-	load_textures(data);
 }
 
 static int	init_fonts(t_doom *data)
@@ -173,16 +172,13 @@ static int	init_fonts(t_doom *data)
 				"./font/coalition/Coalition_v2.ttf", 200)))
 		return (1);
 	if (!(data->lib.ptrfont[1] = TTF_OpenFont(
-				"./font/xolonium/Xolonium-Regular.ttf", 200)))
+				"./font/CGF_Locust_Resistance.ttf", 180)))
 		return (1);
 	if (!(data->lib.ptrfont[2] = TTF_OpenFont("./font/8th_Cargo.ttf", 35)))
 		return (1);
-	if (!(data->lib.ptrfont[3] = TTF_OpenFont(
-				"./font/After_the_Goldrush.ttf", 200)))
+	if (!(data->lib.ptrfont[3] = TTF_OpenFont("./font/8th_Cargo.ttf", 45)))
 		return (1);
-	if (!(data->lib.ptrfont[4] = TTF_OpenFont("./font/8th_Cargo.ttf", 37)))
-		return (1);
-	if (!(data->lib.ptrfont[5] = TTF_OpenFont(
+	if (!(data->lib.ptrfont[4] = TTF_OpenFont(
 				"./font/xolonium/Xolonium-Regular.ttf", 25)))
 		return (1);
 	init_tab(data);
@@ -302,6 +298,7 @@ int			init_sdl(t_doom *data)
 				, SDL_GetError());
 		return (1);
 	}
+	SDL_SetWindowIcon(data->lib.window, data->lib.menu_texture[6]);
 	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1
 					, SDL_RENDERER_ACCELERATED)))
 	{
@@ -323,7 +320,7 @@ int			init_z_buffer(t_doom *data)
 	return (0);
 }
 
-int			init_meshes(t_doom *data)
+void		init_meshes(t_doom *data)
 {
 	data->meshes = (t_mesh*)malloc(sizeof(t_mesh));
 	data->meshes->next = NULL;
@@ -347,6 +344,7 @@ int			init_program(t_doom *data)
 	init_func_pointer(data);
 	init_z_buffer(data);
 	init_meshes(data);
+	load_textures(data);
 	if (init_sdl(data))
 		return (1);
 	if (init_mixer(data))

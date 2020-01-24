@@ -61,6 +61,7 @@ LIBFT		= $(LIBDIR) -lft
 # **************************************************************************** #
 
 SRCS 		=		$(ANIM)/anim_main_menu.c				\
+					$(ANIM)/display_scores.c				\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/clipping.c					\
@@ -145,9 +146,11 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(UI)/get_default_inputs.c				\
 					$(UI)/minimap.c							\
 					$(UI)/parse_input_file.c				\
+					$(UI)/parse_scores_file.c				\
 					$(UI)/put_buttons_names.c				\
 					$(UI)/put_buttons_on_img.c				\
 					$(UI)/put_string_on_renderer.c			\
+					$(UI)/put_string_with_shadow.c			\
 					$(UI)/put_sound_bars.c					\
 					$(UI)/put_health_bar.c					\
 					add_points.c							\

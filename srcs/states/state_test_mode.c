@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:27:33 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/13 18:40:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:35:08 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int			state_test_mode(t_doom *data)
 	add_hud(data);
 	data->player.health = 1000;
 	put_health_bar(data);
+	minimap(data->map_to_save, &data->player, &data->lib);
 	display_inventory(&data->lib, &data->player);
 	update_physics(data);
-	minimap(data->map_to_save, &data->player, &data->lib);
 	if (data->photo)
 	{
 		data->photo = 0;

@@ -28,12 +28,9 @@ int			state_pause(t_doom *data)
 	if (ok == 1)
 	{
 		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-		put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
+		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
 			label("PAUSE", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
-		put_string_on_renderer(data, point(WIDTH / 1.99, HEIGHT / 3),
-			label("Press Escape to continue or Q to quit the game.",
-			(SDL_Color){0, 0, 0, 0}), data->lib.ptrfont[2]);
-		put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 3),
+		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 3),
 			label("Press Escape to continue or Q to quit the game.",
 			(SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
 		SDL_RenderPresent(data->lib.renderer);

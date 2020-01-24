@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 19:03:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/13 20:52:29 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:12:08 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,17 @@ static void	put_death_strings(t_doom *data, t_player *player)
 {
 	if (player->lifes > 0 || data->player.gamemode == FREEPLAY_MODE)
 	{
-		put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
+		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
 			label("YOU ARE DEAD", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
-		put_string_on_renderer(data, point(WIDTH / 1.99, HEIGHT / 3),
-			label("Press Enter to continue or Q to quit the game.",
-			(SDL_Color){0, 0, 0, 0}), data->lib.ptrfont[2]);
-		put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 3),
+		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 3),
 			label("Press Enter to continue or Q to quit the game.",
 			(SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
 	}
 	else
 	{
-		put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 13),
+		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
 			label("GAME OVER", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
-		put_string_on_renderer(data, point(WIDTH / 1.99, HEIGHT / 3),
-			label("Press any key to quit the game.",
-			(SDL_Color){0, 0, 0, 0}), data->lib.ptrfont[2]);
-		put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 3),
+		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 3),
 			label("Press any key to quit the game.",
 			(SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
 	}

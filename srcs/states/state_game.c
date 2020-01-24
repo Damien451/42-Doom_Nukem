@@ -103,6 +103,7 @@ int			state_game(t_doom *data)
 	raytracing(data);
 	add_hud(data);
 	put_health_bar(data);
+	minimap(data->map_to_save, &data->player, &data->lib);
 	display_inventory(&data->lib, &data->player);
 	update_physics(data);
 	if (data->photo)
