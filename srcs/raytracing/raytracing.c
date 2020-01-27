@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/23 17:35:20 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:57:08 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,34 +110,33 @@ int					raytracing(t_doom *data)
 	int				i;
 	static long		max = 0;
 
-	gettimeofday(&time, NULL);
-	wait = time.tv_sec * 1000000 + time.tv_usec;
+//	gettimeofday(&time, NULL);
+//	wait = time.tv_sec * 1000000 + time.tv_usec;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
 	data->actual_i = 2;
 	sun(data);
 	data->sampling = 4;
-	rasterization(data, data->meshes);
 	if (init_thread_structure(data, position) == 1)
 		return (1);
 	event_loop(data);
 	add_clipping_for_each_point(data, &data->player);
 	actualize_torch(data);
-	thread.data = data;
-	thread.frame = data->samplingt[data->sampling - 1][0] * 2 - 4;
-	thread.mutex = &data->mutex;
-	thread.ray.node = position;
-	thread.ray.origin = data->player.camera.origin;
-	thread.ray.find_parent[0] = &find_parent_x;
-	thread.ray.find_parent[1] = &find_parent_y;
-	thread.ray.find_parent[2] = &find_parent_z;
-	launch_rays2(&thread);
-	gettimeofday(&time, NULL);
-	wait = time.tv_sec * 1000000 + time.tv_usec - wait;
-	if (wait > max)
-	{
-		printf("time to compute everything = %ld microseconds\n", wait);
-		max = wait;
-	}
+//	thread.data = data;
+//	thread.frame = data->samplingt[data->sampling - 1][0] * 2 - 4;
+//	thread.mutex = &data->mutex;
+//	thread.ray.node = position;
+//	thread.ray.origin = data->player.camera.origin;
+//	thread.ray.find_parent[0] = &find_parent_x;
+///	thread.ray.find_parent[1] = &find_parent_y;
+//	thread.ray.find_parent[2] = &find_parent_z;
+//	launch_rays2(&thread);
+//	gettimeofday(&time, NULL);
+//	wait = time.tv_sec * 1000000 + time.tv_usec - wait;
+//	if (wait > max)
+//	{
+//		printf("time to compute everything = %ld microseconds\n", wait);
+//		max = wait;
+//	}
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(data->thread[i++].thread, NULL);

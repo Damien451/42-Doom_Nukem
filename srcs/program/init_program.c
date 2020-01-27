@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/24 21:16:24 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/26 17:02:58 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,7 @@ int			init_sdl(t_doom *data)
 	}
 	if (!(data->lib.window = SDL_CreateWindow("Doom Nukem"
 					, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH
-					, HEIGHT, SDL_WINDOW_SHOWN)))
+					, HEIGHT, SDL_WINDOW_FULLSCREEN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"
 				, SDL_GetError());
@@ -325,13 +325,13 @@ void		init_meshes(t_doom *data)
 	data->meshes = (t_mesh*)malloc(sizeof(t_mesh));
 	data->meshes->next = NULL;
 	data->meshes->triangle = (t_triangle*)malloc(sizeof(t_triangle));
-	data->meshes->triangle->vertices[0].x = -5;
+	data->meshes->triangle->vertices[0].x = 5;
 	data->meshes->triangle->vertices[0].y = 0;
 	data->meshes->triangle->vertices[0].z = 10;
-	data->meshes->triangle->vertices[1].x = 0;
+	data->meshes->triangle->vertices[1].x = 10;
 	data->meshes->triangle->vertices[1].y = 10;
 	data->meshes->triangle->vertices[1].z = 10;
-	data->meshes->triangle->vertices[2].x = 5;
+	data->meshes->triangle->vertices[2].x = 15;
 	data->meshes->triangle->vertices[2].y = 0;
 	data->meshes->triangle->vertices[2].z = 10;
 	data->meshes->triangle->next = NULL;

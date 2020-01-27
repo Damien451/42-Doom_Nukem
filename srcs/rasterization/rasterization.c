@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 14:01:14 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/20 06:54:45 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/26 16:46:59 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ t_vec3d			perspective_proj(t_vec3d *vertex, double matrix[4][4])
 	t_vec3d	new;
 
 	matrix44_vec3d_mul(matrix, *vertex, &new);
-	printf("new : x = %.2f, y = %.2f, z = %.2f\n", new.x, new.y, new.z);
-	projected.x = new.x / -new.z;
-	projected.y = new.y / -new.z;
-	projected.z = -new.z;
+//	printf("new : x = %.2f, y = %.2f, z = %.2f\n", new.x, new.y, new.z);
+	projected.x = new.x / new.z * 1080 * FOV;
+	projected.y = new.y / new.z * 1920 * POV;
+	projected.z = new.z;
 	return (projected);
 }
 
@@ -38,6 +38,7 @@ int			create_bounding_box(t_vec3d vertices[3], t_vec3d bbox[2])
 	i = 0;
 	while (i < 3)
 	{
+	//	printf("%.2f || %.2f\n", vertices[i].x, vertices[i].y);
 		if (vertices[i].x < bbox[0].x)
 			bbox[0].x = vertices[i].x;
 		if (vertices[i].x > bbox[1].x)
@@ -170,8 +171,6 @@ int			rasterization(t_doom *data, t_mesh *meshes)
 //	convert_camera_to_matrix44(data, camera_to_world);
 //	matrix44_inverse(camera_to_world, world_to_camera);
 	matrix44_identity(world_to_camera);
-	world_to_camera[0][0] = 0;
-	world_to_camera[1][1] = 0;
 	set_z_buffer(data->z_buffer);
 	obj = meshes;
 	while (obj)

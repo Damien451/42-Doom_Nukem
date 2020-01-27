@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:31:51 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/20 06:41:05 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/26 18:39:01 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,6 @@ void			add_clipping_for_each_point(t_doom *data, t_player *player)
 	hitbox[1].y = hitbox[0].y + 1.7;
 	hitbox[1].z = hitbox[0].z + 0.4;
 	new_acceleration = player->acceleration;
-//	if (new_acceleration.x < 0)
-//		check_x_min(data, &new_acceleration, hitbox);
-//	else
-//		check_x_max(data, &new_acceleration, hitbox);
-//	if (new_acceleration.z < 0)
-//		check_z_min(data, &new_acceleration, hitbox);
-//	else
-//		check_z_max(data, &new_acceleration, hitbox);
 	if (new_acceleration.y < 0)
 		check_y_min(data, &new_acceleration, hitbox);
 	else
@@ -86,10 +78,10 @@ void			add_clipping_for_each_point(t_doom *data, t_player *player)
 		check_z_min(data, &new_acceleration, hitbox);
 	else
 		check_z_max(data, &new_acceleration, hitbox);
-	if (new_acceleration.x < 0)
-		check_x_min(data, &new_acceleration, hitbox);
-	else
-		check_x_max(data, &new_acceleration, hitbox);
+//	if (new_acceleration.x < 0)
+//		check_x_min(data, &new_acceleration, hitbox);
+//	else
+//		check_x_max(data, &new_acceleration, hitbox);
 	new_pos.x = hitbox[0].x + 0.2;
 	new_pos.y = hitbox[0].y + 1.5;
 	new_pos.z = hitbox[0].z + 0.2;

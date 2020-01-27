@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:43 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 16:37:48 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/27 16:10:27 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void		get_default_sounds(t_doom *data)
 {
-	data->mix->v_master = 0.0;
+	data->mix->v_master = 0.88;
 	data->mix->v_music = 0.8;
 	data->mix->v_sound_effects = 0.8;
 }

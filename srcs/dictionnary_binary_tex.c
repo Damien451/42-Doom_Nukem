@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:41:11 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/19 20:58:25 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/26 17:23:41 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void			dictionnary_binary_tex(t_doom *data)
 	{
 		sprintf(data->lib.texture_dic[i]
 			, "/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/%d.binary", i);
-		//printf("%s\n",data->lib.texture_dic[i]);
 		i++;
 	}
 }

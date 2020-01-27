@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 17:41:42 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/26 18:30:23 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void		camera_event_translate(t_doom *data)
 					, data->player.speed));
 	}
 	if (!(data->lib.cam_keys & WATER))
-		tmp.y = data->player.acceleration.y - 0.0225;
+		tmp.y = data->player.acceleration.y - 0.0450;
 	clamp_acceleration(&tmp, data->lib.cam_keys & COURSE ? 0.5 : 0);
 	data->player.acceleration = tmp;
 }
