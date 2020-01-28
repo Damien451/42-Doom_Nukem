@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 18:30:23 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/28 15:27:06 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void		camera_event_translate(t_doom *data)
 {
 	t_vec3d		tmp;
 
-	tmp = vec3d_scalar(data->player.acceleration, 0.8);
+	tmp = vec3d_scalar(data->player.acceleration, 0.7);
 	if (data->lib.cam_keys & CAMERA_TR_LEFT)
 	{
 		tmp = vec3d_sub(tmp, vec3d_scalar(data->player.camera.right
@@ -170,13 +170,16 @@ static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *da
 		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[6])
 			data->lib.cam_keys &= ~COURSE;
 		else if (event->key.keysym.sym == SDLK_LCTRL)
-			data->lib.cam_keys &= ~SQUAT;
+		{
+			data->lib.cam_keys |= SQUAT;
+			data->lib.cam_keys &= ~CRAWL;
+		}
 	}
 }
 
 void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 {
-	data->player.speed = 0.0375 * (data->lib.cam_keys & COURSE ? 1.5 : 1) * (data->lib.cam_keys & SQUAT ? 0.2 : 1);
+	data->player.speed = 0.0375 * (data->lib.cam_keys & COURSE ? 2 : 1) * (data->lib.cam_keys & CRAWL ? 0.25 : 1);
 	if (event->key.type == SDL_KEYDOWN)
 	{
 		if ((unsigned int)event->key.keysym.sym == inputs->keycode[1])
@@ -189,9 +192,11 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 			data->lib.cam_keys |= CAMERA_TR_BACK;
 		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[6])
 			data->lib.cam_keys |= COURSE;
-		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[9]
-			&& data->player.acceleration.y == 0 && !(data->lib.cam_keys & WATER))
-			data->player.acceleration.y = 0.28;
+		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[9])
+		{
+			if (data->player.acceleration.y == 0 && !(data->lib.cam_keys & WATER) && !(data->lib.cam_keys & SQUAT) && !(data->lib.cam_keys & CRAWL))
+				data->player.acceleration.y = 0.4;
+		}
 		else if (event->key.keysym.sym == SDLK_p)
 		{
 			if (WATER & data->lib.cam_keys)
@@ -200,7 +205,7 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 				data->lib.cam_keys |= WATER;
 		}
 		else if (event->key.keysym.sym == SDLK_LCTRL)
-			data->lib.cam_keys |= SQUAT;
+			data->lib.cam_keys |= CRAWL;
 		else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
 			data->photo = 1;
 		else if (event->key.keysym.sym == SDLK_KP_PLUS)

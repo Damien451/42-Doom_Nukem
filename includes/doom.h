@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/24 21:16:32 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/28 14:22:43 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,12 +305,12 @@ void						init_func_pointer(t_doom *data);
 */
 
 void						apply_motion(t_doom *data);
-void			check_y_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
-void			check_y_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
-void			check_x_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
-void			check_x_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
-void			check_z_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
-void			check_z_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_y_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
+void			check_y_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
+void			check_x_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
+void			check_x_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
+void			check_z_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
+void			check_z_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
 
 /*
 ** ====-* GAMEPLAY *-====

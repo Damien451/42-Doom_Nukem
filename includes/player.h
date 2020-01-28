@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/14 19:10:01 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/28 10:39:33 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 # define COURSE				0x10l
 # define WATER				0x20l
 # define SQUAT				0x40l
-# define DESTROY			0x80l
+# define CRAWL				0x80l
+# define DESTROY			0x100l
 
 # define GRAVITY			1.0
 # define ACCELERATION		0.003333333333333

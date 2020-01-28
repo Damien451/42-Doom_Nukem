@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:41:11 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 20:44:33 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/27 20:40:19 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void    put_string_on_renderer(t_doom *data, t_point pos, t_label label
     i = 0;
     dest.w = data->lib.surface->w;
     dest.h = data->lib.surface->h;
-    printf("pitch = %d, width = %ld\n", data->lib.surface->pitch, dest.w);
+//    printf("pitch = %d, width = %ld\n", data->lib.surface->pitch, dest.w);
     dest.x = pos.x - dest.w / 2;
     dest.y = pos.y;
     i = dest.y;
