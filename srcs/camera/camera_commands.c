@@ -6,12 +6,13 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/28 15:27:06 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/29 15:40:44 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "player.h"
 #include "doom.h"
+#include "graphic_lib.h"
 #include "inputs.h"
 #include "vec3.h"
 #include <math.h>
@@ -210,7 +211,7 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 			data->photo = 1;
 		else if (event->key.keysym.sym == SDLK_KP_PLUS)
 		{
-			if (data->player.inventory.selected_block < 41)
+			if (data->player.inventory.selected_block < NBR_TEXTURES_BLOCKS)
 				data->player.inventory.selected_block++;
 			else
 				data->player.inventory.selected_block = 1;

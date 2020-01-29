@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:05:19 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/21 18:18:40 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/26 19:14:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			state_settings_menu(t_doom *data)
 	SDL_ShowCursor(SDL_FALSE);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 3);
-	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
+	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
 		label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 3);
 	if (check_inputs_settings(data, buttons, 3) != 0)

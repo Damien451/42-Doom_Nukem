@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 17:19:54 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/24 17:31:55 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:54:03 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	put_string_at_exact_pos(t_doom *data, t_point pos, t_label label
 	src.y = 0;
 	dest = src;
 	dest.x = pos.x;
-	dest.y = pos.y;
+	dest.y = pos.y - src.h / 2;
 	SDL_RenderCopy(data->lib.renderer, text, &src, &dest);
 	SDL_DestroyTexture(text);
 }

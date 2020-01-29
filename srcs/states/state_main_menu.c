@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/21 18:15:34 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/26 19:08:16 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			state_main_menu(t_doom *data)
 	buttons_main_menu(buttons);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 5);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),
+	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 6),
 		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 5);
 	check_inputs_menu(data, buttons, 5);

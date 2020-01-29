@@ -5,14 +5,14 @@
 #include <unistd.h>
 #include "libft.h"
 
-char	*get_map_name(int map_to_show)
+char	*get_map_name(int map_to_show, char *dir_path)
 {
 	DIR				*directory;
 	struct dirent	*maps;
 
 	directory = NULL;
 	maps = NULL;
-	if (!(directory = opendir("maps")))
+	if (!(directory = opendir(dir_path)))
 		return ("Error opening directory");
 	while ((maps = readdir(directory)))
 	{
@@ -28,7 +28,7 @@ char	*get_map_name(int map_to_show)
 	return ("No map in directory");
 }
 
-int		count_maps(int *first)
+int		count_maps(int *first, char *dir_path)
 {
 	int				nbmaps;
 	DIR				*directory;
@@ -37,7 +37,7 @@ int		count_maps(int *first)
 	directory = NULL;
 	maps = NULL;
 	nbmaps = 0;
-	if (!(directory = opendir("maps")))
+	if (!(directory = opendir(dir_path)))
 		return (-1);
 	while ((maps = readdir(directory)))
 		if (maps->d_name[0] != '.')

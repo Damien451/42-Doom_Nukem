@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 18:29:02 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/29 15:06:49 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,12 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 			ray.origin = ray.intersect;
 			if (ray.node->leaf == BREAKABLE)
 			{
-				if ((length = hit_cylinder(&ray, data)) != 200)
-					return ((ray.color << 16) | (ray.color << 8) | ray.color);
+				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 41)
+					if ((length = hit_sphere(&ray, data)) != 200)
+						return ((ray.color << 16) | (ray.color << 8) | ray.color);
+				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 42)
+					if ((length = hit_cylinder(&ray, data)) != 200)
+						return ((ray.color << 16) | (ray.color << 8) | ray.color);
 			}
 			i = 0;
 		}

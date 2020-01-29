@@ -63,26 +63,24 @@ void		copy_step(t_doom *data, int step)
 
 void		pick_element(t_doom *data, int x, int y)
 {
-	/*int		i;
+	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
 	x -= 1052;
 	y -= 368;
-	while ((i + 1) * 85 < x)
+	while ((i + 1) * 85 < x && i < 2)
 		++i;
-	while ((j + 1) * 83 < y)
-		++j;*/
-	x = 0;
-	y = 0;
+	while ((j + 1) * 83 < y && j < 2)
+		++j;
 	if (data->lib.editor.pickmode == 0)
-		data->lib.editor.picked_texture = 40;
+		data->lib.editor.picked_texture = 40 + i;
 	else if (data->lib.editor.pickmode == 1)
-		data->lib.editor.block1 = 40;
+		data->lib.editor.block1 = 40 + i;
 	else if (data->lib.editor.pickmode == 2)
-		data->lib.editor.block2 = 40;
+		data->lib.editor.block2 = 40 + i;
 	else if (data->lib.editor.pickmode == 3)
-		data->lib.editor.blocktoremove = 40;
+		data->lib.editor.blocktoremove = 40 + i;
 	data->lib.editor.pickmode = 0;
 }

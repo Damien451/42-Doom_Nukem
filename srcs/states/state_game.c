@@ -33,7 +33,7 @@ void		skybox(t_doom *data)
 		ft_strcat(ft_strcat(ft_strcat(full_originpath, originpath), ft_itoa(k)), ".rgb");
 		ft_strcat(ft_strcat(ft_strcat(full_destpath, destpath), ft_itoa(k)), ".binary");
 		tab[0] = 0;*/
-		fd = open("./cut_sandstone.rgb", O_RDONLY);
+		fd = open("stone_cylinder.rgb", O_RDONLY);
 		read(fd, tabi, 128*128*3);
 		close(fd);
 		i = 0;
@@ -55,7 +55,7 @@ void		skybox(t_doom *data)
 		}
 		//if (!ok)
 		//{
-		i = open("sandstone.binary", O_TRUNC | O_WRONLY | O_CREAT, 0777);
+		i = open("stone_cylinder.binary", O_TRUNC | O_WRONLY | O_CREAT, 0777);
 		write(i, tabl, 128*128*4);
 		close(i);
 		ok++;
@@ -95,11 +95,6 @@ int			state_game(t_doom *data)
 
 	gettimeofday(&time, NULL);
 	wait = time.tv_sec * 1000000 + time.tv_usec;
-	if (data->player.camera.origin.x == -1)
-	{
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-	//	set_player_spawn(data->map_to_save, &data->player.camera.origin);
-	}
 	raytracing(data);
 	add_hud(data);
 	put_health_bar(data);

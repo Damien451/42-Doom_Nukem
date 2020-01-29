@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/13 20:28:52 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/29 20:44:03 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,6 @@
 #include "menus.h"
 #include <fcntl.h>
 #include <unistd.h>
-
-static int	load_map(t_doom *data)
-{
-	int			fd;
-	int			ret;
-	char		strtomap[SIZE_MAP * SIZE_MAP * SIZE_MAP];
-	static char	map_path[50];
-
-	ft_bzero(map_path, 50);
-	ft_strcat(ft_strcat(map_path, "./maps/"), data->map_name);
-	if ((fd = open(map_path, O_RDONLY)) != -1)
-	{
-		ret = read(fd, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-		close(fd);
-		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
-			return (1);
-		ft_memcpy(data->map_to_save, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-	}
-	else
-		return (1);
-	data->player.gamemode = FREEPLAY_MODE;
-	return (0);
-}
 
 static void	check_inputs2(t_doom *data, int nbmaps, int *first)
 {
@@ -83,8 +60,11 @@ static void	check_inputs(t_doom *data, t_button *btab, int *first,
 				switch_state(data, PLAY_EDIT_MAP, btab[data->button].state);
 			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 			{
-				if (load_map(data) == 0)
+				if (load_map(data, data->map_name) == 0)
+				{
+					init_game(data, &data->player);
 					switch_state(data, PLAY_EDIT_MAP, PLAYING);
+				}
 			}
 			else
 				check_inputs2(data, tab[1], first);
@@ -114,14 +94,14 @@ int			state_play_edit_map(t_doom *data)
 		, (WIDTH * HEIGHT) << 2);
 	if (!first)
 	{
-		nbmaps = count_maps(&first);
-		ft_strcpy(map_name, get_map_name(data->map_to_show));
+		nbmaps = count_maps(&first, "maps");
+		ft_strcpy(map_name, get_map_name(data->map_to_show, "maps"));
 		data->map_name = map_name;
 	}
 	buttons_play_edit_map(buttons, map_name);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 2);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),
+	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 6),
 		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 2);
 	check_inputs(data, buttons, &first, (int[2]){2, nbmaps});

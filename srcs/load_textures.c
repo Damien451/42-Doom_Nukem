@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/23 20:16:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/29 15:23:30 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void		load_textures_blocks2(SDL_Surface *textures[NBR_TEXTURES_BLOCKS])
 	textures[38] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak_planks.bmp");
 	textures[39] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/dirt.bmp");
 	textures[40] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/glowstone.bmp");
+	textures[41] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_cylinder.bmp");
 }
 
 static void		load_textures_blocks(SDL_Surface *textures[NBR_TEXTURES_BLOCKS])

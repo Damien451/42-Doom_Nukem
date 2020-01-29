@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:01:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/13 20:17:15 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/29 20:06:21 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	check_inputs_play(t_doom *data, t_button *btab, int but)
 			{
 				if (data->button == 0)
 					data->player.gamemode = CLASSIC_MODE;
+				else if (data->button == 1)
+					data->player.gamemode = FREEPLAY_MODE;
 				switch_state(data, PLAY_MENU, btab[data->button].state);
 			}
 		}
@@ -48,7 +50,7 @@ int			state_play_menu(t_doom *data)
 		, (WIDTH * HEIGHT) << 2);
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_MENU, "CLASSIC MODE");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAYING, "CLASSIC MODE");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_EDIT_MAP, "CUSTOM MAPS");
@@ -57,7 +59,7 @@ int			state_play_menu(t_doom *data)
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), MAIN_MENU, "RETURN");
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 3);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 8),
+	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 6),
 		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 3);
 	check_inputs_play(data, buttons, 3);

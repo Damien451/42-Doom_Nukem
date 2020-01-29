@@ -11,7 +11,11 @@ static inline void	mouse_editor_commands4(t_doom *data, int x, int *step)
 	else if (x >= 1178 && data->lib.event.button.y >= 1034
 		&& x <= 1225 && data->lib.event.button.y <= 1062)
 		if (check_map_validity(data) == 0)
+		{
+			data->player.gamemode = TEST_MODE;
+			init_game(data, &data->player);
 			switch_state(data, EDITOR, TEST_MODE);
+		}
 }
 
 static inline void	mouse_editor_commands3(t_doom *data, int *step)

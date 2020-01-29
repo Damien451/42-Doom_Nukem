@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:10:04 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/21 18:14:04 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/29 20:48:28 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	check_inputs_menu(t_doom *data, t_button *btab
 				!(tab[1] == 0 && data->button == 0))
 			{
 				*first = 0;
+				printf("map = %s\n", data->map_name);
 				switch_state(data, EDITOR_MENU, btab[data->button].state);
 			}
 			else
@@ -96,14 +97,16 @@ int			state_editor_menu(t_doom *data)
 		(WIDTH * HEIGHT) << 2);
 	if (!first)
 	{
-		nbmaps = count_maps(&first);
-		ft_strcpy(map_name, get_map_name(data->map_to_show));
+		ft_bzero(map_name, 25);
+		if ((nbmaps = count_maps(&first, "maps")) == -1)
+			switch_state(data, EDITOR_MENU, MAIN_MENU);
+		ft_strcpy(map_name, get_map_name(data->map_to_show, "maps"));
+		data->map_name = map_name;
 	}
 	buttons_editor_menu(buttons, map_name);
-	data->map_name = map_name;
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 4);
-	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
+	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
 		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 4);
 	check_inputs_menu(data, buttons, &first, (int[2]){4, nbmaps});

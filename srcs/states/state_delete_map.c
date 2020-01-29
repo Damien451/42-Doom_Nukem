@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:08:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/21 18:08:06 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/26 19:11:13 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		put_delmap_strings(t_doom *data)
 	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 3),
 		label("Be careful, the deletion is definitive !", (SDL_Color){255, 0, 0
 		, 0}), data->lib.ptrfont[2]);
-	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 13),
+	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
 		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 }
 
@@ -99,8 +99,8 @@ int			state_delete_map(t_doom *data)
 
 	if (!first)
 	{
-		nbmaps = count_maps(&first);
-		ft_strcpy(map_name, get_map_name(data->map_to_show));
+		nbmaps = count_maps(&first, "maps");
+		ft_strcpy(map_name, get_map_name(data->map_to_show, "maps"));
 	}
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels

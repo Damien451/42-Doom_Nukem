@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/28 14:22:43 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/29 20:12:05 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@
 # define Y_MID				6
 
 # define PLAYERS_SCOREBOARD	10
+
+# define NBR_CLASSIC_MAPS 12
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -205,12 +207,14 @@ void						init_game(t_doom *data, t_player *player);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
 void						leave_game(t_doom *data, t_player *player);
+int							load_map(t_doom *data, char *map_name);
 void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
-char						*get_map_name(int map_to_show);
-int							count_maps(int *first);
+char						*get_map_name(int map_to_show, char *dir_path);
+int							count_maps(int *first, char *dir_path);
 void						free_octree(t_octree *node);
 int							parse_scores_file(t_doom *data, int *first);
+void						select_next_level(t_doom *data);
 
 /*
 ** ====-* GRAPHICS *-====

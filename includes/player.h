@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/28 10:39:33 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/29 19:19:30 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ struct						s_player
 	int						score;
 	int						lifes;
 	int						gamemode;
+	int						levels_left;
 	t_vec3d					position;
 	t_vec3d					acceleration;
 	t_hitbox				hitbox[12];

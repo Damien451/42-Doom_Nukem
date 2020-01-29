@@ -95,7 +95,9 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/init_program.c					\
 					$(PROG)/leave_program.c					\
 					$(PROG)/leave_game.c					\
+					$(PROG)/load_map.c						\
 					$(PROG)/program.c						\
+					$(PROG)/select_next_level.c				\
 					$(RAST)/rasterization.c					\
 					$(RT)/add_texture_neg.c					\
 					$(RT)/add_texture_pos.c					\

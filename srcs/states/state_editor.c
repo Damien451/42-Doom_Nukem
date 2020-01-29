@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:09:25 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/24 21:16:09 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/29 20:19:04 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static inline int	display_info(t_doom *data, char *str, int step)
 		info[58] = '.';
 		info[59] = '.';
 	}
-	put_string_on_renderer(data, point(510, 1045),
+	put_string_on_renderer(data, point(WIDTH / 3.9, HEIGHT / 1.018),
 		label(info, (SDL_Color){0, 0, 0, 0}), data->lib.ptrfont[4]);
 	free(str_step);
 	return (0);
@@ -100,31 +100,6 @@ void				set_quadrillage(t_doom *data, int step)
 		pthread_join(thread[i++].thread, NULL);
 }
 
-static inline int	parse_file(t_doom *data, char *str)
-{
-	int		fd;
-	int		ret;
-	char	strtomap[SIZE_MAP * SIZE_MAP * SIZE_MAP];
-	char	full_path[50];
-
-	ft_bzero(full_path, 50);
-	ft_strcat(ft_strcat(full_path, "./maps/"), str);
-	if ((fd = open(full_path, O_RDONLY)) != -1)
-	{
-		ret = read(fd, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-		close(fd);
-		if (ret != SIZE_MAP * SIZE_MAP * SIZE_MAP)
-			return (1);
-		ft_memcpy(data->map_to_save, strtomap, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-	}
-	else
-	{
-		ft_memset(data->lib.image, 0, HEIGHT * WIDTH * 4);
-		ft_memset(data->map_to_save, 0, SIZE_MAP * SIZE_MAP * SIZE_MAP);
-	}
-	return (0);
-}
-
 static void			init_editor(t_editor *editor)
 {
 	editor->picked_texture = 0;
@@ -143,7 +118,8 @@ int					state_editor(t_doom *data)
 	if (!first)
 	{
 		ft_memset(data->lib.image, 0, (HEIGHT * WIDTH) << 2);
-		parse_file(data, data->map_name);
+		if (load_map(data, data->map_name) != 0)
+			switch_state(data, EDITOR, EDITOR_MENU);
 		init_editor(&data->lib.editor);
 		first++;
 	}
