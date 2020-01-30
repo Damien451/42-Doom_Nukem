@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:31:51 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/28 17:02:43 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/30 15:13:51 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ void			add_clipping_for_each_point(t_doom *data, t_player *player)
 		check_y_min(data, &new_acceleration, hitbox, y);
 	else
 		check_y_max(data, &new_acceleration, hitbox, y);
-	if (new_acceleration.z < 0)
-		check_z_min(data, &new_acceleration, hitbox, 0.4);
-	else
-		check_z_max(data, &new_acceleration, hitbox, 0.4);
 	if (new_acceleration.x < 0)
 		check_x_min(data, &new_acceleration, hitbox, 0.4);
 	else
 		check_x_max(data, &new_acceleration, hitbox, 0.4);
+	if (new_acceleration.z < 0)
+		check_z_min(data, &new_acceleration, hitbox, 0.4);
+	else
+		check_z_max(data, &new_acceleration, hitbox, 0.4);
 	new_pos.x = hitbox[0].x + 0.2;
 	new_pos.z = hitbox[0].z + 0.2;
 	new_pos.y = hitbox[0].y + y - 0.2;

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 17:02:58 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/30 11:50:46 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,7 @@ int			init_sdl(t_doom *data)
 	}
 	if (!(data->lib.window = SDL_CreateWindow("Doom Nukem"
 					, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH
-					, HEIGHT, SDL_WINDOW_FULLSCREEN)))
+					, HEIGHT, SDL_WINDOW_SHOWN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"
 				, SDL_GetError());
