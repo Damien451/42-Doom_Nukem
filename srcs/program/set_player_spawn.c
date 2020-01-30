@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   select_next_level.c                                :+:      :+:    :+:   */
+/*   set_player_spawn.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/29 19:00:53 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/30 19:37:45 by dacuvill         ###   ########.fr       */
+/*   Created: 2020/01/30 19:32:19 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/01/30 19:32:42 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-#include <time.h>
 
-void	select_next_level(t_doom *data)
+void		set_player_spawn(char map[64][64][64], t_vec3d *position)
 {
-	static char	randmap[25];
-	int			randnumber;
+	int		x;
+	int		y;
+	int		z;
 
-	ft_bzero(randmap, 25);
-	randnumber = rand() % NBR_CLASSIC_MAPS;
-	ft_strcpy(randmap, get_map_name(randnumber, "maps"));
-	data->map_name = randmap;
-	load_map(data, data->map_name);
-	free_octree(data->octree);
-	create_octree(data);
-	set_player_spawn(data->map_to_save, &data->player.camera.origin);
+	z = -1;
+	while (++z < 64)
+	{
+		y = -1;
+		while (++y < 64)
+		{
+			x = -1;
+			while (++x < 64)
+			{
+				if (map[z][y][x] == SPAWNBLOCK)
+				{
+					position->x = z + 0.5;
+					position->y = y + 2.7;
+					position->z = x + 0.5;
+				}
+			}
+		}
+	}
 }

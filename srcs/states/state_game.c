@@ -101,6 +101,9 @@ int			state_game(t_doom *data)
 	minimap(data->map_to_save, &data->player, &data->lib);
 	display_inventory(&data->lib, &data->player);
 	update_physics(data);
+	if (data->map_to_save[(int)data->player.camera.origin.x]
+		[(int)data->player.camera.origin.y - 2][(int)data->player.camera.origin.z] == ID_FINISH_BLOCK + 1)
+		switch_state(data, PLAYING, FINISHED);
 	if (data->photo)
 	{
 		data->photo = 0;

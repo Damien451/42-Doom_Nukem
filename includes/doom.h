@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/29 20:12:05 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:33:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,27 @@
 # define FOV				1.047197551196598
 # define POV				0.593411945678072
 
+# define NBR_STATES			19
 # define RUNNING			1
 # define START				0
 # define PLAYING			1
 # define PAUSE				2
 # define DEATH				3
-# define MAIN_MENU			4
-# define PLAY_MENU			5
-# define PLAY_EDIT_MAP		6
-# define EDITOR_MENU		7
-# define EDITOR				8
-# define GET_MAP_NAME		9
-# define DELETE_MAP			10
-# define SCORES				11
-# define SETTINGS			12
-# define SETTINGS_INPUTS	13
-# define SETTINGS_SOUND		14
-# define TEST_MODE			15
-# define GET_INPUT			16
-# define LEAVING			17
+# define FINISHED			4
+# define MAIN_MENU			5
+# define PLAY_MENU			6
+# define PLAY_EDIT_MAP		7
+# define EDITOR_MENU		8
+# define EDITOR				9
+# define GET_MAP_NAME		10
+# define DELETE_MAP			11
+# define SCORES				12
+# define SETTINGS			13
+# define SETTINGS_INPUTS	14
+# define SETTINGS_SOUND		15
+# define TEST_MODE			16
+# define GET_INPUT			17
+# define LEAVING			18
 
 # define SUN				0
 # define PLAYER				1
@@ -161,7 +163,7 @@ struct						s_doom
 	long					button;
 	long					state;
 	int						running;
-	int						(*state_f[18])(t_doom *);
+	int						(*state_f[NBR_STATES])(t_doom *);
 	t_octree				*octree;
 	t_octree				*octree_model;
 	int						load_page[2];
@@ -202,6 +204,7 @@ struct						s_doom
 ** ====-* PROGRAM *-====
 */
 
+void						init_editor(t_editor *editor);
 int							init_program(t_doom *data);
 void						init_game(t_doom *data, t_player *player);
 int							program(t_doom *data);
@@ -215,6 +218,8 @@ int							count_maps(int *first, char *dir_path);
 void						free_octree(t_octree *node);
 int							parse_scores_file(t_doom *data, int *first);
 void						select_next_level(t_doom *data);
+void						set_player_spawn(char map[64][64][64],
+	t_vec3d *position);
 
 /*
 ** ====-* GRAPHICS *-====
@@ -341,6 +346,8 @@ void						switch_state(t_doom *data, long actual_state
 int							state_start(t_doom *data);
 
 int							state_inputs_settings_menu(t_doom *data);
+
+int							state_level_finished(t_doom *data);
 
 int							state_main_menu(t_doom *data);
 

@@ -45,9 +45,12 @@ void		switch_state(t_doom *data, long actual_state, long new_state)
 		data->running = 0;
 		return ;
 	}
+	if (new_state != EDITOR)
+		SDL_ShowCursor(SDL_FALSE);
 	data->state = new_state;
 	if ((new_state == PLAYING || new_state == TEST_MODE)
-		&& actual_state != PAUSE && actual_state != DEATH)
+		&& actual_state != PAUSE && actual_state != DEATH
+		&& actual_state != FINISHED)
 	{
 		free_octree(data->octree);
 		create_octree(data);

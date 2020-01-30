@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:09:25 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/29 20:19:04 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/30 14:22:33 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,25 @@ static inline int	display_info(t_doom *data, char *str, int step)
 	return (0);
 }
 
-void					*set_quadrillage2(void *thread)
+static void			set_quadrillage3(void *thread,
+	t_doom *data, int k, double alpha)
 {
 	int			i;
 	int			j;
+
+	i = ((t_thread*)thread)->num;
+	while (i < SIZE_MAP)
+	{
+		j = -1;
+		while (++j < SIZE_MAP)
+			if ((int)data->map_to_save[i][k][j] != 0)
+				color_rectangle(data, (t_vec3l){i, j, 0}, k, alpha);
+		i += NBR_THREAD;
+	}
+}
+
+static void			*set_quadrillage2(void *thread)
+{
 	int			k;
 	double		alpha;
 	double		nbr;
@@ -66,15 +81,7 @@ void					*set_quadrillage2(void *thread)
 	alpha = (data->lib.editor.alpha == 10) ? nbr : 1;
 	while (++k <= step)
 	{
-		i = ((t_thread*)thread)->num;
-		while (i < SIZE_MAP)
-		{
-			j = -1;
-			while (++j < SIZE_MAP)
-				if ((int)data->map_to_save[i][k][j] != 0)
-					color_rectangle(data, (t_vec3l){i, j, 0}, k, alpha);
-			i += NBR_THREAD;
-		}
+		set_quadrillage3(thread, data, k, alpha);
 		alpha += nbr;
 	}
 	pthread_exit(0);
@@ -91,23 +98,14 @@ void				set_quadrillage(t_doom *data, int step)
 		thread[i].num = i;
 		thread[i].data = data;
 		thread[i].frame = step;
-		if (pthread_create(&thread[i].thread, NULL, (*set_quadrillage2), &thread[i]) < 0)
+		if (pthread_create(&thread[i].thread, NULL,
+			(*set_quadrillage2), &thread[i]) < 0)
 			return ;
 		i++;
 	}
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(thread[i++].thread, NULL);
-}
-
-static void			init_editor(t_editor *editor)
-{
-	editor->picked_texture = 0;
-	editor->brush_size = 1;
-	editor->pickmode = 0;
-	editor->block1 = 0;
-	editor->block2 = 0;
-	editor->blocktoremove = 0;
 }
 
 int					state_editor(t_doom *data)
@@ -126,8 +124,6 @@ int					state_editor(t_doom *data)
 	ft_memcpy(data->lib.image,
 		data->lib.editor.texture[data->lib.editor.mode]->pixels,
 		WIDTH * HEIGHT * 4);
-	SDL_SetRelativeMouseMode(SDL_FALSE);
-	SDL_ShowCursor(SDL_TRUE);
 	set_quadrillage(data, step);
 	while (SDL_PollEvent(&data->lib.event))
 		editor_commands(data, data->map_name, &step, &first);

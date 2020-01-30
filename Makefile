@@ -98,6 +98,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/load_map.c						\
 					$(PROG)/program.c						\
 					$(PROG)/select_next_level.c				\
+					$(PROG)/set_player_spawn.c				\
 					$(RAST)/rasterization.c					\
 					$(RT)/add_texture_neg.c					\
 					$(RT)/add_texture_pos.c					\
@@ -132,6 +133,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_get_input.c				\
 					$(STATES)/state_get_map_name.c			\
 					$(STATES)/state_inputs_settings_menu.c	\
+					$(STATES)/state_level_finished.c		\
 					$(STATES)/state_main_menu.c				\
 					$(STATES)/state_pause.c					\
 					$(STATES)/state_play_edit_map.c			\
