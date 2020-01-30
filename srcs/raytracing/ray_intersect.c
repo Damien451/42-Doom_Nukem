@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/30 17:41:53 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:51:15 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ unsigned int		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 {
 	t_light	*light;
 
-	ray.length = launch_ray_to_light(ray, data->player_light, data);
+	ray.length = launch_ray_to_light2(ray, data->player_light, data);
 	if (ray.length >= 0.875)
 		return (ray.color);
-	ray.length += launch_ray_to_light(ray, data->sun_light, data);
+	ray.length += launch_ray_to_light2(ray, data->sun_light, data);
 	if (ray.length >= 0.875)
 		return (ray.color);
 	if (data->light_array[(int)ray.origin.x][(int)ray.origin.y]
@@ -86,12 +86,13 @@ t_octree	*find_actual_position2(t_vec3d *position, t_octree *node)
 	return (node);
 }
 
-int					ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorted[3])
+unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorted[3])
 {
 	int			i;
 	t_ray		rayon;
 	t_octree		*tmp;
 	int			touch;
+	t_vec3d		vec;
 
 	rayon.direction = ray->direction;
 	rayon.find_parent[0] = &find_parent_x;
@@ -104,7 +105,7 @@ int					ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorted[3])
 		if (ray->direction.x >= 0)
 			rayon.origin.x = 0;
 		else
-			rayon.origin.x = 64 - EPSILON;
+			rayon.origin.x = 64;
 	}
 	else if (ray->intersect.y == floor(ray->intersect.y))
 	{
@@ -113,7 +114,7 @@ int					ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorted[3])
 		if (ray->direction.y >= 0)
 			rayon.origin.y = 0;
 		else
-			rayon.origin.y = 64 - EPSILON;
+			rayon.origin.y = 64;
 	}
 	else
 	{
@@ -122,7 +123,7 @@ int					ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorted[3])
 		if (ray->direction.z >= 0)
 			rayon.origin.z = 0;
 		else
-			rayon.origin.z = 64 - EPSILON;
+			rayon.origin.z = 64;
 	}
 	rayon.node = find_actual_position2(&rayon.origin, data->octree_model);
 	if (!rayon.node)
@@ -142,11 +143,25 @@ int					ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorted[3])
 			i = 0;
 		}
 		else if (rayon.face >= 0)
+		{
 			return (data->fire_model[rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1]);
+		}
 		else
 			return (0);
 	}
 	return (0);
+}
+
+unsigned int		compute_lights(t_ray ray, const t_doom *const data
+	, t_octree *node)
+{
+	ray.node = node;
+	ray.origin = ray.intersect;
+	ray.color = data->add_texture[ray.face](ray.origin, data);
+	ray.black = (ray.color & 0xF8F8F8) >> 3;
+	ray.normal = data->normal[ray.face];
+	data->player_light->position = data->player.camera.origin;
+	return (launch_rays_to_lights(ray, data));
 }
 
 unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
