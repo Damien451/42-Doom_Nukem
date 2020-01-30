@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/27 20:37:49 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:04:33 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int					raytracing(t_doom *data)
 					, vec3d_scalar(data->player.camera.direction, 2)));
 		data->lib.cam_keys &= ~DESTROY;
 		free_octree(data->octree);
+		free_octree(data->octree_model);
 		create_octree(data);
 	}
 	return (0);

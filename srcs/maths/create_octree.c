@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/29 15:38:43 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:08:33 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static inline int		breadth_first_create_octree(t_doom *data
 			if (actual->size > 2)
 			{
 				create_child(actual, data);
+				check_if_child_is_leaf(data, actual);
 				verify_and_add_to_queue(queue, actual);
 			}
 		}
@@ -149,7 +150,6 @@ int						create_octree(t_doom *data)
 		actual->leaf = FULL;
 	if (actual->leaf == INSIDE)
 		breadth_first_create_octree(data, actual);
-	actual = data->octree;
 	create_octree_model(data);
 	create_light_array(data);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/29 15:06:49 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:41:53 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,87 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	return (launch_rays_to_lights(ray, data));
 }
 
+t_octree	*find_actual_position2(t_vec3d *position, t_octree *node)
+{
+	int			child;
+
+	while (node && node->leaf != EMPTY && node->leaf != BREAKABLE)
+	{
+		child = 0;
+		if (position->x >= (double)(node->center.x >> 1))
+			child |= 1;
+		if (position->y >= (double)(node->center.y >> 1))
+			child |= 2;
+		if (position->z >= (double)(node->center.z >> 1))
+			child |= 4;
+		node = node->child[child];
+	}
+	return (node);
+}
+
+int					ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorted[3])
+{
+	int			i;
+	t_ray		rayon;
+	t_octree		*tmp;
+	int			touch;
+
+	rayon.direction = ray->direction;
+	rayon.find_parent[0] = &find_parent_x;
+	rayon.find_parent[1] = &find_parent_y;
+	rayon.find_parent[2] = &find_parent_z;
+	if (ray->intersect.x == floor(ray->intersect.x))
+	{
+		rayon.origin.y = (ray->intersect.y - floor(ray->intersect.y)) * 64.0;
+		rayon.origin.z = (ray->intersect.z - floor(ray->intersect.z)) * 64.0;
+		if (ray->direction.x >= 0)
+			rayon.origin.x = 0;
+		else
+			rayon.origin.x = 64 - EPSILON;
+	}
+	else if (ray->intersect.y == floor(ray->intersect.y))
+	{
+		rayon.origin.x = (ray->intersect.x - floor(ray->intersect.x)) * 64.0;
+		rayon.origin.z = (ray->intersect.z - floor(ray->intersect.z)) * 64.0;
+		if (ray->direction.y >= 0)
+			rayon.origin.y = 0;
+		else
+			rayon.origin.y = 64 - EPSILON;
+	}
+	else
+	{
+		rayon.origin.x = (ray->intersect.x - floor(ray->intersect.x)) * 64.0;
+		rayon.origin.y = (ray->intersect.y - floor(ray->intersect.y)) * 64.0;
+		if (ray->direction.z >= 0)
+			rayon.origin.z = 0;
+		else
+			rayon.origin.z = 64 - EPSILON;
+	}
+	rayon.node = find_actual_position2(&rayon.origin, data->octree_model);
+	if (!rayon.node)
+		return (1);
+	tmp = rayon.node;
+	i = 0;
+	while (i < 3)
+	{
+		rayon.face = data->check_intersect[sorted[i]](&rayon.intersect, rayon.origin
+				, &rayon, &rayon.node);
+		if (rayon.face == -1)
+			i++;
+		else if (rayon.face == -3)
+		{
+			tmp = rayon.node;
+			rayon.origin = rayon.intersect;
+			i = 0;
+		}
+		else if (rayon.face >= 0)
+			return (data->fire_model[rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1]);
+		else
+			return (0);
+	}
+	return (0);
+}
+
 unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 {
 	int				sorted[3];
@@ -81,7 +162,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 	while (i < 3)
 	{
 		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin
-			, &ray, &ray.node);
+				, &ray, &ray.node);
 		if (ray.face == -1)
 			i++;
 		else if (ray.face == -3)
@@ -94,8 +175,10 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 					if ((length = hit_sphere(&ray, data)) != 200)
 						return ((ray.color << 16) | (ray.color << 8) | ray.color);
 				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 42)
-					if ((length = hit_cylinder(&ray, data)) != 200)
-						return ((ray.color << 16) | (ray.color << 8) | ray.color);
+					if ((ray.color = ray_intersect_mini(&ray, data, sorted)))
+						return (ray.color);
+				//		if ((length = hit_cylinder(&ray, data)) != 200)
+				//			return ((ray.color << 16) | (ray.color << 8) | ray.color);
 			}
 			i = 0;
 		}

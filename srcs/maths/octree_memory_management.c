@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:31:37 by roduquen          #+#    #+#             */
-/*   Updated: 2019/10/26 11:48:27 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:08:48 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int			create_child(t_octree *node, t_doom *data)
 		- offset, node->center.y + offset, node->center.z + offset}, node);
 	node->child[7] = create_node(size, (t_vec3l){node->center.x
 		+ offset, node->center.y + offset, node->center.z + offset}, node);
-	check_if_child_is_leaf(data, node);
 	return (0);
 }
 

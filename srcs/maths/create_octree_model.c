@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:51:02 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:10:03 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,26 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 	return (nbr_node);
 }
 
+void					check_if_child_isleaf(t_doom *data, t_octree *node)
+{
+	int			i;
+	int			ret;
+
+	i = 0;
+	while (i < 8)
+	{
+		if ((ret = verify_inside_node(data, node->child[i])) == 0)
+			node->child[i]->leaf = EMPTY;
+		else if (ret == -1)
+			node->child[i]->leaf = INSIDE;
+		else if (ret == -2)
+			node->child[i]->leaf = BREAKABLE;
+		else
+			node->child[i]->leaf = FULL;
+		i++;
+	}
+}
+
 static inline void		verify_and_add_to_queue(t_queue *queue[2]
 	, t_octree *actual)
 {
@@ -100,6 +120,7 @@ static inline int		breadth_first_create_octree(t_doom *data
 			if (actual->size > 2)
 			{
 				create_child(actual, data);
+				check_if_child_isleaf(data, actual);
 				verify_and_add_to_queue(queue, actual);
 			}
 		}
