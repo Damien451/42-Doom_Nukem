@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/30 19:51:15 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/31 11:57:19 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ unsigned int		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 	return (compute_color(ray));
 }
 
-unsigned int		compute_lights(t_ray ray, const t_doom *const data
+unsigned int		compute_lights2(t_ray ray, const t_doom *const data
 	, t_octree *node)
 {
 	ray.node = node;
@@ -86,11 +86,12 @@ t_octree	*find_actual_position2(t_vec3d *position, t_octree *node)
 	return (node);
 }
 
-unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorted[3])
+unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data
+	, int sorted[3])
 {
 	int			i;
 	t_ray		rayon;
-	t_octree		*tmp;
+	t_octree	*tmp;
 	int			touch;
 	t_vec3d		vec;
 
@@ -143,9 +144,7 @@ unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data, int sorte
 			i = 0;
 		}
 		else if (rayon.face >= 0)
-		{
 			return (data->fire_model[rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1]);
-		}
 		else
 			return (0);
 	}
