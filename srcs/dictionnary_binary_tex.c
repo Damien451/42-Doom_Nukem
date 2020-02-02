@@ -25,3 +25,16 @@ void			dictionnary_binary_tex(t_doom *data)
 		i++;
 	}
 }
+
+void			dictionnary_binary_models(t_doom *data)
+{
+	int			i;
+
+	i = 0;
+	while (i < NBR_TEXTURES_BLOCKS)
+	{
+		sprintf(data->dic_obj[i]
+			, "ressources/models/%d.binary", i + 1);
+		i++;
+	}
+}
