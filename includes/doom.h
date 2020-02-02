@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/30 19:33:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/31 18:20:24 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,6 +308,10 @@ void						sun(t_doom *data);
 unsigned int				print_octree(t_vec3d intersect);
 int							create_octree_model(t_doom *data);
 void						init_func_pointer(t_doom *data);
+unsigned int				ray_intersect_mini(t_ray *ray
+	, const t_doom *const data, int sorted[3]);
+double						launch_ray_to_light2(t_ray ray, t_light *light
+		, const t_doom *const data);
 
 /*
 ** ====-* PHYSICS *-====

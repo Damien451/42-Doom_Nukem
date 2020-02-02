@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/29 15:40:44 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/31 10:19:50 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 			else
 				data->lib.cam_keys |= WATER;
 		}
-		else if (event->key.keysym.sym == SDLK_LCTRL)
+		else if (event->key.keysym.sym == SDLK_LCTRL && data->player.acceleration.y == 0 && !(data->lib.cam_keys & WATER))
 			data->lib.cam_keys |= CRAWL;
 		else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
 			data->photo = 1;
