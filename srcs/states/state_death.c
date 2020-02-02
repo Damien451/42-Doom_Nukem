@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 19:03:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/26 19:10:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/02 16:43:02 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int			state_death(t_doom *data)
 		put_death_strings(data, &data->player);
 		SDL_RenderPresent(data->lib.renderer);
 		SDL_RenderClear(data->lib.renderer);
+		data->lib.cam_keys = 0;
 		data->player.lifes--;
 		ok--;
 	}

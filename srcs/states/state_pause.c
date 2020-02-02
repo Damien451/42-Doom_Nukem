@@ -35,6 +35,7 @@ int			state_pause(t_doom *data)
 			(SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
 		SDL_RenderPresent(data->lib.renderer);
 		SDL_RenderClear(data->lib.renderer);
+		data->lib.cam_keys = 0;
 		ok--;
 	}
 	check_pause_inputs(data, &ok);

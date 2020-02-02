@@ -52,6 +52,7 @@ void		switch_state(t_doom *data, long actual_state, long new_state)
 		&& actual_state != PAUSE && actual_state != DEATH
 		&& actual_state != FINISHED)
 	{
+		data->lib.cam_keys = 0;
 		free_octree(data->octree);
 		create_octree(data);
 		init_game(data, &data->player);

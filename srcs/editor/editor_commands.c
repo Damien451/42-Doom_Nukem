@@ -38,6 +38,7 @@ static inline void	keydown_editor_commands(t_doom *data, int *step, int *first,
 	}
 	else if (data->lib.event.key.keysym.sym == SDLK_t && !data->lib.event.key.repeat)
 	{
+		*first = 0;
 		data->player.gamemode = TEST_MODE;
 		init_game(data, &data->player);
 		switch_state(data, EDITOR, TEST_MODE);
@@ -62,7 +63,7 @@ static inline void	mouse_button_up(SDL_Event *event, t_editor *editor)
 		editor->mouseinputs &= ~R_INPUT_EDITOR;
 }
 
-static inline void	mouse_button_down(t_doom *data, int *step,
+static inline void	mouse_button_down(t_doom *data, int *step_first[2],
 	SDL_Event *event, t_editor *editor)
 {
 	if (event->button.x >= 15 && event->button.y >= 15
@@ -71,14 +72,15 @@ static inline void	mouse_button_down(t_doom *data, int *step,
 		editor->mouseinputs |= L_INPUT_EDITOR;
 	else if (event->button.button == SDL_BUTTON_RIGHT)
 		editor->mouseinputs |= R_INPUT_EDITOR;
-	mouse_editor_commands(data, step);
+	mouse_editor_commands(data, step_first[0], step_first[1]);
 }
 
 void				editor_commands(t_doom *data, char map_name[50],
 	int *step, int *first)
 {
 	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
-		mouse_button_down(data, step, &data->lib.event, &data->lib.editor);
+		mouse_button_down(data, (int *[2]){step, first},
+			&data->lib.event, &data->lib.editor);
 	if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
 		&& data->lib.editor.mode == 0
 		&& data->lib.event.button.x >= 1197 && data->lib.event.button.y >= 773

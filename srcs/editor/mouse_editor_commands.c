@@ -2,7 +2,8 @@
 #include "libft.h"
 #include "inputs.h"
 
-static inline void	mouse_editor_commands4(t_doom *data, int x, int *step)
+static inline void	mouse_editor_commands4(t_doom *data, int x, int *step,
+	int *first)
 {
 	if (data->lib.event.button.x >= 1541 && data->lib.event.button.y >= 970
 		&& data->lib.event.button.x <= 1573 && data->lib.event.button.y <= 1005
@@ -12,13 +13,14 @@ static inline void	mouse_editor_commands4(t_doom *data, int x, int *step)
 		&& x <= 1225 && data->lib.event.button.y <= 1062)
 		if (check_map_validity(data) == 0)
 		{
+			*first = 0;
 			data->player.gamemode = TEST_MODE;
 			init_game(data, &data->player);
 			switch_state(data, EDITOR, TEST_MODE);
 		}
 }
 
-static inline void	mouse_editor_commands3(t_doom *data, int *step)
+static inline void	mouse_editor_commands3(t_doom *data, int *step, int *first)
 {
 	if (data->lib.event.button.x >= 1283 && data->lib.event.button.y >= 711
 		&& data->lib.event.button.x <= 1318 && data->lib.event.button.y <= 734)
@@ -41,10 +43,10 @@ static inline void	mouse_editor_commands3(t_doom *data, int *step)
 	else if (data->lib.event.button.x >= 1277 && data->lib.event.button.y >= 640
 		&& data->lib.event.button.x <= 1313 && data->lib.event.button.y <= 671)
 		remove_type_block(data);
-	mouse_editor_commands4(data, data->lib.event.button.x, step);
+	mouse_editor_commands4(data, data->lib.event.button.x, step, first);
 }
 
-static inline void	mouse_editor_commands2(t_doom *data, int *step)
+static inline void	mouse_editor_commands2(t_doom *data, int *step, int *first)
 {
 	if (data->lib.event.button.x >= 1189 && data->lib.event.button.y >= 904
 		&& data->lib.event.button.x <= 1226 && data->lib.event.button.y <= 939)
@@ -67,7 +69,7 @@ static inline void	mouse_editor_commands2(t_doom *data, int *step)
 	else if (data->lib.event.button.x >= 1223 && data->lib.event.button.y >= 647
 		&& data->lib.event.button.x <= 1243 && data->lib.event.button.y <= 667)
 		data->lib.editor.pickmode = 3;
-	mouse_editor_commands3(data, step);
+	mouse_editor_commands3(data, step, first);
 }
 
 static inline void	check_switch_mode(t_doom *data)
@@ -78,7 +80,7 @@ static inline void	check_switch_mode(t_doom *data)
 		data->lib.editor.mode = (data->lib.editor.mode == 0 ? 1 : 0);
 }
 
-void				mouse_editor_commands(t_doom *data, int *step)
+void				mouse_editor_commands(t_doom *data, int *step, int *first)
 {
 	if (data->lib.event.button.x >= 1052 && data->lib.event.button.y >= 16
 		&& data->lib.event.button.x <= 1903 && data->lib.event.button.y <= 350)
@@ -98,5 +100,5 @@ void				mouse_editor_commands(t_doom *data, int *step)
 			data->lib.event.button.y, *step);
 	check_switch_mode(data);
 	if (data->lib.editor.mode == 0)
-		mouse_editor_commands2(data, step);
+		mouse_editor_commands2(data, step, first);
 }

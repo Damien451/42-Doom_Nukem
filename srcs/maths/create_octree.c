@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/30 17:08:33 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:04:18 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static inline int		inside_loop(t_doom *data, t_octree *node, int *nbr_node
 			while (++count.z < node->size >> 1)
 			{
 				if (((c = data->map_to_save[tester.x + count.x][tester.y +
-					count.y][tester.z + count.z]) == 41 || c == 42) && node->size >> 1 > 1)
+					count.y][tester.z + count.z]) >= 41) && node->size >> 1 > 1)
 					return (-1);
-				else if (c == 41 || c == 42)
+				else if (c >= 41)
 					return (-2);
 				else if (c)
 					(*nbr_node)++;

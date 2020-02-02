@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/31 10:19:50 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/02 17:58:20 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 			data->photo = 1;
 		else if (event->key.keysym.sym == SDLK_KP_PLUS)
 		{
-			if (data->player.inventory.selected_block < NBR_TEXTURES_BLOCKS)
+			if (data->player.inventory.selected_block < NBR_TEXTURES_BLOCKS + NBR_OBJ)
 				data->player.inventory.selected_block++;
 			else
 				data->player.inventory.selected_block = 1;
@@ -221,7 +221,7 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 			if (data->player.inventory.selected_block > 1)
 				data->player.inventory.selected_block--;
 			else
-				data->player.inventory.selected_block = 41;
+				data->player.inventory.selected_block = NBR_TEXTURES_BLOCKS + NBR_OBJ - 1;
 		}
 	}
 	camera_release_key(event, inputs, data);

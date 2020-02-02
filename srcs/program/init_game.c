@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 22:03:07 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/30 19:31:22 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/01/31 13:44:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void		init_game(t_doom *data, t_player *player)
 {
+	printf("init_game called\n");
 	if (player->gamemode == CLASSIC_MODE)
 	{
 		player->lifes = 3;
