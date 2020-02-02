@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 22:24:05 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/30 19:46:22 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/02 13:04:31 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ double		launch_ray_to_light(t_ray ray, t_light *light
 	{
 		if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 41)
 			return (compute_light_power(ray, length, data, light));
+		if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 42)
+		{
+			ray2 = ray;
+			if (ray_intersect_mini(&ray2, data, sorted))
+				return (0);
+		}
 	}
 	i = 0;
 	while (i < 3)

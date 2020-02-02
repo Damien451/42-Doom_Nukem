@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/31 11:57:19 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/02 13:02:44 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,101 +54,6 @@ unsigned int		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 		}
 	}
 	return (compute_color(ray));
-}
-
-unsigned int		compute_lights2(t_ray ray, const t_doom *const data
-	, t_octree *node)
-{
-	ray.node = node;
-	ray.origin = ray.intersect;
-	ray.color = data->add_texture[ray.face](ray.origin, data);
-	ray.black = (ray.color & 0xF8F8F8) >> 3;
-	ray.normal = data->normal[ray.face];
-	data->player_light->position = data->player.camera.origin;
-	return (launch_rays_to_lights(ray, data));
-}
-
-t_octree	*find_actual_position2(t_vec3d *position, t_octree *node)
-{
-	int			child;
-
-	while (node && node->leaf != EMPTY && node->leaf != BREAKABLE)
-	{
-		child = 0;
-		if (position->x >= (double)(node->center.x >> 1))
-			child |= 1;
-		if (position->y >= (double)(node->center.y >> 1))
-			child |= 2;
-		if (position->z >= (double)(node->center.z >> 1))
-			child |= 4;
-		node = node->child[child];
-	}
-	return (node);
-}
-
-unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data
-	, int sorted[3])
-{
-	int			i;
-	t_ray		rayon;
-	t_octree	*tmp;
-	int			touch;
-	t_vec3d		vec;
-
-	rayon.direction = ray->direction;
-	rayon.find_parent[0] = &find_parent_x;
-	rayon.find_parent[1] = &find_parent_y;
-	rayon.find_parent[2] = &find_parent_z;
-	if (ray->intersect.x == floor(ray->intersect.x))
-	{
-		rayon.origin.y = (ray->intersect.y - floor(ray->intersect.y)) * 64.0;
-		rayon.origin.z = (ray->intersect.z - floor(ray->intersect.z)) * 64.0;
-		if (ray->direction.x >= 0)
-			rayon.origin.x = 0;
-		else
-			rayon.origin.x = 64;
-	}
-	else if (ray->intersect.y == floor(ray->intersect.y))
-	{
-		rayon.origin.x = (ray->intersect.x - floor(ray->intersect.x)) * 64.0;
-		rayon.origin.z = (ray->intersect.z - floor(ray->intersect.z)) * 64.0;
-		if (ray->direction.y >= 0)
-			rayon.origin.y = 0;
-		else
-			rayon.origin.y = 64;
-	}
-	else
-	{
-		rayon.origin.x = (ray->intersect.x - floor(ray->intersect.x)) * 64.0;
-		rayon.origin.y = (ray->intersect.y - floor(ray->intersect.y)) * 64.0;
-		if (ray->direction.z >= 0)
-			rayon.origin.z = 0;
-		else
-			rayon.origin.z = 64;
-	}
-	rayon.node = find_actual_position2(&rayon.origin, data->octree_model);
-	if (!rayon.node)
-		return (1);
-	tmp = rayon.node;
-	i = 0;
-	while (i < 3)
-	{
-		rayon.face = data->check_intersect[sorted[i]](&rayon.intersect, rayon.origin
-				, &rayon, &rayon.node);
-		if (rayon.face == -1)
-			i++;
-		else if (rayon.face == -3)
-		{
-			tmp = rayon.node;
-			rayon.origin = rayon.intersect;
-			i = 0;
-		}
-		else if (rayon.face >= 0)
-			return (data->fire_model[rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1]);
-		else
-			return (0);
-	}
-	return (0);
 }
 
 unsigned int		compute_lights(t_ray ray, const t_doom *const data
