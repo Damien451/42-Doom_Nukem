@@ -222,14 +222,28 @@ static void	init_program2(t_doom *data)
 	data->map_to_show = 0;
 	data->map_name = "\0";
 	init_map_colors(&data->lib);
-	create_entity(&(data->entities), (t_vec3d){10.5, 2.5, 10.5}, IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.bmp"));
 	data->player.inventory.selected_block = 1;
-	init_zbuf(&(data->zbuf));
 	init_camera(data);
 	pthread_mutex_init(&data->mutex, NULL);
-	fd = open("test_new_subdivision.binary", O_RDONLY);
-	read(fd, data->fire_model, 1048576);
-	close(fd);
+//	fd = open("test_new_subdivision.binary", O_RDONLY);
+//	read(fd, data->fire_model, 1048576);
+//	close(fd);
+}
+
+static int	init_objects(t_doom *data)
+{
+	int		fd;
+
+	dictionnary_binary_models(data);
+	data->actual_obj = 0;
+	while (data->actual_obj < NBR_OBJ)
+	{
+		fd = open(data->dic_obj[data->actual_obj], O_RDONLY);
+		read(fd, data->object[data->actual_obj], 1048576);
+		close(fd);
+		create_octree_model(data);
+		data->actual_obj++;
+	}
 }
 
 int			load_sampling(t_doom *data)
@@ -309,17 +323,6 @@ int			init_sdl(t_doom *data)
 	return (0);
 }
 
-int			init_z_buffer(t_doom *data)
-{
-	data->z_buffer = (double*)malloc(sizeof(double) * WIDTH * HEIGHT);
-	if (data->z_buffer == NULL)
-		return (1);
-	data->frame_buffer = (unsigned int*)malloc(sizeof(unsigned int) * WIDTH * HEIGHT);
-	if (data->frame_buffer == NULL)
-		return (1);
-	return (0);
-}
-
 void		init_meshes(t_doom *data)
 {
 	data->meshes = (t_mesh*)malloc(sizeof(t_mesh));
@@ -342,8 +345,8 @@ int			init_program(t_doom *data)
 	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);
-	init_z_buffer(data);
 	init_meshes(data);
+	init_objects(data);
 	load_textures(data);
 	if (init_sdl(data))
 		return (1);

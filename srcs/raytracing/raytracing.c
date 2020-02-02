@@ -146,7 +146,6 @@ int					raytracing(t_doom *data)
 					, vec3d_scalar(data->player.camera.direction, 2)));
 		data->lib.cam_keys &= ~DESTROY;
 		free_octree(data->octree);
-		free_octree(data->octree_model);
 		create_octree(data);
 	}
 	return (0);

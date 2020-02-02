@@ -91,8 +91,6 @@ unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data
 	int			i;
 	t_ray		rayon;
 	t_octree	*tmp;
-	int			touch;
-	t_vec3d		vec;
 
 	rayon.direction = ray->direction;
 	rayon.find_parent[0] = &find_parent_x;
@@ -125,7 +123,7 @@ unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data
 		else
 			rayon.origin.z = 64;
 	}
-	rayon.node = find_actual_position2(&rayon.origin, data->octree_model);
+	rayon.node = find_actual_position2(&rayon.origin, data->octree_obj[ray->mini]);
 	if (!rayon.node)
 		return (1);
 	tmp = rayon.node;
@@ -143,7 +141,7 @@ unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data
 			i = 0;
 		}
 		else if (rayon.face >= 0)
-			return (data->fire_model[rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1]);
+			return (data->object[ray->mini][rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1]);
 		else
 			return (0);
 	}

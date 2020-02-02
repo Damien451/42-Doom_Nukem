@@ -56,7 +56,7 @@ struct					s_octree
 t_octree				*create_node(int size, t_vec3l center
 	, t_octree *parent);
 
-int						create_child(t_octree *node, t_doom *data);
+int						create_child(t_octree *node);
 
 int						free_queue(t_queue *queue[2]);
 

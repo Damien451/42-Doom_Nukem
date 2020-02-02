@@ -77,7 +77,8 @@
 
 # define PLAYERS_SCOREBOARD	10
 
-# define NBR_CLASSIC_MAPS 12
+# define NBR_CLASSIC_MAPS	12
+# define NBR_OBJ			20
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -129,6 +130,7 @@ struct						s_ray
 	double					length;
 	int						face;
 	int						pos[2];
+	int						mini;
 };
 
 struct						s_thread
@@ -165,7 +167,7 @@ struct						s_doom
 	int						running;
 	int						(*state_f[NBR_STATES])(t_doom *);
 	t_octree				*octree;
-	t_octree				*octree_model;
+	t_octree				*octree_obj[NBR_OBJ];
 	int						load_page[2];
 	double					sensitivity;
 	t_mixer					*mix;
@@ -190,14 +192,14 @@ struct						s_doom
 	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
 	t_thread				thread[NBR_THREAD];
 	pthread_mutex_t			mutex;
-	t_zbuf					zbuf;
-	t_entity				*entities;
-	t_light					light_array[64][64][64];
-	unsigned int			fire_model[64][64][64];
+	t_light					light_array[SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	unsigned int			object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	char					dic_obj[NBR_OBJ][100];
 	int						tmp;
 	double					*z_buffer;
 	unsigned int			*frame_buffer;
 	t_mesh					*meshes;
+	int						actual_obj;
 };
 
 /*
@@ -388,5 +390,7 @@ double						hit_sphere(t_ray *ray, const t_doom *const data);
 double						hit_cylinder(t_ray *ray, const t_doom *const data);
 
 double						hit_plane(t_ray *ray, const t_doom *const data);
+
+void			dictionnary_binary_models(t_doom *data);
 
 #endif

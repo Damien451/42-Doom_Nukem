@@ -102,7 +102,7 @@ static inline int		breadth_first_create_octree(t_doom *data
 		{
 			if (actual->size > 2)
 			{
-				create_child(actual, data);
+				create_child(actual);
 				check_if_child_is_leaf(data, actual);
 				verify_and_add_to_queue(queue, actual);
 			}
@@ -150,7 +150,6 @@ int						create_octree(t_doom *data)
 		actual->leaf = FULL;
 	if (actual->leaf == INSIDE)
 		breadth_first_create_octree(data, actual);
-	create_octree_model(data);
 	create_light_array(data);
 	return (0);
 }

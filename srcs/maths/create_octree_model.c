@@ -39,7 +39,7 @@ static inline int		inside_loop(t_doom *data, t_octree *node, int *nbr_node
 		{
 			while (++count.z < node->size >> 1)
 			{
-				c = data->fire_model[tester.x + count.x][tester.y + count.y]
+				c = data->object[data->actual_obj][tester.x + count.x][tester.y + count.y]
 					[tester.z + count.z];
 				if (c)
 					(*nbr_node)++;
@@ -119,7 +119,7 @@ static inline int		breadth_first_create_octree(t_doom *data
 		{
 			if (actual->size > 2)
 			{
-				create_child(actual, data);
+				create_child(actual);
 				check_if_child_isleaf(data, actual);
 				verify_and_add_to_queue(queue, actual);
 			}
@@ -137,7 +137,7 @@ int						create_octree_model(t_doom *data)
 
 	size = SIZE_MAP;
 	actual = create_node(size << 1, vec3l(size, size, size), NULL);
-	data->octree_model = actual;
+	data->octree_obj[data->actual_obj] = actual;
 	ret = verify_inside_node(data, actual);
 	if (ret == -1)
 		actual->leaf = INSIDE;
