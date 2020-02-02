@@ -93,11 +93,17 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 41)
 					if ((length = hit_sphere(&ray, data)) != 200)
 						return ((ray.color << 16) | (ray.color << 8) | ray.color);
+				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 42)
+					if ((length = hit_cylinder(&ray, data)) != 200)
+						return ((ray.color << 16) | (ray.color << 8) | ray.color);
 				if ((ray.mini = data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1]) > 42)
+				{
+					ray.mini -= 43;
 					if ((ray.color = ray_intersect_mini(&ray, data, sorted)))
 						return (ray.color);
 				//		if ((length = hit_cylinder(&ray, data)) != 200)
 				//			return ((ray.color << 16) | (ray.color << 8) | ray.color);
+				}
 			}
 			i = 0;
 		}
