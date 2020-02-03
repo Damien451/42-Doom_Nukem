@@ -79,20 +79,20 @@ void		pick_element(t_doom *data, int x, int y)
 	int		j;
 
 	i = 0;
-	j = 0;
+	j = 1;
 	x -= 1052;
 	y -= 368;
-	while ((i + 1) * 85 < x && i < 2)
+	while ((i + 1) * 85 < x && i < 10)
 		++i;
-	while ((j + 1) * 83 < y && j < 2)
+	while (j * 83 < y && j < 2)
 		++j;
 	if (data->lib.editor.pickmode == 0)
-		data->lib.editor.picked_texture = 40 + i;
+		data->lib.editor.picked_texture = 30 + 10 * j + i;
 	else if (data->lib.editor.pickmode == 1)
-		data->lib.editor.block1 = 40 + i;
+		data->lib.editor.block1 = 30 + 10 * j + i;
 	else if (data->lib.editor.pickmode == 2)
-		data->lib.editor.block2 = 40 + i;
+		data->lib.editor.block2 = 30 + 10 * j + i;
 	else if (data->lib.editor.pickmode == 3)
-		data->lib.editor.blocktoremove = 40 + i;
+		data->lib.editor.blocktoremove = 30 + 10 * j + i;
 	data->lib.editor.pickmode = 0;
 }

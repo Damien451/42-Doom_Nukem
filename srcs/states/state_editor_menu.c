@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:10:04 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/29 20:48:28 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/03 15:02:05 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	check_inputs_menu(t_doom *data, t_button *btab
 				!(tab[1] == 0 && data->button == 0))
 			{
 				*first = 0;
-				printf("map = %s\n", data->map_name);
 				switch_state(data, EDITOR_MENU, btab[data->button].state);
 			}
 			else

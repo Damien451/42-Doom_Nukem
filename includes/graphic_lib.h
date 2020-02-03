@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/28 18:55:49 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/03 19:39:37 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@
 # define BLOCK_SIZE_EDITOR		16
 # define TEXTURE_SIZE			83
 
-# define NBR_TEXTURES_BLOCKS	42
+# define NBR_TEXTURES_EDITOR	60
+# define NBR_TEXTURES_BLOCKS	38
+# define NBR_TEXTURES_OBJECTS	20
 # define NBR_TEXTURES_MENU		7
 # define NBR_FONTS				5
 # define NB_IMG					2
@@ -100,8 +102,8 @@ struct							s_graphic_lib
 	SDL_Surface					*menu_texture[NBR_TEXTURES_MENU];
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
-	SDL_Surface					*textures[NBR_TEXTURES_BLOCKS];
-	char						texture_dic[NBR_TEXTURES_BLOCKS][100];
+	SDL_Surface					*textures[NBR_TEXTURES_EDITOR];
+	char						texture_dic[42][100];
 	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
 	SDL_Window					*window;
@@ -118,7 +120,7 @@ struct							s_graphic_lib
 	unsigned int				*image;
 	unsigned int				cam_keys;
 	unsigned int				*textures_block[NBR_TEXTURES_BLOCKS];
-	unsigned int				map_colors[NBR_TEXTURES_BLOCKS];
+	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
 };
 
 /*

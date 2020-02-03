@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/02 17:13:21 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/03 19:58:38 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@
 # define TORCH2				3
 # define TORCH3				4
 # define TORCH4				5
-
-# define SPAWNBLOCK			31
 
 # define X_MIN				0
 # define X_MAX				1

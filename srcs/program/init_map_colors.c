@@ -1,5 +1,28 @@
 #include "graphic_lib.h"
 
+static inline void	init_map_colors3(t_graphic_lib *lib)
+{
+	lib->map_colors[41] = 0x808080;
+	lib->map_colors[42] = 0x003300;
+	lib->map_colors[43] = 0xbfbfbf;
+	lib->map_colors[44] = 0;
+	lib->map_colors[45] = 0x333333;
+	lib->map_colors[46] = 0xffff66;
+	lib->map_colors[47] = 0xf2f2f2;
+	lib->map_colors[48] = 0x996633;
+	lib->map_colors[49] = 0x333333;
+	lib->map_colors[50] = 0x604020;
+	lib->map_colors[51] = 0xbf8040;
+	lib->map_colors[52] = 0x009933;
+	lib->map_colors[53] = 0xb34700;
+	lib->map_colors[54] = 0xffe6ff;
+	lib->map_colors[55] = 0xf2f2f2;
+	lib->map_colors[56] = 0xffddcc;
+	lib->map_colors[57] = 0xcccccc;
+	lib->map_colors[58] = 0;
+	lib->map_colors[59] = 0xffddcc;
+}
+
 static inline void	init_map_colors2(t_graphic_lib *lib)
 {
 	lib->map_colors[21] = 0x661813;
@@ -8,8 +31,8 @@ static inline void	init_map_colors2(t_graphic_lib *lib)
 	lib->map_colors[24] = 0xd3d3d3;
 	lib->map_colors[25] = 0xd3d3d3;
 	lib->map_colors[26] = 0xd3d3d3;
-	lib->map_colors[27] = 0x8b8b8b;
-	lib->map_colors[28] = 0xffffff;
+	lib->map_colors[27] = 0x808080;
+	lib->map_colors[28] = 0x808080;
 	lib->map_colors[29] = 0x2f2d3d;
 	lib->map_colors[30] = 0x971a28;
 	lib->map_colors[31] = 0x276107;
@@ -22,6 +45,7 @@ static inline void	init_map_colors2(t_graphic_lib *lib)
 	lib->map_colors[38] = 0x2f241b;
 	lib->map_colors[39] = 0x41291e;
 	lib->map_colors[40] = 0xffffff;
+	init_map_colors3(lib);
 }
 
 void				init_map_colors(t_graphic_lib *lib)
