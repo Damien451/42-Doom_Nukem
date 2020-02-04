@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/03 19:06:46 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/04 22:36:39 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 			if (data->player.inventory.selected_block > 1)
 				data->player.inventory.selected_block--;
 			else
-				data->player.inventory.selected_block = NBR_TEXTURES_EDITOR - 1;
+				data->player.inventory.selected_block = NBR_TEXTURES_EDITOR;
 		}
 	}
 	camera_release_key(event, inputs, data);

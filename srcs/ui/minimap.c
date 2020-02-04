@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:42:04 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/11 14:02:38 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/04 20:21:02 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static inline int			check_block(char block)
 {
-	if (block == 41 || block == 0)
+	if (block == 0)
 		return (0);
 	return (1);
 }

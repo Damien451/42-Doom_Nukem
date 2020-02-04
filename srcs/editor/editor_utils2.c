@@ -9,8 +9,6 @@ void		init_editor(t_editor *editor)
 	editor->block1 = 0;
 	editor->block2 = 0;
 	editor->blocktoremove = 0;
-	SDL_SetRelativeMouseMode(SDL_FALSE);
-	SDL_ShowCursor(SDL_TRUE);
 }
 
 void		replace_blocks(t_doom *data)

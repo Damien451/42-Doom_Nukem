@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/03 20:06:36 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/04 22:28:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 
 static void		load_textures_objects(SDL_Surface *textures[NBR_TEXTURES_EDITOR])
 {
-	textures[42] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/eclair.bmp");
-	textures[43] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/small_bridge.bmp");
-	textures[44] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/anubis_statue.bmp");
-	textures[45] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/barrel.bmp");
+	textures[40] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/ammo_box.bmp");
+	textures[41] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/small_bridge.bmp");
+	textures[42] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/anubis_statue.bmp");
+	textures[43] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/barrel.bmp");
+	textures[44] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/bars_x.bmp");
+	textures[45] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/bars_y.bmp");
 	textures[46] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/bird_statue.bmp");
 	textures[47] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/budda_statue.bmp");
 	textures[48] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/box.bmp");
@@ -43,21 +45,19 @@ static void		load_textures_blocks2(SDL_Surface *textures[NBR_TEXTURES_EDITOR])
 	textures[24] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz.bmp");
 	textures[25] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_pillar.bmp");
 	textures[26] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_chiseled.bmp");
-	textures[27] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/bars_x.bmp");
-	textures[28] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/bars_y.bmp");
-	textures[29] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/obsidian.bmp");
-	textures[30] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/start_block.bmp");
-	textures[31] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/arrival_block.bmp");
-	textures[32] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/water.bmp");
-	textures[33] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/gold.bmp");
-	textures[34] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.bmp");
-	textures[35] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak.bmp");
-	textures[36] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak_planks.bmp");
-	textures[37] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak.bmp");
-	textures[38] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak_planks.bmp");
-	textures[39] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/dirt.bmp");
-	textures[40] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/glowstone.bmp");
-	textures[41] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_cylinder.bmp");
+	textures[27] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/obsidian.bmp");
+	textures[28] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/start_block.bmp");
+	textures[29] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/arrival_block.bmp");
+	textures[30] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/water.bmp");
+	textures[31] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/gold.bmp");
+	textures[32] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.bmp");
+	textures[33] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak.bmp");
+	textures[34] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak_planks.bmp");
+	textures[35] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak.bmp");
+	textures[36] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak_planks.bmp");
+	textures[37] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/dirt.bmp");
+	textures[38] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/glowstone.bmp");
+	textures[39] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_cylinder.bmp");
 	load_textures_objects(textures);
 }
 
