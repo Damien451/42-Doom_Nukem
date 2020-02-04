@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/03 19:58:38 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/04 23:04:50 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -391,5 +391,8 @@ double						hit_cylinder(t_ray *ray, const t_doom *const data);
 double						hit_plane(t_ray *ray, const t_doom *const data);
 
 void			dictionnary_binary_models(t_doom *data);
+unsigned int		compute_color(t_ray ray);
+unsigned int		ray_intersect_mini2(t_ray *ray, const t_doom *const data
+		, int sorted[3]);
 
 #endif

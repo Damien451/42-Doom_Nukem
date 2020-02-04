@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/30 17:04:33 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/03 19:52:37 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int					raytracing(t_doom *data)
 //	gettimeofday(&time, NULL);
 //	wait = time.tv_sec * 1000000 + time.tv_usec;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
+	data->player_light->position = data->player.camera.origin;
 	data->actual_i = 2;
 	sun(data);
 	data->sampling = 4;
