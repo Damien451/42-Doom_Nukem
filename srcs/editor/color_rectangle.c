@@ -37,7 +37,7 @@ static inline void	color_rectangle2(t_doom *data, unsigned int *color,
 static inline int	texture(int idtexture)
 {
 	if (idtexture > 28)
-		return (idtexture - 2);
+		return (idtexture);
 	return (idtexture);
 }
 

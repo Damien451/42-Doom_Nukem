@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/04 22:12:50 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/05 20:28:26 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define BLOCK_SIZE_EDITOR		16
 # define TEXTURE_SIZE			83
 
-# define NBR_TEXTURES_EDITOR	60
-# define NBR_TEXTURES_BLOCKS	38
+# define NBR_TEXTURES_EDITOR	62
+# define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_OBJECTS	20
 # define NBR_TEXTURES_MENU		7
 # define NBR_FONTS				5
@@ -103,7 +103,7 @@ struct							s_graphic_lib
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
 	SDL_Surface					*textures[NBR_TEXTURES_EDITOR];
-	char						texture_dic[NBR_TEXTURES_BLOCKS + 1][100];
+	char						texture_dic[NBR_TEXTURES_BLOCKS][100];
 	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
 	SDL_Window					*window;

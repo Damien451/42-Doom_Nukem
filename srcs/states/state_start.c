@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_start.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/03 22:01:36 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:45:03 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 		lightning(data, image, (((frame + 50) << 16) | ((frame + 50) << 8))
 			+ frame + 75, frame);
 	if (type > 0 && frame == 120)
-		play_sound(data->mix->sounds[3]);
+		play_sound(data->mix->sounds[1]);
 	frame += type;
 	if (frame == 255 || frame == 0)
 		type *= -1;
@@ -161,7 +161,7 @@ int					state_start(t_doom *data)
 
 	if (flag == 0)
 	{
-		loop_sound(data->mix->sounds[2]);
+		loop_sound(data->mix->sounds[0]);
 		flag = 1;
 	}
 	while (SDL_PollEvent(&data->lib.event))

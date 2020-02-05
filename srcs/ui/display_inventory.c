@@ -10,7 +10,7 @@ static void	display_selected_block(t_graphic_lib *lib, t_player *player)
 	int		aff;
 
 	i = -1;
-	aff = (player->inventory.selected_block > NBR_TEXTURES_BLOCKS + 4 ? 64 : 128);
+	aff = (player->inventory.selected_block > NBR_TEXTURES_BLOCKS + 2 ? 64 : 128);
 	while (++i < INV_BLOCK_SIZE)
 	{
 		j = -1;

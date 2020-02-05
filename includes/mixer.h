@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:19:58 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/19 23:40:59 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:36:12 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <SDL_mixer.h>
 
-# define NB_SOUND				5
+# define NB_SOUND				4
 
 typedef struct s_doom		t_doom;
 

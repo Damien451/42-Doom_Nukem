@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:49:10 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/04 23:07:48 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/05 23:39:30 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,15 @@
 static inline void	place_block(t_doom *data, int step, int tmpx, int tmpy)
 {
 	if (data->lib.editor.picked_texture == 27)
-	{
 		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
-		step][(tmpx - 10) / BLOCK_SIZE_EDITOR] = 45;
-	}
+		step][(tmpx - 10) / BLOCK_SIZE_EDITOR] = 47;
 	else if (data->lib.editor.picked_texture == 28)
-	{
 		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
-		step][(tmpx - 10) / BLOCK_SIZE_EDITOR] = 46;
-	}
-	/*else if (data->lib.editor.picked_texture > 45)
-	{
-		printf("bloc %d placeed\n", data->lib.editor.picked_texture + 3);
+		step][(tmpx - 10) / BLOCK_SIZE_EDITOR] = 48;
+	else if (data->lib.editor.picked_texture > 45)
 		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
 		step][(tmpx - 10)
 		/ BLOCK_SIZE_EDITOR] = data->lib.editor.picked_texture + 3;
-	}*/
 	else
 	{
 		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][

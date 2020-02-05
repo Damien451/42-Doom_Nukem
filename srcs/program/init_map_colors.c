@@ -7,20 +7,22 @@ static inline void	init_map_colors3(t_graphic_lib *lib)
 	lib->map_colors[43] = 0xbfbfbf;
 	lib->map_colors[44] = 0;
 	lib->map_colors[45] = 0x333333;
-	lib->map_colors[46] = 0xffff66;
-	lib->map_colors[47] = 0xf2f2f2;
-	lib->map_colors[48] = 0x996633;
-	lib->map_colors[49] = 0x333333;
-	lib->map_colors[50] = 0x604020;
-	lib->map_colors[51] = 0xbf8040;
-	lib->map_colors[52] = 0x009933;
-	lib->map_colors[53] = 0xb34700;
-	lib->map_colors[54] = 0xffe6ff;
-	lib->map_colors[55] = 0xf2f2f2;
-	lib->map_colors[56] = 0xffddcc;
-	lib->map_colors[57] = 0xcccccc;
-	lib->map_colors[58] = 0;
-	lib->map_colors[59] = 0xffddcc;
+	lib->map_colors[46] = 0x808080;
+	lib->map_colors[47] = 0x808080;
+	lib->map_colors[48] = 0xffff66;
+	lib->map_colors[49] = 0xf2f2f2;
+	lib->map_colors[50] = 0x996633;
+	lib->map_colors[51] = 0x333333;
+	lib->map_colors[52] = 0x604020;
+	lib->map_colors[53] = 0xbf8040;
+	lib->map_colors[54] = 0x009933;
+	lib->map_colors[55] = 0xb34700;
+	lib->map_colors[56] = 0xffe6ff;
+	lib->map_colors[57] = 0xf2f2f2;
+	lib->map_colors[58] = 0xffddcc;
+	lib->map_colors[59] = 0xcccccc;
+	lib->map_colors[60] = 0;
+	lib->map_colors[61] = 0xffddcc;
 }
 
 static inline void	init_map_colors2(t_graphic_lib *lib)
