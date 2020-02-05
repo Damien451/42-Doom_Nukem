@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/03 19:53:24 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/05 17:40:55 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 			ray.origin = ray.intersect;
 			if (ray.node->leaf == BREAKABLE)
 			{
-				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 41)
+				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 39)
 					if ((length = hit_sphere(&ray, data)) != 200)
 						return ((ray.color << 16) | (ray.color << 8) | ray.color);
-				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 42)
+				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 40)
 					if ((length = hit_cylinder(&ray, data)) != 200)
 						return ((ray.color << 16) | (ray.color << 8) | ray.color);
-				if ((ray.mini = data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1]) > 42)
+				if ((ray.mini = data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1]) > 40)
 				{
-					ray.mini -= 43;
+					ray.mini -= 41;
 					if ((ray.color = ray_intersect_mini(&ray, data, sorted)))
 						return (ray.color);
 				//		if ((length = hit_cylinder(&ray, data)) != 200)
