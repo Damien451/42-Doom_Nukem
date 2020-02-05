@@ -80,30 +80,3 @@ void	erase_block(t_doom *data, int x, int y, int step)
 		tmpy += BLOCK_SIZE_EDITOR;
 	}
 }
-
-void	draw_block(t_doom *data, int x, int y, int step)
-{
-	int			tmpx;
-	int			tmpy;
-	int			tmpbrush;
-	int			nbrx;
-	int			nbry;
-
-	tmpbrush = data->lib.editor.brush_size;
-	nbry = tmpbrush + 1;
-	tmpy = (tmpbrush == 1 ? y : y - BLOCK_SIZE_EDITOR * tmpbrush / 2);
-	while (--nbry > 0)
-	{
-		nbrx = tmpbrush + 1;
-		tmpx = (tmpbrush == 1 ? x : x - BLOCK_SIZE_EDITOR * tmpbrush / 2);
-		while (--nbrx > 0)
-		{
-			if (tmpx >= 15 && tmpx <= 1030 && tmpy >= 15 && tmpy <= 1030)
-				data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
-					step][(tmpx - 10)
-					/ BLOCK_SIZE_EDITOR] = data->lib.editor.picked_texture + 1;
-			tmpx += BLOCK_SIZE_EDITOR;
-		}
-		tmpy += BLOCK_SIZE_EDITOR;
-	}
-}

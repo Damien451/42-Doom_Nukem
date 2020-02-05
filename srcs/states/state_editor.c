@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:09:25 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/30 14:22:33 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/04 21:00:27 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int					state_editor(t_doom *data)
 		init_editor(&data->lib.editor);
 		first++;
 	}
+	SDL_SetRelativeMouseMode(SDL_FALSE);
+	SDL_ShowCursor(SDL_TRUE);
 	ft_memcpy(data->lib.image,
 		data->lib.editor.texture[data->lib.editor.mode]->pixels,
 		WIDTH * HEIGHT * 4);

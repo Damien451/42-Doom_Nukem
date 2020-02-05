@@ -34,6 +34,13 @@ static inline void	color_rectangle2(t_doom *data, unsigned int *color,
 	*color = (c_color[1] << 16) | (c_color[2] << 8) | c_color[3];
 }
 
+static inline int	texture(int idtexture)
+{
+	if (idtexture > 28)
+		return (idtexture - 2);
+	return (idtexture);
+}
+
 void				color_rectangle(t_doom *data, t_vec3l rectangle,
 	int step, double alpha)
 {
@@ -51,10 +58,10 @@ void				color_rectangle(t_doom *data, t_vec3l rectangle,
 		j = -1;
 		while (++j < BLOCK_SIZE_EDITOR)
 		{
-			color = ((unsigned int*)data->lib.textures[(int)data->map_to_save
-				[rectangle.x][step][rectangle.y] - 1]->pixels)
-				[i * (128 / BLOCK_SIZE_EDITOR) * 128 + j *
-				(128 / BLOCK_SIZE_EDITOR)];
+			color = ((unsigned int*)data->lib.textures[texture((int)data->map_to_save
+				[rectangle.x][step][rectangle.y] - 1)]->pixels)
+				[i * (64 / BLOCK_SIZE_EDITOR) * 64 + j *
+				(64 / BLOCK_SIZE_EDITOR)];
 			color_rectangle2(data, &color, (int[4]){i, j,
 				coord_x, coord_y}, alpha);
 			if (data->map_to_save[rectangle.x][step][rectangle.y] > 0)

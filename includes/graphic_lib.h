@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/03 19:39:37 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/04 22:12:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ struct							s_graphic_lib
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
 	SDL_Surface					*textures[NBR_TEXTURES_EDITOR];
-	char						texture_dic[42][100];
+	char						texture_dic[NBR_TEXTURES_BLOCKS + 1][100];
 	SDL_Surface					*hud_texture;
 	SDL_Texture					*texture;
 	SDL_Window					*window;

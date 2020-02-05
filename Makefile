@@ -70,6 +70,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/check_map_validity.c			\
 					$(EDITOR)/color_rectangle.c				\
 					$(EDITOR)/deal_with_map_directory.c		\
+					$(EDITOR)/draw_block.c					\
 					$(EDITOR)/editor_commands.c				\
 					$(EDITOR)/editor_utils.c				\
 					$(EDITOR)/editor_utils2.c				\
