@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:22:41 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/05 17:41:53 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/03 18:25:40 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int		create_light_array(t_doom *data)
 			cor[2] = 0;
 			while (cor[2] < 64)
 			{
-				if (data->map_to_save[cor[0]][cor[1]][cor[2]] == 39)
+				if (data->map_to_save[cor[0]][cor[1]][cor[2]] == 41)
 					add_light_to_array(cor, data);
 				cor[2]++;
 			}

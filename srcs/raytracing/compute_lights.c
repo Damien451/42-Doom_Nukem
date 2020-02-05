@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 22:24:05 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/05 17:45:57 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/05 20:30:03 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ double		launch_ray_to_light(t_ray ray, t_light *light
 	max_absolute_between_three(ray.direction, sorted);
 	if (ray.node->leaf == BREAKABLE)
 	{
-		if ((ray.mini = data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1]) > 40)
+		if ((ray.mini = data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1]) > 42)
 		{
 			if (floor(ray.origin.x) == ray.origin.x || floor(ray.origin.y) == ray.origin.y || floor(ray.origin.z) == ray.origin.z)
 			{
@@ -75,17 +75,17 @@ double		launch_ray_to_light(t_ray ray, t_light *light
 			ray.origin = ray.intersect;
 			if (ray.node->leaf == BREAKABLE)
 			{
-				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 40)
+				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 42)
 				{
 					ray2 = ray;
 					ray2.mini = -1000;
 					if (hit_cylinder(&ray2, data) != 200)
 						return (0);
 				}
-				if ((ray.mini = data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1]) > 40)
+				if ((ray.mini = data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1]) > 42)
 				{
 					ray2 = ray;
-					ray2.mini -= 41;
+					ray2.mini -= 43;
 					if (ray_intersect_mini2(&ray2, data, sorted))
 						return (0);
 				}
