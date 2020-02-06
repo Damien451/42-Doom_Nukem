@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:19:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/05 19:36:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:28:05 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct				s_mixer
 int							init_mixer(t_doom *data);
 int							load_sound(char *path, Mix_Chunk **sound);
 int							play_sound(Mix_Chunk *sound);
-int							loop_sound(Mix_Chunk *sound);
+int							loop_sound(Mix_Chunk *sound, int id_sound);
 
 int							change_volume(t_mixer *mix);
 int							set_master_volume(t_mixer *mix, double a);

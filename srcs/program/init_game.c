@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 22:03:07 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/04 17:34:30 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:28:32 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void		init_game(t_doom *data, t_player *player)
 	}
 	else
 		player->lifes = -1;
+	loop_sound(data->mix->sounds[3], 3);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	player->score = 0;

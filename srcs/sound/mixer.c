@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mixer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:53 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 16:37:54 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:27:35 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,21 @@ int		play_sound(Mix_Chunk *sound)
 	return (0);
 }
 
-int		loop_sound(Mix_Chunk *sound)
+int		loop_sound(Mix_Chunk *sound, int id_sound)
 {
-	int channel;
+	static int	id_current_sound = -1;
+	int 		channel;
 
-	Mix_FadeOutChannel(1, 300);
-	channel = Mix_FadeInChannel(1, sound, -1, 300);
-	if (channel == -1)
+	if (id_current_sound != id_sound)
 	{
-		printf("Unable to play WAV file: %s\n", Mix_GetError());
-		return (1);
+		Mix_FadeOutChannel(1, 300);
+		channel = Mix_FadeInChannel(1, sound, -1, 300);
+		if (channel == -1)
+		{
+			printf("Unable to play WAV file: %s\n", Mix_GetError());
+			return (1);
+		}
+		id_current_sound = id_sound;
 	}
 	return (0);
 }

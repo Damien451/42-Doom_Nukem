@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/05 19:45:03 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:31:13 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,13 +157,7 @@ static inline void	create_start_renderer(t_doom *data)
 
 int					state_start(t_doom *data)
 {
-	static int flag = 0;
-
-	if (flag == 0)
-	{
-		loop_sound(data->mix->sounds[0]);
-		flag = 1;
-	}
+	loop_sound(data->mix->sounds[0], 0);
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)

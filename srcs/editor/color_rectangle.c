@@ -1,10 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color_rectangle.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/06 18:30:34 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/02/06 18:30:37 by dacuvill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "doom.h"
 #include "libft.h"
 #include "graphic_lib.h"
 #include "vec3.h"
-
-#include <stdio.h>
 
 /*
 ** coords[0] = i, [1] = j,
@@ -34,13 +43,6 @@ static inline void	color_rectangle2(t_doom *data, unsigned int *color,
 	*color = (c_color[1] << 16) | (c_color[2] << 8) | c_color[3];
 }
 
-static inline int	texture(int idtexture)
-{
-	if (idtexture > 28)
-		return (idtexture);
-	return (idtexture);
-}
-
 void				color_rectangle(t_doom *data, t_vec3l rectangle,
 	int step, double alpha)
 {
@@ -58,8 +60,8 @@ void				color_rectangle(t_doom *data, t_vec3l rectangle,
 		j = -1;
 		while (++j < BLOCK_SIZE_EDITOR)
 		{
-			color = ((unsigned int*)data->lib.textures[texture((int)data->map_to_save
-				[rectangle.x][step][rectangle.y] - 1)]->pixels)
+			color = ((unsigned int*)data->lib.textures[(int)data->map_to_save
+				[rectangle.x][step][rectangle.y] - 1]->pixels)
 				[i * (64 / BLOCK_SIZE_EDITOR) * 64 + j *
 				(64 / BLOCK_SIZE_EDITOR)];
 			color_rectangle2(data, &color, (int[4]){i, j,

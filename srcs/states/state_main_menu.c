@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/05 19:49:37 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:29:16 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,11 @@ static void	check_inputs_menu(t_doom *data, t_button *btab, int but)
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
-			{
-				play_sound(data->mix->sounds[3]);
 				data->button = data->button == 0 ? but - 1 : data->button - 1;
-			}
 			if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
-			{
-				play_sound(data->mix->sounds[3]);
 				data->button = data->button == but - 1 ? 0 : data->button + 1;
-			}
 			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 				switch_state(data, MAIN_MENU, btab[data->button].state);
 		}
@@ -65,17 +59,12 @@ int			state_main_menu(t_doom *data)
 	t_button				buttons[5];
 	static int				total_frame = 0;
 	static int				frame = 0;
-	static int				flag = 0;
 	static unsigned long	time = 0;
 	long					wait;
 
 	if (!time)
 		time = SDL_GetTicks();
-	if (flag == 0)
-	{
-		loop_sound(data->mix->sounds[2]);
-		flag = 1;
-	}
+	loop_sound(data->mix->sounds[2], 2);
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
 		, (WIDTH * HEIGHT) << 2);
