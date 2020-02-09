@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/08 20:34:31 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/09 17:06:02 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,80 +16,6 @@
 #include "inputs.h"
 #include "vec3.h"
 #include <math.h>
-
-/*void		apply_motion(t_doom *data)
-{
-	t_vec3d		new_pos;
-	double		squat;
-	t_vec3d		course;
-	static int	frame_s = 0;
-	static int	frame_r = 0;
-
-	if (data->lib.cam_keys & SQUAT)
-	{
-		if (frame_s != 10)
-			frame_s++;
-	}
-	else if (frame_s)
-	{
-		frame_s -= 2;
-		if (frame_s < 0)
-			frame_s = 0;
-	}
-	squat = 0.03 * (data->lib.cam_keys & SQUAT ? 0.10 : 1.0);
-	if ((data->lib.cam_keys & COURSE || data->lib.cam_keys & SQUAT) && (data->player.acceleration.x >= squat || data->player.acceleration.x <= -squat || data->player.acceleration.z >= squat || data->player.acceleration.z <= -squat))
-	{
-		if (frame_r / 12 == 0)
-		{
-			course = vec3d_scalar(data->player.camera.right, frame_r / 12.0);
-			course = vec3d_scalar(course, 0.1);
-			course.y = frame_r * 0.005;
-			frame_r++;
-		}
-		else if (frame_r / 12 == 1)
-		{
-			course = vec3d_scalar(data->player.camera.right, 1.0 - (frame_r - 12) / 12.0);
-			course = vec3d_scalar(course, 0.1);
-			course.y = 12.0 * 0.005 - (frame_r - 12) * 0.005;
-			frame_r++;
-		}
-		else if (frame_r / 12 == 2)
-		{
-			course = vec3d_scalar(data->player.camera.right, 0.0 - (frame_r - 24) / 12.0);
-			course = vec3d_scalar(course, 0.1);
-			course.y = 0.0 - (frame_r - 24) * 0.005;
-			frame_r++;
-		}
-		else
-		{
-			if (frame_r / 12 == 3)
-			{
-				course = vec3d_scalar(data->player.camera.right, -1.0 + (frame_r - 36) / 12.0);
-				course = vec3d_scalar(course, 0.1);
-				course.y = -12.0 * 0.005 + (frame_r - 36) * 0.005;
-				frame_r++;
-			}
-			if (frame_r / 12 == 4)
-			{
-				course.x = 0;
-				course.z = 0;
-				course.y = 0;
-				frame_r = 0;
-			}
-		}
-	}
-	else
-	{
-		frame_r = 0;
-		course.y = 0;
-	}*/
-//	course = vec3d_add(new_pos, course);
-//	course.y += 1.0 - ((double)frame_s * 0.8 / 10.0);
-//	check_player_clipping(&data->player.acceleration, &new_pos, data->map_to_save, data->player.position);
-//	check_camera_clipping(&data->player.acceleration, &course, data->map_to_save, data->player.position);
-//	data->player.camera.origin = course;
-//	data->player.position = new_pos;
-//}
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y
 		, double *sensitivity)

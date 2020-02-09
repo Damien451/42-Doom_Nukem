@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:31:51 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 16:23:39 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/09 17:20:18 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,40 @@ void		check_if_inside_map(t_doom *data, t_vec3d *position)
 	}
 }
 
+void			check_map_clipping(t_vec3d *pos, t_vec3d *accel)
+{
+	if (pos->x >= 63.8)
+	{
+		pos->x = 63.8;
+		accel->x = 0;
+	}
+	else if (pos->x <= 0.2)
+	{
+		pos->x = 0.2;
+		accel->x = 0;
+	}
+	if (pos->y > 63.8)
+	{
+		pos->y = 63.8;
+		accel->y = 0;
+	}
+	else if (pos->y <= 1.7)
+	{
+		pos->y = 1.7;
+		accel->y = 0;
+	}
+	if (pos->z >= 63.8)
+	{
+		pos->z = 63.8;
+		accel->z = 0;
+	}
+	else if (pos->z <= 0.2)
+	{
+		pos->z = 0.2;
+		accel->z = 0;
+	}
+}
+
 void			add_clipping_for_each_point(t_doom *data, t_player *player)
 {
 	static double	up = 0.0;
@@ -56,27 +90,29 @@ void			add_clipping_for_each_point(t_doom *data, t_player *player)
 	t_vec3d			hitbox[2];
 	double			y;
 
-	if ((data->lib.cam_keys & SQUAT) && up < 1.0 && data->player.camera.origin.y  < 63.0 && !data->map_to_save[(int)data->player.camera.origin.x][(int)data->player.camera.origin.y + 1][(int)data->player.camera.origin.z])
+	if ((data->lib.cam_keys & SQUAT) && up < 0.75)
 	{
-		up += (1.0 / 10.0);
-		y = 0.7 + up;
+		up += (0.75 / 10.0);
+		y = 0.95 + up;
 	}
-	else if (data->lib.cam_keys & SQUAT && data->player.camera.origin.y < 63.0 && !data->map_to_save[(int)data->player.camera.origin.x][(int)data->player.camera.origin.y + 1][(int)data->player.camera.origin.z])
+	else if (data->lib.cam_keys & SQUAT)
 	{
 		data->lib.cam_keys &= ~SQUAT;
 		up = 0.0;
 		y = 1.7;
 	}
 	else if (data->lib.cam_keys & CRAWL)
-		y = 0.7;
+		y = 0.95;
 	else
 		y = 1.7;
 	camera_event_translate(data);
 	new_pos = data->player.camera.origin;
-	if (data->lib.cam_keys & SQUAT && data->player.camera.origin.y  < 63.0 && !data->map_to_save[(int)data->player.camera.origin.x][(int)data->player.camera.origin.y + 1][(int)data->player.camera.origin.z])
-		new_pos.y += (1.1 / 10.0);
-	hitbox[0].x = new_pos.x - 0.2;
-	hitbox[0].y = data->player.camera.origin.y - y + 0.2;
+	new_acceleration = player->acceleration;
+	if (data->lib.cam_keys & SQUAT)
+		new_pos.y += (0.80 / 10.0);
+	check_map_clipping(&new_pos, &new_acceleration);
+	hitbox[0].y = new_pos.y - y + 0.2;
+	hitbox[0].x = data->player.camera.origin.x - 0.2;
 	hitbox[0].z = data->player.camera.origin.z - 0.2;
 	if (hitbox[0].x < 0.3)
 		hitbox[0].x = 0.3;
@@ -87,17 +123,16 @@ void			add_clipping_for_each_point(t_doom *data, t_player *player)
 	hitbox[1].x = hitbox[0].x + 0.4;
 	hitbox[1].y = hitbox[0].y + y;
 	hitbox[1].z = hitbox[0].z + 0.4;
-	new_acceleration = player->acceleration;
-	if (new_acceleration.x < 0)
-		check_x_min(data, &new_acceleration, hitbox, 0.4);
-	else
-		check_x_max(data, &new_acceleration, hitbox, 0.4);
-	hitbox[0].y = new_pos.y - y + 0.2;
-	hitbox[1].y = hitbox[0].y + y;
 	if (new_acceleration.y < 0)
 		check_y_min(data, &new_acceleration, hitbox, y);
 	else
 		check_y_max(data, &new_acceleration, hitbox, y);
+	hitbox[0].x = new_pos.x - 0.2;
+	hitbox[1].x = hitbox[0].x + 0.4;
+	if (new_acceleration.x < 0)
+		check_x_min(data, &new_acceleration, hitbox, 0.4);
+	else
+		check_x_max(data, &new_acceleration, hitbox, 0.4);
 	hitbox[0].z = new_pos.z - 0.2;
 	hitbox[1].z = hitbox[0].z + 0.4;
 	if (new_acceleration.z < 0)

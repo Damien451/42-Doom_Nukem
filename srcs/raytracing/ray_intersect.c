@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 04:51:04 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/09 16:56:40 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ unsigned int		compute_color(t_ray ray)
 	return (ray.black + *((unsigned int*)&ray.c_color));
 }
 
-unsigned int		launch_rays_to_lights(t_ray ray, const t_doom *const data)
+double		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 {
 	t_light	*light;
 
 	ray.length = launch_ray_to_light_player(ray, data->player_light, data);
 	if (ray.length >= 0.875)
-		return (ray.color);
+		return (1);
 	ray.length += launch_ray_to_light(ray, data->sun_light, data);
 	if (ray.length >= 0.875)
-		return (ray.color);
+		return (1);
 	if (data->light_array[(int)ray.origin.x][(int)ray.origin.y]
 		[(int)ray.origin.z].type >= 2)
 	{
@@ -49,11 +49,11 @@ unsigned int		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 		{
 			ray.length += launch_ray_to_light(ray, light, data);
 			if (ray.length >= 0.875)
-				return (ray.color);
+				return (1);
 			light = light->next;
 		}
 	}
-	return (compute_color(ray));
+	return (ray.length);
 }
 
 unsigned int		compute_lights(t_ray ray, const t_doom *const data
@@ -64,7 +64,10 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	ray.color = data->add_texture[ray.face](ray.origin, data);
 	ray.black = (ray.color & 0xF8F8F8) >> 3;
 	ray.normal = data->normal[ray.face];
-	return (launch_rays_to_lights(ray, data));
+	ray.length = launch_rays_to_lights(ray, data);
+	if (ray.length == 1)
+		return (ray.color);
+	return (compute_color(ray));
 }
 
 unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
