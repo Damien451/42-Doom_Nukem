@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/31 10:26:14 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/09 16:05:48 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ int			load_sampling(t_doom *data)
 	int		fd;
 	char	sizec[4];
 
-	fd = open("sampling1.binary", O_RDONLY);
+	fd = open("ressources/sampling/sampling1.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
 	data->samplingt[0] = malloc(sizeof(int) * (size * 2 + 1));
@@ -293,7 +293,7 @@ void		init_lights(t_doom *data)
 	data->power[SUN] = 5000;
 	data->player_light = malloc(sizeof(t_light));
 	data->player_light->type = PLAYER;
-	data->power[PLAYER] = 25;
+	data->power[PLAYER] = 100;
 }
 
 int			init_sdl(t_doom *data)
@@ -342,6 +342,10 @@ void		init_meshes(t_doom *data)
 
 int			init_program(t_doom *data)
 {
+	data->oriented[0] = 1;
+	data->oriented[1] = 1;
+	data->oriented[2] = 0;
+	data->oriented[3] = 0;
 	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);

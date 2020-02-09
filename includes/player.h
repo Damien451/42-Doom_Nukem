@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/29 19:19:30 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:29:21 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define SQUAT				0x40l
 # define CRAWL				0x80l
 # define DESTROY			0x100l
+# define BEST_SAMPLING		0x200l
 
 # define GRAVITY			1.0
 # define ACCELERATION		0.003333333333333

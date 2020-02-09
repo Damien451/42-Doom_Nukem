@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/04 22:36:39 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:34:31 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,8 @@ static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *da
 			data->lib.cam_keys |= SQUAT;
 			data->lib.cam_keys &= ~CRAWL;
 		}
+		else if (event->key.keysym.sym == SDLK_h)
+				data->lib.cam_keys &= ~BEST_SAMPLING;
 	}
 }
 
@@ -223,6 +225,9 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 			else
 				data->player.inventory.selected_block = NBR_TEXTURES_EDITOR;
 		}
+		else if (event->key.keysym.sym == SDLK_h)
+				data->lib.cam_keys |= BEST_SAMPLING;
+
 	}
 	camera_release_key(event, inputs, data);
 }

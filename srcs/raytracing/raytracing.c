@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/04 23:12:24 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/09 12:03:58 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,28 @@ int					raytracing(t_doom *data)
 	long			wait;
 	int				i;
 	static long		max = 0;
+	double			tmp;
 
 //	gettimeofday(&time, NULL);
 //	wait = time.tv_sec * 1000000 + time.tv_usec;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
 	data->player_light->position = data->player.camera.origin;
+	data->player_light->position.y -= 0.375;
+	data->player_light->position = vec3d_add(data->player_light->position, vec3d_scalar(data->player.camera.right, 0.2));
+	tmp = vec3d_length2(data->player.acceleration);
+	data->oriented_light = vec3d_add(data->player.camera.direction, vec3d_add(vec3d_scalar(data->player.camera.up, data->oriented[2] - 0.125), vec3d_scalar(data->player.camera.right, data->oriented[3])));
+	data->oriented[2] += (data->oriented[0] * tmp / 30);
+	if (data->oriented[2] > 0.05 || data->oriented[2] < -0.05)
+		data->oriented[0] *= -1;
+	data->oriented[3] += (data->oriented[1] * tmp / 30);
+	if (data->oriented[3] > 0.05 || data->oriented[3] < -0.05)
+		data->oriented[1] *= -1;
 	data->actual_i = 2;
 	sun(data);
-	data->sampling = 4;
+	if (data->lib.cam_keys & BEST_SAMPLING)
+		data->sampling = 1;
+	else
+		data->sampling = 4;
 	if (init_thread_structure(data, position) == 1)
 		return (1);
 	event_loop(data);

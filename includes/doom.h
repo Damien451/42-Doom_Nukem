@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/04 23:12:48 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/09 06:09:47 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,8 @@ struct						s_doom
 	unsigned int			*frame_buffer;
 	t_mesh					*meshes;
 	int						actual_obj;
+	t_vec3d					oriented_light;
+	double					oriented[4];
 };
 
 /*
@@ -393,5 +395,7 @@ void			dictionnary_binary_models(t_doom *data);
 unsigned int		compute_color(t_ray ray);
 unsigned int		ray_intersect_mini2(t_ray *ray, const t_doom *const data
 		, int sorted[3]);
+double		launch_ray_to_light_player(t_ray ray, t_light *light
+		, const t_doom *const data);
 
 #endif

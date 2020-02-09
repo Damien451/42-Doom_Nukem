@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 00:16:21 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/30 15:21:52 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/09 16:27:59 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void			check_x_min(t_doom *data, t_vec3d *accel
 	if (data->map_to_save[(int)vec.x][y][z])
 	{
 		accel->x = 0;
-		hitbox[0].x = floor(hitbox[0].x);
+		hitbox[0].x = floor(hitbox[0].x) + EPSILON;
 		hitbox[1].x = hitbox[0].x + x;
 		return ;
 	}
@@ -155,7 +155,7 @@ void			check_x_min(t_doom *data, t_vec3d *accel
 		if (data->map_to_save[(int)vec.x][y][z])
 		{
 			accel->x = 0;
-			hitbox[0].x = floor(hitbox[0].x);
+			hitbox[0].x = floor(hitbox[0].x) + EPSILON;
 			hitbox[1].x = hitbox[0].x + x;
 			return ;
 		}
@@ -167,7 +167,7 @@ void			check_x_min(t_doom *data, t_vec3d *accel
 		if (data->map_to_save[(int)vec.x][y][z])
 		{
 			accel->x = 0;
-			hitbox[0].x = floor(hitbox[0].x);
+			hitbox[0].x = floor(hitbox[0].x) + EPSILON;
 			hitbox[1].x = hitbox[0].x + x;
 			return ;
 		}
@@ -177,7 +177,7 @@ void			check_x_min(t_doom *data, t_vec3d *accel
 			if (data->map_to_save[(int)vec.x][y][z])
 			{
 				accel->x = 0;
-				hitbox[0].x = floor(hitbox[0].x);
+				hitbox[0].x = floor(hitbox[0].x) + EPSILON;
 				hitbox[1].x = hitbox[0].x + x;
 				return ;
 			}
@@ -189,7 +189,7 @@ void			check_x_min(t_doom *data, t_vec3d *accel
 			if (data->map_to_save[(int)vec.x][y][z])
 			{
 				accel->x = 0;
-				hitbox[0].x = floor(hitbox[0].x);
+				hitbox[0].x = floor(hitbox[0].x) + EPSILON;
 				hitbox[1].x = hitbox[0].x + x;
 				return ;
 			}
@@ -199,7 +199,7 @@ void			check_x_min(t_doom *data, t_vec3d *accel
 				if (data->map_to_save[(int)vec.x][y][z])
 				{
 					accel->x = 0;
-					hitbox[0].x = floor(hitbox[0].x);
+					hitbox[0].x = floor(hitbox[0].x) + EPSILON;
 					hitbox[1].x = hitbox[0].x + x;
 					return ;
 				}
@@ -306,7 +306,7 @@ void			check_z_min(t_doom *data, t_vec3d *accel
 	if (data->map_to_save[x][y][(int)vec.z])
 	{
 		accel->z = 0;
-		hitbox[0].z = floor(hitbox[0].z);
+		hitbox[0].z = floor(hitbox[0].z) + EPSILON;
 		hitbox[1].z = hitbox[0].z + z;
 		return ;
 	}
@@ -316,7 +316,7 @@ void			check_z_min(t_doom *data, t_vec3d *accel
 		if (data->map_to_save[x][y][(int)vec.z])
 		{
 			accel->z = 0;
-			hitbox[0].z = floor(hitbox[0].z);
+			hitbox[0].z = floor(hitbox[0].z) + EPSILON;
 			hitbox[1].z = hitbox[0].z + z;
 			return ;
 		}
@@ -328,7 +328,7 @@ void			check_z_min(t_doom *data, t_vec3d *accel
 		if (data->map_to_save[x][y][(int)vec.z])
 		{
 			accel->z = 0;
-			hitbox[0].z = floor(hitbox[0].z);
+			hitbox[0].z = floor(hitbox[0].z) + EPSILON;
 			hitbox[1].z = hitbox[0].z + z;
 			return ;
 		}
@@ -338,7 +338,7 @@ void			check_z_min(t_doom *data, t_vec3d *accel
 			if (data->map_to_save[x][y][(int)vec.z])
 			{
 				accel->z = 0;
-				hitbox[0].z = floor(hitbox[0].z);
+				hitbox[0].z = floor(hitbox[0].z) + EPSILON;
 				hitbox[1].z = hitbox[0].z + z;
 				return ;
 			}
@@ -350,7 +350,7 @@ void			check_z_min(t_doom *data, t_vec3d *accel
 			if (data->map_to_save[x][y][(int)vec.z])
 			{
 				accel->z = 0;
-				hitbox[0].z = floor(hitbox[0].z);
+				hitbox[0].z = floor(hitbox[0].z) + EPSILON;
 				hitbox[1].z = hitbox[0].z + z;
 				return ;
 			}
@@ -360,7 +360,7 @@ void			check_z_min(t_doom *data, t_vec3d *accel
 				if (data->map_to_save[x][y][(int)vec.z])
 				{
 					accel->z = 0;
-					hitbox[0].z = floor(hitbox[0].z);
+					hitbox[0].z = floor(hitbox[0].z) + EPSILON;
 					hitbox[1].z = hitbox[0].z + z;
 					return ;
 				}
