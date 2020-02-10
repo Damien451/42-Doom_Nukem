@@ -16,7 +16,6 @@
 /*
 ** ====-* INCLUDES *-====
 */
-#include "doom.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -24,25 +23,13 @@
 
 # define CUT				0x1l
 # define DEAGLE				0x2l
-# define AK47				0x4l
-# define AWP				0x8l
-# define M4					0x16l
-
-# define D_CUT				50
-# define D_DEAGLE			35
-# define D_AK47				34
-# define D_AWP				119
-# define D_M4				31
+# define AK-47				0x4l
 
 /*
 ** ====-* TYPEDEFS *-====
 */
-typedef struct s_ray			t_ray;
 
 typedef struct s_weapon		t_weapon;
-typedef struct s_hit		t_hit;
-
-t_ray       				*send_bullet(const t_camera camera, const t_doom *const data);
 
 /*
 ** ====-* STRUCTURES *-====
@@ -50,12 +37,7 @@ t_ray       				*send_bullet(const t_camera camera, const t_doom *const data);
 
 struct						s_weapon
 {
-	long					name;
-};
-
-struct						s_hit
-{
-	double					length;
+	long					weapons;
 };
 
 #endif
