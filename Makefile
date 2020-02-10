@@ -70,7 +70,6 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/check_map_validity.c			\
 					$(EDITOR)/color_rectangle.c				\
 					$(EDITOR)/deal_with_map_directory.c		\
-					$(EDITOR)/draw_block.c					\
 					$(EDITOR)/editor_commands.c				\
 					$(EDITOR)/editor_utils.c				\
 					$(EDITOR)/editor_utils2.c				\
@@ -96,10 +95,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/init_program.c					\
 					$(PROG)/leave_program.c					\
 					$(PROG)/leave_game.c					\
-					$(PROG)/load_map.c						\
 					$(PROG)/program.c						\
-					$(PROG)/select_next_level.c				\
-					$(PROG)/set_player_spawn.c				\
 					$(RAST)/rasterization.c					\
 					$(RT)/add_texture_neg.c					\
 					$(RT)/add_texture_pos.c					\
@@ -115,10 +111,10 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/plane.c							\
 					$(RT)/print_octree.c					\
 					$(RT)/ray_intersect.c					\
-					$(RT)/ray_intersect_mini.c				\
 					$(RT)/raytracing.c						\
 					$(RT)/sphere.c							\
 					$(RT)/sun_animation.c					\
+					$(RT)/z_buffer.c						\
 					$(SHAPES)/draw_circle.c					\
 					$(SHAPES)/draw_rectangle.c				\
 					$(SOUND)/get_default_sounds.c			\
@@ -134,7 +130,6 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_get_input.c				\
 					$(STATES)/state_get_map_name.c			\
 					$(STATES)/state_inputs_settings_menu.c	\
-					$(STATES)/state_level_finished.c		\
 					$(STATES)/state_main_menu.c				\
 					$(STATES)/state_pause.c					\
 					$(STATES)/state_play_edit_map.c			\
@@ -161,6 +156,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					add_points.c							\
 					load_textures.c							\
 					utils.c									\
+					bullet_intersection.c					\
 					dictionnary_binary_tex.c
 
 

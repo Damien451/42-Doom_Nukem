@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 06:09:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/01/24 21:16:32 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "thread.h"
 # include "mesh.h"
 # include <pthread.h>
+# include "weapons.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -36,27 +37,25 @@
 # define FOV				1.047197551196598
 # define POV				0.593411945678072
 
-# define NBR_STATES			19
 # define RUNNING			1
 # define START				0
 # define PLAYING			1
 # define PAUSE				2
 # define DEATH				3
-# define FINISHED			4
-# define MAIN_MENU			5
-# define PLAY_MENU			6
-# define PLAY_EDIT_MAP		7
-# define EDITOR_MENU		8
-# define EDITOR				9
-# define GET_MAP_NAME		10
-# define DELETE_MAP			11
-# define SCORES				12
-# define SETTINGS			13
-# define SETTINGS_INPUTS	14
-# define SETTINGS_SOUND		15
-# define TEST_MODE			16
-# define GET_INPUT			17
-# define LEAVING			18
+# define MAIN_MENU			4
+# define PLAY_MENU			5
+# define PLAY_EDIT_MAP		6
+# define EDITOR_MENU		7
+# define EDITOR				8
+# define GET_MAP_NAME		9
+# define DELETE_MAP			10
+# define SCORES				11
+# define SETTINGS			12
+# define SETTINGS_INPUTS	13
+# define SETTINGS_SOUND		14
+# define TEST_MODE			15
+# define GET_INPUT			16
+# define LEAVING			17
 
 # define SUN				0
 # define PLAYER				1
@@ -64,6 +63,8 @@
 # define TORCH2				3
 # define TORCH3				4
 # define TORCH4				5
+
+# define SPAWNBLOCK			31
 
 # define X_MIN				0
 # define X_MAX				1
@@ -74,9 +75,6 @@
 # define Y_MID				6
 
 # define PLAYERS_SCOREBOARD	10
-
-# define NBR_CLASSIC_MAPS	12
-# define NBR_OBJ			20
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -128,7 +126,6 @@ struct						s_ray
 	double					length;
 	int						face;
 	int						pos[2];
-	int						mini;
 };
 
 struct						s_thread
@@ -163,9 +160,9 @@ struct						s_doom
 	long					button;
 	long					state;
 	int						running;
-	int						(*state_f[NBR_STATES])(t_doom *);
+	int						(*state_f[18])(t_doom *);
 	t_octree				*octree;
-	t_octree				*octree_obj[NBR_OBJ];
+	t_octree				*octree_model;
 	int						load_page[2];
 	double					sensitivity;
 	t_mixer					*mix;
@@ -190,38 +187,31 @@ struct						s_doom
 	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
 	t_thread				thread[NBR_THREAD];
 	pthread_mutex_t			mutex;
-	t_light					light_array[SIZE_MAP][SIZE_MAP][SIZE_MAP];
-	unsigned int			object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
-	char					dic_obj[NBR_OBJ][100];
+	t_zbuf					zbuf;
+	t_entity				*entities;
+	t_light					light_array[64][64][64];
+	unsigned int			fire_model[64][64][64];
 	int						tmp;
 	double					*z_buffer;
 	unsigned int			*frame_buffer;
 	t_mesh					*meshes;
-	int						actual_obj;
-	t_vec3d					oriented_light;
-	double					oriented[4];
 };
 
 /*
 ** ====-* PROGRAM *-====
 */
 
-void						init_editor(t_editor *editor);
 int							init_program(t_doom *data);
 void						init_game(t_doom *data, t_player *player);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
 void						leave_game(t_doom *data, t_player *player);
-int							load_map(t_doom *data, char *map_name);
 void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
-char						*get_map_name(int map_to_show, char *dir_path);
-int							count_maps(int *first, char *dir_path);
+char						*get_map_name(int map_to_show);
+int							count_maps(int *first);
 void						free_octree(t_octree *node);
 int							parse_scores_file(t_doom *data, int *first);
-void						select_next_level(t_doom *data);
-void						set_player_spawn(char map[64][64][64],
-	t_vec3d *position);
 
 /*
 ** ====-* GRAPHICS *-====
@@ -310,22 +300,18 @@ void						sun(t_doom *data);
 unsigned int				print_octree(t_vec3d intersect);
 int							create_octree_model(t_doom *data);
 void						init_func_pointer(t_doom *data);
-unsigned int				ray_intersect_mini(t_ray *ray
-	, const t_doom *const data, int sorted[3]);
-double						launch_ray_to_light2(t_ray ray, t_light *light
-		, const t_doom *const data);
 
 /*
 ** ====-* PHYSICS *-====
 */
 
 void						apply_motion(t_doom *data);
-void			check_y_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_y_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_x_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_x_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_z_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_z_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
+void			check_y_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_y_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_x_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_x_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_z_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
+void			check_z_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2]);
 
 /*
 ** ====-* GAMEPLAY *-====
@@ -352,8 +338,6 @@ void						switch_state(t_doom *data, long actual_state
 int							state_start(t_doom *data);
 
 int							state_inputs_settings_menu(t_doom *data);
-
-int							state_level_finished(t_doom *data);
 
 int							state_main_menu(t_doom *data);
 
@@ -390,12 +374,5 @@ double						hit_sphere(t_ray *ray, const t_doom *const data);
 double						hit_cylinder(t_ray *ray, const t_doom *const data);
 
 double						hit_plane(t_ray *ray, const t_doom *const data);
-
-void			dictionnary_binary_models(t_doom *data);
-unsigned int		compute_color(t_ray ray);
-unsigned int		ray_intersect_mini2(t_ray *ray, const t_doom *const data
-		, int sorted[3]);
-double		launch_ray_to_light_player(t_ray ray, t_light *light
-		, const t_doom *const data);
 
 #endif
