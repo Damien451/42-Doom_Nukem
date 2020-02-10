@@ -30,6 +30,7 @@ BREWDIR		= /Users/$(LOGIN)/.brew
 ANIM		= animations
 CAMERA		= camera
 EDITOR		= editor
+GAMEPLAY	= gameplay
 MATHS		= maths
 PROG		= program
 RAST		= rasterization
@@ -76,6 +77,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/editor_utils2.c				\
 					$(EDITOR)/mouse_editor_commands.c		\
 					$(EDITOR)/show_selected_params.c		\
+					$(GAMEPLAY)/line_of_sight.c				\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/create_octree_model.c			\
@@ -195,18 +197,19 @@ $(OBJDIR)/%.o	: $(SRCDIR)/%.c | $(OBJDIR)
 
 $(OBJDIR)		:
 
-	@mkdir -p $@			2> /dev/null || true
-	@mkdir -p $@/$(ANIM)	2> /dev/null || true
-	@mkdir -p $@/$(CAMERA)	2> /dev/null || true
-	@mkdir -p $@/$(EDITOR)	2> /dev/null || true
-	@mkdir -p $@/$(MATHS)	2> /dev/null || true
-	@mkdir -p $@/$(PROG)	2> /dev/null || true
-	@mkdir -p $@/$(RAST)	2> /dev/null || true
-	@mkdir -p $@/$(RT)		2> /dev/null || true
-	@mkdir -p $@/$(SHAPES)	2> /dev/null || true
-	@mkdir -p $@/$(SOUND)	2> /dev/null || true
-	@mkdir -p $@/$(STATES)	2> /dev/null || true
-	@mkdir -p $@/$(UI)		2> /dev/null || true
+	@mkdir -p $@				2> /dev/null || true
+	@mkdir -p $@/$(ANIM)		2> /dev/null || true
+	@mkdir -p $@/$(CAMERA)		2> /dev/null || true
+	@mkdir -p $@/$(EDITOR)		2> /dev/null || true
+	@mkdir -p $@/$(GAMEPLAY)	2> /dev/null || true
+	@mkdir -p $@/$(MATHS)		2> /dev/null || true
+	@mkdir -p $@/$(PROG)		2> /dev/null || true
+	@mkdir -p $@/$(RAST)		2> /dev/null || true
+	@mkdir -p $@/$(RT)			2> /dev/null || true
+	@mkdir -p $@/$(SHAPES)		2> /dev/null || true
+	@mkdir -p $@/$(SOUND)		2> /dev/null || true
+	@mkdir -p $@/$(STATES)		2> /dev/null || true
+	@mkdir -p $@/$(UI)			2> /dev/null || true
 
 clean			:
 

@@ -46,16 +46,20 @@ static int		line_of_sight_intersection(t_ray *ray, const t_doom *const data)
 			}
 			i = 0;
 		}
-		return (1);
+		else if (ray->face >= 0)
+			return (1);
+		else
+			return (-5);
 	}
 	return (0);
 }
 
-t_ray			*line_of_sight(const t_camera camera, const t_doom *const data)
+t_hit			*line_of_sight(const t_camera camera, const t_doom *const data)
 {
-	t_ray		*bullet;
+	t_hit		*line;
+	int			ret;
 
-	if (!(bullet = (t_ray*)malloc(sizeof(t_ray))))
+	if (!(line = (t_hit*)malloc(sizeof(t_hit))))
 		return (NULL);
 	bullet->origin = camera.origin;
 	bullet->direction = camera.direction;
@@ -63,7 +67,10 @@ t_ray			*line_of_sight(const t_camera camera, const t_doom *const data)
 	bullet->find_parent[0] = &find_parent_x;
 	bullet->find_parent[1] = &find_parent_y;
 	bullet->find_parent[2] = &find_parent_z;
-	if ((line_of_sight_intersection(bullet, data) == 1))
-		return (bullet);
+	ret = line_of_sight_intersection(bullet, data);
+	if (ret == 0)
+		printf("Skyblock");
+	else
+		printf("c'est     %d\n", ret);
 	return (NULL);
 }

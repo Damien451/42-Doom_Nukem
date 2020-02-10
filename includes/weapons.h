@@ -16,7 +16,8 @@
 /*
 ** ====-* INCLUDES *-====
 */
-#include "doom.h"
+
+# include "doom.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -42,7 +43,7 @@ typedef struct s_ray			t_ray;
 typedef struct s_weapon		t_weapon;
 typedef struct s_hit		t_hit;
 
-t_ray       				*send_bullet(const t_camera camera, const t_doom *const data);
+t_hit       				*line_of_sight(const t_camera camera, const t_doom *const data);
 
 /*
 ** ====-* STRUCTURES *-====
@@ -56,6 +57,7 @@ struct						s_weapon
 struct						s_hit
 {
 	double					length;
+	t_ray					*ray;
 };
 
 #endif

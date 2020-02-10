@@ -16,14 +16,13 @@
 void    damages(t_player *victim, t_player *raper, double speed)
 {
     if (raper.inventory.weapon & CUT)
-    victim.health -= speed * D_CUT;
+        victim.health -= speed * D_CUT;
     else if (raper.inventory.weapon & DEAGLE)
-    victim.health -= speed * D_DEAGLE;
+        victim.health -= speed * D_DEAGLE;
     else if (raper.inventory.weapon & AK47)
         victim.health -= speed * D_AK47;
     else if (raper.inventory.weapon & AWP)
         victim.health -= speed * D_AWP;
     else if (raper.inventory.weapon & M4)
         victim.health -= speed * D_M4;
-    victim.health -= damages * speed;
 }

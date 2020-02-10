@@ -110,6 +110,7 @@ int					raytracing(t_doom *data)
 	int				i;
 	static long		max = 0;
 	double			tmp;
+	t_ray			*bullet;
 
 //	gettimeofday(&time, NULL);
 //	wait = time.tv_sec * 1000000 + time.tv_usec;
@@ -157,11 +158,20 @@ int					raytracing(t_doom *data)
 		pthread_join(data->thread[i++].thread, NULL);
 	if (data->lib.cam_keys & DESTROY)
 	{
-		interaction(data, vec3d_add(data->player.camera.origin
-					, vec3d_scalar(data->player.camera.direction, 2)));
+		if (1)
+		{
+			printf("start");
+			line_of_sight(data->player.camera, data);
+			printf("finish");
+		}
+		else
+		{
+			interaction(data, vec3d_add(data->player.camera.origin
+						, vec3d_scalar(data->player.camera.direction, 2)));
+			free_octree(data->octree);
+			create_octree(data);
+		}
 		data->lib.cam_keys &= ~DESTROY;
-		free_octree(data->octree);
-		create_octree(data);
 	}
 	return (0);
 }
