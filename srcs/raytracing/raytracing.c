@@ -160,9 +160,7 @@ int					raytracing(t_doom *data)
 	{
 		if (1)
 		{
-			printf("start");
 			line_of_sight(data->player.camera, data);
-			printf("finish");
 		}
 		else
 		{

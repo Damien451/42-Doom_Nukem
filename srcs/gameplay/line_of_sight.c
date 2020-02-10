@@ -61,16 +61,18 @@ t_hit			*line_of_sight(const t_camera camera, const t_doom *const data)
 
 	if (!(line = (t_hit*)malloc(sizeof(t_hit))))
 		return (NULL);
-	bullet->origin = camera.origin;
-	bullet->direction = camera.direction;
-	bullet->node = find_actual_position(&camera.origin, data->octree);
-	bullet->find_parent[0] = &find_parent_x;
-	bullet->find_parent[1] = &find_parent_y;
-	bullet->find_parent[2] = &find_parent_z;
-	ret = line_of_sight_intersection(bullet, data);
-	if (ret == 0)
-		printf("Skyblock");
+	if (!(line->ray = (t_ray*)malloc(sizeof(t_ray))))
+		return (NULL);
+	line->ray->origin = camera.origin;
+	line->ray->direction = camera.direction;
+	line->ray->node = find_actual_position(&camera.origin, data->octree);
+	line->ray->find_parent[0] = &find_parent_x;
+	line->ray->find_parent[1] = &find_parent_y;
+	line->ray->find_parent[2] = &find_parent_z;
+	ret = line_of_sight_intersection(line->ray, data);
+	if (ret == -5)
+		printf("Skyblock\n");
 	else
-		printf("c'est     %d\n", ret);
+		printf("c'est     %d a une distance de %f\n", ret, sqrt(line->ray->length));
 	return (NULL);
 }
