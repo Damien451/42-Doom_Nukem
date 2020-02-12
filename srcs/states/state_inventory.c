@@ -26,7 +26,7 @@ int			state_inventory(t_doom *data, int trader)
 	{
         SDL_ShowCursor(SDL_TRUE);
         while (SDL_PollEvent(&data->lib.event))
-		    keydown_trader_commands(data);
+		    keydown_inventory_commands(data);
 		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 		SDL_RenderPresent(data->lib.renderer);
 		SDL_RenderClear(data->lib.renderer);

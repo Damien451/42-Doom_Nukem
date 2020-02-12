@@ -61,7 +61,7 @@ struct						s_hit
 {
 	double					length;
 	t_ray					*ray;
-	int						type;
+	int						face;
 };
 
 #endif

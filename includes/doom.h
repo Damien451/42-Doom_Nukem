@@ -37,7 +37,7 @@
 # define FOV				1.047197551196598
 # define POV				0.593411945678072
 
-# define NBR_STATES			19
+# define NBR_STATES			21
 # define RUNNING			1
 # define START				0
 # define PLAYING			1

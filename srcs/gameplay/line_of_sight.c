@@ -47,7 +47,7 @@ static int		line_of_sight_intersection(t_ray *ray, const t_doom *const data)
 			i = 0;
 		}
 		else if (ray->face >= 0)
-			return (1);
+			return (ray->face);
 		else
 			return (-5);
 	}
@@ -69,6 +69,6 @@ t_hit			*line_of_sight(const t_camera camera, const t_doom *const data)
 	line->ray->find_parent[0] = &find_parent_x;
 	line->ray->find_parent[1] = &find_parent_y;
 	line->ray->find_parent[2] = &find_parent_z;
-	line->type = line_of_sight_intersection(line->ray, data);
+	line->face = line_of_sight_intersection(line->ray, data);
 	return (line);
 }

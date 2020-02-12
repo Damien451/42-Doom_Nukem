@@ -13,11 +13,25 @@
 #include "gameplay.h"
 #include "doom.h"
 
-static int      put_block(t_doom *data, t_vec3d pos)
+static void      put_block(t_doom *data, t_hit *line)
 {
-    // if ((int)floor(pos.x))
-    data->map_to_save[(int)floor(pos.x)][(int)floor(pos.y)][(int)floor(pos.z)] =
-        data->player.inventory.selected_block;
+    t_vec3d pos;
+    int     face;
+    int     tmp[3];
+
+    face = line->face;
+    pos = line->ray->intersect;
+    if (data->map_to_save[(int)floor(pos.x)][(int)floor(pos.y)][(int)floor(pos.z)] == 0)
+        data->map_to_save[(int)floor(pos.x)][(int)floor(pos.y)][(int)floor(pos.z)] =
+            data->player.inventory.selected_block;
+    else
+    {
+        tmp[0] = (int)((face == X_MIN ? 1 : 0) + (face == X_MAX ? -1 : 0) + (int)floor(pos.x));
+        tmp[1] = (int)((face == Y_MIN ? 1 : 0) + (face == Y_MAX ? -1 : 0) + (int)floor(pos.y));
+        tmp[2] = (int)((face == Z_MIN ? 1 : 0) + (face == Z_MAX ? -1 : 0) + (int)floor(pos.z));
+        if (data->map_to_save[tmp[0]][tmp[1]][tmp[2]] == 0)
+            data->map_to_save[tmp[0]][tmp[1]][tmp[2]] = data->player.inventory.selected_block;
+    }
 }
 
 static int      check_distance(t_hit **line)
@@ -28,21 +42,12 @@ static int      check_distance(t_hit **line)
     i = -1;
     good = 0;
     while (++i < 3) {
-	    // printf("hit block %d %d %d\n", (int)floor(line[i]->ray->intersect.x), (int)floor(line[i]->ray->intersect.y), (int)floor(line[i]->ray->intersect.z));
-        if (line[i] && line[i]->type && (int)floor(line[i]->length) < DISTANCE_MAX_BLOCK
+        if (line[i] && line[i]->face && (int)floor(line[i]->length) < DISTANCE_MAX_BLOCK
             && line[i]->length > 1)
-        {
-            // printf("gooddd");
             good++;
-        }
         else
-        {
-	        // printf("bad because %d    %d    %f\n", (line[i] ? 1 : 0), (line[i] && line[i]->type ? line[i]->type : 0), (line[i] && line[i]->type && line[i]->length ? line[i]->length : 0));
-            // printf("%f\n", line[i]->length );
             line[i] = NULL;
-        }
     }
-    printf("good = %d\n", good);
     return good > 1;
 }
 
@@ -52,18 +57,11 @@ void            interaction(t_doom *data)
     int             i;
 
     i = -1;
-	if (!(line = (t_hit**)malloc(sizeof(t_hit*) * 3)))
-		return ;
+	line = (t_hit**)malloc(sizeof(t_hit*) * 3);
     while (++i < 3){
         line[i] = line_of_sight(data->player.camera, data);
         line[i]->length = sqrt(line[i]->ray->length);
     }
     if (check_distance(line))
-    {
-        // printf("put_block\n");
-	    // printf("player positionnnnnnn %f %f %f\n", data->player.position.x, data->player.position.y, data->player.position.z);
-	    // printf("player direction %d %d %d\n", (int)floor(data->player.camera.direction.x), (int)floor(data->player.camera.direction.y), (int)floor(data->player.camera.direction.z));
-        put_block(data, (line[1] ? line[1] : line[2])->ray->intersect);
-        // printf("finish\n");
-    }
+        put_block(data, (line[1] ? line[1] : line[2]));
 }
