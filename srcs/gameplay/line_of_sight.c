@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "weapons.h"
+#include "gameplay.h"
 #include "doom.h"
 #include "libft.h"
 #include "graphic_lib.h"
@@ -69,10 +69,6 @@ t_hit			*line_of_sight(const t_camera camera, const t_doom *const data)
 	line->ray->find_parent[0] = &find_parent_x;
 	line->ray->find_parent[1] = &find_parent_y;
 	line->ray->find_parent[2] = &find_parent_z;
-	ret = line_of_sight_intersection(line->ray, data);
-	if (ret == -5)
-		printf("Skyblock\n");
-	else
-		printf("c'est     %d a une distance de %f\n", ret, sqrt(line->ray->length));
-	return (NULL);
+	line->type = line_of_sight_intersection(line->ray, data);
+	return (line);
 }

@@ -27,7 +27,7 @@
 # include "thread.h"
 # include "mesh.h"
 # include <pthread.h>
-# include "weapons.h"
+# include "gameplay.h"
 
 /*
 ** ====-* DEFINES *-====

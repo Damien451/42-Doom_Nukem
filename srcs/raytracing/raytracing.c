@@ -15,6 +15,7 @@
 #include "player.h"
 #include "thread.h"
 #include "octree.h"
+#include "gameplay.h"
 #include <pthread.h>
 #include <math.h>
 #include <sys/time.h>
@@ -40,23 +41,6 @@ static inline int	init_thread_structure(t_doom *data, t_octree *position)
 		i++;
 	}
 	return (0);
-}
-
-void				interaction(t_doom *data, t_vec3d pos)
-{
-	int			new[3];
-
-	new[0] = (int)floor(pos.x);
-	new[1] = (int)floor(pos.y);
-	new[2] = (int)floor(pos.z);
-	if (new[0] >= 0 && new[0] < 64)
-	{
-		if (data->map_to_save[new[0]][new[1]][new[2]])
-			data->map_to_save[new[0]][new[1]][new[2]] = 0;
-		else
-			data->map_to_save[new[0]][new[1]][new[2]] =
-				data->player.inventory.selected_block;
-	}
 }
 
 void				actualize_torch(t_doom *data)
@@ -110,7 +94,7 @@ int					raytracing(t_doom *data)
 	int				i;
 	static long		max = 0;
 	double			tmp;
-	t_ray			*bullet;
+
 
 //	gettimeofday(&time, NULL);
 //	wait = time.tv_sec * 1000000 + time.tv_usec;
@@ -158,17 +142,9 @@ int					raytracing(t_doom *data)
 		pthread_join(data->thread[i++].thread, NULL);
 	if (data->lib.cam_keys & DESTROY)
 	{
-		if (1)
-		{
-			line_of_sight(data->player.camera, data);
-		}
-		else
-		{
-			interaction(data, vec3d_add(data->player.camera.origin
-						, vec3d_scalar(data->player.camera.direction, 2)));
-			free_octree(data->octree);
-			create_octree(data);
-		}
+		interaction(data);
+		free_octree(data->octree);
+		create_octree(data);
 		data->lib.cam_keys &= ~DESTROY;
 	}
 	return (0);
