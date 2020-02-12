@@ -47,6 +47,7 @@ typedef struct s_hit		t_hit;
 
 t_hit       				*line_of_sight(const t_camera camera, const t_doom *const data);
 void            			interaction(t_doom *data);
+
 /*
 ** ====-* STRUCTURES *-====
 */

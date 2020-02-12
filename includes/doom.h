@@ -58,6 +58,8 @@
 # define TEST_MODE			16
 # define GET_INPUT			17
 # define LEAVING			18
+# define TRADER				19
+# define INVENTORY			20
 
 # define SUN				0
 # define PLAYER				1
@@ -385,6 +387,10 @@ int							state_editor_menu(t_doom *data);
 int							state_game(t_doom *data);
 
 int							state_death(t_doom *data);
+
+int							state_inventory(t_doom *data, int trader);
+
+int							state_trader(t_doom *data, int trader);
 
 double						hit_sphere(t_ray *ray, const t_doom *const data);
 

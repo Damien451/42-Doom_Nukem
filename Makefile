@@ -78,6 +78,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/mouse_editor_commands.c		\
 					$(EDITOR)/show_selected_params.c		\
 					$(GAMEPLAY)/line_of_sight.c				\
+					$(GAMEPLAY)/interaction.c				\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/create_octree_model.c			\
@@ -143,6 +144,8 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_play_menu.c				\
 					$(STATES)/state_sound_settings.c		\
 					$(STATES)/state_start.c					\
+					$(STATES)/state_trader.c				\
+					$(STATES)/state_inventory.c				\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
 					$(STATES)/state_sound_settings.c		\

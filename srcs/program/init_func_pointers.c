@@ -30,6 +30,8 @@ static void		init_func_pointer_game_state(t_doom *data)
 	data->state_f[GET_INPUT] = &state_get_input;
 	data->state_f[PAUSE] = &state_pause;
 	data->state_f[PLAYING] = &state_game;
+	data->state_f[TRADER] = &state_trader;
+	data->state_f[INVENTORY] = &state_inventory;
 	data->state_f[SETTINGS_SOUND] = &state_sound_settings;
 	data->state_f[DEATH] = &state_death;
 	data->state_f[FINISHED] = &state_level_finished;
