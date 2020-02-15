@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state_game.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/02/13 17:37:07 by dacuvill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "player.h"
 #include <SDL.h>
@@ -6,6 +18,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "octree.h"
+#include "mixer.h"
 
 void		skybox(t_doom *data)
 {
@@ -98,6 +111,7 @@ int			state_game(t_doom *data)
 	raytracing(data);
 	add_hud(data);
 	put_health_bar(data);
+	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
 	display_inventory(&data->lib, &data->player);
 	update_physics(data);

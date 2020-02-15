@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:53 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/06 20:27:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:52:42 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,20 @@ int		init_mixer(t_doom *data)
 		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		return (1);
 	}
-	if (!(data->mix = malloc(sizeof(t_mixer))))
-		return (1);
-	data->mix->rate = 44100;
+	data->mix.rate = 44100;
 	get_default_sounds(data);
-	data->mix->format = AUDIO_S16SYS;
-	data->mix->channels = 2;
-	data->mix->buffers = 4096;
-	if (Mix_OpenAudio(data->mix->rate, data->mix->format,
-		data->mix->channels, data->mix->buffers) != 0)
+	data->mix.format = AUDIO_S16SYS;
+	data->mix.channels = NB_CHANNELS;
+	data->mix.buffers = 4096;
+	if (Mix_OpenAudio(data->mix.rate, data->mix.format,
+		2, data->mix.buffers) != 0)
 	{
 		printf("Unable to initialize audio: %s\n", Mix_GetError());
 		return (1);
 	}
 	if (load_sounds(data))
 		return (1);
-	change_volume(data->mix);
-	return (0);
-}
-
-int		load_sound(char *path, Mix_Chunk **sound)
-{
-	*sound = Mix_LoadWAV(path);
-	if (*sound == NULL)
-	{
-		printf("Unable to load WAV file: %s\n", Mix_GetError());
-		return (1);
-	}
+	change_volume(&data->mix);
 	return (0);
 }
 

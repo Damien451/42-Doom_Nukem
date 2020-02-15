@@ -6,11 +6,12 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 19:03:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/02 16:43:02 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:40:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include "mixer.h"
 
 static void	check_death_inputs(t_doom *data, int gamemode, int *ok)
 {
@@ -68,6 +69,7 @@ int			state_death(t_doom *data)
 		put_death_strings(data, &data->player);
 		SDL_RenderPresent(data->lib.renderer);
 		SDL_RenderClear(data->lib.renderer);
+		Mix_HaltChannel(-1);
 		data->lib.cam_keys = 0;
 		data->player.lifes--;
 		ok--;

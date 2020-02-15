@@ -6,81 +6,12 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:31:51 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 17:20:18 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/10 20:49:30 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "player.h"
-
-void		check_if_inside_map(t_doom *data, t_vec3d *position)
-{
-	if (position->x > 63.5)
-	{
-		data->player.acceleration.x = 0;
-		position->x = 63.5;
-	}
-	else if (position->x < 0.5)
-	{
-		data->player.acceleration.x = 0;
-		position->x = 0.5;
-	}
-	if (position->y > 63.5)
-	{
-		data->player.acceleration.y = 0;
-		position->y = 63.5;
-	}
-	else if (position->y < 0.5)
-	{
-		data->player.acceleration.y = 0;
-		data->player.health = 0;
-		position->y = 0.5;
-	}
-	if (position->z > 63.5)
-	{
-		data->player.acceleration.z = 0;
-		position->z = 63.5;
-	}
-	else if (position->z < 0.5)
-	{
-		data->player.acceleration.z = 0;
-		position->z = 0.5;
-	}
-}
-
-void			check_map_clipping(t_vec3d *pos, t_vec3d *accel)
-{
-	if (pos->x >= 63.8)
-	{
-		pos->x = 63.8;
-		accel->x = 0;
-	}
-	else if (pos->x <= 0.2)
-	{
-		pos->x = 0.2;
-		accel->x = 0;
-	}
-	if (pos->y > 63.8)
-	{
-		pos->y = 63.8;
-		accel->y = 0;
-	}
-	else if (pos->y <= 1.7)
-	{
-		pos->y = 1.7;
-		accel->y = 0;
-	}
-	if (pos->z >= 63.8)
-	{
-		pos->z = 63.8;
-		accel->z = 0;
-	}
-	else if (pos->z <= 0.2)
-	{
-		pos->z = 0.2;
-		accel->z = 0;
-	}
-}
 
 void			add_clipping_for_each_point(t_doom *data, t_player *player)
 {
@@ -89,7 +20,6 @@ void			add_clipping_for_each_point(t_doom *data, t_player *player)
 	t_vec3d			new_acceleration;
 	t_vec3d			hitbox[2];
 	double			y;
-
 	if ((data->lib.cam_keys & SQUAT) && up < 0.75)
 	{
 		up += (0.75 / 10.0);
@@ -110,7 +40,6 @@ void			add_clipping_for_each_point(t_doom *data, t_player *player)
 	new_acceleration = player->acceleration;
 	if (data->lib.cam_keys & SQUAT)
 		new_pos.y += (0.80 / 10.0);
-	check_map_clipping(&new_pos, &new_acceleration);
 	hitbox[0].y = new_pos.y - y + 0.2;
 	hitbox[0].x = data->player.camera.origin.x - 0.2;
 	hitbox[0].z = data->player.camera.origin.z - 0.2;

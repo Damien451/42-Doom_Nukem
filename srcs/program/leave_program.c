@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   leave_program.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:35:39 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 14:35:56 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:49:00 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <inputs.h>
 #include "libft.h"
 #include "octree.h"
+#include "mixer.h"
 
 static void	close_fonts(t_doom *data)
 {
@@ -53,7 +54,7 @@ int			leave_program(t_doom *data, int type)
 	if (data->lib.window)
 		SDL_DestroyWindow(data->lib.window);
 	close_fonts(data);
-	free(data->mix);
+	Mix_CloseAudio();
 	SDL_Quit();
 	return (type);
 }

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 14:23:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/30 19:26:48 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:43:08 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			state_level_finished(t_doom *data)
 		put_strings(data, &data->player);
 		SDL_RenderPresent(data->lib.renderer);
 		SDL_RenderClear(data->lib.renderer);
+		Mix_HaltChannel(-1);
 		ok--;
 	}
 	check_inputs(data, data->player.gamemode, &ok);

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/06 20:29:16 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:53:02 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			state_main_menu(t_doom *data)
 
 	if (!time)
 		time = SDL_GetTicks();
-	loop_sound(data->mix->sounds[2], 2);
+	loop_sound(data->mix.sounds[2], 2);
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
 		, (WIDTH * HEIGHT) << 2);

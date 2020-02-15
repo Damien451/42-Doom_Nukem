@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 06:09:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:47:23 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ struct						s_doom
 	t_octree				*octree_obj[NBR_OBJ];
 	int						load_page[2];
 	double					sensitivity;
-	t_mixer					*mix;
+	t_mixer					mix;
 	int						sampling;
 	int						map_to_show;
 	int						(*check_intersect[6])(t_vec3d *, t_vec3d, t_ray *

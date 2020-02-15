@@ -6,12 +6,23 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:49 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/06 19:54:25 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:50:37 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include <stdio.h>
+
+static int		load_sound(char *path, Mix_Chunk **sound)
+{
+	*sound = Mix_LoadWAV(path);
+	if (*sound == NULL)
+	{
+		printf("Unable to load WAV file: %s\n", Mix_GetError());
+		return (1);
+	}
+	return (0);
+}
 
 int				load_sounds(t_doom *data)
 {
@@ -23,8 +34,8 @@ int				load_sounds(t_doom *data)
 	{
 		ft_bzero(buf, 70);
 		sprintf(buf
-			, "/sgoinfre/goinfre/Perso/dacuvill/sound/%d.wav", i);
-		if (load_sound(buf, &(data->mix->sounds[i])))
+			, "/sgoinfre/goinfre/Perso/dacuvill/sounds/%d.wav", i);
+		if (load_sound(buf, &(data->mix.sounds[i])))
 			return (1);
 	}
 	return (0);
