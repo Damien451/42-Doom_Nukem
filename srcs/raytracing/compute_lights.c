@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 22:24:05 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 16:09:09 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/10 20:34:51 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ double		launch_ray_to_light_player(t_ray ray, t_light *light
 	int				sorted[3];
 	t_ray			ray2;
 	double			power;
+	double			ret;
 
 	if (data->check_light_view[ray.face](ray.origin, light->position))
 		return (0);
@@ -115,9 +116,9 @@ double		launch_ray_to_light_player(t_ray ray, t_light *light
 		return (0);
 	ray.length = 0;
 	ray.direction = vec3d_unit(vec3d_sub(light->position, ray.origin));
-	if (vec3d_dot(data->oriented_light, ray.direction) > -0.975)
-		return (0);
 	power = length;
+	if (!((ret = vec3d_dot(data->oriented_light, ray.direction)) <= -0.950))
+		return (0);
 	max_absolute_between_three(ray.direction, sorted);
 	if (ray.node->leaf == BREAKABLE)
 	{

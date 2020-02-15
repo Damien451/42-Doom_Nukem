@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 16:56:40 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/15 12:13:25 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ double		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 	t_light	*light;
 
 	ray.length = launch_ray_to_light_player(ray, data->player_light, data);
-	if (ray.length >= 0.875)
+	if (ray.length >= 0.75)
 		return (1);
 	ray.length += launch_ray_to_light(ray, data->sun_light, data);
-	if (ray.length >= 0.875)
+	if (ray.length >= 0.75)
 		return (1);
 	if (data->light_array[(int)ray.origin.x][(int)ray.origin.y]
 		[(int)ray.origin.z].type >= 2)
@@ -48,7 +48,7 @@ double		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 		while (light)
 		{
 			ray.length += launch_ray_to_light(ray, light, data);
-			if (ray.length >= 0.875)
+			if (ray.length >= 0.75)
 				return (1);
 			light = light->next;
 		}
@@ -62,7 +62,7 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	ray.node = node;
 	ray.origin = ray.intersect;
 	ray.color = data->add_texture[ray.face](ray.origin, data);
-	ray.black = (ray.color & 0xF8F8F8) >> 3;
+	ray.black = (ray.color & 0xFCFCFC) >> 2;
 	ray.normal = data->normal[ray.face];
 	ray.length = launch_rays_to_lights(ray, data);
 	if (ray.length == 1)

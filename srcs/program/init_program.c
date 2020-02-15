@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 16:05:48 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/15 12:16:35 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ void		init_lights(t_doom *data)
 	data->power[SUN] = 5000;
 	data->player_light = malloc(sizeof(t_light));
 	data->player_light->type = PLAYER;
-	data->power[PLAYER] = 100;
+	data->power[PLAYER] = 500;
 }
 
 int			init_sdl(t_doom *data)

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 06:09:47 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/12 18:22:53 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@
 # define Y_MAX				3
 # define Z_MIN				4
 # define Z_MAX				5
-# define Y_MID				6
 
 # define PLAYERS_SCOREBOARD	10
 
