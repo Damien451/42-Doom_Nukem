@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/13 17:37:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/15 20:06:10 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <fcntl.h>
 #include "octree.h"
 #include "mixer.h"
+#include <sys/time.h>
 
 void		skybox(t_doom *data)
 {
@@ -97,8 +98,6 @@ static void	update_physics(t_doom *data)
 	data->player.camera.up = data->player.physics.camera.up;
 	data->player.camera.right = data->player.physics.camera.right;
 }
-
-#include <sys/time.h>
 
 int			state_game(t_doom *data)
 {

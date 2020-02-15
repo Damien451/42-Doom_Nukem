@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:53 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/12 19:52:42 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/15 18:23:10 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,37 @@ int		play_sound(Mix_Chunk *sound)
 	return (0);
 }
 
-int		loop_sound(Mix_Chunk *sound, int id_sound)
+int		loop_music(Mix_Chunk *sound, int id_music)
 {
-	static int	id_current_sound = -1;
+	static int	id_current_music = -1;
 	int 		channel;
 
+	if (id_current_music != id_music)
+	{
+		Mix_FadeOutChannel(CHANNEL_MUSIC, 300);
+		channel = Mix_FadeInChannel(CHANNEL_MUSIC, sound, -1, 300);
+		if (channel == -1)
+		{
+			printf("Unable to play WAV file: %s\n", Mix_GetError());
+			return (1);
+		}
+		id_current_music = id_music;
+	}
+	return (0);
+}
+
+int		loop_sound_effect(Mix_Chunk *sound, int id_sound)
+{
+	static int	id_current_sound = -1;
+	int			id_channel;
+	int 		channel;
+
+	id_channel = (!Mix_Playing(CHANNEL_SOUNDS) ?
+		CHANNEL_SOUNDS : CHANNEL_SOUNDS2);
 	if (id_current_sound != id_sound)
 	{
-		Mix_FadeOutChannel(1, 300);
-		channel = Mix_FadeInChannel(1, sound, -1, 300);
+		Mix_FadeOutChannel(id_channel, 300);
+		channel = Mix_FadeInChannel(id_channel, sound, -1, 300);
 		if (channel == -1)
 		{
 			printf("Unable to play WAV file: %s\n", Mix_GetError());
@@ -65,5 +87,5 @@ int		loop_sound(Mix_Chunk *sound, int id_sound)
 		}
 		id_current_sound = id_sound;
 	}
-	return (0);
+	return (0);	
 }

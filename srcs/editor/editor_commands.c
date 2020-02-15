@@ -39,7 +39,6 @@ static inline void	keydown_editor_commands(t_doom *data, int *step, int *first,
 	else if (data->lib.event.key.keysym.sym == SDLK_t && !data->lib.event.key.repeat)
 	{
 		data->player.gamemode = TEST_MODE;
-		init_game(data, &data->player);
 		switch_state(data, EDITOR, TEST_MODE);
 	}
 	else if (data->lib.event.key.keysym.sym == SDLK_g && !data->lib.event.key.repeat)

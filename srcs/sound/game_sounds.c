@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:28:56 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/13 21:22:28 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/15 20:43:32 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ static void	play_movement_sounds(t_mixer *mix, unsigned int tmp,
 	if (!(tmp & COURSE))
 	{
 		if ((f1 % 22 == 0) && !Mix_Playing(CHANNEL_FOOTSTEP))
-			Mix_PlayChannel(CHANNEL_FOOTSTEP, mix->sounds[5], 0);
+			Mix_PlayChannel(CHANNEL_FOOTSTEP, mix->sounds[8], 0);
 		else if (f1 % 22 == 11 && !Mix_Playing(CHANNEL_FOOTSTEP2))
-			Mix_PlayChannel(CHANNEL_FOOTSTEP2, mix->sounds[6], 0);
+			Mix_PlayChannel(CHANNEL_FOOTSTEP2, mix->sounds[9], 0);
 	}
 	else
 	{
 		if ((f2 % 14 == 0) && !Mix_Playing(CHANNEL_FOOTSTEP))
-			Mix_PlayChannel(CHANNEL_FOOTSTEP, mix->sounds[5], 0);
+			Mix_PlayChannel(CHANNEL_FOOTSTEP, mix->sounds[8], 0);
 		else if (f2 % 14 == 7 && !Mix_Playing(CHANNEL_FOOTSTEP2))
-			Mix_PlayChannel(CHANNEL_FOOTSTEP2, mix->sounds[6], 0);
+			Mix_PlayChannel(CHANNEL_FOOTSTEP2, mix->sounds[9], 0);
 	}
 }
 
