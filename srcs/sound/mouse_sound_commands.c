@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_sound_commands.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:57 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 16:38:00 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:52:32 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	mouse_sound_commands2(t_doom *data, int tab[3])
 	{
 		tab[2] = (int)((data->lib.event.button.x - BAR_WIDTH_START)
 			* 100.0 / BAR_WIDTH + 0.5);
-		set_sound_effects_volume(data->mix, (data->lib.event.button.x -
+		set_sound_effects_volume(&data->mix, (data->lib.event.button.x -
 			(double)BAR_WIDTH_START) / (double)BAR_WIDTH);
 	}
 	else if (data->lib.event.button.x >= WIDTH_CENTER - DEF_BUTTON_W &&
@@ -59,7 +59,7 @@ void		mouse_sound_commands(t_doom *data, int tab[3])
 	{
 		tab[0] = (int)((data->lib.event.button.x - BAR_WIDTH_START)
 			* 100.0 / BAR_WIDTH + 0.5);
-		set_master_volume(data->mix, (data->lib.event.button.x -
+		set_master_volume(&data->mix, (data->lib.event.button.x -
 			(double)BAR_WIDTH_START) / (double)BAR_WIDTH);
 	}
 	else if (data->lib.event.button.y >= BAR_HEIGHT_START + BAR_GAP &&
@@ -69,7 +69,7 @@ void		mouse_sound_commands(t_doom *data, int tab[3])
 	{
 		tab[1] = (int)((data->lib.event.button.x - BAR_WIDTH_START)
 			* 100.0 / BAR_WIDTH + 0.5);
-		set_music_volume(data->mix, (data->lib.event.button.x -
+		set_music_volume(&data->mix, (data->lib.event.button.x -
 			(double)BAR_WIDTH_START) / (double)BAR_WIDTH);
 	}
 	mouse_sound_commands2(data, tab);

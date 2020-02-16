@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:27:33 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/23 17:35:08 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/15 20:06:27 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "octree.h"
+#include <sys/time.h>
 
 static void	add_hud(t_doom *data)
 {
@@ -43,15 +44,17 @@ static void	update_physics(t_doom *data)
 
 int			state_test_mode(t_doom *data)
 {
-	unsigned long	time;
+	struct timeval	time;
 	long			wait;
+	long			sleep;
 
-	time = SDL_GetTicks();
+	gettimeofday(&time, NULL);
+	wait = time.tv_sec * 1000000 + time.tv_usec;
 	raytracing(data);
-	wait = SDL_GetTicks();
 	add_hud(data);
 	data->player.health = 1000;
 	put_health_bar(data);
+	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
 	display_inventory(&data->lib, &data->player);
 	update_physics(data);
@@ -63,7 +66,8 @@ int			state_test_mode(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
-	if ((wait = (SDL_GetTicks() - time)) < 50)
-		usleep(50000 - (wait * 1000));
+	gettimeofday(&time, NULL);
+	if ((sleep = time.tv_sec * 1000000 + time.tv_usec - wait) < 50000)
+		usleep(50000 - sleep);
 	return (0);
 }

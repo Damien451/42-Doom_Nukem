@@ -129,6 +129,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(SOUND)/mixer.c						\
 					$(SOUND)/mixer2.c						\
 					$(SOUND)/mouse_sound_commands.c			\
+					$(SOUND)/game_sounds.c				\
 					$(STATES)/state_death.c					\
 					$(STATES)/state_delete_map.c			\
 					$(STATES)/state_editor.c				\

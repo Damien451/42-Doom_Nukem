@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:53 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 19:14:55 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:53:28 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ int			state_sound_settings(t_doom *data)
 
 	if (first == 1)
 	{
-		tab[0] = (int)(data->mix->v_master * 100);
-		tab[1] = (int)(data->mix->v_music * 100);
-		tab[2] = (int)(data->mix->v_sound_effects * 100);
+		tab[0] = (int)(data->mix.v_master * 100);
+		tab[1] = (int)(data->mix.v_music * 100);
+		tab[2] = (int)(data->mix.v_sound_effects * 100);
 	}
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER + (2 * DEF_BUTTON_H + 2 * BUTTON_GAP_Y)),

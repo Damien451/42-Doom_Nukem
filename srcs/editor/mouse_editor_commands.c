@@ -13,7 +13,6 @@ static inline void	mouse_editor_commands4(t_doom *data, int x, int *step)
 		if (check_map_validity(data) == 0)
 		{
 			data->player.gamemode = TEST_MODE;
-			init_game(data, &data->player);
 			switch_state(data, EDITOR, TEST_MODE);
 		}
 }

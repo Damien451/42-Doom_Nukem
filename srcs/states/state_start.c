@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/06 20:31:13 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/15 18:42:44 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 		lightning(data, image, (((frame + 50) << 16) | ((frame + 50) << 8))
 			+ frame + 75, frame);
 	if (type > 0 && frame == 120)
-		play_sound(data->mix->sounds[1]);
+		play_sound(data->mix.sounds[1]);
 	frame += type;
 	if (frame == 255 || frame == 0)
 		type *= -1;
@@ -157,13 +157,14 @@ static inline void	create_start_renderer(t_doom *data)
 
 int					state_start(t_doom *data)
 {
-	loop_sound(data->mix->sounds[0], 0);
+	loop_sound_effect(data->mix.sounds[0], 0);
 	while (SDL_PollEvent(&data->lib.event))
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)
 		{
 			data->load_page[0] = 0;
 			data->load_page[1] = 0;
+			Mix_HaltChannel(-1);
 			switch_state(data, START, MAIN_MENU);
 		}
 	}

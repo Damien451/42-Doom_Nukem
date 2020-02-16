@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/29 20:44:03 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/15 19:41:20 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ static void	check_inputs(t_doom *data, t_button *btab, int *first,
 			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 			{
 				if (load_map(data, data->map_name) == 0)
-				{
-					init_game(data, &data->player);
 					switch_state(data, PLAY_EDIT_MAP, PLAYING);
-				}
 			}
 			else
 				check_inputs2(data, tab[1], first);

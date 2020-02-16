@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 17:06:02 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/15 20:43:45 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "inputs.h"
 #include "vec3.h"
 #include <math.h>
+#include "mixer.h"
 
 void			camera_mouse_motion(t_camera *camera, int *x, int *y
 		, double *sensitivity)
@@ -124,7 +125,10 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[9])
 		{
 			if (data->player.acceleration.y == 0 && !(data->lib.cam_keys & WATER) && !(data->lib.cam_keys & SQUAT) && !(data->lib.cam_keys & CRAWL))
+			{
+				Mix_PlayChannel(CHANNEL_PLAYER_SOUNDS, data->mix.sounds[10], 0);
 				data->player.acceleration.y = 0.4;
+			}
 		}
 		else if (event->key.keysym.sym == SDLK_p)
 		{

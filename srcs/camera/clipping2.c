@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clipping2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 00:16:21 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 16:27:59 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/10 20:59:26 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,13 @@ void			check_y_min(t_doom *data, t_vec3d *accel
 	}
 	hitbox[0].y += accel->y;
 	hitbox[1].y += accel->y;
+	if (hitbox[0].y < 0.3)
+	{
+		accel->y = 0;
+		hitbox[0].y = 0.3;
+		hitbox[1].y = hitbox[0].y + y;
+		return ;
+	}
 }
 
 void			check_y_max(t_doom *data, t_vec3d *accel
@@ -130,6 +137,13 @@ void			check_y_max(t_doom *data, t_vec3d *accel
 	}
 	hitbox[0].y += accel->y;
 	hitbox[1].y += accel->y;
+	if (hitbox[1].y > 63.7)
+	{
+		accel->y = 0;
+		hitbox[1].y = 63.7;
+		hitbox[0].y = hitbox[1].y - y;
+		return ;
+	}
 }
 
 void			check_x_min(t_doom *data, t_vec3d *accel
@@ -209,6 +223,13 @@ void			check_x_min(t_doom *data, t_vec3d *accel
 	}
 	hitbox[0].x += accel->x;
 	hitbox[1].x += accel->x;
+	if (hitbox[0].x < 0.3)
+	{
+		accel->x = 0;
+		hitbox[0].x = 0.3 + EPSILON;
+		hitbox[1].x = hitbox[0].x + x;
+		return ;
+	}
 }
 
 void			check_x_max(t_doom *data, t_vec3d *accel
@@ -291,6 +312,13 @@ void			check_x_max(t_doom *data, t_vec3d *accel
 	}
 	hitbox[0].x += accel->x;
 	hitbox[1].x += accel->x;
+	if (hitbox[1].x > 63.7)
+	{
+		accel->x = 0;
+		hitbox[1].x = 63.7;
+		hitbox[0].x = hitbox[1].x - x;
+		return ;
+	}
 }
 
 void			check_z_min(t_doom *data, t_vec3d *accel
@@ -370,6 +398,13 @@ void			check_z_min(t_doom *data, t_vec3d *accel
 	}
 	hitbox[0].z += accel->z;
 	hitbox[1].z += accel->z;
+	if (hitbox[0].z < 0.3)
+	{
+		accel->z = 0;
+		hitbox[0].z = 0.3;
+		hitbox[1].z = hitbox[0].z + z;
+		return ;
+	}
 }
 
 void			check_z_max(t_doom *data, t_vec3d *accel
@@ -449,4 +484,11 @@ void			check_z_max(t_doom *data, t_vec3d *accel
 	}
 	hitbox[0].z += accel->z;
 	hitbox[1].z += accel->z;
+	if (hitbox[1].z > 63.7)
+	{
+		accel->z = 0;
+		hitbox[1].z = 63.7;
+		hitbox[0].z = hitbox[1].z - z;
+		return ;
+	}
 }
