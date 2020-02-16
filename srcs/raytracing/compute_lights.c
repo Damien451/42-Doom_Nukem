@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 22:24:05 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 16:09:09 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/16 16:35:36 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ double		compute_light_power(t_ray ray, double length
 	return ((1.0 - length / data->power[light->type])
 			* compute_normal(ray.direction, ray.normal));
 }
+
+double		compute_light_power_player(t_ray ray, double length
+		, const t_doom *const data, double coef)
+{
+	return (coef * (1.0 - length / data->power[PLAYER])
+			* compute_normal(ray.direction, ray.normal));
+}
+
 
 double		launch_ray_to_light(t_ray ray, t_light *light
 		, const t_doom *const data)
@@ -115,9 +123,15 @@ double		launch_ray_to_light_player(t_ray ray, t_light *light
 		return (0);
 	ray.length = 0;
 	ray.direction = vec3d_unit(vec3d_sub(light->position, ray.origin));
-	if (vec3d_dot(data->oriented_light, ray.direction) > -0.975)
+	if ((power = -vec3d_dot(vec3d_unit(data->oriented_light), ray.direction)) < 0.950)
 		return (0);
-	power = length;
+	else if (power < 0.960)
+	{
+		power -= 0.950;
+		power /= 0.01;
+	}
+	else
+		power = 1;
 	max_absolute_between_three(ray.direction, sorted);
 	if (ray.node->leaf == BREAKABLE)
 	{
@@ -138,7 +152,7 @@ double		launch_ray_to_light_player(t_ray ray, t_light *light
 		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin
 				, &ray, &ray.node);
 		if (ray.length * ray.length >= length)
-			return (compute_light_power(ray, power, data, light));
+			return (compute_light_power_player(ray, length, data, power));
 		if (ray.face == -1)
 			i++;
 		else if (ray.face == -3 && !(i = 0))
@@ -165,7 +179,7 @@ double		launch_ray_to_light_player(t_ray ray, t_light *light
 		else if (ray.face >= 0)
 			return (0);
 		else
-			return (compute_light_power(ray, power, data, light));
+			return (compute_light_power_player(ray, length, data, power));
 	}
 	return (0);
 }
