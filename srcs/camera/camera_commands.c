@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/15 20:43:45 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 16:01:38 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
 		}
 		else if (event->key.keysym.sym == SDLK_h)
 				data->lib.cam_keys |= BEST_SAMPLING;
-
 	}
 	camera_release_key(event, inputs, data);
 }

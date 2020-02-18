@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:10:04 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/03 15:02:05 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 20:16:06 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	check_inputs_menu2(t_doom *data, int nbmaps, int *first)
 		*first = 0;
 		data->map_to_show++;
 	}
+	else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+		switch_state(data, EDITOR_MENU, MAIN_MENU);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:53 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/12 19:53:28 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 20:09:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	check_sound_settings(t_doom *data, int tab[3])
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
 				data->button = (data->button == 1) ? 0 : 1;
+			else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+				switch_state(data, SETTINGS_SOUND, SETTINGS);
 			else if (data->lib.event.key.keysym.sym == SDLK_RETURN &&
 				data->button == 0)
 				switch_state(data, SETTINGS_SOUND, SETTINGS);

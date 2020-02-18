@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:01:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/15 18:27:00 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 20:06:44 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static void	check_inputs_play(t_doom *data, t_button *btab, int but)
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
 				data->button = data->button ? data->button - 1 : but - 1;
-			if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
+			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
 				data->button = data->button == but - 1 ? 0 : data->button + 1;
-			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
+			else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+				switch_state(data, PLAY_MENU, MAIN_MENU);
+			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 			{
 				if (data->button == 0)
 					data->player.gamemode = CLASSIC_MODE;

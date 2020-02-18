@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 22:03:07 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/15 19:55:58 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 18:51:24 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ void		init_game(t_doom *data, t_player *player)
 	set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	player->score = 0;
 	data->player.camera.x_angle = 0;
+	data->player.physics.camera.x_angle = 0;
+	player->camera.direction = vec3d(0, 0, 1);
+	player->camera.right = vec3d(1, 0, 0);
+	player->camera.up = vec3d(0, 1, 0);
+	player->acceleration.x = 0;
+	player->acceleration.y = 0;
+	player->acceleration.z = 0;
 }

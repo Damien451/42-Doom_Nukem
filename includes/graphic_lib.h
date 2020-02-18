@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/05 20:28:26 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/18 17:17:35 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,4 +147,6 @@ void							init_map_colors(t_graphic_lib *lib);
 int								display_scores(t_doom *data,
 	t_scoreboard *scores, int frame, int *curr_score);
 
+void							display_str(t_doom *data,
+	t_point pos, char *str, long duration);
 #endif

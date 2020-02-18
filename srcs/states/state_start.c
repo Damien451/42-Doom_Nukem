@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/15 18:42:44 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/18 17:16:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ static inline void	create_start_renderer(t_doom *data)
 	if ((wait = (SDL_GetTicks() - time)) < 17)
 		usleep(17000 - (wait * 1000));
 	time = SDL_GetTicks();
+	//display_str(data, (t_point){200, 200}, "TEST", 20000000);
 	SDL_RenderPresent(data->lib.renderer);
 }
 

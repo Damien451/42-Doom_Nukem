@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:20:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 19:13:29 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 20:16:22 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ static int	save_inputs(t_doom *data)
 	write(fd, (void*)data->tabinputs.keycode, NB_MODIF_INPUTS * 4);
 	close(fd);
 	switch_state(data, SETTINGS_INPUTS, SETTINGS);
+	return (0);
+}
+
+static int	check_inputs_settings3(t_doom *data, int *first)
+{
+	if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+	{
+		*first = 0;
+		switch_state(data, SETTINGS_INPUTS, SETTINGS);
+	}
 	return (0);
 }
 
@@ -56,7 +66,7 @@ static int	check_inputs_settings2(t_doom *data, int nbuttons, int *first)
 			*first = 0;
 		}
 	}
-	return (0);
+	return (check_inputs_settings3(data, first));
 }
 
 static int	check_inputs_settings(t_doom *data, int nbuttons, int *first)
@@ -68,12 +78,12 @@ static int	check_inputs_settings(t_doom *data, int nbuttons, int *first)
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
-				data->button = data->button == 0 ? 0 : data->button - 1;
+				data->button = data->button == 0 ? nbuttons - 1 : data->button - 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
 				data->button = (data->button == nbuttons - 1)
-				? nbuttons - 1 : data->button + 1;
+				? 0 : data->button + 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_LEFT ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[1])

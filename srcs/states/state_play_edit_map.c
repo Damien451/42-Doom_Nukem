@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/15 19:41:20 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 20:07:19 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,15 @@ static void	check_inputs(t_doom *data, t_button *btab, int *first,
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
 				data->button = data->button ? data->button - 1 : tab[0] - 1;
-			if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
+			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
 				data->button = data->button == tab[0] - 1 ? 0 : data->button + 1;
-			if (data->lib.event.key.keysym.sym == SDLK_RETURN
+			else if (data->lib.event.key.keysym.sym == SDLK_RETURN
 				&& data->button == 1)
 				switch_state(data, PLAY_EDIT_MAP, btab[data->button].state);
+			else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+				switch_state(data, PLAY_EDIT_MAP, PLAY_MENU);
 			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 			{
 				if (load_map(data, data->map_name) == 0)

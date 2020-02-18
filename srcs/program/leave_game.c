@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:36:05 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/10 21:14:57 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 18:52:37 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void		leave_game(t_doom *data, t_player *player)
 	player->speed = 0;
 	player->health = 1000;
 	data->player.camera.x_angle = 0;
+	data->player.physics.camera.x_angle = 0;
 	data->lib.cam_keys = 0;
 }

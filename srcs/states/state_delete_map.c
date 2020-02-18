@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:08:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 19:11:13 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/16 20:17:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static void	check_inputs_delmap(t_doom *data, int nbmaps, int *first)
 				*first = 0;
 				switch_state(data, DELETE_MAP, EDITOR_MENU);
 			}
+			else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+				switch_state(data, DELETE_MAP, EDITOR_MENU);
 			else
 				check_inputs_delmap2(data, nbmaps, first);
 		}
