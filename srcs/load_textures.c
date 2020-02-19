@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/05 20:27:57 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:50:39 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ void			load_textures(t_doom *data)
 	data->lib.menu_texture[4] = IMG_Load("textures/background_menu.bmp");
 	data->lib.menu_texture[5] = IMG_Load("textures/scoreboard.bmp");
 	data->lib.menu_texture[6] = IMG_Load("textures/doom-icon.bmp");
+	data->lib.menu_texture[7] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/icon-arrow-left.bmp");
+	data->lib.menu_texture[8] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/icon-arrow-right.bmp");
 	data->lib.editor.texture[0] = IMG_Load("textures/editor.bmp");
 	data->lib.editor.texture[1] = IMG_Load("textures/editor2.bmp");
 	data->lib.hud_texture = IMG_Load("textures/hud2.png");

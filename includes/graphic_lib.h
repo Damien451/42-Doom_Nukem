@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/18 17:17:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:28:05 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define NBR_TEXTURES_EDITOR	62
 # define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_OBJECTS	20
-# define NBR_TEXTURES_MENU		7
+# define NBR_TEXTURES_MENU		9
 # define NBR_FONTS				5
 # define NB_IMG					2
 # define ID_START_BLOCK			30
@@ -57,6 +57,7 @@ typedef struct s_label			t_label;
 typedef struct s_point			t_point;
 typedef struct s_mixer			t_mixer;
 typedef struct s_scoreboard		t_scoreboard;
+typedef struct s_button			t_button;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -149,4 +150,7 @@ int								display_scores(t_doom *data,
 
 void							display_str(t_doom *data,
 	t_point pos, char *str, long duration);
+
+void							display_arrows(t_doom *data,
+	t_button *button);
 #endif

@@ -62,6 +62,7 @@ LIBFT		= $(LIBDIR) -lft
 # **************************************************************************** #
 
 SRCS 		=		$(ANIM)/anim_main_menu.c				\
+					$(ANIM)/display_arrows.c				\
 					$(ANIM)/display_scores.c				\
 					$(ANIM)/display_str.c					\
 					$(CAMERA)/camera.c						\

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/16 20:07:19 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:10:53 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ static void	check_inputs2(t_doom *data, int nbmaps, int *first)
 {
 	if ((data->lib.event.key.keysym.sym == SDLK_LEFT ||
 		(unsigned int)data->lib.event.key.keysym.sym ==
-		data->tabinputs.keycode[1]) && data->map_to_show > 0 &&
-		data->button == 0)
+		data->tabinputs.keycode[1]) && data->button == 0)
 	{
 		*first = 0;
-		data->map_to_show--;
+		data->map_to_show = (data->map_to_show == 0
+			? nbmaps - 1 : data->map_to_show - 1);
 	}
 	else if ((data->lib.event.key.keysym.sym == SDLK_RIGHT ||
 		(unsigned int)data->lib.event.key.keysym.sym ==
-		data->tabinputs.keycode[3]) && data->map_to_show < nbmaps - 1 &&
-		data->button == 0)
+		data->tabinputs.keycode[3]) && data->button == 0)
 	{
 		*first = 0;
-		data->map_to_show++;
+		data->map_to_show = (data->map_to_show == nbmaps - 1
+			? 0 : data->map_to_show + 1);
 	}
 }
 
@@ -100,6 +100,7 @@ int			state_play_edit_map(t_doom *data)
 	buttons_play_edit_map(buttons, map_name);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 2);
+	display_arrows(data, &buttons[0]);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 6),
 		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 2);

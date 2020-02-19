@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:10:04 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/16 20:16:06 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/19 18:21:30 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 #include "libft.h"
 #include "menus.h"
 #include "inputs.h"
+#include "graphic_lib.h"
 
 static void	check_inputs_menu2(t_doom *data, int nbmaps, int *first)
 {
 	if ((data->lib.event.key.keysym.sym == SDLK_LEFT ||
 		(unsigned int)data->lib.event.key.keysym.sym ==
-		data->tabinputs.keycode[1]) && data->map_to_show > 0 &&
-		data->button == 0)
+		data->tabinputs.keycode[1]) && data->button == 0)
 	{
 		*first = 0;
-		data->map_to_show--;
+		data->map_to_show = (data->map_to_show == 0
+			? nbmaps - 1 : data->map_to_show - 1);
 	}
 	else if ((data->lib.event.key.keysym.sym == SDLK_RIGHT ||
 		(unsigned int)data->lib.event.key.keysym.sym ==
-		data->tabinputs.keycode[3]) && data->map_to_show < nbmaps - 1 &&
-		data->button == 0)
+		data->tabinputs.keycode[3]) && data->button == 0)
 	{
 		*first = 0;
-		data->map_to_show++;
+		data->map_to_show = (data->map_to_show == nbmaps - 1
+			? 0 : data->map_to_show + 1);
 	}
 	else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		switch_state(data, EDITOR_MENU, MAIN_MENU);
@@ -107,6 +108,7 @@ int			state_editor_menu(t_doom *data)
 	buttons_editor_menu(buttons, map_name);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 4);
+	display_arrows(data, &buttons[0]);
 	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
 		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 4);
