@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:50:40 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/19 19:09:04 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:22:36 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@ static void	print_arrow(t_doom *data, SDL_Surface *texture, t_point pos, int fra
 		while (++j < 64)
 		{
 			if (!(((unsigned int*)texture->pixels)
-				[i * 64 + j] > 4278190080))
+				[i * 64 + j] > 4278190080) && data->button != 0)
 				data->lib.image[(i + pos.y) * WIDTH + j + frame + pos.x] =
 					((unsigned int*)texture->pixels)[i * 64 + j];
+			else if (!(((unsigned int*)texture->pixels)
+				[i * 64 + j] > 4278190080) && data -> button == 0)
+				data->lib.image[(i + pos.y) * WIDTH + j + frame + pos.x] =
+					0xffffff;
 		}
 	}
 }
