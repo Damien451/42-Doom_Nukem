@@ -6,21 +6,12 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 00:16:21 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/10 20:59:26 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:19:53 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int				clipping_between_hitbox_and_voxels(t_vec3d voxel[2]
-	, t_vec3d hitbox[2])
-{
-	if (voxel[0].x <= hitbox[1].x && voxel[1].x >= hitbox[0].x)
-		if (voxel[0].y <= hitbox[1].y && voxel[1].y >= hitbox[0].y)
-			if (voxel[0].z <= hitbox[1].z && voxel[1].z >= hitbox[0].z)
-				return (1);
-	return (0);
-}
 
 void			check_y_min(t_doom *data, t_vec3d *accel
 	, t_vec3d hitbox[2], double y)

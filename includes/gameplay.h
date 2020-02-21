@@ -35,7 +35,7 @@
 # define D_AWP				119
 # define D_M4				31
 
-# define DISTANCE_MAX_BLOCK 4
+# define DISTANCE_MAX_BLOCK 4.0f
 
 /*
 ** ====-* TYPEDEFS *-====

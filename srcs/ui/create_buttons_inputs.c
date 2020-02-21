@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:41:28 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/06 19:54:11 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:16:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	create_buttons_inputs2(t_doom *data, t_button *btab,
 				titles[(i > 8 ? i - 1 : i)]);
 		else if (i == 8)
 			btab[8] = button(point(coords[i][0], coords[i][1]),
-			point(SET_BUTTON_W, SET_BUTTON_H), 0, "Save & quit");
+			point(SET_BUTTON_W, SET_BUTTON_H), 0, "Save and quit");
 		else
 			btab[13] = button(point(coords[i][0], coords[i][1]),
 			point(SET_BUTTON_W, SET_BUTTON_H), 0, "Reset");

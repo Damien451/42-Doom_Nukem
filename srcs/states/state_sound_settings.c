@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:53 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 17:03:42 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:03:59 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static int	check_sound_settings(t_doom *data, int tab[3])
 
 static int	state_sound_settings_2(t_doom *data, int tab[3], t_button *btab)
 {
-	SDL_SetRelativeMouseMode(SDL_FALSE);
-	SDL_ShowCursor(SDL_TRUE);
 	if (check_sound_settings(data, tab) != 0)
 		return (1);
 	put_buttons_on_img(data, btab, 2);

@@ -45,8 +45,17 @@ void		switch_state(t_doom *data, long actual_state, long new_state)
 		data->running = 0;
 		return ;
 	}
-	if (new_state != EDITOR)
+	if (new_state != EDITOR && new_state != SETTINGS_SOUND)
+	{
+		SDL_SetRelativeMouseMode(SDL_TRUE);
 		SDL_ShowCursor(SDL_FALSE);
+	}
+	else
+	{
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+		SDL_ShowCursor(SDL_TRUE);
+	}
+	
 	data->state = new_state;
 	if ((new_state == PLAYING || new_state == TEST_MODE)
 		&& actual_state != PAUSE && actual_state != DEATH

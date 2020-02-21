@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/16 16:01:38 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:54:22 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			camera_mouse_motion(t_camera *camera, int *x, int *y
 	{
 		move = *sensitivity * (double)*y;
 		x_angle = camera->x_angle + move;
-		if (x_angle > -1.2 && x_angle < 1.2)
+		if (x_angle > -M_PI_2 + 0.1 && x_angle < M_PI_2 - 0.1)
 		{
 			camera->x_angle = x_angle;
 			rotate_camera(camera, camera->right, move);

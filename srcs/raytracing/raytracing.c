@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/16 18:47:11 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:59:40 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@
 #include <pthread.h>
 #include <math.h>
 #include <sys/time.h>
+
+
+static void	update_physics(t_doom *data)
+{
+	data->player.acceleration = data->player.physics.acceleration;
+	data->player.camera.origin = data->player.physics.origin;
+	data->player.camera.direction = data->player.physics.camera.direction;
+	data->player.camera.up = data->player.physics.camera.up;
+	data->player.camera.right = data->player.physics.camera.right;
+}
 
 static inline int	init_thread_structure(t_doom *data, t_octree *position)
 {
@@ -83,7 +93,10 @@ static void			event_loop(t_doom *data)
 					, &data->lib.event.motion.yrel
 					, &data->player.sensitivity);
 		else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
-			data->lib.cam_keys |= DESTROY;
+				data->lib.cam_keys |= DESTROY;
+		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
+				data->lib.cam_keys &= ~DESTROY;
+
 		camera_press_key(&data->lib.event, &data->tabinputs, data);
 	}
 }
@@ -143,12 +156,8 @@ int					raytracing(t_doom *data)
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(data->thread[i++].thread, NULL);
+	update_physics(data);
 	if (data->lib.cam_keys & DESTROY)
-	{
 		interaction(data);
-		free_octree(data->octree);
-		create_octree(data);
-		data->lib.cam_keys &= ~DESTROY;
-	}
 	return (0);
 }

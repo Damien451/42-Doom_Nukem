@@ -6,65 +6,112 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:04:23 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/02/21 13:02:58 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 20:10:04 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gameplay.h"
 #include "doom.h"
+#include "octree.h"
 
-static void		put_block(t_doom *data, t_player *player, t_hit *line)
+int				clipping_between_hitbox_and_voxels(t_vec3d voxel[2]
+	, t_vec3d hitbox[2])
 {
-	t_vec3d	pos;
-	int		face;
-	int		tmp[3];
-
-	face = line->face;
-	pos = line->ray->intersect;
-	if (data->map_to_save[(int)floor(pos.x)][(int)floor(pos.y)][(int)floor(pos.z)] == 0
-		&& !(player->camera.origin.x == floor(pos.x) && (player->camera.origin.y == floor(pos.y)
-		|| player->camera.origin.y == floor(pos.y - 1)) && player->camera.origin.z == floor(pos.z)))
-		data->map_to_save[(int)floor(pos.x)][(int)floor(pos.y)][(int)floor(pos.z)] =
-			data->player.inventory.selected_block;
-	else
-	{
-		tmp[0] = (int)((face == X_MIN ? 1 : 0) + (face == X_MAX ? -1 : 0) + (int)floor(pos.x));
-		tmp[1] = (int)((face == Y_MIN ? 1 : 0) + (face == Y_MAX ? -1 : 0) + (int)floor(pos.y));
-		tmp[2] = (int)((face == Z_MIN ? 1 : 0) + (face == Z_MAX ? -1 : 0) + (int)floor(pos.z));
-		if (data->map_to_save[tmp[0]][tmp[1]][tmp[2]] == 0)
-			data->map_to_save[tmp[0]][tmp[1]][tmp[2]] = data->player.inventory.selected_block;
-	}
+	if (voxel[0].x <= hitbox[1].x && voxel[1].x >= hitbox[0].x)
+		if (voxel[0].y <= hitbox[1].y && voxel[1].y >= hitbox[0].y)
+			if (voxel[0].z <= hitbox[1].z && voxel[1].z >= hitbox[0].z)
+				return (1);
+	return (0);
 }
 
-static int		check_distance(t_hit **line)
+t_ray		ray_colision(t_ray ray, const t_doom *const data)
 {
-	int		i;
-	int		good;
+	int				sorted[3];
+	int				i;
+	t_octree		*tmp;
+	double			length;
 
-	i = -1;
-	good = 0;
-	while (++i < 3) {
-		if (line[i] && line[i]->face && (int)floor(line[i]->length) < DISTANCE_MAX_BLOCK
-		&& line[i]->length > 1)
-			good++;
+	max_absolute_between_three(ray.direction, sorted);
+	tmp = ray.node;
+	i = 0;
+	while (i < 3)
+	{
+		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin
+				, &ray, &ray.node);
+		if (ray.face == -1)
+			i++;
+		else if (ray.face == -3)
+		{
+			ray.origin = ray.intersect;
+			if (ray.node->leaf == BREAKABLE)
+				return (ray);
+			tmp = ray.node;
+			i = 0;
+		}
+		else if (ray.face >= 0)
+			return (ray);
 		else
-			line[i] = NULL;
+			return (ray);
 	}
-	return (good > 1);
+	return (ray);
 }
 
 void			interaction(t_doom *data)
 {
-	t_hit			**line;
-	int				i;
+	t_ray		ray;
+	t_vec3d		player[2];
+	t_vec3d		block[2];
 
-	i = -1;
-	line = (t_hit**)malloc(sizeof(t_hit*) * 3);
-	while (++i < 3){
-		line[i] = line_of_sight(data->player.camera, data);
-		line[i]->length = sqrt(line[i]->ray->length);
-		printf("line[%d]->length = %f\n", i, line[i]->length);
+	ray.node = find_actual_position(&data->player.camera.origin, data->octree);
+	ray.direction = data->player.camera.direction;
+	ray.origin = data->player.camera.origin;
+	ray.find_parent[0] = &find_parent_x;
+	ray.find_parent[1] = &find_parent_y;
+	ray.find_parent[2] = &find_parent_z;
+	ray.length = 0;
+	ray = ray_colision(ray, data);
+	if (ray.length > DISTANCE_MAX_BLOCK)
+		return ;
+	else if (!ray.node)
+		return ;
+	else if (ray.face >= 0 || ray.node->leaf == BREAKABLE)
+	{
+		player[0].x = data->player.camera.origin.x - 0.25;
+		player[1].x = data->player.camera.origin.x + 0.25;
+		player[0].z = data->player.camera.origin.z - 0.25;
+		player[1].z = data->player.camera.origin.z + 0.25;
+		player[0].y = data->player.camera.origin.y - 1.55;
+		player[1].y = data->player.camera.origin.y + 0.25;
+		block[0].x = floor(ray.intersect.x);
+		block[0].y = floor(ray.intersect.y);
+		block[0].z = floor(ray.intersect.z);
+		if (ray.node->leaf == BREAKABLE)
+			return ;
+		if (ray.face == 0)
+			block[0].x -= 1;
+		else if (ray.face == 2)
+			block[0].y -= 1;
+		else if (ray.face == 4)
+			block[0].z -= 1;
+		if (ray.face == 1)
+			block[0].x -= 1;
+		else if (ray.face == 0)
+			block[0].x += 1;
+		else if (ray.face == 3)
+			block[0].y -= 1;
+		else if (ray.face == 2)
+			block[0].y += 1;
+		else if (ray.face == 5)
+			block[0].z -= 1;
+		else
+			block[0].z += 1;
+		block[1].x = block[0].x + 1;
+		block[1].y = block[0].y + 1;
+		block[1].z = block[0].z + 1;
+		if (clipping_between_hitbox_and_voxels(block, player))
+			return ;
+		data->map_to_save[(int)block[0].x][(int)block[0].y][(int)block[0].z] = data->player.inventory.selected_block;
+		free_octree(data->octree);
+		create_octree(data);
 	}
-	if (check_distance(line))
-		put_block(data, &data->player, (line[1] ? line[1] : line[2]));
 }

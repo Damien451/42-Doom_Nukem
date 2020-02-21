@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/15 20:06:10 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:49:52 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,6 @@ static void	add_hud(t_doom *data)
 	}
 }
 
-static void	update_physics(t_doom *data)
-{
-	data->player.acceleration = data->player.physics.acceleration;
-	data->player.camera.origin = data->player.physics.origin;
-	data->player.camera.direction = data->player.physics.camera.direction;
-	data->player.camera.up = data->player.physics.camera.up;
-	data->player.camera.right = data->player.physics.camera.right;
-}
-
 int			state_game(t_doom *data)
 {
 	struct timeval	time;
@@ -113,7 +104,6 @@ int			state_game(t_doom *data)
 	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
 	display_inventory(&data->lib, &data->player);
-	update_physics(data);
 	if (data->map_to_save[(int)data->player.camera.origin.x]
 		[(int)data->player.camera.origin.y - 2][(int)data->player.camera.origin.z] == ID_FINISH_BLOCK + 1)
 		switch_state(data, PLAYING, FINISHED);
