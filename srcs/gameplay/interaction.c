@@ -1,19 +1,19 @@
 /* ************************************************************************** */
-/*	*/
-/*	:::	  ::::::::   */
-/*   interaction.c	  :+:	  :+:	:+:   */
-/*	+:+ +:+	 +:+	 */
-/*   By: dacuvill <marvin@42.fr>	+#+  +:+	   +#+	*/
-/*	+#+#+#+#+#+   +#+	   */
-/*   Created: 2020/02/12 15:46:30 by smokhtar	  #+#	#+#	 */
-/*   Updated: 2020/02/19 16:22:01 by dacuvill	 ###   ########.fr	   */
-/*	*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   interaction.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/12 07:04:23 by smokhtar          #+#    #+#             */
+/*   Updated: 2020/02/21 13:02:58 by dacuvill         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "gameplay.h"
 #include "doom.h"
 
-static void		put_block(t_doom *data, t_hit *line)
+static void		put_block(t_doom *data, t_player *player, t_hit *line)
 {
 	t_vec3d	pos;
 	int		face;
@@ -21,7 +21,9 @@ static void		put_block(t_doom *data, t_hit *line)
 
 	face = line->face;
 	pos = line->ray->intersect;
-	if (data->map_to_save[(int)floor(pos.x)][(int)floor(pos.y)][(int)floor(pos.z)] == 0)
+	if (data->map_to_save[(int)floor(pos.x)][(int)floor(pos.y)][(int)floor(pos.z)] == 0
+		&& !(player->camera.origin.x == floor(pos.x) && (player->camera.origin.y == floor(pos.y)
+		|| player->camera.origin.y == floor(pos.y - 1)) && player->camera.origin.z == floor(pos.z)))
 		data->map_to_save[(int)floor(pos.x)][(int)floor(pos.y)][(int)floor(pos.z)] =
 			data->player.inventory.selected_block;
 	else
@@ -61,7 +63,8 @@ void			interaction(t_doom *data)
 	while (++i < 3){
 		line[i] = line_of_sight(data->player.camera, data);
 		line[i]->length = sqrt(line[i]->ray->length);
+		printf("line[%d]->length = %f\n", i, line[i]->length);
 	}
 	if (check_distance(line))
-		put_block(data, (line[1] ? line[1] : line[2]));
+		put_block(data, &data->player, (line[1] ? line[1] : line[2]));
 }

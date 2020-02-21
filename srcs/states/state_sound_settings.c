@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:53 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/16 20:09:50 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:03:42 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	state_sound_settings_2(t_doom *data, int tab[3], t_button *btab)
 	put_buttons_on_img(data, btab, 2);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_sound_bars(data, tab);
-	put_buttons_names(data, btab, (SDL_Color){0, 0, 0, 0}, 2);
+	put_buttons_names(data, btab, (SDL_Color){255, 0, 0, 0}, 2);
 	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
 		label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	SDL_RenderPresent(data->lib.renderer);

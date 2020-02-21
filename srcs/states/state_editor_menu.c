@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:10:04 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/19 18:21:30 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:07:28 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int			state_editor_menu(t_doom *data)
 	display_arrows(data, &buttons[0]);
 	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
 		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
-	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 4);
+	put_buttons_names(data, buttons, (SDL_Color){255, 0, 0, 0}, 4);
 	check_inputs_menu(data, buttons, &first, (int[2]){4, nbmaps});
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);

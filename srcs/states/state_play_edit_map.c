@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/19 19:10:53 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:06:34 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int			state_play_edit_map(t_doom *data)
 	put_buttons_on_img(data, buttons, 2);
 	display_arrows(data, &buttons[0]);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 6),
-		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
-	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 2);
+		label("DOOMCRAFT", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
+	put_buttons_names(data, buttons, (SDL_Color){255, 0, 0, 0}, 2);
 	check_inputs(data, buttons, &first, (int[2]){2, nbmaps});
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);

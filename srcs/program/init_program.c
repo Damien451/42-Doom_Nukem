@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 16:05:48 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/20 17:26:23 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,10 +169,10 @@ static int	init_fonts(t_doom *data)
 	if (TTF_Init() < 0)
 		return (1);
 	if (!(data->lib.ptrfont[0] = TTF_OpenFont(
-				"./font/coalition/Coalition_v2.ttf", 200)))
+				"./font/coalition/Coalition_v2.ttf", 150)))
 		return (1);
 	if (!(data->lib.ptrfont[1] = TTF_OpenFont(
-				"./font/CGF_Locust_Resistance.ttf", 180)))
+				"./font/CGF_Locust_Resistance.ttf", 150)))
 		return (1);
 	if (!(data->lib.ptrfont[2] = TTF_OpenFont("./font/8th_Cargo.ttf", 35)))
 		return (1);
@@ -304,7 +304,7 @@ int			init_sdl(t_doom *data)
 				, SDL_GetError());
 		return (1);
 	}
-	if (!(data->lib.window = SDL_CreateWindow("Doom Nukem"
+	if (!(data->lib.window = SDL_CreateWindow("DoomCraft"
 					, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH
 					, HEIGHT, SDL_WINDOW_SHOWN)))
 	{

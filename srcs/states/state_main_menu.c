@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/15 18:26:37 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:56:28 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int			state_main_menu(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 5);
 	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 6),
-		label("DOOM", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
-	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 5);
+		label("DOOMCRAFT", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
+	put_buttons_names(data, buttons, (SDL_Color){255, 0, 0, 0}, 5);
 	check_inputs_menu(data, buttons, 5);
 	if ((wait = (SDL_GetTicks() - time)) < 17)
 		usleep(17000 - (wait * 1000));
