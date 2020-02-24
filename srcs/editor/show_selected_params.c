@@ -97,14 +97,13 @@ static void			show_brush_selection_and_selected_blocks(t_doom *data,
 		x = 1611;
 	else
 		x = 1720;
-	draw_select_rectangle(&data->lib, (t_point){x, 705},
-			(t_point){65, 35}, 0x000000);
-	draw_textures_square(&data->lib, (t_point){1234, 581},
-		(t_point){size, size}, (int[2]){1, (int)block1});
-	draw_textures_square(&data->lib, (t_point){1341, 581},
-		(t_point){size, size}, (int[2]){2, (int)block2});
-	draw_textures_square(&data->lib, (t_point){1223, 647},
-		(t_point){size, size}, (int[2]){3, (int)blocktoremove});
+	draw_select_rectangle(&data->lib, point(x, 705), point(65, 35), 0x000000);
+	draw_textures_square(&data->lib, point(1234, 581),
+		point(size, size), (int[2]){1, (int)block1});
+	draw_textures_square(&data->lib, point(1341, 581),
+		point(size, size), (int[2]){2, (int)block2});
+	draw_textures_square(&data->lib, point(1223, 647),
+		point(size, size), (int[2]){3, (int)blocktoremove});
 }
 
 void				show_selected_params(t_doom *data)
@@ -126,8 +125,7 @@ void				show_selected_params(t_doom *data)
 	if (y == 5)
 		y = 44;
 	y += 13 + (tmp * TEXTURE_SIZE);
-	draw_select_square(&data->lib, (t_point){(int)x, y},
-		(t_point){85, 85}, 0xff0000);
+	draw_select_square(&data->lib, point((int)x, y), point(85, 85), 0xff0000);
 	if (data->lib.editor.mode == 0)
 		show_brush_selection_and_selected_blocks(data, data->lib.editor.block1,
 			data->lib.editor.block2, data->lib.editor.blocktoremove);

@@ -6,13 +6,22 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:25:50 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/23 16:01:56 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/24 20:49:06 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "graphic_lib.h"
 #include <sys/time.h>
+
+/*
+	Example to use this function :
+
+	static int				aff = 0;
+
+	if (aff == 0 && display_str(data, t_point(200, 200), "TON TRAVAIL", 70000) == 1)
+		aff = 1;
+*/
 
 static void	manage_transparency(long time_left, long duration, int *alpha)
 {

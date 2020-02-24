@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_trader.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smokhtar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:14:32 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/02/12 15:14:33 by smokhtar         ###   ########.fr       */
+/*   Updated: 2020/02/24 21:03:44 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline void	keydown_trader_commands(t_doom *data)
 		switch_state(data, TRADER, PLAYING);
 }
 
-int			state_trader(t_doom *data, int trader)
+int			state_trader(t_doom *data)
 {
 	static int	ok = 1;
 

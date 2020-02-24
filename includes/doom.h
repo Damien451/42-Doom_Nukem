@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/12 19:47:23 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/24 21:05:51 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define FOV				1.047197551196598
 # define POV				0.593411945678072
 
-# define NBR_STATES			21
+# define NBR_STATES			22
 # define RUNNING			1
 # define START				0
 # define PLAYING			1
@@ -60,6 +60,7 @@
 # define LEAVING			18
 # define TRADER				19
 # define INVENTORY			20
+# define LOAD_SAVE			21
 
 # define SUN				0
 # define PLAYER				1
@@ -358,6 +359,8 @@ int							state_inputs_settings_menu(t_doom *data);
 
 int							state_level_finished(t_doom *data);
 
+int							state_load_save(t_doom *data);
+
 int							state_main_menu(t_doom *data);
 
 int							state_pause(t_doom *data);
@@ -388,9 +391,9 @@ int							state_game(t_doom *data);
 
 int							state_death(t_doom *data);
 
-int							state_inventory(t_doom *data, int trader);
+int							state_inventory(t_doom *data);
 
-int							state_trader(t_doom *data, int trader);
+int							state_trader(t_doom *data);
 
 double						hit_sphere(t_ray *ray, const t_doom *const data);
 

@@ -131,7 +131,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(SOUND)/mixer.c						\
 					$(SOUND)/mixer2.c						\
 					$(SOUND)/mouse_sound_commands.c			\
-					$(SOUND)/game_sounds.c				\
+					$(SOUND)/game_sounds.c					\
 					$(STATES)/state_death.c					\
 					$(STATES)/state_delete_map.c			\
 					$(STATES)/state_editor.c				\
@@ -141,6 +141,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_get_map_name.c			\
 					$(STATES)/state_inputs_settings_menu.c	\
 					$(STATES)/state_level_finished.c		\
+					$(STATES)/state_load_save.c				\
 					$(STATES)/state_main_menu.c				\
 					$(STATES)/state_pause.c					\
 					$(STATES)/state_play_edit_map.c			\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_inventory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smokhtar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 18:13:55 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/02/12 18:13:57 by smokhtar         ###   ########.fr       */
+/*   Updated: 2020/02/24 21:04:01 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline void	keydown_inventory_commands(t_doom *data)
 		switch_state(data, INVENTORY, PLAYING);
 }
 
-int			state_inventory(t_doom *data, int trader)
+int			state_inventory(t_doom *data)
 {
 	static int	ok = 1;
 
