@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:27:33 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/15 20:06:27 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 23:52:55 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,16 @@ static void	add_hud(t_doom *data)
 	i = 0;
 	while (i < WIDTH * HEIGHT)
 	{
-		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78 && ((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
-			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
+		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78
+			&& ((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
+			data->lib.image[i] =
+				(((unsigned int*)data->lib.hud_texture->pixels)[i]
+				& 0xff000000) +
+				((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff)
+				<< (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i]
+				& 0xff00))
+				+ ((((unsigned int*)data->lib.hud_texture->pixels)[i]
+				& 0xff0000) >> 16);
 		i++;
 	}
 }
@@ -52,11 +60,9 @@ int			state_test_mode(t_doom *data)
 	wait = time.tv_sec * 1000000 + time.tv_usec;
 	raytracing(data);
 	add_hud(data);
-	data->player.health = 1000;
-	put_health_bar(data);
 	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
-	display_inventory(&data->lib, &data->player);
+	display_inventory(&data->lib, &data->player, TEST_MODE);
 	update_physics(data);
 	if (data->photo)
 	{

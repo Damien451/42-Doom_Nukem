@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_string_with_shadow.c                           :+:      :+:    :+:   */
+/*   check_if_not_in_map.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/21 17:40:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/25 23:26:53 by dacuvill         ###   ########.fr       */
+/*   Created: 2020/02/25 20:49:59 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/02/25 22:04:41 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-#include "graphic_lib.h"
-#include "menus.h"
-#include <SDL_ttf.h>
-#include <SDL.h>
+#include "player.h"
 
-void	put_string_with_shadow(t_doom *data, t_point pos, t_label lab
-	, TTF_Font *font)
+int		check_if_not_in_map(t_hitbox hitbox, char map[64][64][64])
 {
-	put_string_on_renderer(data, point(pos.x + WIDTH / 300, pos.y),
-		label(lab.str, (SDL_Color){0, 0, 0, 0}), font);
-	put_string_on_renderer(data, pos, lab, font);
+	int		x;
+	int		y;
+	int		z;
+
+	x = (int)hitbox.min.x - 1;
+	while (++x <= (int)hitbox.max.x)
+	{
+		y = (int)hitbox.min.y - 1;
+		while (++y <= (int)hitbox.max.y)
+		{
+			z = (int)hitbox.min.z - 1;
+			while (++z <= (int)hitbox.max.z)
+			{
+				if (z > 64 || y > 64 || x > 64 || map[x][y][z])
+					return (1);
+			}
+		}
+	}
+	return (0);
 }

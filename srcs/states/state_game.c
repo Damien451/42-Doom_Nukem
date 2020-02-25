@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/21 18:49:52 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 23:30:10 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int			state_game(t_doom *data)
 	put_health_bar(data);
 	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
-	display_inventory(&data->lib, &data->player);
+	display_inventory(&data->lib, &data->player, PLAYING);
 	if (data->map_to_save[(int)data->player.camera.origin.x]
 		[(int)data->player.camera.origin.y - 2][(int)data->player.camera.origin.z] == ID_FINISH_BLOCK + 1)
 		switch_state(data, PLAYING, FINISHED);

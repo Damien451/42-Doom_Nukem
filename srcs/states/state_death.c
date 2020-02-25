@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 19:03:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/12 17:40:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 00:16:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	put_death_strings(t_doom *data, t_player *player)
 	if (player->lifes > 0 || data->player.gamemode == FREEPLAY_MODE)
 	{
 		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 8),
-			label("YOU ARE DEAD", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+			label("YOU ARE DEAD", (SDL_Color){255, 0, 0, 0}),
+			data->lib.ptrfont[1]);
 		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 3),
 			label("Press Enter to continue or Q to quit the game.",
 			(SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
@@ -52,7 +53,8 @@ static void	put_death_strings(t_doom *data, t_player *player)
 	else
 	{
 		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 8),
-			label("GAME OVER", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+			label("GAME OVER", (SDL_Color){255, 0, 0, 0}),
+			data->lib.ptrfont[1]);
 		put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 3),
 			label("Press any key to quit the game.",
 			(SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);

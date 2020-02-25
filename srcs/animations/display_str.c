@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:25:50 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/24 20:49:06 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 23:39:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include <sys/time.h>
 
 /*
-	Example to use this function :
-
-	static int				aff = 0;
-
-	if (aff == 0 && display_str(data, t_point(200, 200), "TON TRAVAIL", 70000) == 1)
-		aff = 1;
+**	Example to use this function :
+**
+**	static int				aff = 0;
+**
+**	if (aff == 0 && display_str(data, t_point(200, 200), "TEST", 70000) == 1)
+**		aff = 1;
 */
 
 static void	manage_transparency(long time_left, long duration, int *alpha)
@@ -31,7 +31,7 @@ static void	manage_transparency(long time_left, long duration, int *alpha)
 		(*alpha) -= 2;
 }
 
-int			display_str(t_doom *data, t_point pos, char *str, long duration)
+int			display_str(t_doom *data, t_message msg)
 {
 	struct timeval	time;
 	static int		flag = 0;
@@ -41,14 +41,14 @@ int			display_str(t_doom *data, t_point pos, char *str, long duration)
 
 	if (flag == 0)
 	{
-		time_left = duration;
+		time_left = msg.duration;
 		flag = 1;
 	}
 	gettimeofday(&time, NULL);
 	wait = time.tv_sec * 1000000 + time.tv_usec;
-	put_string_on_renderer(data, pos, label(str,
-		(SDL_Color){255, 0, 0, alpha}), data->lib.ptrfont[2]);
-	manage_transparency(time_left, duration, &alpha);
+	put_string_on_renderer(data, msg.pos, label(msg.message,
+		(SDL_Color){255, 0, 0, alpha}), data->lib.ptrfont[msg.font]);
+	manage_transparency(time_left, msg.duration, &alpha);
 	gettimeofday(&time, NULL);
 	if ((time_left -= time.tv_sec * 1000000 + time.tv_usec - wait) <= 0)
 	{

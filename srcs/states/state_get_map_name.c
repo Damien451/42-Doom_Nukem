@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/15 15:16:29 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 17:07:06 by dacuvill         ###   ########.fr       */
+/*   Created: 2020/02/26 00:02:44 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/02/26 00:09:31 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static int		check_if_authorised_input(int input)
 static void		check_inputs_map_name2(t_doom *data, char *map_name,
 	int *nbinputs)
 {
-	if (check_if_authorised_input(
-		data->lib.event.key.keysym.sym) == 0 && *nbinputs < 24)
+	if (check_if_authorised_input(data->lib.event.key.keysym.sym) == 0
+		&& *nbinputs < 24)
 	{
 		(*nbinputs)++;
 		ft_strcat(map_name, SDL_GetKeyName(data->lib.event.key.keysym.sym));

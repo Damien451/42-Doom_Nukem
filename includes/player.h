@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/08 20:29:21 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/26 00:28:27 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ typedef struct s_tabinputs		t_tabinputs;
 
 struct						s_hitbox
 {
-	t_vec3d					vertex;
+	t_vec3d					min;
+	t_vec3d					max;
 };
 
 struct						s_camera
@@ -90,8 +91,10 @@ struct						s_physics
 
 struct						s_inventory
 {
-	int						weapons;
+	int						weapons[5];
+	int						ammo[5];
 	int						keys;
+	int						heal_pack;
 	int						blocks[40];
 	int						selected_block;
 	int						selected_weapon;
@@ -119,7 +122,7 @@ struct						s_player
 };
 
 void						display_inventory(t_graphic_lib *lib,
-	t_player *player);
+	t_player *player, long state);
 
 void						rotate_camera(t_camera *camera, t_vec3d rot_vec
 	, double angle);

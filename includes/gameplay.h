@@ -45,8 +45,11 @@ typedef struct s_ray			t_ray;
 typedef struct s_weapon		t_weapon;
 typedef struct s_hit		t_hit;
 
-t_hit       				*line_of_sight(const t_camera camera, const t_doom *const data);
 void            			interaction(t_doom *data);
+int							check_if_not_in_map(t_hitbox hitbox,
+	char map[64][64][64]);
+void						move_hitbox(t_vec3d direction,
+	t_hitbox hitbox, char map[64][64][64]);
 
 /*
 ** ====-* STRUCTURES *-====

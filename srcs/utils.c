@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/25 16:37:41 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/02/25 18:36:32 by dacuvill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "menus.h"
+#include "graphic_lib.h"
 
 t_label		label(char *str, SDL_Color color)
 {
@@ -30,40 +43,19 @@ t_point		point(int width, int height)
 	return (newpoint);
 }
 
+t_message	message(char *message, long int duration, t_point pos, int font)
+{
+	t_message	newmessage;
+
+	newmessage.message = message;
+	newmessage.duration = duration;
+	newmessage.pos = pos;
+	newmessage.font = font;
+	return (newmessage);
+}
+
 void		switch_button(t_doom *data, long actual_button, long new_button)
 {
 	data->button &= ~actual_button;
 	data->button |= new_button;
-}
-
-void		switch_state(t_doom *data, long actual_state, long new_state)
-{
-	if (new_state != GET_INPUT && actual_state != GET_INPUT)
-		data->button = 0;
-	if (new_state == LEAVING)
-	{
-		data->running = 0;
-		return ;
-	}
-	if (new_state != EDITOR && new_state != SETTINGS_SOUND)
-	{
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-		SDL_ShowCursor(SDL_FALSE);
-	}
-	else
-	{
-		SDL_SetRelativeMouseMode(SDL_FALSE);
-		SDL_ShowCursor(SDL_TRUE);
-	}
-	
-	data->state = new_state;
-	if ((new_state == PLAYING || new_state == TEST_MODE)
-		&& actual_state != PAUSE && actual_state != DEATH
-		&& actual_state != FINISHED)
-	{
-		data->lib.cam_keys = 0;
-		free_octree(data->octree);
-		create_octree(data);
-		init_game(data, &data->player);
-	}
 }

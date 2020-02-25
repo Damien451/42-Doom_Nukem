@@ -6,15 +6,11 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 14:23:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/12 17:43:08 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 23:56:34 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
-/*
-**	Faire un check du score au préalable pour l'ajouter si besoin au tableau des highscores
-*/
 
 static void	check_inputs(t_doom *data, int gamemode, int *ok)
 {

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:05:19 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 19:04:22 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 23:54:18 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ static int	check_inputs_settings(t_doom *data, t_button *btab, int nbuttons)
 			if (data->lib.event.key.keysym.sym == SDLK_UP ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
-				{
+			{
 				data->button = (data->button == 0) ? nbuttons - 1 :
 				data->button - 1;
-				}
+			}
 			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])

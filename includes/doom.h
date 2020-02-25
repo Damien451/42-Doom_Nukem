@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/24 21:05:51 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 23:34:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define FOV				1.047197551196598
 # define POV				0.593411945678072
 
-# define NBR_STATES			22
+# define NBR_STATES			20
 # define RUNNING			1
 # define START				0
 # define PLAYING			1
@@ -58,9 +58,7 @@
 # define TEST_MODE			16
 # define GET_INPUT			17
 # define LEAVING			18
-# define TRADER				19
-# define INVENTORY			20
-# define LOAD_SAVE			21
+# define LOAD_SAVE			19
 
 # define SUN				0
 # define PLAYER				1
@@ -223,6 +221,7 @@ char						*get_map_name(int map_to_show, char *dir_path);
 int							count_maps(int *first, char *dir_path);
 void						free_octree(t_octree *node);
 int							parse_scores_file(t_doom *data, int *first);
+void						save_map_to_file(t_doom *data, char *map_name);
 void						select_next_level(t_doom *data);
 void						set_player_spawn(char map[64][64][64],
 	t_vec3d *position);
@@ -332,10 +331,6 @@ void			check_z_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
 void			check_z_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
 
 /*
-** ====-* GAMEPLAY *-====
-*/
-
-/*
 ** ====-* COMMANDS *-====
 */
 
@@ -345,6 +340,9 @@ void						editor_commands(t_doom *data, char map_name[50]
 int							check_map_validity(t_doom *data);
 
 void						mouse_editor_commands(t_doom *data, int *step);
+
+void						keydown_editor_commands(t_doom *data, int *step,
+	int *first, char *map_name);
 
 /*
 ** ====-* GAMESTATES *-====
@@ -401,11 +399,14 @@ double						hit_cylinder(t_ray *ray, const t_doom *const data);
 
 double						hit_plane(t_ray *ray, const t_doom *const data);
 
-void			dictionnary_binary_models(t_doom *data);
-unsigned int		compute_color(t_ray ray);
-unsigned int		ray_intersect_mini2(t_ray *ray, const t_doom *const data
-		, int sorted[3]);
-double		launch_ray_to_light_player(t_ray ray, t_light *light
-		, const t_doom *const data);
+void						dictionnary_binary_models(t_doom *data);
+
+unsigned int				compute_color(t_ray ray);
+
+unsigned int				ray_intersect_mini2(t_ray *ray,
+	const t_doom *const data, int sorted[3]);
+
+double						launch_ray_to_light_player(t_ray ray,
+	t_light *light, const t_doom *const data);
 
 #endif

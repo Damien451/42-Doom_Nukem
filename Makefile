@@ -77,10 +77,13 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/editor_commands.c				\
 					$(EDITOR)/editor_utils.c				\
 					$(EDITOR)/editor_utils2.c				\
+					$(EDITOR)/keydown_editor_commands.c		\
 					$(EDITOR)/mouse_editor_commands.c		\
+					$(EDITOR)/save_map_to_file.c			\
 					$(EDITOR)/show_selected_params.c		\
-					$(GAMEPLAY)/line_of_sight.c				\
 					$(GAMEPLAY)/interaction.c				\
+					$(GAMEPLAY)/check_if_not_in_map.c		\
+					$(GAMEPLAY)/move_hitbox.c				\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/create_octree_model.c			\
@@ -148,8 +151,6 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_play_menu.c				\
 					$(STATES)/state_sound_settings.c		\
 					$(STATES)/state_start.c					\
-					$(STATES)/state_trader.c				\
-					$(STATES)/state_inventory.c				\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
 					$(STATES)/state_sound_settings.c		\
@@ -168,9 +169,10 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(UI)/put_sound_bars.c					\
 					$(UI)/put_health_bar.c					\
 					add_points.c							\
+					dictionnary_binary_tex.c				\
 					load_textures.c							\
-					utils.c									\
-					dictionnary_binary_tex.c
+					switch_state.c							\
+					utils.c									
 
 
 # **************************************************************************** #

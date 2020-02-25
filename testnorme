@@ -1,0 +1,414 @@
+Norme: ./srcs/add_points.c
+Norme: ./srcs/animations/display_arrows.c
+Norme: ./srcs/animations/display_scores.c
+Norme: ./srcs/camera/camera.c
+Norme: ./srcs/animations/anim_main_menu.c
+Norme: ./srcs/camera/clipping.c
+Error: 7 functions in the file
+Error (line 66): add_vertex_clipping_y_min have 5 parameters
+Error (line 92): function add_vertex_clipping has 31 lines
+Error (line 100): C++ comment
+Error (line 101): bad indentation
+Error (line 102): bad indentation
+Error (line 102): C++ comment
+Error (line 103): bad indentation
+Error (line 103): C++ comment
+Error (line 107): C++ comment
+Error (line 108): C++ comment
+Error (line 109): C++ comment
+Error (line 110): C++ comment
+Error (line 111): C++ comment
+Error (line 112): C++ comment
+Error (line 113): C++ comment
+Error (line 114): C++ comment
+Error (line 115): C++ comment
+Error (line 116): C++ comment
+Error (line 117): C++ comment
+Error (line 118): C++ comment
+Error (line 119): C++ comment
+Error (line 120): C++ comment
+Error (line 121): C++ comment
+Error (line 122): C++ comment
+Error (line 123): C++ comment
+Error (line 124): C++ comment
+Norme: ./srcs/animations/display_str.c
+Norme: ./srcs/camera/camera_commands.c
+Error: global scope bad aligned
+Error (line 55): function camera_event_translate has 27 lines
+Error (line 86): line has 84 characters
+Error (line 106): bad indentation
+Error (line 110): function camera_press_key has 50 lines
+Error (line 110): line has 82 characters
+Error (line 112): line has 115 characters
+Error (line 127): line has 149 characters
+Error (line 140): line has 123 characters
+Error (line 159): bad indentation
+Norme: ./srcs/editor/check_map_validity.c
+Norme: ./srcs/camera/player_hitbox.c
+Error: file must end with a single empty line
+Error (line 16): function add_clipping_for_each_point has 62 lines
+Error (line 16): declarations must be followed by one empty line in add_clipping_for_each_point
+Error (line 80, col 0): no newline after block
+Norme: ./srcs/editor/deal_with_map_directory.c
+Norme: ./srcs/editor/draw_block.c
+Norme: ./srcs/editor/editor_commands.c
+Norme: ./srcs/editor/editor_utils.c
+Norme: ./srcs/editor/editor_utils2.c
+Norme: ./srcs/editor/keydown_editor_commands.c
+Norme: ./srcs/editor/mouse_editor_commands.c
+Norme: ./srcs/editor/save_map_to_file.c
+Norme: ./srcs/editor/show_selected_params.c
+Norme: ./srcs/camera/clipping2.c
+Warning: /Users/dacuvill/Documents/projets/doom/srcs/camera/clipping2.c: timeouted.
+Norme: ./srcs/dictionnary_binary_tex.c
+Norme: ./srcs/gameplay/damage.c
+Norme: ./srcs/editor/color_rectangle.c
+Norme: ./srcs/gameplay/check_if_not_in_map.c
+Norme: ./srcs/gameplay/move_hitbox.c
+Error (line 36): function move_hitbox has 28 lines
+Norme: ./srcs/gameplay/interaction.c
+Error: global scope bad aligned
+Error (line 27): function ray_colision has 28 lines
+Error (line 59): function interaction has 57 lines
+Error (line 114): line has 118 characters
+Norme: ./srcs/load_textures.c
+Error (line 19): line has 82 characters
+Error (line 21): line has 85 characters
+Error (line 22): line has 89 characters
+Error (line 23): line has 90 characters
+Error (line 24): line has 83 characters
+Error (line 25): line has 83 characters
+Error (line 26): line has 83 characters
+Error (line 27): line has 88 characters
+Error (line 28): line has 89 characters
+Error (line 30): line has 83 characters
+Error (line 31): line has 89 characters
+Error (line 32): line has 82 characters
+Error (line 33): line has 88 characters
+Error (line 34): line has 89 characters
+Error (line 35): line has 82 characters
+Error (line 36): line has 83 characters
+Error (line 37): line has 82 characters
+Error (line 38): line has 82 characters
+Error (line 39): line has 86 characters
+Error (line 40): line has 96 characters
+Error (line 43): line has 82 characters
+Error (line 45): line has 83 characters
+Error (line 46): line has 90 characters
+Error (line 47): line has 92 characters
+Error (line 48): line has 92 characters
+Error (line 49): line has 97 characters
+Error (line 50): line has 85 characters
+Error (line 51): line has 88 characters
+Error (line 52): line has 90 characters
+Error (line 53): line has 82 characters
+Error (line 56): line has 85 characters
+Error (line 57): line has 92 characters
+Error (line 58): line has 90 characters
+Error (line 59): line has 97 characters
+Error (line 61): line has 86 characters
+Error (line 62): line has 91 characters
+Error (line 68): line has 84 characters
+Error (line 69): line has 93 characters
+Error (line 70): line has 83 characters
+Error (line 71): line has 92 characters
+Error (line 72): line has 83 characters
+Error (line 73): line has 92 characters
+Error (line 75): line has 85 characters
+Error (line 76): line has 92 characters
+Error (line 77): line has 94 characters
+Error (line 78): line has 86 characters
+Error (line 79): line has 89 characters
+Error (line 80): line has 91 characters
+Error (line 81): line has 88 characters
+Error (line 82): line has 89 characters
+Error (line 83): line has 95 characters
+Error (line 84): line has 97 characters
+Error (line 85): line has 98 characters
+Error (line 86): line has 89 characters
+Error (line 87): line has 95 characters
+Error (line 88): line has 82 characters
+Error (line 89): line has 88 characters
+Error (line 90): line has 90 characters
+Error (line 91): line has 83 characters
+Error (line 122): line has 98 characters
+Error (line 123): line has 99 characters
+Norme: ./srcs/maths/create_octree_model.c
+Error: 7 functions in the file
+Error (line 42): line has 91 characters
+Norme: ./srcs/maths/create_light_array.c
+Error (line 15): function free_light_map has 29 lines
+Error (line 34): line has 84 characters
+Norme: ./srcs/maths/max_absolute_between_three.c
+Norme: ./srcs/maths/quaternion.c
+Norme: ./srcs/maths/create_octree.c
+Error: 7 functions in the file
+Norme: ./srcs/maths/octree_memory_management.c
+Norme: ./srcs/maths/vec3d_maths_2.c
+Norme: ./srcs/maths/quaternion_2.c
+Norme: ./srcs/maths/vec3d_maths.c
+Norme: ./srcs/program/doom.c
+Norme: ./srcs/maths/vec3l_maths.c
+Norme: ./srcs/program/frame_calculator.c
+Norme: ./srcs/program/init_game.c
+Norme: ./srcs/program/init_map_colors.c
+Norme: ./srcs/maths/matrix.c
+Error (line 66): function matrix44_inverse has 72 lines
+Error (line 88): comment not well formatted
+Error (line 88): bad indentation
+Error (line 88): comment not well placed
+Error (line 100): C++ comment
+Error (line 110): C++ comment
+Error (line 123): line has 82 characters
+Error (line 142): comment not well formatted
+Error (line 206): line has 82 characters
+Norme: ./srcs/maths/vec3l_maths_2.c
+Norme: ./srcs/program/init_func_pointers.c
+Norme: ./srcs/program/leave_game.c
+Norme: ./srcs/program/load_map.c
+Norme: ./srcs/program/select_next_level.c
+Norme: ./srcs/program/init_program.c
+Error: 14 functions in the file
+Error (line 86): function init_tab has 77 lines
+Error (line 228): C++ comment
+Error (line 229): C++ comment
+Error (line 230): C++ comment
+Error (line 231, col 0): no empty line before block
+Error (line 249): function load_sampling has 26 lines
+Norme: ./srcs/program/leave_program.c
+Norme: ./srcs/program/program.c
+Norme: ./srcs/program/set_player_spawn.c
+Norme: ./srcs/raytracing/add_texture_pos.c
+Norme: ./srcs/raytracing/add_texture_neg.c
+Norme: ./srcs/raytracing/check_light_view_neg.c
+Norme: ./srcs/raytracing/check_light_view_pos.c
+Norme: ./srcs/raytracing/check_which_face_is_touched_pos.c
+Norme: ./srcs/rasterization/rasterization.c
+Error: global scope bad aligned
+Error: 8 functions in the file
+Error (line 23): C++ comment
+Error (line 41): C++ comment
+Error (line 85): function loop_over_bounding_box has 39 lines
+Error (line 160): function rasterization has 31 lines
+Error (line 160): declarations must be followed by one empty line in rasterization
+Error (line 160, col 0): rasterization has 8 variables
+Error (line 171): C++ comment
+Error (line 172): C++ comment
+Error (line 181): line has 85 characters
+Error (line 182): line has 85 characters
+Error (line 183): line has 85 characters
+Error (line 184): C++ comment
+Error (line 184): line has 86 characters
+Error (line 185): C++ comment
+Error (line 185): line has 86 characters
+Error (line 186): C++ comment
+Error (line 186): line has 86 characters
+Error (line 188): line has 88 characters
+Norme: ./srcs/raytracing/add_textures.c
+Norme: ./srcs/raytracing/launch_rays.c
+Error (line 85): line has 87 characters
+Error (line 86): line has 91 characters
+Error (line 87): line has 96 characters
+Error (line 89): line has 111 characters
+Error (line 109): line has 87 characters
+Error (line 110): line has 91 characters
+Error (line 111): line has 96 characters
+Error (line 113): line has 111 characters
+Norme: ./srcs/raytracing/compute_lights.c
+Error (line 35): bad spacing after compute_light_power_player
+Error (line 42): multiple empty lines
+Error (line 43): function launch_ray_to_light has 62 lines
+Error (line 43): bad spacing before launch_ray_to_light
+Error (line 61): line has 124 characters
+Error (line 63): line has 131 characters
+Error (line 86): line has 120 characters
+Error (line 93): line has 132 characters
+Error (line 110): function launch_ray_to_light_player has 72 lines
+Error (line 126): line has 87 characters
+Error (line 138): line has 124 characters
+Error (line 140): line has 131 characters
+Error (line 163): line has 120 characters
+Error (line 170): line has 132 characters
+Norme: ./srcs/raytracing/check_which_face_is_touched_neg.c
+Norme: ./srcs/raytracing/cylinder.c
+Error (line 17): function hit_cylinder has 42 lines
+Error (line 25): line has 99 characters
+Norme: ./srcs/raytracing/plane.c
+Error (line 27): line has 86 characters
+Norme: ./srcs/raytracing/light_gun.c
+Norme: ./srcs/raytracing/locate_in_octree.c
+Norme: ./srcs/raytracing/print_octree.c
+Norme: ./srcs/raytracing/raytracing.c
+Error: global scope bad aligned
+Error (line 23): multiple empty lines
+Error (line 24): bad spacing before update_physics
+Error (line 73): function event_loop has 27 lines
+Error (line 84, col 7): missing space after if
+Error (line 96): bad indentation
+Error (line 98): bad indentation
+Error (line 99): Empty line
+Error (line 104): function raytracing has 57 lines
+Error (line 104): declarations must be followed by one empty line in raytracing
+Error (line 104, col 0): raytracing has 7 variables
+Error (line 114): multiple empty lines
+Error (line 114): Empty line
+Error (line 115): C++ comment
+Error (line 116): C++ comment
+Error (line 120): line has 122 characters
+Error (line 122): line has 205 characters
+Error (line 140): C++ comment
+Error (line 141): C++ comment
+Error (line 142): C++ comment
+Error (line 143): C++ comment
+Error (line 144): C++ comment
+Error (line 145): C++ comment
+Error (line 146): C++ comment
+Error (line 147): C++ comment
+Error (line 148): C++ comment
+Error (line 149): C++ comment
+Error (line 150): C++ comment
+Error (line 151): C++ comment
+Error (line 152): C++ comment
+Error (line 153): C++ comment
+Error (line 154): C++ comment
+Error (line 155): C++ comment
+Norme: ./srcs/raytracing/ray_intersect.c
+Error: global scope bad aligned
+Error (line 73): function ray_intersect has 43 lines
+Error (line 95): line has 120 characters
+Error (line 97): line has 83 characters
+Error (line 98): line has 120 characters
+Error (line 100): line has 83 characters
+Error (line 101): line has 132 characters
+Error (line 106): bad indentation
+Error (line 106): C++ comment
+Error (line 107): bad indentation
+Error (line 107): C++ comment
+Error (line 107): line has 87 characters
+Norme: ./srcs/raytracing/sphere.c
+Error (line 17): function hit_sphere has 32 lines
+Error (line 17, col 0): hit_sphere has 6 variables
+Error (line 26): line has 99 characters
+Norme: ./srcs/shapes/draw_rectangle.c
+Error (line 31, col 4): missing space around =
+Norme: ./srcs/shapes/draw_circle.c
+Norme: ./srcs/sound/get_default_sounds.c
+Norme: ./srcs/sound/load_sounds.c
+Norme: ./srcs/sound/mixer.c
+Norme: ./srcs/sound/mixer2.c
+Norme: ./srcs/sound/mouse_sound_commands.c
+Norme: ./srcs/raytracing/ray_intersect_mini.c
+Error: global scope bad aligned
+Error: 6 functions in the file
+Error (line 51): declarations in launch_rays_to_lights_mini are bad aligned
+Error (line 51): function launch_rays_to_lights_mini has 50 lines
+Error (line 51): line has 100 characters
+Error (line 85): line has 83 characters
+Error (line 91): line has 127 characters
+Error (line 93): line has 130 characters
+Error (line 136): function ray_intersect_mini2 has 61 lines
+Error (line 174): line has 84 characters
+Error (line 181): line has 85 characters
+Error (line 193): line has 132 characters
+Error (line 202): function ray_intersect_mini has 61 lines
+Error (line 240): line has 84 characters
+Error (line 247): line has 85 characters
+Error (line 259): line has 132 characters
+Norme: ./srcs/raytracing/sun_animation.c
+Norme: ./srcs/sound/game_sounds.c
+Norme: ./srcs/states/state_death.c
+Norme: ./srcs/states/state_editor_menu.c
+Warning: /Users/dacuvill/Documents/projets/doom/srcs/states/state_editor_menu.c may not compile or is invalid for some reasons.
+Norme: ./srcs/states/state_editor.c
+Norme: ./srcs/states/state_get_map_name.c
+Warning: /Users/dacuvill/Documents/projets/doom/srcs/states/state_get_map_name.c may not compile or is invalid for some reasons.
+Norme: ./srcs/states/state_get_input.c
+Norme: ./srcs/states/state_delete_map.c
+Norme: ./srcs/states/state_level_finished.c
+Norme: ./srcs/states/state_load_save.c
+Norme: ./srcs/states/state_pause.c
+Norme: ./srcs/states/state_game.c
+Error (line 24): declarations in skybox are bad aligned
+Error (line 24): function skybox has 52 lines
+Error (line 24): declarations in skybox must be at the top of the function
+Error (line 24): declarations must be followed by one empty line in skybox
+Error (line 24, col 0): skybox has 7 variables
+Error (line 28): C++ comment
+Error (line 35): multiple empty lines
+Error (line 35): Empty line
+Error (line 36): comment not well formatted
+Error (line 36): comment not well placed
+Error (line 37): line has 100 characters
+Error (line 39): line has 97 characters
+Error (line 41): Empty line
+Error (line 47): line has 90 characters
+Error (line 48): line has 89 characters
+Error (line 50): bad indentation
+Error (line 51): bad indentation
+Error (line 51, col 20): missing space around *
+Error (line 51, col 24): missing space around *
+Error (line 52): bad indentation
+Error (line 53): bad indentation
+Error (line 54): bad indentation
+Error (line 55): bad indentation
+Error (line 56): bad indentation
+Error (line 57): bad indentation
+Error (line 58): bad indentation
+Error (line 59): bad indentation
+Error (line 60): bad indentation
+Error (line 61): bad indentation
+Error (line 62): bad indentation
+Error (line 63): bad indentation
+Error (line 64): bad indentation
+Error (line 65): bad indentation
+Error (line 66): bad indentation
+Error (line 67): bad indentation
+Error (line 68): bad indentation
+Error (line 69): bad indentation
+Error (line 70): bad indentation
+Error (line 70): C++ comment
+Error (line 71): bad indentation
+Error (line 71): C++ comment
+Error (line 72): bad indentation
+Error (line 73): bad indentation
+Error (line 73, col 20): missing space around *
+Error (line 73, col 24): missing space around *
+Error (line 74): bad indentation
+Error (line 75): bad indentation
+Error (line 76): bad indentation
+Error (line 76): C++ comment
+Error (line 77): C++ comment
+Error (line 87): line has 144 characters
+Error (line 88): line has 308 characters
+Error (line 93): function state_game has 29 lines
+Error (line 108): line has 107 characters
+Norme: ./srcs/states/state_inputs_settings_menu.c
+Warning: /Users/dacuvill/Documents/projets/doom/srcs/states/state_inputs_settings_menu.c may not compile or is invalid for some reasons.
+Norme: ./srcs/states/state_scoreboard.c
+Error (line 18): comment not well formatted
+Norme: ./srcs/states/state_play_menu.c
+Norme: ./srcs/states/state_main_menu.c
+Error (line 57): function state_main_menu has 27 lines
+Norme: ./srcs/states/state_play_edit_map.c
+Warning: /Users/dacuvill/Documents/projets/doom/srcs/states/state_play_edit_map.c may not compile or is invalid for some reasons.
+Norme: ./srcs/states/state_sound_settings.c
+Norme: ./srcs/states/state_test_mode.c
+Norme: ./srcs/states/state_settings_menu.c
+Norme: ./srcs/ui/convert_to_ppm.c
+Norme: ./srcs/ui/display_inventory.c
+Norme: ./srcs/ui/get_default_inputs.c
+Norme: ./srcs/states/state_start.c
+Error: 8 functions in the file
+Norme: ./srcs/switch_state.c
+Norme: ./srcs/ui/parse_scores_file.c
+Norme: ./srcs/ui/parse_input_file.c
+Norme: ./srcs/ui/put_buttons_names.c
+Norme: ./srcs/ui/put_health_bar.c
+Norme: ./srcs/ui/put_sound_bars.c
+Warning: /Users/dacuvill/Documents/projets/doom/srcs/ui/put_sound_bars.c may not compile or is invalid for some reasons.
+Norme: ./srcs/ui/create_buttons_inputs.c
+Norme: ./srcs/ui/put_string_with_shadow.c
+Norme: ./srcs/utils.c
+Norme: ./srcs/ui/minimap.c
+Norme: ./srcs/ui/put_buttons_on_img.c
+Norme: ./srcs/ui/put_string_on_renderer.c

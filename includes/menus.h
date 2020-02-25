@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:19:42 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/06 19:43:40 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:58:17 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,6 @@ struct								s_start
 	int								speed;
 	int								size;
 	int								color;
-};
-
-struct								s_point
-{
-	int								x;
-	int								y;
 };
 
 struct								s_button

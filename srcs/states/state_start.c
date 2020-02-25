@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/24 20:44:19 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 23:45:17 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 static inline void	create_start_renderer(t_doom *data)
 {
 	static unsigned long	time = 0;
-	static int				aff = 0;
 	long					wait;
 
 	if (!time)
@@ -153,9 +152,6 @@ static inline void	create_start_renderer(t_doom *data)
 	if ((wait = (SDL_GetTicks() - time)) < 17)
 		usleep(17000 - (wait * 1000));
 	time = SDL_GetTicks();
-	if (aff == 0 && display_str(data, point(200, 200),
-		"TON TRAVAIL", 70000) == 1)
-		aff = 1;
 	SDL_RenderPresent(data->lib.renderer);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:41:28 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 17:16:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 23:27:54 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "inputs.h"
 
-static void	init_desc(t_doom *data, 
+static void	init_desc(t_doom *data,
 	char titles[NB_MODIF_INPUTS][40], int *first)
 {
 	int			i;

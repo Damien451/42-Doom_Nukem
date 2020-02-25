@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:53 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/15 18:23:10 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 00:14:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		play_sound(Mix_Chunk *sound)
 int		loop_music(Mix_Chunk *sound, int id_music)
 {
 	static int	id_current_music = -1;
-	int 		channel;
+	int			channel;
 
 	if (id_current_music != id_music)
 	{
@@ -72,7 +72,7 @@ int		loop_sound_effect(Mix_Chunk *sound, int id_sound)
 {
 	static int	id_current_sound = -1;
 	int			id_channel;
-	int 		channel;
+	int			channel;
 
 	id_channel = (!Mix_Playing(CHANNEL_SOUNDS) ?
 		CHANNEL_SOUNDS : CHANNEL_SOUNDS2);
@@ -87,5 +87,5 @@ int		loop_sound_effect(Mix_Chunk *sound, int id_sound)
 		}
 		id_current_sound = id_sound;
 	}
-	return (0);	
+	return (0);
 }

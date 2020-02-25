@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 17:19:54 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/27 18:54:03 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/25 22:44:46 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static void	display_current_score(t_doom *data, t_scoreboard *scores,
 			score = ft_itoa(scores->scores[i]);
 		put_string_with_shadow(data, point(WIDTH / 1.5,
 			(HEIGHT / 3.4) + i * 70), label(score,
-			(SDL_Color){255 - 13 * i, 13 * i, 13 * i, 0}), data->lib.ptrfont[3]);
+			(SDL_Color){255 - 13 * i, 13 * i, 13 * i, 0}),
+			data->lib.ptrfont[3]);
 		ft_strdel(&score);
 	}
 }
