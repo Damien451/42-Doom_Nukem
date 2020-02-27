@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/26 00:28:27 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 18:36:35 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ struct						s_physics
 
 struct						s_inventory
 {
-	int						weapons[5];
-	int						ammo[5];
+	int						weapon;
+	int						ammo;
 	int						keys;
 	int						heal_pack;
 	int						blocks[40];
 	int						selected_block;
-	int						selected_weapon;
+	int						selected_thing;
 };
 
 struct						s_player
@@ -114,6 +114,8 @@ struct						s_player
 	int						lifes;
 	int						gamemode;
 	int						levels_left;
+	int						firstlevel;
+	int						secondlevel;
 	t_vec3d					position;
 	t_vec3d					acceleration;
 	t_hitbox				hitbox[12];

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   state_get_map_name.c                               :+:      :+:    :+:   */
+/*   state_new_highscore.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/26 00:02:44 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 17:07:41 by dacuvill         ###   ########.fr       */
+/*   Created: 2020/02/26 16:22:33 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/02/26 20:00:08 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,25 @@ static int		check_if_authorised_input(int input)
 	return (1);
 }
 
-static void		check_inputs_map_name2(t_doom *data, char *map_name,
+static void		check_inputs_new_highscore2(t_doom *data, char *nametag,
 	int *nbinputs, int *first)
 {
 	if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 	{
-		*nbinputs = 0;
 		*first = 0;
-		switch_state(data, GET_MAP_NAME, EDITOR_MENU);
+		*nbinputs = 0;
+		switch_state(data, NEW_HIGHSCORE, PLAY_MENU);
 		return ;
 	}
 	else if (check_if_authorised_input(data->lib.event.key.keysym.sym) == 0
-		&& *nbinputs < 24)
+		&& *nbinputs < LENGTH_NAMETAG)
 	{
 		(*nbinputs)++;
-		ft_strcat(map_name, SDL_GetKeyName(data->lib.event.key.keysym.sym));
+		ft_strcat(nametag, SDL_GetKeyName(data->lib.event.key.keysym.sym));
 	}
 }
 
-static void		check_inputs_map_name(t_doom *data, char *map_name,
+static void		check_inputs_new_highscore(t_doom *data, char *nametag,
 	int *nbinputs, int *first)
 {
 	while (SDL_PollEvent(&data->lib.event))
@@ -61,48 +61,49 @@ static void		check_inputs_map_name(t_doom *data, char *map_name,
 			if (data->lib.event.key.keysym.sym == SDLK_RETURN &&
 				*nbinputs > 0)
 			{
+				add_new_highscore(&data->scoreboard,
+					&data->player, nametag);
 				*first = 0;
 				*nbinputs = 0;
-				switch_state(data, GET_MAP_NAME, EDITOR);
+				switch_state(data, NEW_HIGHSCORE, PLAY_MENU);
 				return ;
 			}
 			else if (data->lib.event.key.keysym.sym == SDLK_BACKSPACE
 				&& *nbinputs >= 0)
 			{
-				map_name[*nbinputs] = '\0';
+				nametag[*nbinputs] = '\0';
 				(*nbinputs)--;
 			}
-			check_inputs_map_name2(data, map_name, nbinputs, first);
+			check_inputs_new_highscore2(data, nametag, nbinputs, first);
 		}
 	}
 }
 
-int				state_get_map_name(t_doom *data)
+int				state_new_highscore(t_doom *data)
 {
 	t_button	input_field;
 	static int	nbinputs = 0;
-	static char	map_name[LENGTH_MAPNAME];
+	static char	nametag[LENGTH_NAMETAG];
 	static int	first = 0;
 
 	if (first == 0)
 	{
-		ft_bzero(map_name, LENGTH_MAPNAME);
+		ft_bzero(nametag, LENGTH_NAMETAG);
 		first = 1;
 	}
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels,
+	ft_memcpy(data->lib.image, data->lib.menu_texture[5]->pixels,
 		(WIDTH * HEIGHT) << 2);
-	check_inputs_map_name(data, map_name, &nbinputs, &first);
+	check_inputs_new_highscore(data, nametag, &nbinputs, &first);
 	input_field = button(point(WIDTH_CENTER - (DEF_BUTTON_W * 3 / 2),
 		HEIGHT_CENTER),
-		point(DEF_BUTTON_W * 3, DEF_BUTTON_H), EDITOR,
-		(map_name[0] == '\0' ? "Enter new map name" : map_name));
+		point(DEF_BUTTON_W * 3, DEF_BUTTON_H), NEW_HIGHSCORE,
+		(nametag[0] == '\0' ? "Enter your nametag" : nametag));
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, &input_field, 1);
 	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
-		label("EDITOR", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+		label("NEW HIGHSCORE", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	put_buttons_names(data, &input_field, (SDL_Color){255, 0, 0, 0}, 1);
 	SDL_RenderPresent(data->lib.renderer);
-	data->map_name = map_name;
 	return (0);
 }

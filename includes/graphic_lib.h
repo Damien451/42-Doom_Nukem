@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/25 20:38:43 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 15:37:08 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_doom			t_doom;
 typedef struct s_format			t_format;
 typedef struct s_text			t_text;
 typedef struct s_label			t_label;
-typedef struct s_message		t_message;
 typedef struct s_point			t_point;
 typedef struct s_mixer			t_mixer;
 typedef struct s_scoreboard		t_scoreboard;
@@ -91,14 +90,6 @@ struct							s_text
 	int							h;
 };
 
-struct							s_message
-{
-	char						*message;
-	long int					duration;
-	t_point						pos;
-	int							font;
-};
-
 struct							s_editor
 {
 	SDL_Surface					*texture[2];
@@ -133,7 +124,6 @@ struct							s_graphic_lib
 	t_editor					editor;
 	t_format					format;
 	t_text						text;
-	t_message					message;
 	TTF_Font					*ptrfont[NBR_FONTS];
 	unsigned int				*image;
 	unsigned int				cam_keys;
@@ -165,11 +155,6 @@ void							init_map_colors(t_graphic_lib *lib);
 int								display_scores(t_doom *data,
 	t_scoreboard *scores, int frame, int *curr_score);
 
-int								display_str(t_doom *data, t_message msg);
-
 void							display_arrows(t_doom *data, t_button *button);
-
-t_message						message(char *message, long int duration,
-	t_point pos, int font);
 
 #endif

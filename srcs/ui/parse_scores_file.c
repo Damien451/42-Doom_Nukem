@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 12:27:15 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/25 23:26:09 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 15:55:54 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int			parse_scores_file(t_doom *data, int *first)
 	char		*line;
 
 	i = -1;
-	*first = 1;
 	if ((fd = open("./files/scores", O_RDONLY, 0777)) == -1)
 		return (1);
 	while (++i < PLAYERS_SCOREBOARD)
@@ -37,5 +36,6 @@ int			parse_scores_file(t_doom *data, int *first)
 		ft_strdel(&line);
 	}
 	close(fd);
+	*first = 1;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/25 23:34:14 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 21:15:58 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define FOV				1.047197551196598
 # define POV				0.593411945678072
 
-# define NBR_STATES			20
+# define NBR_STATES			21
 # define RUNNING			1
 # define START				0
 # define PLAYING			1
@@ -59,6 +59,7 @@
 # define GET_INPUT			17
 # define LEAVING			18
 # define LOAD_SAVE			19
+# define NEW_HIGHSCORE		20
 
 # define SUN				0
 # define PLAYER				1
@@ -76,7 +77,9 @@
 # define Y_MID				6
 
 # define PLAYERS_SCOREBOARD	10
+# define LENGTH_NAMETAG		15
 
+# define LENGTH_MAPNAME		20
 # define NBR_CLASSIC_MAPS	12
 # define NBR_OBJ			20
 
@@ -112,7 +115,7 @@ struct						s_light
 
 struct						s_scoreboard
 {
-	char					playertags[PLAYERS_SCOREBOARD][15];
+	char					playertags[PLAYERS_SCOREBOARD][LENGTH_NAMETAG];
 	int						scores[PLAYERS_SCOREBOARD];
 };
 
@@ -225,6 +228,8 @@ void						save_map_to_file(t_doom *data, char *map_name);
 void						select_next_level(t_doom *data);
 void						set_player_spawn(char map[64][64][64],
 	t_vec3d *position);
+void						add_new_highscore(t_scoreboard *scoreboard,
+	t_player *player, char *nametag);
 
 /*
 ** ====-* GRAPHICS *-====
@@ -389,9 +394,7 @@ int							state_game(t_doom *data);
 
 int							state_death(t_doom *data);
 
-int							state_inventory(t_doom *data);
-
-int							state_trader(t_doom *data);
+int							state_new_highscore(t_doom *data);
 
 double						hit_sphere(t_ray *ray, const t_doom *const data);
 

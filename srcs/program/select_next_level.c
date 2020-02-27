@@ -6,21 +6,42 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 19:00:53 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/02 16:44:16 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 18:44:24 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include <time.h>
 
+int		randnumber_map(t_player *player)
+{
+	int		randn;
+
+	randn = 0;
+	if (player->levels_left == 3)
+		return (rand() % NBR_CLASSIC_MAPS);
+	else if (player->levels_left == 2)
+		while (randn == player->firstlevel)
+			randn = rand() % NBR_CLASSIC_MAPS;
+	else if (player->levels_left == 1)
+		while (randn == player->firstlevel
+			|| randn == player->secondlevel)
+			randn = rand() % NBR_CLASSIC_MAPS;
+	return (randn);
+}
+
 void	select_next_level(t_doom *data)
 {
-	static char	randmap[25];
-	int			randnumber;
+	static char	randmap[LENGTH_MAPNAME];
+	int			randn;
 
-	ft_bzero(randmap, 25);
-	randnumber = rand() % NBR_CLASSIC_MAPS;
-	ft_strcpy(randmap, get_map_name(randnumber, "maps"));
+	ft_bzero(randmap, LENGTH_MAPNAME);
+	randn = randnumber_map(&data->player);
+	ft_strcpy(randmap, get_map_name(randn, "maps"));
+	if (data->player.levels_left == 3)
+		data->player.firstlevel = randn;
+	else if (data->player.levels_left == 2)
+		data->player.secondlevel = randn;
 	data->map_name = randmap;
 	data->lib.cam_keys = 0;
 	load_map(data, data->map_name);

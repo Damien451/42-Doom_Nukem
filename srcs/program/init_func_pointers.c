@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:42:20 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/25 20:44:44 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 18:03:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void		init_func_pointer_game_state(t_doom *data)
 	data->state_f[DEATH] = &state_death;
 	data->state_f[FINISHED] = &state_level_finished;
 	data->state_f[LOAD_SAVE] = &state_load_save;
+	data->state_f[NEW_HIGHSCORE] = &state_new_highscore;
 }
 
 void			init_func_pointer(t_doom *data)

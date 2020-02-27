@@ -6,13 +6,13 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 14:23:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/25 23:56:34 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:20:05 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void	check_inputs(t_doom *data, int gamemode, int *ok)
+static void	check_inputs(t_doom *data, int gamemode, int *ok, int newscore)
 {
 	while (SDL_PollEvent(&data->lib.event))
 	{
@@ -23,7 +23,8 @@ static void	check_inputs(t_doom *data, int gamemode, int *ok)
 			{
 				*ok = 1;
 				leave_game(data, &data->player);
-				switch_state(data, FINISHED, PLAY_MENU);
+				switch_state(data, FINISHED,
+					(newscore == 1 ? NEW_HIGHSCORE : PLAY_MENU));
 			}
 			else
 			{
@@ -58,10 +59,23 @@ static void	put_strings(t_doom *data, t_player *player)
 	}
 }
 
+static int	check_if_new_highscore(t_scoreboard *scoreboard, t_player *player)
+{
+	int		i;
+
+	i = -1;
+	while (++i < PLAYERS_SCOREBOARD)
+		if (scoreboard->scores[i] < player->score)
+			return (1);
+	return (0);
+}
+
 int			state_level_finished(t_doom *data)
 {
 	static int	ok = 1;
+	int			newscore;
 
+	newscore = 0;
 	if (ok == 1)
 	{
 		data->player.levels_left--;
@@ -72,6 +86,7 @@ int			state_level_finished(t_doom *data)
 		Mix_HaltChannel(-1);
 		ok--;
 	}
-	check_inputs(data, data->player.gamemode, &ok);
+	newscore = check_if_new_highscore(&data->scoreboard, &data->player);
+	check_inputs(data, data->player.gamemode, &ok, newscore);
 	return (0);
 }

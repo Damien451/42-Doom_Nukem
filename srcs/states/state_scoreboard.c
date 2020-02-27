@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:37 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 19:14:33 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 21:40:13 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ int			state_scoreboard(t_doom *data)
 	static int				curr_score = 0;
 	long					wait;
 
-	if (first == 0)
-		if (parse_scores_file(data, &first))
-			switch_state(data, SCORES, MAIN_MENU);
+	if (parse_scores_file(data, &first) != 0 || first == 0)
+		switch_state(data, SCORES, MAIN_MENU);
 	if (!time)
 		time = SDL_GetTicks();
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);

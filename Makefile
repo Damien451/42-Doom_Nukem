@@ -64,7 +64,6 @@ LIBFT		= $(LIBDIR) -lft
 SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(ANIM)/display_arrows.c				\
 					$(ANIM)/display_scores.c				\
-					$(ANIM)/display_str.c					\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/clipping.c					\
@@ -96,6 +95,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(MATHS)/vec3l_maths_2.c				\
 					$(MATHS)/vec3d_maths.c					\
 					$(MATHS)/vec3d_maths_2.c				\
+					$(PROG)/add_new_highscore.c				\
 					$(PROG)/doom.c							\
 					$(PROG)/frame_calculator.c				\
 					$(PROG)/init_func_pointers.c			\
@@ -146,6 +146,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_level_finished.c		\
 					$(STATES)/state_load_save.c				\
 					$(STATES)/state_main_menu.c				\
+					$(STATES)/state_new_highscore.c			\
 					$(STATES)/state_pause.c					\
 					$(STATES)/state_play_edit_map.c			\
 					$(STATES)/state_play_menu.c				\

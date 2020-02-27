@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 18:54:22 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/26 15:13:15 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *da
 		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[6])
 			data->lib.cam_keys &= ~COURSE;
 		else if (event->key.keysym.sym == SDLK_LCTRL)
+			//&& !data->map_to_save[(int)data->player.camera.origin.x]
+			//[(int)data->player.camera.origin.y + 1][(int)data->player.camera.origin.z])
 		{
+			//printf("y = %d\n", (int)data->player.camera.origin.y);
 			data->lib.cam_keys |= SQUAT;
 			data->lib.cam_keys &= ~CRAWL;
 		}

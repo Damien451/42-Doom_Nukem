@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_octree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:19:56 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/02 18:04:18 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/27 15:25:13 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static inline int		breadth_first_create_octree(t_doom *data
 		actual = (t_octree*)queue[0]->ptr;
 		if (actual->leaf == INSIDE)
 		{
+			printf("actual->size = %d\n", actual->size);
 			if (actual->size > 2)
 			{
 				create_child(actual);
