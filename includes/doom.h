@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/26 21:15:58 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/27 17:54:44 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,12 @@ struct						s_thread
 	t_vec3l					rectangle;
 	double					alpha;
 };
+typedef struct						s_tri
+{
+	t_vec3d					vertices[3];
+	t_vec3d					normals[3];
+	t_vec3d					textures[3];
+}									t_tri;
 
 struct						s_doom
 {
@@ -205,6 +211,8 @@ struct						s_doom
 	int						actual_obj;
 	t_vec3d					oriented_light;
 	double					oriented[4];
+	t_tri					*tri;
+	unsigned int			*png;
 };
 
 /*

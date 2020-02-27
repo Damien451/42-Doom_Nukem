@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 20:15:41 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:57:14 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,12 +340,30 @@ void		init_meshes(t_doom *data)
 	data->meshes->triangle->next = NULL;
 }
 
+void		init_triangle(t_doom *data)
+{
+	int		fd;
+
+	fd = open("first_obj.obj", O_RDONLY);
+	printf("fd = %d\n", fd);
+	data->tri = malloc(sizeof(t_tri) * 4224);
+	if (read(fd, data->tri, 2222222) == -1)
+		printf("MERDE\n");
+}
+
 int			init_program(t_doom *data)
 {
+	init_triangle(data);
 	data->oriented[0] = 1;
 	data->oriented[1] = 1;
 	data->oriented[2] = 0;
 	data->oriented[3] = 0;
+	data->png = malloc(4 * 4096 * 4096);
+	int fd = open("robintest.binary", O_RDONLY);
+	read(fd, data->png, 4 * 4096 * 4096);
+	close(fd);
+	data->z_buffer = malloc(sizeof(double) * WIDTH * HEIGHT);
+	data->frame_buffer = malloc(sizeof(unsigned int) * WIDTH * HEIGHT);
 	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);

@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 14:01:14 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 16:46:59 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:56:59 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,14 @@ int			is_inside_triangle(t_vec3d *bary, t_vec3d vertices[3])
 }
 
 int			loop_over_bounding_box(t_vec3d vertices[3], t_vec3d bbox[2]
-	, double *z_buffer, unsigned int *image)
+	, double *z_buffer, unsigned int *image, t_tri tri, unsigned int *png)
 {
 	t_vec3l		min;
 	t_vec3l		max;
 	double		distance;
+	double		tmp;
 	t_vec3d		bary;
+	double		pl[50];
 
 	min.x = bbox[0].x;
 	if (min.x < 0)
@@ -110,13 +112,15 @@ int			loop_over_bounding_box(t_vec3d vertices[3], t_vec3d bbox[2]
 			bary.y = min.y;
 			if (!is_inside_triangle(&bary, vertices))
 			{
-				distance = vertices[0].z * bary.x + vertices[1].z * bary.y
+				tmp = vertices[0].z * bary.x + vertices[1].z * bary.y
 					+ vertices[2].z * bary.z;
-				distance = 1 / distance;
+				distance = 1 / tmp;
 				if (distance > 0 && distance < z_buffer[min.x + min.y * WIDTH])
 				{
 					z_buffer[min.x + min.y * WIDTH] = distance;
-					image[min.x + min.y * WIDTH] = 0x151561;
+					pl[0] = bary.x * tri.textures[0].x + bary.y * tri.textures[1].x + bary.z * tri.textures[2].x;
+					pl[1] = bary.x * tri.textures[0].y + bary.y * tri.textures[1].y + bary.z * tri.textures[2].y;
+					image[min.x + min.y * WIDTH] = png[(int)(pl[0] * 4096) + (int)(pl[1] * 4096 * 4096)];
 				}
 			}
 			min.y++;
@@ -162,7 +166,7 @@ int			rasterization(t_doom *data, t_mesh *meshes)
 	int				i;
 	t_vec3d			vertices[3];
 	t_vec3d			bbox[2];
-	t_mesh			*obj;
+	t_tri			*obj;
 	t_triangle		*triangle;
 	double			world_to_camera[4][4];
 	double			camera_to_world[4][4];
@@ -172,22 +176,18 @@ int			rasterization(t_doom *data, t_mesh *meshes)
 //	matrix44_inverse(camera_to_world, world_to_camera);
 	matrix44_identity(world_to_camera);
 	set_z_buffer(data->z_buffer);
-	obj = meshes;
-	while (obj)
+	obj = data->tri;
+	i = 0;
+	while (i < 4224)
 	{
-		triangle = obj->triangle;
-		while (triangle)
-		{
-			vertices[0] = perspective_proj(&triangle->vertices[0], world_to_camera);
-			vertices[1] = perspective_proj(&triangle->vertices[1], world_to_camera);
-			vertices[2] = perspective_proj(&triangle->vertices[2], world_to_camera);
-//			printf("projected1: x = %.2f, y = %.2f\n", vertices[0].x, vertices[0].y);
-//			printf("projected2: x = %.2f, y = %.2f\n", vertices[1].x, vertices[1].y);
-//			printf("projected3: x = %.2f, y = %.2f\n", vertices[2].x, vertices[2].y);
-			create_bounding_box(vertices, bbox);
-			loop_over_bounding_box(vertices, bbox, data->z_buffer, data->frame_buffer);
-			triangle = triangle->next;
-		}
-		obj = obj->next;
+		vertices[0] = perspective_proj(&obj[i].vertices[0], world_to_camera);
+		vertices[1] = perspective_proj(&obj[i].vertices[1], world_to_camera);
+		vertices[2] = perspective_proj(&obj[i].vertices[2], world_to_camera);
+//		printf("projected1: x = %.2f, y = %.2f\n", vertices[0].x, vertices[0].y);
+//		printf("projected2: x = %.2f, y = %.2f\n", vertices[1].x, vertices[1].y);
+//		printf("projected3: x = %.2f, y = %.2f\n", vertices[2].x, vertices[2].y);
+		create_bounding_box(vertices, bbox);
+		loop_over_bounding_box(vertices, bbox, data->z_buffer, data->frame_buffer, obj[i], (unsigned int*)data->png);
+		i++;
 	}
 }
