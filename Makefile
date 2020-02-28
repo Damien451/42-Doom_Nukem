@@ -64,6 +64,7 @@ LIBFT		= $(LIBDIR) -lft
 SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(ANIM)/display_arrows.c				\
 					$(ANIM)/display_scores.c				\
+					$(ANIM)/init_anim_state_start.c			\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/clipping.c					\
@@ -137,6 +138,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(SOUND)/game_sounds.c					\
 					$(STATES)/state_death.c					\
 					$(STATES)/state_delete_map.c			\
+					$(STATES)/state_edition_mode.c			\
 					$(STATES)/state_editor.c				\
 					$(STATES)/state_editor_menu.c			\
 					$(STATES)/state_game.c					\
@@ -144,7 +146,6 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_get_map_name.c			\
 					$(STATES)/state_inputs_settings_menu.c	\
 					$(STATES)/state_level_finished.c		\
-					$(STATES)/state_load_save.c				\
 					$(STATES)/state_main_menu.c				\
 					$(STATES)/state_new_highscore.c			\
 					$(STATES)/state_pause.c					\
@@ -155,7 +156,6 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(STATES)/state_scoreboard.c			\
 					$(STATES)/state_settings_menu.c			\
 					$(STATES)/state_sound_settings.c		\
-					$(STATES)/state_test_mode.c				\
 					$(UI)/convert_to_ppm.c					\
 					$(UI)/create_buttons_inputs.c			\
 					$(UI)/display_inventory.c				\

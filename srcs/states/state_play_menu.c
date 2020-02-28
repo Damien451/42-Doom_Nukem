@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_play_menu.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:01:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 17:05:03 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int			state_play_menu(t_doom *data)
 
 	loop_music(data->mix.sounds[2], 2);
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
-		, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+		(WIDTH * HEIGHT) << 2);
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAYING, "CLASSIC MODE");

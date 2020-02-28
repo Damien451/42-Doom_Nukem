@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_settings_menu.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:05:19 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/25 23:54:18 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 19:27:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int			state_settings_menu(t_doom *data)
 	t_button	buttons[3];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels,
+	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
 		(WIDTH * HEIGHT) << 2);
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W, HEIGHT_CENTER
-			- (DEF_BUTTON_H + BUTTON_GAP_Y)), point(DEF_BUTTON_W * 2
+			- (DEF_BUTTON_H + BUTTON_GAP_Y)), point(DEF_BUTTON_W << 1
 			, DEF_BUTTON_H), SETTINGS_SOUND, "SOUND SETTINGS");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER), point(DEF_BUTTON_W * 2, DEF_BUTTON_H)
@@ -62,7 +62,7 @@ int			state_settings_menu(t_doom *data)
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), MAIN_MENU, "RETURN");
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 3);
-	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
+	put_string_with_shadow(data, point(WIDTH >> 1, HEIGHT / 6),
 		label("SETTINGS", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
 	put_buttons_names(data, buttons, (SDL_Color){255, 0, 0, 0}, 3);
 	if (check_inputs_settings(data, buttons, 3) != 0)

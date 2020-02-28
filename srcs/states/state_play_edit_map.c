@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_play_edit_map.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/21 17:06:34 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,14 @@ int			state_play_edit_map(t_doom *data)
 	t_button	buttons[2];
 	static int	first = 0;
 	static int	nbmaps = 0;
-	static char	map_name[25];
+	static char	map_name[LENGTH_MAPNAME];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
-		, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+		(WIDTH * HEIGHT) << 2);
 	if (!first)
 	{
+		ft_bzero(map_name, LENGTH_MAPNAME);
 		nbmaps = count_maps(&first, "maps");
 		ft_strcpy(map_name, get_map_name(data->map_to_show, "maps"));
 		data->map_name = map_name;

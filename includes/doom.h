@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/27 17:54:44 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/29 00:12:36 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define FOV				1.047197551196598
 # define POV				0.593411945678072
 
-# define NBR_STATES			21
+# define NBR_STATES			20
 # define RUNNING			1
 # define START				0
 # define PLAYING			1
@@ -55,11 +55,10 @@
 # define SETTINGS			13
 # define SETTINGS_INPUTS	14
 # define SETTINGS_SOUND		15
-# define TEST_MODE			16
+# define EDITION_MODE		16
 # define GET_INPUT			17
 # define LEAVING			18
-# define LOAD_SAVE			19
-# define NEW_HIGHSCORE		20
+# define NEW_HIGHSCORE		19
 
 # define SUN				0
 # define PLAYER				1
@@ -226,7 +225,6 @@ int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
 void						leave_game(t_doom *data, t_player *player);
 int							load_map(t_doom *data, char *map_name);
-void						load_textures(t_doom *data);
 int							load_sounds(t_doom *data);
 char						*get_map_name(int map_to_show, char *dir_path);
 int							count_maps(int *first, char *dir_path);
@@ -249,8 +247,8 @@ void						erase_block(t_doom *data, int x, int y, int step);
 void						fill_step(t_doom *data, int step);
 int							frame_calculator(void);
 void						copy_step(t_doom *data, int step);
-void						color_rectangle(t_doom *data, t_vec3l rectangle
-	, int step, double alpha);
+void						color_rectangle(t_doom *data, t_vec3l rectangle,
+	int step, double alpha);
 int							create_octree(t_doom *data);
 void						pick_element(t_doom *data, int x, int y);
 void						pick_texture(t_doom *data, int x, int y);
@@ -370,8 +368,6 @@ int							state_inputs_settings_menu(t_doom *data);
 
 int							state_level_finished(t_doom *data);
 
-int							state_load_save(t_doom *data);
-
 int							state_main_menu(t_doom *data);
 
 int							state_pause(t_doom *data);
@@ -386,7 +382,7 @@ int							state_settings_menu(t_doom *data);
 
 int							state_sound_settings(t_doom *data);
 
-int							state_test_mode(t_doom *data);
+int							state_edition_mode(t_doom *data);
 
 int							state_get_input(t_doom *data);
 

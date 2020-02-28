@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_program.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/22 19:57:14 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/29 00:10:32 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,6 @@
 #include <unistd.h>
 #include "mesh.h"
 
-void		load_skybox(t_doom *data)
-{
-	int		fd;
-
-	fd = 0;
-	data->skybox = malloc(sizeof(int*) * 6);
-	while (fd < 6)
-		data->skybox[fd++] = malloc(sizeof(int) * 512 * 512);
-	fd = open("test.binary", O_RDONLY);
-	read(fd, data->skybox[0], 512 * 512 * 4);
-	close(fd);
-	fd = open("test2.binary", O_RDONLY);
-	read(fd, data->skybox[1], 512 * 512 * 4);
-	close(fd);
-	fd = open("test3.binary", O_RDONLY);
-	read(fd, data->skybox[2], 512 * 512 * 4);
-	close(fd);
-	fd = open("test4.binary", O_RDONLY);
-	read(fd, data->skybox[3], 512 * 512 * 4);
-	close(fd);
-	fd = open("test5.binary", O_RDONLY);
-	read(fd, data->skybox[4], 512 * 512 * 4);
-	close(fd);
-	fd = open("test6.binary", O_RDONLY);
-	read(fd, data->skybox[5], 512 * 512 * 4);
-	close(fd);
-}
-
 void		init_camera(t_doom *data)
 {
 	data->player.camera.direction = vec3d(0, 0, 1);
@@ -60,108 +32,6 @@ void		init_camera(t_doom *data)
 	data->player.camera.origin.y = -1;
 	data->player.camera.origin.z = -1;
 	data->sampling = 4;
-	load_skybox(data);
-}
-
-void		init_bubbles(t_doom *data)
-{
-	int			i;
-
-	i = 0;
-	while (i < NB_BUBBLE)
-	{
-		data->tab[i].pos = rand() % WIDTH * HEIGHT;
-		if (rand() % 2)
-			rand();
-		data->tab[i].speed = rand() % 10 + 1;
-		if (rand() % 3)
-			rand();
-		data->tab[i].size = rand() % 10 + 4;
-		if (rand() % 4)
-			rand();
-		data->tab[i++].color = (rand() % 256) << 16;
-	}
-}
-
-static void	init_tab(t_doom *data)
-{
-	int			i;
-	SDL_Surface	*surface;
-	t_bubble	*tmp;
-	t_bubble	*tmp2;
-
-	init_bubbles(data);
-	surface = IMG_Load("textures/Untitled.bmp");
-	data->lib.start_bg = IMG_Load("textures/start_bg.bmp");
-	i = 0;
-	tmp = NULL;
-	while (i < WIDTH * HEIGHT)
-	{
-		if (((int*)surface->pixels)[i] != -1)
-		{
-			if (!tmp)
-			{
-				tmp = malloc(sizeof(t_bubble));
-				tmp->pos = i;
-				tmp->next = NULL;
-				data->bubble_list = tmp;
-			}
-			else
-			{
-				tmp->next = malloc(sizeof(t_bubble));
-				tmp->next->pos = i;
-				tmp->next->next = NULL;
-				tmp = tmp->next;
-			}
-		}
-		i++;
-	}
-	tmp = NULL;
-	SDL_FreeSurface(surface);
-	surface = IMG_Load("textures/eclair.bmp");
-	i = 0;
-	tmp2 = NULL;
-	while (i < WIDTH * HEIGHT)
-	{
-		if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)
-				surface->pixels)[i] % 0x1000000 <= 0x888888)
-		{
-			if (!tmp)
-			{
-				tmp = malloc(sizeof(t_bubble));
-				tmp->pos = i;
-				tmp->next = NULL;
-				data->lightning_list = tmp;
-			}
-			else
-			{
-				tmp->next = malloc(sizeof(t_bubble));
-				tmp->next->pos = i;
-				tmp->next->next = NULL;
-				tmp = tmp->next;
-			}
-		}
-		else if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)
-				surface->pixels)[i] % 0x1000000 <= 0x999999)
-		{
-			if (!tmp2)
-			{
-				tmp2 = malloc(sizeof(t_bubble));
-				tmp2->pos = i;
-				tmp2->next = NULL;
-				data->lightning_list2 = tmp2;
-			}
-			else
-			{
-				tmp2->next = malloc(sizeof(t_bubble));
-				tmp2->next->pos = i;
-				tmp2->next->next = NULL;
-				tmp2 = tmp2->next;
-			}
-		}
-		i++;
-	}
-	SDL_FreeSurface(surface);
 }
 
 static int	init_fonts(t_doom *data)
@@ -181,7 +51,7 @@ static int	init_fonts(t_doom *data)
 	if (!(data->lib.ptrfont[4] = TTF_OpenFont(
 				"./font/xolonium/Xolonium-Regular.ttf", 25)))
 		return (1);
-	init_tab(data);
+	init_anim_state_start(data);
 	return (0);
 }
 
@@ -206,8 +76,6 @@ static int	init_texture(t_doom *data)
 
 static void	init_program2(t_doom *data)
 {
-	int			fd;
-
 	data->state = START;
 	data->button = 0;
 	data->load_page[0] = 0;
@@ -300,21 +168,21 @@ int			init_sdl(t_doom *data)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s"
-				, SDL_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+		"Couldn't initialize SDL: %s", SDL_GetError());
 		return (1);
 	}
-	if (!(data->lib.window = SDL_CreateWindow("DoomCraft"
-					, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH
-					, HEIGHT, SDL_WINDOW_SHOWN)))
+	if (!(data->lib.window = SDL_CreateWindow("DoomCraft",
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH,
+		HEIGHT, SDL_WINDOW_SHOWN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"
 				, SDL_GetError());
 		return (1);
 	}
-	SDL_SetWindowIcon(data->lib.window, data->lib.menu_texture[6]);
-	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1
-					, SDL_RENDERER_ACCELERATED)))
+	SDL_SetWindowIcon(data->lib.window, data->lib.game_icon);
+	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1,
+		SDL_RENDERER_ACCELERATED)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION
 				, "Couldn't create renderer: %s", SDL_GetError());

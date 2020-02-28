@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_sound_bars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:44:59 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/24 20:43:21 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 17:20:53 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,12 @@ void		put_sound_bars(t_doom *data, int *tab)
 	i = -1;
 	while (++i < 3)
 	{
+		draw_rectangle(&(data->lib), point(BAR_WIDTH_START - 2
+			, BAR_HEIGHT_START + i * BAR_GAP - 2),
+			point(BAR_WIDTH + 4, BAR_HEIGHT + 4), 0xff0000);
 		draw_rectangle(&(data->lib), point(BAR_WIDTH_START
 			, BAR_HEIGHT_START + i * BAR_GAP),
-			point(BAR_WIDTH, BAR_HEIGHT), 0xffffff);
+			point(BAR_WIDTH, BAR_HEIGHT), 0xff0001);
 	}
 	put_filled_bars(data, tab);
 }

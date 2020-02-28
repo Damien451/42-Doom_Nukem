@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_inputs_settings_menu.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:20:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 17:06:51 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int			state_inputs_settings_menu(t_doom *data)
 	static int	first = 0;
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
-		, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+		(WIDTH * HEIGHT) << 2);
 	create_buttons_inputs(data, buttons, &first);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 14);

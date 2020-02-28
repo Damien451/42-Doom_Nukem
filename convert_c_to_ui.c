@@ -49,6 +49,7 @@ void				init_map_colors(unsigned int map_colors[40])
 	map_colors[20] = 0x989898;
 	init_map_colors2(map_colors);
 }
+
 int main(int ac, char **av)
 {
 	int		fd;

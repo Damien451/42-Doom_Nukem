@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_inventory.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 23:43:06 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/25 23:44:13 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 22:55:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void	display_selected_block(t_graphic_lib *lib, t_player *player)
 		while (++j < INV_BLOCK_SIZE)
 		{
 			lib->image[(BLOCK_POS_Y + i) * WIDTH + j + BLOCK_POS_X] =
-			((unsigned int*)lib->textures
-			[player->inventory.selected_block - 1]->pixels)
+			lib->textures
+			[player->inventory.selected_block - 1]
 			[i * (aff / INV_BLOCK_SIZE) * aff + j * (aff / INV_BLOCK_SIZE)];
 		}
 	}
@@ -39,6 +39,6 @@ static void	display_selected_block(t_graphic_lib *lib, t_player *player)
 
 void		display_inventory(t_graphic_lib *lib, t_player *player, long state)
 {
-	if (state == TEST_MODE)
+	if (state == EDITION_MODE)
 		display_selected_block(lib, player);
 }

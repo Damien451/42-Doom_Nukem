@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/22 17:18:29 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/28 22:55:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void			event_loop(t_doom *data)
 			&& data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 		{
 			leave_game(data, &data->player);
-			switch_state(data, TEST_MODE, EDITOR);
+			switch_state(data, EDITION_MODE, EDITOR);
 		}
 		else if (data->lib.event.type == SDL_MOUSEMOTION)
 			camera_mouse_motion(&data->player.physics.camera

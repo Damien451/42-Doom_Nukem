@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   show_selected_params.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:21:04 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 00:21:19 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/27 23:21:56 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static inline void	draw_textures_square(t_graphic_lib *lib, t_point pos,
 				lib->image[(pos.y + y) * WIDTH + pos.x + x] = color;
 			else
 				lib->image[(pos.y + y) * WIDTH + pos.x + x] =
-				((unsigned int *)lib->textures[block[1]]->pixels)
-				[y * (128 / BLOCK_SIZE_EDITOR) * 128 +
-				x * (128 / BLOCK_SIZE_EDITOR)];
+				lib->textures[block[1]]
+				[y * (64 / BLOCK_SIZE_EDITOR) * 64 +
+				x * (64 / BLOCK_SIZE_EDITOR)];
 			++x;
 		}
 		++y;

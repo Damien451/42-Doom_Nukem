@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/25 23:30:10 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 21:36:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,62 +21,6 @@
 #include "mixer.h"
 #include <sys/time.h>
 
-void		skybox(t_doom *data)
-{
-	int			i;
-	int			j;
-//	unsigned int			format;
-	unsigned char			tab[4];
-	static unsigned char	tabi[3 * 256 * 256];
-	static unsigned int		tabl[256 * 256];
-	static int				ok = 0;
-	int						fd;
-
-
-	/*int						k;
-	char					destpath[70] = "/sgoinfre/goinfre/Perso/dacuvill/new_blocks_binaries/";
-	char					full_destpath[100];
-	char					originpath[60] = "/sgoinfre/goinfre/Perso/dacuvill/blocks_rgb_tmp/";
-	char					full_originpath[80];
-
-	k = -1;
-	while (++k < NBR_TEXTURES_BLOCKS)
-	{
-		ft_bzero(full_originpath, 80);
-		ft_bzero(full_destpath, 100);
-		ft_strcat(ft_strcat(ft_strcat(full_originpath, originpath), ft_itoa(k)), ".rgb");
-		ft_strcat(ft_strcat(ft_strcat(full_destpath, destpath), ft_itoa(k)), ".binary");
-		tab[0] = 0;*/
-		fd = open("stone_cylinder.rgb", O_RDONLY);
-		read(fd, tabi, 128*128*3);
-		close(fd);
-		i = 0;
-		while (i < 128)
-		{
-			j = 0;
-			while (j < 128)
-			{
-				tab[0] = tabi[i * 128 * 3 + 3 * j + 2];
-				tab[1] = tabi[i * 128 * 3 + 3 * j + 1];
-				tab[2] = tabi[i * 128 * 3 + 3 * j];
-				tab[3] = 0;
-				tabl[i * 128 + j] = *((unsigned int *)&tab);
-				data->lib.image[i * WIDTH + j] = *((unsigned int*)&tab);
-				data->lib.image[i * WIDTH + j] = tabl[i * 128 + j];
-				j++;
-			}
-			i++;
-		}
-		//if (!ok)
-		//{
-		i = open("stone_cylinder.binary", O_TRUNC | O_WRONLY | O_CREAT, 0777);
-		write(i, tabl, 128*128*4);
-		close(i);
-		ok++;
-		//}
-	//}
-}
-
 static void	add_hud(t_doom *data)
 {
 	int			i;
@@ -84,8 +28,12 @@ static void	add_hud(t_doom *data)
 	i = 0;
 	while (i < WIDTH * HEIGHT)
 	{
-		if (((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xffffff78 && ((unsigned int*)data->lib.hud_texture->pixels)[i] != 0xff00ffff)
-			data->lib.image[i] = (((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff000000) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff) << (16)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff00)) + ((((unsigned int*)data->lib.hud_texture->pixels)[i] & 0xff0000) >> 16);
+		if (data->lib.hud_texture[i] != 7929855
+			&& data->lib.hud_texture[i] != 0xff00ffff)
+			data->lib.image[i] = (data->lib.hud_texture[i] & 0xff000000)
+			+ ((data->lib.hud_texture[i] & 0xff) << (16))
+			+ (data->lib.hud_texture[i] & 0xff00)
+			+ ((data->lib.hud_texture[i] & 0xff0000) >> 16);
 		i++;
 	}
 }

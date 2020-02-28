@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_get_map_name.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:02:44 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 17:07:41 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int				state_get_map_name(t_doom *data)
 		first = 1;
 	}
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels,
+	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
 		(WIDTH * HEIGHT) << 2);
 	check_inputs_map_name(data, map_name, &nbinputs, &first);
 	input_field = button(point(WIDTH_CENTER - (DEF_BUTTON_W * 3 / 2),

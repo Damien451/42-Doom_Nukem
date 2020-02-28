@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keydown_editor_commands.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:55:22 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 00:29:50 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 22:55:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void				keydown_editor_commands(t_doom *data, int *step,
 	else if (data->lib.event.key.keysym.sym == SDLK_t
 		&& !data->lib.event.key.repeat)
 	{
-		data->player.gamemode = TEST_MODE;
-		switch_state(data, EDITOR, TEST_MODE);
+		data->player.gamemode = EDITION_MODE;
+		switch_state(data, EDITOR, EDITION_MODE);
 	}
 	keydown_editor_commands2(data, step, map_name);
 }

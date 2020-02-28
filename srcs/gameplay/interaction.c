@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:04:23 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/02/25 20:40:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 00:08:52 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_ray		ray_colision(t_ray ray, const t_doom *const data)
 	int				sorted[3];
 	int				i;
 	t_octree		*tmp;
-	double			length;
 
 	max_absolute_between_three(ray.direction, sorted);
 	tmp = ray.node;
@@ -75,7 +74,7 @@ void			interaction(t_doom *data)
 	else if (!ray.node)
 		return ;
 	else if ((ray.face >= 0 || ray.node->leaf == BREAKABLE)
-		&& data->state == TEST_MODE)
+		&& data->state == EDITION_MODE)
 	{
 		player[0].x = data->player.camera.origin.x - 0.25;
 		player[1].x = data->player.camera.origin.x + 0.25;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/19 17:50:39 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 21:44:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,114 +16,93 @@
 #include <unistd.h>
 #include <SDL_image.h>
 
-static void		load_textures_objects(SDL_Surface *textures[NBR_TEXTURES_EDITOR])
+static void		load_skybox(t_doom *data)
 {
-	textures[42] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/ammo_box.bmp");
-	textures[43] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/small_bridge.bmp");
-	textures[44] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/anubis_statue.bmp");
-	textures[45] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/barrel.bmp");
-	textures[46] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/bars_x.bmp");
-	textures[47] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/bars_y.bmp");
-	textures[48] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/bird_statue.bmp");
-	textures[49] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/budda_statue.bmp");
-	textures[50] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/box.bmp");
-	textures[51] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/camera.bmp");
-	textures[52] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/little_chair.bmp");
-	textures[53] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/chest.bmp");
-	textures[54] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/health_case.bmp");
-	textures[55] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/tiger_statue.bmp");
-	textures[56] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/table.bmp");
-	textures[57] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/pillar.bmp");
-	textures[58] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/skull.bmp");
-	textures[59] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/sword.bmp");
-	textures[60] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/tombstone.bmp");
-	textures[61] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/tyrannosaurus_skull.bmp");
+	int		fd;
+
+	fd = 0;
+	data->skybox = malloc(sizeof(int*) * 6);
+	while (fd < 6)
+		data->skybox[fd++] = malloc(sizeof(int) * 512 * 512);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/skybox1.binary", O_RDONLY);
+	read(fd, data->skybox[0], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/skybox2.binary", O_RDONLY);
+	read(fd, data->skybox[1], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/skybox3.binary", O_RDONLY);
+	read(fd, data->skybox[2], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/skybox4.binary", O_RDONLY);
+	read(fd, data->skybox[3], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/skybox5.binary", O_RDONLY);
+	read(fd, data->skybox[4], 512 * 512 * 4);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/skybox6.binary", O_RDONLY);
+	read(fd, data->skybox[5], 512 * 512 * 4);
+	close(fd);
 }
 
-static void		load_textures_blocks2(SDL_Surface *textures[NBR_TEXTURES_EDITOR])
-{
-	textures[24] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz.bmp");
-	textures[25] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_pillar.bmp");
-	textures[26] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/quartz_chiseled.bmp");
-	textures[27] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak_planks.bmp");
-	textures[28] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak_planks.bmp");
-	textures[29] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/obsidian.bmp");
-	textures[30] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/start_block.bmp");
-	textures[31] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/arrival_block.bmp");
-	textures[32] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/water.bmp");
-	textures[33] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/gold.bmp");
-	textures[34] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/iron.bmp");
-	textures[35] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak.bmp");
-	textures[36] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_oak_planks.bmp");
-	textures[37] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak.bmp");
-	textures[38] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/wood_dark_oak_planks.bmp");
-	textures[39] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/dirt.bmp");
-	textures[40] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/glowstone.bmp");
-	textures[41] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_cylinder.bmp");
-	load_textures_objects(textures);
-}
 
-static void		load_textures_blocks(SDL_Surface *textures[NBR_TEXTURES_EDITOR])
-{
-	textures[0] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/andesite.bmp");
-	textures[1] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/andesite_polished.bmp");
-	textures[2] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/diorite.bmp");
-	textures[3] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/diorite_polished.bmp");
-	textures[4] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/granite.bmp");
-	textures[5] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/granite_polished.bmp");
-	textures[6] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/sand.bmp");
-	textures[7] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/sandstone.bmp");
-	textures[8] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/sandstone_bricks.bmp");
-	textures[9] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/sandstone_chiseled.bmp");
-	textures[10] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_cut.bmp");
-	textures[11] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_smooth.bmp");
-	textures[12] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_pavement.bmp");
-	textures[13] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_slabs.bmp");
-	textures[14] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_bricks.bmp");
-	textures[15] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_bricks_mossy.bmp");
-	textures[16] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_bricks_cracked.bmp");
-	textures[17] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_bricks_chiseled.bmp");
-	textures[18] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_cobble.bmp");
-	textures[19] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone_cobble_mossy.bmp");
-	textures[20] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/stone.bmp");
-	textures[21] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/nether_rock.bmp");
-	textures[22] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/nether_bricks.bmp");
-	textures[23] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/blocks/gravel.bmp");
-	load_textures_blocks2(textures);
-}
-
-void			load_binary_textures(t_doom *data)
+static void		load_binary_textures(t_doom *data)
 {
 	int		fd;
 	int		i;
 
 	i = 0;
 	dictionnary_binary_tex(data);
-	while (i < NBR_TEXTURES_BLOCKS)
+	while (i < NBR_TEXTURES_EDITOR)
 	{
-		data->lib.textures_block[i] = malloc(128 * 128 * 4);
+		if (i < 42)
+			data->lib.textures[i] = malloc(128 * 128 * 4);
+		else
+			data->lib.textures[i] = malloc(64 * 64 * 4);
 		fd = open(data->lib.texture_dic[i], O_RDONLY);
-		read(fd, data->lib.textures_block[i], 128 * 128 * 4);
+		if (i < 42)
+			read(fd, data->lib.textures[i], 128 * 128 * 4);
+		else
+			read(fd, data->lib.textures[i], 64 * 64 * 4);
 		close(fd);
 		i++;
 	}
 }
 
-void			load_textures(t_doom *data)
+static int		get_texture(unsigned int **dest, int size, char *path_text)
 {
-	data->lib.character = IMG_Load("textures/character.bmp");
-	data->lib.menu_texture[0] = IMG_Load("textures/gstvine1.bmp");
-	data->lib.menu_texture[1] = IMG_Load("textures/gstvine2.bmp");
-	data->lib.menu_texture[2] = IMG_Load("enemy_menu.bmp");
-	data->lib.menu_texture[3] = IMG_Load("energy_orb.bmp");
-	data->lib.menu_texture[4] = IMG_Load("textures/background_menu.bmp");
-	data->lib.menu_texture[5] = IMG_Load("textures/scoreboard.bmp");
-	data->lib.menu_texture[6] = IMG_Load("textures/doom-icon.bmp");
-	data->lib.menu_texture[7] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/icon-arrow-left.bmp");
-	data->lib.menu_texture[8] = IMG_Load("/sgoinfre/goinfre/Perso/dacuvill/icon-arrow-right.bmp");
+	int		fd;
+	
+	if (!(*dest = malloc(size)))
+		return (1);
+	fd = open(path_text, O_RDONLY);
+	if (read(fd, *dest, size) != size)
+		return (1);
+	close(fd);
+	return (0);
+}
+
+int				load_textures(t_doom *data)
+{
+	get_texture(&data->lib.character, 500 * 350 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/character.binary");
+	get_texture(&data->lib.menu_texture[0], 256 * 128 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/gstvine1.binary");
+	get_texture(&data->lib.menu_texture[1], 256 * 128 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/gstvine2.binary");
+	get_texture(&data->lib.menu_texture[2], 1920 * 1080 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/background_menu.binary");	
+	get_texture(&data->lib.menu_texture[3], 1920 * 1080 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/background_scoreboard.binary");	
+	get_texture(&data->lib.menu_texture[4], 64 * 64 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/arrow_left.binary");	
+	get_texture(&data->lib.menu_texture[5], 64 * 64 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/arrow_right.binary");	
+	data->lib.game_icon = IMG_Load("textures/doom-icon.bmp");
 	data->lib.editor.texture[0] = IMG_Load("textures/editor.bmp");
 	data->lib.editor.texture[1] = IMG_Load("textures/editor2.bmp");
-	data->lib.hud_texture = IMG_Load("textures/hud2.png");
+	get_texture(&data->lib.hud_texture, 1920 * 1080 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/hud2.binary");	
 	load_binary_textures(data);
-	load_textures_blocks(data->lib.textures);
+	load_skybox(data);
+	return (0);
 }

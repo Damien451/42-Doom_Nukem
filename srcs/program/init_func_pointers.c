@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_func_pointers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:42:20 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/26 18:03:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 00:11:55 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ static void		init_func_pointer_game_state(t_doom *data)
 	data->state_f[SETTINGS] = &state_settings_menu;
 	data->state_f[SETTINGS_INPUTS] = &state_inputs_settings_menu;
 	data->state_f[SETTINGS_SOUND] = &state_sound_settings;
-	data->state_f[TEST_MODE] = &state_test_mode;
+	data->state_f[EDITION_MODE] = &state_edition_mode;
 	data->state_f[GET_INPUT] = &state_get_input;
 	data->state_f[PAUSE] = &state_pause;
 	data->state_f[PLAYING] = &state_game;
 	data->state_f[SETTINGS_SOUND] = &state_sound_settings;
 	data->state_f[DEATH] = &state_death;
 	data->state_f[FINISHED] = &state_level_finished;
-	data->state_f[LOAD_SAVE] = &state_load_save;
 	data->state_f[NEW_HIGHSCORE] = &state_new_highscore;
 }
 

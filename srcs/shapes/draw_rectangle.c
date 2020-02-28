@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_rectangle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:01:33 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/26 14:18:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 20:12:24 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static int	draw_stylish_rectangle(t_graphic_lib *lib, t_point pos,
 		while (pos.x + x < end.x)
 		{
 			lib->image[(pos.y + i) * WIDTH + pos.x + x] =
-				((unsigned int*)lib->menu_texture[5]->pixels)
-				[(WIDTH * (i + 200)) + x + 20];
+				lib->menu_texture[3][(WIDTH * (i + 200)) + x + 20];
 			++x;
 		}
 		++i;

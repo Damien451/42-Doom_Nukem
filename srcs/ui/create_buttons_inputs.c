@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_buttons_inputs.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:41:28 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/25 23:27:54 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/27 18:02:19 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ void		create_buttons_inputs(t_doom *data, t_button *btab, int *first)
 
 	i = -1;
 	j = 0;
-	posy[0] = HEIGHT_CENTER - (BUTTON_GAP_Y + 2 * SET_BUTTON_H);
+	posy[0] = HEIGHT_CENTER - (BUTTON_GAP_Y + (SET_BUTTON_H << 1));
 	while (++j < 5)
 		posy[j] = posy[j - 1] + SET_BUTTON_H + BUTTON_GAP_Y;
 	while (++i < NB_MODIF_INPUTS + 2)
 	{
 		if (i < 4)
 			coords[i][0] = WIDTH_CENTER - (SET_BUTTON_W +
-				SET_BUTTON_W / 2 + BUTTON_GAP_X);
+				(SET_BUTTON_W >> 1) + BUTTON_GAP_X);
 		else if (i < 9)
-			coords[i][0] = WIDTH_CENTER - SET_BUTTON_W / 2;
+			coords[i][0] = WIDTH_CENTER - (SET_BUTTON_W >> 1);
 		else
 			coords[i][0] = coords[8][0] + BUTTON_GAP_X + SET_BUTTON_W;
 		coords[i][1] = (i < 4 ? posy[i] : posy[(i + 1) % 5]);

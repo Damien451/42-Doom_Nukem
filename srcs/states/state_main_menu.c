@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_main_menu.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/24 20:52:47 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	buttons_main_menu(t_button buttons[5])
 {
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LOAD_SAVE, "PLAY");
+		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_MENU, "PLAY");
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), EDITOR_MENU, "MAP EDITOR");
@@ -66,8 +66,8 @@ int			state_main_menu(t_doom *data)
 		time = SDL_GetTicks();
 	loop_music(data->mix.sounds[2], 2);
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
-		, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+		(WIDTH * HEIGHT) << 2);
 	anim_main_menu(data, total_frame++, frame);
 	buttons_main_menu(buttons);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);

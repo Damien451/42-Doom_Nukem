@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_arrows.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 16:50:40 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/25 22:42:59 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "menus.h"
 #include <unistd.h>
 
-static void	print_arrow(t_doom *data, SDL_Surface *texture,
+static void	print_arrow(t_doom *data, unsigned int *texture,
 	t_point pos, int frame)
 {
 	int			i;
@@ -27,12 +27,10 @@ static void	print_arrow(t_doom *data, SDL_Surface *texture,
 		j = -1;
 		while (++j < 64)
 		{
-			if (!(((unsigned int*)texture->pixels)
-				[i * 64 + j] > 4278190080) && data->button != 0)
+			if ((texture[i * 64 + j] < 14588888) && data->button != 0)
 				data->lib.image[(i + pos.y) * WIDTH + j + frame + pos.x] =
 					0xff0000;
-			else if (!(((unsigned int*)texture->pixels)
-				[i * 64 + j] > 4278190080) && data->button == 0)
+			else if ((texture[i * 64 + j] < 14588888) && data->button == 0)
 				data->lib.image[(i + pos.y) * WIDTH + j + frame + pos.x] =
 					0xffffff;
 		}
@@ -45,10 +43,10 @@ void		display_arrows(t_doom *data, t_button *button)
 	static int				frame2 = 60;
 	static int				ok = 0;
 
-	print_arrow(data, data->lib.menu_texture[7],
+	print_arrow(data, data->lib.menu_texture[4],
 		point(button->pos.x + (button->pos.x / 5 - 32),
 		button->pos.y + button->dim.y / 2 - 32), frame / 4);
-	print_arrow(data, data->lib.menu_texture[8],
+	print_arrow(data, data->lib.menu_texture[5],
 		point(button->pos.x + (button->dim.x / 1.2),
 		button->pos.y + button->dim.y / 2 - 32), frame2 / 4);
 	if (ok == 0 && frame2 > -60)

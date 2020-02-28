@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_editor_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:21:42 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 00:21:46 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/28 22:55:07 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static inline void	mouse_editor_commands4(t_doom *data, int x, int *step)
 		&& x <= 1225 && data->lib.event.button.y <= 1062)
 		if (check_map_validity(data) == 0)
 		{
-			data->player.gamemode = TEST_MODE;
-			switch_state(data, EDITOR, TEST_MODE);
+			data->player.gamemode = EDITION_MODE;
+			switch_state(data, EDITOR, EDITION_MODE);
 		}
 }
 

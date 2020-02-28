@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphic_lib.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/26 15:37:08 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 00:04:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define NBR_TEXTURES_EDITOR	62
 # define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_OBJECTS	20
-# define NBR_TEXTURES_MENU		9
+# define NBR_TEXTURES_MENU		6
 # define NBR_FONTS				5
 # define NB_IMG					2
 # define ID_START_BLOCK			30
@@ -106,13 +106,13 @@ struct							s_editor
 
 struct							s_graphic_lib
 {
-	SDL_Surface					*character;
-	SDL_Surface					*menu_texture[NBR_TEXTURES_MENU];
+	unsigned int				*character;
+	unsigned int				*menu_texture[NBR_TEXTURES_MENU];
+	SDL_Surface					*game_icon;
 	SDL_Surface					*skybox[6];
 	SDL_Texture					*skybox_t[6];
-	SDL_Surface					*textures[NBR_TEXTURES_EDITOR];
-	char						texture_dic[NBR_TEXTURES_BLOCKS][100];
-	SDL_Surface					*hud_texture;
+	char						texture_dic[NBR_TEXTURES_EDITOR][100];
+	unsigned int				*hud_texture;
 	SDL_Texture					*texture;
 	SDL_Window					*window;
 	SDL_Renderer				*renderer;
@@ -127,7 +127,7 @@ struct							s_graphic_lib
 	TTF_Font					*ptrfont[NBR_FONTS];
 	unsigned int				*image;
 	unsigned int				cam_keys;
-	unsigned int				*textures_block[NBR_TEXTURES_BLOCKS];
+	unsigned int				*textures[NBR_TEXTURES_EDITOR];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
 };
 
@@ -137,7 +137,7 @@ struct							s_graphic_lib
 
 t_label							label(char *str, SDL_Color color);
 
-void							load_textures(t_doom *data);
+int								load_textures(t_doom *data);
 
 void							put_string_on_renderer(t_doom *data,
 	t_point pos, t_label label, TTF_Font *font);
@@ -147,6 +147,8 @@ void							put_string_with_shadow(t_doom *data,
 
 int								anim_main_menu(t_doom *data, int total_frame
 	, int frame);
+
+void	        				init_anim_state_start(t_doom *data);
 
 void							dictionnary_binary_tex(t_doom *data);
 
