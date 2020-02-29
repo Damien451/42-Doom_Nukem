@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:39:10 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:20:36 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "thread.h"
 #include <pthread.h>
 
-static int	create_charac_anim(t_doom *data, unsigned int *image, int move)
+static int	create_charac_anim(unsigned int *character, unsigned int *image, int move)
 {
 	int			i;
 	int			j;
@@ -26,12 +26,9 @@ static int	create_charac_anim(t_doom *data, unsigned int *image, int move)
 		j = 0;
 		while (j < 200)
 		{
-			if (data->lib.character[(i >> 2) * 500 + move + (j >> 2)])
-			{
+			if (character[(i >> 2) * 500 + move + (j >> 2)])
 				image[i * WIDTH + j + 525 * WIDTH + (WIDTH >> 4)] =
-				data->lib.character[(i >> 2)
-				* 500 + move + (j >> 2)];
-			}
+					character[(i >> 2) * 500 + move + (j >> 2)];
 			j++;
 		}
 		i++;
@@ -39,53 +36,55 @@ static int	create_charac_anim(t_doom *data, unsigned int *image, int move)
 	return (0);
 }
 
-static void	choose_animation_part2(t_doom *data, int frame)
+static void	choose_animation_part2(unsigned int *character,
+	unsigned int *image, int frame)
 {
 	int			ret;
 
 	if (frame >= 960)
 	{
 		if ((ret = (frame >> 4) & 3) == 0)
-			create_charac_anim(data, data->lib.image, 350 + 125000);
+			create_charac_anim(character, image, 350 + 125000);
 		else if (ret == 1 || ret == 3)
-			create_charac_anim(data, data->lib.image, 400 + 125000);
+			create_charac_anim(character, image, 400 + 125000);
 		else
-			create_charac_anim(data, data->lib.image, 450 + 125000);
+			create_charac_anim(character, image, 450 + 125000);
 	}
 	else if ((ret = (frame >> 4) & 3) == 0)
-		create_charac_anim(data, data->lib.image, 150);
+		create_charac_anim(character, image, 150);
 	else if (ret == 1 || ret == 3)
-		create_charac_anim(data, data->lib.image, 200);
+		create_charac_anim(character, image, 200);
 	else
-		create_charac_anim(data, data->lib.image, 250);
+		create_charac_anim(character, image, 250);
 }
 
-static void	choose_animation_part1(t_doom *data, int frame)
+static void	choose_animation_part1(unsigned int *character,
+	unsigned int *image, int frame)
 {
 	int			ret;
 
 	if (frame >= 160 && frame <= 256)
 	{
 		if ((ret = (frame >> 4) & 3) == 0)
-			create_charac_anim(data, data->lib.image, 150 + 25000);
+			create_charac_anim(character, image, 150 + 25000);
 		else if (ret == 1 || ret == 3)
-			create_charac_anim(data, data->lib.image, 200 + 25000);
+			create_charac_anim(character, image, 200 + 25000);
 		else
-			create_charac_anim(data, data->lib.image, 250 + 25000);
+			create_charac_anim(character, image, 250 + 25000);
 	}
 	else if (frame >= 448 && frame <= 512)
 	{
 		if ((ret = (frame >> 4) & 3) == 0)
-			create_charac_anim(data, data->lib.image, 100 + 100000);
+			create_charac_anim(character, image, 100 + 100000);
 		else if (ret == 1)
-			create_charac_anim(data, data->lib.image, 150 + 100000);
+			create_charac_anim(character, image, 150 + 100000);
 		else if (ret == 2)
-			create_charac_anim(data, data->lib.image, 200 + 100000);
+			create_charac_anim(character, image, 200 + 100000);
 		else
-			create_charac_anim(data, data->lib.image, 250 + 100000);
+			create_charac_anim(character, image, 250 + 100000);
 	}
 	else
-		choose_animation_part2(data, frame);
+		choose_animation_part2(character, image, frame);
 }
 
 void		*thread_main_anim(void *thread)
@@ -138,6 +137,7 @@ int			anim_main_menu(t_doom *data, int total_frame, int frame)
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(thread[i++].thread, NULL);
-	choose_animation_part1(data, frame);
+	choose_animation_part1(data->lib.character, data->lib.image, frame);
+	choose_animation_ennemy(data->lib.ennemy, data->lib.image, frame);
 	return (0);
 }

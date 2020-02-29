@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 22:03:07 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 17:13:36 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:12:45 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		init_game(t_doom *data, t_player *player)
 	loop_music(data->mix.sounds[randmusic], randmusic);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	set_player_spawn(data->map_to_save, &data->player.camera.origin);
-	player->score = 1000000;
+	//player->score = 1000000;
 	data->player.camera.x_angle = 0;
 	data->player.physics.camera.x_angle = 0;
 	player->camera.direction = vec3d(0, 0, 1);

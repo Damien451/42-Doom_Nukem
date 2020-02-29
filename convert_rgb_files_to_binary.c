@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:10:09 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/28 20:26:10 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:10:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <fcntl.h>
 
 # define SIZE_X 1920
-# define SIZE_Y 1080
-# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/hud2.rgb"
-# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/textures_binary/hud2.binary"
+# define SIZE_Y 1440
+# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/eclair.rgb"
+# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/textures_binary/eclair.binary"
 
 int		main(void)
 {

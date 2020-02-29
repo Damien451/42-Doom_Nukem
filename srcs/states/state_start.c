@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_start.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:06:01 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/25 23:45:17 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:10:37 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static inline void	draw_on_texture(t_doom *data, unsigned int *image)
 	static int	type = 1;
 
 	i = -1;
-	ft_memcpy(image, data->lib.start_bg->pixels, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(image, data->lib.start_bg, (WIDTH * HEIGHT) << 2);
 	print_autor(data, image, ((frame >> 1) << 16));
 	i = 0;
 	srand(time(NULL));

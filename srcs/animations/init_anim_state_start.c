@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 00:05:06 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/29 00:07:59 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:16:46 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@
 #include <SDL.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <limits.h>
 
-/*static int		get_texture(unsigned int **dest, int size, char *path_text)
+static int		get_texture(unsigned int **dest, int size, char *path_text)
 {
 	int		fd;
-	
+
 	fd = 0;
 	if (!(*dest = malloc(size)))
 		return (1);
-	fd = open(path_text, O_RDONLY);
+	if (!(fd = open(path_text, O_RDONLY)))
+		return (1);
 	if (read(fd, *dest, size) != size)
 		return (1);
 	close(fd);
 	return (0);
-}*/
+}
 
 static void		init_bubbles(t_doom *data)
 {
@@ -51,21 +53,23 @@ static void		init_bubbles(t_doom *data)
 	}
 }
 
-void	        init_anim_state_start(t_doom *data)
+void			init_anim_state_start(t_doom *data)
 {
-	int			i;
-	SDL_Surface	*surface;
-	t_bubble	*tmp;
-	t_bubble	*tmp2;
+	int				i;
+	unsigned int	*surface;
+	t_bubble		*tmp;
+	t_bubble		*tmp2;
 
 	init_bubbles(data);
-	surface = IMG_Load("textures/Credits.bmp");
-	data->lib.start_bg = IMG_Load("textures/start_bg.bmp");
-	i = 0;
+	get_texture(&surface, 4 * 1920 * 1080,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/Credits.binary");
+	get_texture(&data->lib.start_bg, 4 * 1920 * 1200,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/start_bg.binary");
+	i = -1;
 	tmp = NULL;
-	while (i < WIDTH * HEIGHT)
+	while (++i < WIDTH * HEIGHT)
 	{
-		if (((int*)surface->pixels)[i] != -1)
+		if (surface[i] != UINT_MAX)
 		{
 			if (!tmp)
 			{
@@ -82,17 +86,16 @@ void	        init_anim_state_start(t_doom *data)
 				tmp = tmp->next;
 			}
 		}
-		i++;
 	}
 	tmp = NULL;
-	SDL_FreeSurface(surface);
-	surface = IMG_Load("textures/eclair.bmp");
-	i = 0;
+	free(surface);
+	get_texture(&surface, 4 * 1920 * 1440,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/eclair.binary");
+	i = -1;
 	tmp2 = NULL;
-	while (i < WIDTH * HEIGHT)
+	while (++i < WIDTH * HEIGHT)
 	{
-		if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)
-				surface->pixels)[i] % 0x1000000 <= 0x888888)
+		if (surface[i] != UINT_MAX && (surface[i] % 0x1000000 <= 0x888888))
 		{
 			if (!tmp)
 			{
@@ -109,8 +112,7 @@ void	        init_anim_state_start(t_doom *data)
 				tmp = tmp->next;
 			}
 		}
-		else if (((int*)surface->pixels)[i] != -1 && ((unsigned int*)
-				surface->pixels)[i] % 0x1000000 <= 0x999999)
+		else if (surface[i] != UINT_MAX && (surface[i] % 0x1000000 <= 0x999999))
 		{
 			if (!tmp2)
 			{
@@ -127,7 +129,6 @@ void	        init_anim_state_start(t_doom *data)
 				tmp2 = tmp2->next;
 			}
 		}
-		i++;
 	}
-	SDL_FreeSurface(surface);
+	free(surface);
 }

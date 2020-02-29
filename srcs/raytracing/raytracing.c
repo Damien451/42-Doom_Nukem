@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/28 22:55:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:03:25 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ static void			event_loop(t_doom *data)
 					, &data->lib.event.motion.yrel
 					, &data->player.sensitivity);
 		else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN)
-				data->lib.cam_keys |= DESTROY;
+				data->lib.cam_keys |= RIGHT_CLICK;
 		else if (data->lib.event.type == SDL_MOUSEBUTTONUP)
-				data->lib.cam_keys &= ~DESTROY;
+				data->lib.cam_keys &= ~RIGHT_CLICK;
 
 		camera_press_key(&data->lib.event, &data->tabinputs, data);
 	}
@@ -158,7 +158,7 @@ int					raytracing(t_doom *data)
 	while (i < NBR_THREAD)
 		pthread_join(data->thread[i++].thread, NULL);
 	update_physics(data);
-	if (data->lib.cam_keys & DESTROY)
-		interaction(data);
+	if (data->lib.cam_keys & RIGHT_CLICK || data->lib.cam_keys & LEFT_CLICK)
+		interaction(data, data->lib.cam_keys);
 	return (0);
 }

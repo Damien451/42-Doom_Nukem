@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/28 21:44:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:40:28 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,19 @@ int				load_textures(t_doom *data)
 	get_texture(&data->lib.menu_texture[1], 256 * 128 * 4,
 		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/gstvine2.binary");
 	get_texture(&data->lib.menu_texture[2], 1920 * 1080 * 4,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/background_menu.binary");	
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/background_menu.binary");
 	get_texture(&data->lib.menu_texture[3], 1920 * 1080 * 4,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/background_scoreboard.binary");	
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/background_scoreboard.binary");
 	get_texture(&data->lib.menu_texture[4], 64 * 64 * 4,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/arrow_left.binary");	
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/arrow_left.binary");
 	get_texture(&data->lib.menu_texture[5], 64 * 64 * 4,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/arrow_right.binary");	
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/arrow_right.binary");
 	data->lib.game_icon = IMG_Load("textures/doom-icon.bmp");
 	data->lib.editor.texture[0] = IMG_Load("textures/editor.bmp");
 	data->lib.editor.texture[1] = IMG_Load("textures/editor2.bmp");
+	data->lib.ennemy = IMG_Load("textures/ennemy.bmp");
 	get_texture(&data->lib.hud_texture, 1920 * 1080 * 4,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/hud2.binary");	
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/hud2.binary");
 	load_binary_textures(data);
 	load_skybox(data);
 	return (0);

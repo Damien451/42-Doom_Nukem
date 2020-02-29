@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 22:52:29 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/28 22:55:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:26:44 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "libft.h"
 #include "octree.h"
 #include <sys/time.h>
-
 
 static void	add_hud(t_doom *data)
 {

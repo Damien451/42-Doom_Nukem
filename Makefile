@@ -62,6 +62,7 @@ LIBFT		= $(LIBDIR) -lft
 # **************************************************************************** #
 
 SRCS 		=		$(ANIM)/anim_main_menu.c				\
+					$(ANIM)/anim_ennemy.c					\
 					$(ANIM)/display_arrows.c				\
 					$(ANIM)/display_scores.c				\
 					$(ANIM)/init_anim_state_start.c			\
@@ -83,6 +84,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/show_selected_params.c		\
 					$(GAMEPLAY)/interaction.c				\
 					$(GAMEPLAY)/check_if_not_in_map.c		\
+					$(GAMEPLAY)/get_time_levels.c			\
 					$(GAMEPLAY)/move_hitbox.c				\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\

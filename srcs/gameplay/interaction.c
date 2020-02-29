@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:04:23 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/02/29 00:08:52 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:09:03 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_ray		ray_colision(t_ray ray, const t_doom *const data)
 	i = 0;
 	while (i < 3)
 	{
-		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin
-				, &ray, &ray.node);
+		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin,
+			&ray, &ray.node);
 		if (ray.face == -1)
 			i++;
 		else if (ray.face == -3)
@@ -55,7 +55,7 @@ t_ray		ray_colision(t_ray ray, const t_doom *const data)
 	return (ray);
 }
 
-void			interaction(t_doom *data)
+void			interaction(t_doom *data, unsigned int key)
 {
 	t_ray		ray;
 	t_vec3d		player[2];
@@ -85,7 +85,7 @@ void			interaction(t_doom *data)
 		block[0].x = floor(ray.intersect.x);
 		block[0].y = floor(ray.intersect.y);
 		block[0].z = floor(ray.intersect.z);
-		if (ray.node->leaf == BREAKABLE)
+		if (ray.node->leaf == BREAKABLE || (key & LEFT_CLICK))
 			return ;
 		if (ray.face == 0)
 			block[0].x -= 1;

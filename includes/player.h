@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/26 18:36:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:01:48 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@
 # define WATER				0x20l
 # define SQUAT				0x40l
 # define CRAWL				0x80l
-# define DESTROY			0x100l
+# define RIGHT_CLICK		0x100l
+# define LEFT_CLICK			0x1000l
 # define BEST_SAMPLING		0x200l
 
 # define GRAVITY			1.0
@@ -153,5 +154,7 @@ int							add_vertex_clipping_z_max(t_vec3d *acceleration
 
 void						add_clipping_for_each_point(t_doom *data
 	, t_player *player);
+
+long						get_time_levels(t_player *player);
 
 #endif

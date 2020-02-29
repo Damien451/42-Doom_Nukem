@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   leave_program.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:35:39 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/12 19:49:00 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:38:10 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ static void	close_fonts(t_doom *data)
 		TTF_Quit();
 }
 
+static void	free_textures(t_doom *data)
+{
+	int		i;
+
+	i = -1;
+	while (++i < NBR_TEXTURES_MENU)
+		free(data->lib.menu_texture[i]);
+	i = -1;
+	while (++i < NBR_TEXTURES_EDITOR)
+		free(data->lib.textures[i]);
+	free(data->lib.character);
+	free(data->lib.hud_texture);
+}
+
 void		free_octree(t_octree *node)
 {
 	int			i;
@@ -47,6 +61,7 @@ void		free_octree(t_octree *node)
 int			leave_program(t_doom *data, int type)
 {
 	free_octree(data->octree);
+	free_textures(data);
 	if (data->lib.texture)
 		SDL_DestroyTexture(data->lib.texture);
 	if (data->lib.renderer)
