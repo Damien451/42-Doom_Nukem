@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/29 00:12:36 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:42:51 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ struct						s_doom
 	t_scoreboard			scoreboard;
 	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					*map_name;
-	unsigned int			**skybox;
+	unsigned int			skybox;
 	long					button;
 	long					state;
 	int						running;
@@ -195,7 +195,7 @@ struct						s_doom
 	char					photo;
 	int						actual_i;
 	int						actual_j;
-	int						*samplingt[7];
+	int						samplingt[7][WIDTH * HEIGHT];
 	t_vec3d					normal[6];
 	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
 	t_thread				thread[NBR_THREAD];
@@ -204,8 +204,8 @@ struct						s_doom
 	unsigned int			object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					dic_obj[NBR_OBJ][100];
 	int						tmp;
-	double					*z_buffer;
-	unsigned int			*frame_buffer;
+	double					z_buffer[WIDTH * HEIGHT];
+	unsigned int			frame_buffer[WIDTH * HEIGHT];
 	t_mesh					*meshes;
 	int						actual_obj;
 	t_vec3d					oriented_light;
