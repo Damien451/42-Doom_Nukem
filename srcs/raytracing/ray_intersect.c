@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 18:11:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:07:52 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ double		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 {
 	t_light	*light;
 
-	ray.length = launch_ray_to_light_player(ray, data->player_light, data);
+	ray.length = launch_ray_to_light_player(ray, &data->player_light, data);
 	if (ray.length >= 0.875)
 		return (1);
-	ray.length += launch_ray_to_light(ray, data->sun_light, data);
+	ray.length += launch_ray_to_light(ray, &data->sun_light, data);
 	if (ray.length >= 0.875)
 		return (1);
 	if (data->light_array[(int)ray.origin.x][(int)ray.origin.y]
@@ -114,7 +114,7 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 		else if (ray.face >= 0)
 			return (compute_lights(ray, data, tmp));
 		else
-			return (add_skybox(ray.intersect, data->skybox));
+			return (add_skybox(ray.intersect, data));
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 17:54:01 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:49:11 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ static int	init_objects(t_doom *data)
 		create_octree_model(data);
 		data->actual_obj++;
 	}
+	return (0);
 }
 
 int			load_sampling(t_doom *data)
@@ -123,21 +124,18 @@ int			load_sampling(t_doom *data)
 	fd = open("ressources/sampling/sampling1.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
-	data->samplingt[0] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[0][0] = size;
 	read(fd, &data->samplingt[0][1], size * 8);
 	close(fd);
 	fd = open("ressources/sampling/sampling4.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
-	data->samplingt[3] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[3][0] = size;
 	read(fd, &data->samplingt[3][1], size * 8);
 	close(fd);
 	fd = open("hud.binary", O_RDONLY);
 	read(fd, sizec, 4);
 	size = *((int*)sizec);
-	data->samplingt[6] = malloc(sizeof(int) * (size * 2 + 1));
 	data->samplingt[6][0] = size;
 	read(fd, &data->samplingt[6][1], size * 8);
 	close(fd);
@@ -156,11 +154,9 @@ void		init_normals(t_doom *data)
 
 void		init_lights(t_doom *data)
 {
-	data->sun_light = malloc(sizeof(t_light));
-	data->sun_light->type = SUN;
+	data->sun_light.type = SUN;
 	data->power[SUN] = 7500;
-	data->player_light = malloc(sizeof(t_light));
-	data->player_light->type = PLAYER;
+	data->player_light.type = PLAYER;
 	data->power[PLAYER] = 100;
 }
 
@@ -233,8 +229,6 @@ int init_program(t_doom *data)
 	int fd = open("robintest.binary", O_RDONLY);
 	read(fd, data->png, 4 * 4096 * 4096);
 	close(fd);
-	data->z_buffer = malloc(sizeof(double) * WIDTH * HEIGHT);
-	data->frame_buffer = malloc(sizeof(unsigned int) * WIDTH * HEIGHT);
 	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);

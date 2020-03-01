@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/04 22:48:34 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:53:25 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-double		launch_ray_to_light_mini(t_ray ray, t_light *light
+double		launch_ray_to_light_mini(t_ray ray, const t_light *light
 		, const t_doom *const data, t_ray *big_ray)
 {
 	int				i;
@@ -82,10 +82,10 @@ unsigned int		launch_rays_to_lights_mini(t_ray ray, const t_doom *const data, t_
 	}
 	big_ray->origin = position;
 	big_ray->intersect = position;
-	ray.length = launch_ray_to_light_mini(ray, data->player_light, data, big_ray);
+	ray.length = launch_ray_to_light_mini(ray, &data->player_light, data, big_ray);
 	if (ray.length >= 0.75)
 		return (ray.color);
-	ray.length += launch_ray_to_light_mini(ray, data->sun_light, data, big_ray);
+	ray.length += launch_ray_to_light_mini(ray, &data->sun_light, data, big_ray);
 	if (ray.length >= 0.75)
 		return (ray.color);
 	if (data->light_array[big_ray->node->center.x >> 1][big_ray->node->center.y >> 1][big_ray->node->center.z >> 1].type >= 2)

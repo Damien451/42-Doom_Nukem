@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 16:32:40 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:51:20 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ static void		load_skybox(t_doom *data)
 	int		fd;
 
 	fd = 0;
-	data->skybox = malloc(sizeof(int*) * 6);
-	while (fd < 6)
-		data->skybox[fd++] = malloc(sizeof(int) * 512 * 512);
 	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/skybox1.binary", O_RDONLY);
 	read(fd, data->skybox[0], 512 * 512 * 4);
 	close(fd);

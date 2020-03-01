@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:01:29 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/03 12:02:34 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:07:24 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void					sun(t_doom *data)
 
 	if (frame == 0)
 	{
-		data->sun_light->position.x = 0;
-		data->sun_light->position.y = 63 + EPSILON;
-		data->sun_light->position.z = 0;
+		data->sun_light.position.x = 0;
+		data->sun_light.position.y = 63 + EPSILON;
+		data->sun_light.position.z = 0;
 	}
 	else
 	{
-		data->sun_light->position.z += 0.05;
-		data->sun_light->position.x += 0.05;
-		if (data->sun_light->position.z > 64.0)
+		data->sun_light.position.z += 0.05;
+		data->sun_light.position.x += 0.05;
+		if (data->sun_light.position.z > 64.0)
 		{
-			data->sun_light->position.z = 0.0;
-			data->sun_light->position.x = 0.0;
+			data->sun_light.position.z = 0.0;
+			data->sun_light.position.x = 0.0;
 			frame = 0;
 		}
 	}

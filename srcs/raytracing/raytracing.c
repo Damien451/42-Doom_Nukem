@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 18:10:36 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:06:11 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ int					raytracing(t_doom *data)
 //	gettimeofday(&time, NULL);
 //	wait = time.tv_sec * 1000000 + time.tv_usec;
 	position = find_actual_position(&data->player.camera.origin, data->octree);
-	data->player_light->position = data->player.camera.origin;
-	data->player_light->position.y -= 0.375;
-	data->player_light->position = vec3d_add(data->player_light->position, vec3d_scalar(data->player.camera.right, 0.2));
+	data->player_light.position = data->player.camera.origin;
+	data->player_light.position.y -= 0.375;
+	data->player_light.position = vec3d_add(data->player_light.position, vec3d_scalar(data->player.camera.right, 0.2));
 	tmp = vec3d_length2(data->player.acceleration);
 	data->oriented_light = vec3d_add(data->player.camera.direction, vec3d_add(vec3d_scalar(data->player.camera.up, data->oriented[2] - 0.125), vec3d_scalar(data->player.camera.right, data->oriented[3])));
 	data->oriented[2] += (data->oriented[0] * tmp / 30);

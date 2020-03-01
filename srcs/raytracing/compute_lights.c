@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 22:24:05 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/16 16:35:36 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:56:39 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ double		compute_normal(t_vec3d direction, t_vec3d normal)
 }
 
 double		compute_light_power(t_ray ray, double length
-		, const t_doom *const data, t_light *light)
+		, const t_doom *const data, const t_light *light)
 {
 	return ((1.0 - length / data->power[light->type])
 			* compute_normal(ray.direction, ray.normal));
@@ -40,7 +40,7 @@ double		compute_light_power_player(t_ray ray, double length
 }
 
 
-double		launch_ray_to_light(t_ray ray, t_light *light
+double		launch_ray_to_light(t_ray ray, const t_light *light
 		, const t_doom *const data)
 {
 	double			length;
@@ -107,7 +107,7 @@ double		launch_ray_to_light(t_ray ray, t_light *light
 	return (0);
 }
 
-double		launch_ray_to_light_player(t_ray ray, t_light *light
+double		launch_ray_to_light_player(t_ray ray, const t_light *light
 		, const t_doom *const data)
 {
 	double			length;

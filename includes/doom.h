@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/29 14:42:51 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:56:13 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ struct						s_doom
 	t_scoreboard			scoreboard;
 	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					*map_name;
-	unsigned int			skybox;
+	unsigned int			skybox[6][512*512];
 	long					button;
 	long					state;
 	int						running;
@@ -189,8 +189,8 @@ struct						s_doom
 	int						ball;
 	int						torch;
 	t_vec3d					sun;
-	t_light					*sun_light;
-	t_light					*player_light;
+	t_light					sun_light;
+	t_light					player_light;
 	double					power[6];
 	char					photo;
 	int						actual_i;
@@ -259,9 +259,9 @@ void						remove_type_block(t_doom *data);
 void						replace_blocks(t_doom *data);
 void						show_selected_params(t_doom *data);
 unsigned int				add_skybox(t_vec3d intersect
-	, unsigned int *skybox[6]);
+	, const t_doom *const data);
 int							convert_to_ppm(unsigned int *view);
-double						launch_ray_to_light(t_ray ray, t_light *light
+double						launch_ray_to_light(t_ray ray, const t_light *light
 	, const t_doom *const data);
 void						max_absolute_between_three(t_vec3d vec, int tab[3]);
 double						launch_ray_to_sun(t_ray ray
@@ -414,6 +414,6 @@ unsigned int				ray_intersect_mini2(t_ray *ray,
 	const t_doom *const data, int sorted[3]);
 
 double						launch_ray_to_light_player(t_ray ray,
-	t_light *light, const t_doom *const data);
+	const t_light *light, const t_doom *const data);
 
 #endif
