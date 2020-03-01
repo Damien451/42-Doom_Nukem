@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 00:05:06 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/01 22:11:37 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:15:33 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void			init_anim_state_start(t_doom *data)
 
 	init_bubbles(data);
 	get_texture(&surface, 4 * 1920 * 1080,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/Credits.binary");
-	if (!(fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/start_bg.binary", O_RDONLY)))
+		"textures/textures_binary/Credits.binary");
+	if (!(fd = open("textures/textures_binary/start_bg.binary", O_RDONLY)))
 		return ;
 	if (read(fd, data->lib.start_bg, 1920 * 1200 * 4) != 1920 * 1200 * 4)
 		return ;
@@ -93,7 +93,7 @@ void			init_anim_state_start(t_doom *data)
 	tmp = NULL;
 	free(surface);
 	get_texture(&surface, 4 * 1920 * 1440,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/eclair.binary");
+		"textures/textures_binary/eclair.binary");
 	i = -1;
 	tmp2 = NULL;
 	while (++i < WIDTH * HEIGHT)

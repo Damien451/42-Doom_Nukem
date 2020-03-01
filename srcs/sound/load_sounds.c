@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:49 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/13 16:50:37 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:16:02 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int				load_sounds(t_doom *data)
 	{
 		ft_bzero(buf, 70);
 		sprintf(buf
-			, "/sgoinfre/goinfre/Perso/dacuvill/sounds/%d.wav", i);
+			, "textures/sounds/%d.wav", i);
 		if (load_sound(buf, &(data->mix.sounds[i])))
 			return (1);
 	}

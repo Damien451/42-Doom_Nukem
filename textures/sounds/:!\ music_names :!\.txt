@@ -1,0 +1,7 @@
+0 : rain
+1 : Storm_exclamation (thunder sound effect)
+2 : Posedion (main menu music)
+3 - 7 : Dark Ambient Background Music
+8 : Left step sound
+9 : Right step sound
+10 : Jump shout sound
