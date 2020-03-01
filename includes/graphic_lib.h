@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 16:57:43 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:26:38 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ struct							s_graphic_lib
 	SDL_Texture					*texture;
 	SDL_Window					*window;
 	SDL_Renderer				*renderer;
-	unsigned int				*start_bg;
+	unsigned int				start_bg[1920 * 1080];
 	SDL_Surface					*surface;
 	SDL_Event					event;
 	t_editor					editor;
@@ -126,7 +126,7 @@ struct							s_graphic_lib
 	TTF_Font					*ptrfont[NBR_FONTS];
 	unsigned int				*image;
 	unsigned int				cam_keys;
-	unsigned int				*textures[NBR_TEXTURES_EDITOR];
+	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
 };
 

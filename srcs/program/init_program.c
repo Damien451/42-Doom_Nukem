@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 20:49:11 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:15:46 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <pthread.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "mesh.h"
 
 void		init_camera(t_doom *data)
 {
@@ -187,52 +186,15 @@ int			init_sdl(t_doom *data)
 	return (0);
 }
 
-void		init_meshes(t_doom *data)
-{
-	data->meshes = (t_mesh*)malloc(sizeof(t_mesh));
-	data->meshes->next = NULL;
-	data->meshes->triangle = (t_triangle*)malloc(sizeof(t_triangle));
-	data->meshes->triangle->vertices[0].x = 5;
-	data->meshes->triangle->vertices[0].y = 0;
-	data->meshes->triangle->vertices[0].z = 10;
-	data->meshes->triangle->vertices[1].x = 10;
-	data->meshes->triangle->vertices[1].y = 10;
-	data->meshes->triangle->vertices[1].z = 10;
-	data->meshes->triangle->vertices[2].x = 15;
-	data->meshes->triangle->vertices[2].y = 0;
-	data->meshes->triangle->vertices[2].z = 10;
-	data->meshes->triangle->next = NULL;
-}
-
-void		init_triangle(t_doom *data)
-{
-	int		fd;
-	int		ret;
-
-	fd = open("first_obj.obj", O_RDONLY);
-	printf("fd = %d\n", fd);
-	data->tri = malloc(sizeof(t_tri) * 4224);
-	if ((ret = read(fd, data->tri, 2222222)) == -1)
-		printf("MERDE\n");
-	printf("ret = %d\n", ret);
-	close(fd);
-}
-
 int init_program(t_doom *data)
 {
-	init_triangle(data);
 	data->oriented[0] = 1;
 	data->oriented[1] = 1;
 	data->oriented[2] = 0;
 	data->oriented[3] = 0;
-	data->png = malloc(4 * 4096 * 4096);
-	int fd = open("robintest.binary", O_RDONLY);
-	read(fd, data->png, 4 * 4096 * 4096);
-	close(fd);
 	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);
-	init_meshes(data);
 	init_objects(data);
 	load_textures(data);
 	if (init_sdl(data))

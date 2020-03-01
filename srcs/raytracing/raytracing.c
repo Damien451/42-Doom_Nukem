@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 20:06:11 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:16:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ int					raytracing(t_doom *data)
 	static long		max = 0;
 	double			tmp;
 
-
-//	rasterization(data, data->meshes);
 //	gettimeofday(&time, NULL);
 //	wait = time.tv_sec * 1000000 + time.tv_usec;
 	position = find_actual_position(&data->player.camera.origin, data->octree);

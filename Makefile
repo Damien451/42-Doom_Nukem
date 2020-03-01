@@ -33,7 +33,6 @@ EDITOR		= editor
 GAMEPLAY	= gameplay
 MATHS		= maths
 PROG		= program
-RAST		= rasterization
 RT			= raytracing
 SHAPES		= shapes
 SOUND		= sound
@@ -111,7 +110,6 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/program.c						\
 					$(PROG)/select_next_level.c				\
 					$(PROG)/set_player_spawn.c				\
-					$(RAST)/rasterization.c					\
 					$(RT)/add_texture_neg.c					\
 					$(RT)/add_texture_pos.c					\
 					$(RT)/add_textures.c					\
@@ -216,7 +214,6 @@ $(OBJDIR)		:
 	@mkdir -p $@/$(GAMEPLAY)	2> /dev/null || true
 	@mkdir -p $@/$(MATHS)		2> /dev/null || true
 	@mkdir -p $@/$(PROG)		2> /dev/null || true
-	@mkdir -p $@/$(RAST)		2> /dev/null || true
 	@mkdir -p $@/$(RT)			2> /dev/null || true
 	@mkdir -p $@/$(SHAPES)		2> /dev/null || true
 	@mkdir -p $@/$(SOUND)		2> /dev/null || true

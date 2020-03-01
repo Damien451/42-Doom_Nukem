@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 10:36:11 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 20:52:32 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:23:29 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static inline unsigned int	fill_percent_512(double a, double b
 }
 
 unsigned int				fill_percent_128(double a, double b
-		, unsigned int tab[128 * 128])
+		, const unsigned int tab[128 * 128])
 {
 	return (tab[(int)(a * 128) * 128 + (int)(b * 128)]);
 }

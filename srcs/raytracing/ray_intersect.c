@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 20:07:52 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:17:01 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 	max_absolute_between_three(ray.direction, sorted);
 	tmp = ray.node;
 	i = 0;
-	//if (data->z_buffer[ray.pos[0] * WIDTH + ray.pos[1]] != INFINITY)
-	//	return (data->frame_buffer[ray.pos[0] * WIDTH + ray.pos[1]]);
 	while (i < 3)
 	{
 		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin

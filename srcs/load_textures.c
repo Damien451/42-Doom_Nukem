@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 19:51:20 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:21:23 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ static void		load_binary_textures(t_doom *data)
 	dictionnary_binary_tex(data);
 	while (i < NBR_TEXTURES_EDITOR)
 	{
-		if (i < 42)
-			data->lib.textures[i] = malloc(128 * 128 * 4);
-		else
-			data->lib.textures[i] = malloc(64 * 64 * 4);
 		fd = open(data->lib.texture_dic[i], O_RDONLY);
 		if (i < 42)
 			read(fd, data->lib.textures[i], 128 * 128 * 4);

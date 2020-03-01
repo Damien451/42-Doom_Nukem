@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 20:56:13 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:23:13 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include "entities.h"
 # include "vec3.h"
 # include "thread.h"
-# include "mesh.h"
 # include <pthread.h>
 # include "gameplay.h"
 
@@ -150,12 +149,6 @@ struct						s_thread
 	t_vec3l					rectangle;
 	double					alpha;
 };
-typedef struct						s_tri
-{
-	t_vec3d					vertices[3];
-	t_vec3d					normals[3];
-	t_vec3d					textures[3];
-}									t_tri;
 
 struct						s_doom
 {
@@ -204,14 +197,9 @@ struct						s_doom
 	unsigned int			object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					dic_obj[NBR_OBJ][100];
 	int						tmp;
-	double					z_buffer[WIDTH * HEIGHT];
-	unsigned int			frame_buffer[WIDTH * HEIGHT];
-	t_mesh					*meshes;
 	int						actual_obj;
 	t_vec3d					oriented_light;
 	double					oriented[4];
-	t_tri					*tri;
-	unsigned int			*png;
 };
 
 /*
@@ -311,7 +299,7 @@ int							check_y_intersect_pos(t_vec3d *intersect
 int							check_z_intersect_pos(t_vec3d *intersect
 		, t_vec3d origin, t_ray *ray, t_octree **node);
 unsigned int				fill_percent_128(double a, double b
-		, unsigned int tab[128 * 128]);
+		, const unsigned int tab[128 * 128]);
 t_octree					*find_parent_x(t_vec3d position, t_octree *node
 		, t_vec3d origin);
 t_octree					*find_parent_y(t_vec3d position, t_octree *node
