@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/29 18:40:28 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:32:40 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ int				load_textures(t_doom *data)
 	data->lib.game_icon = IMG_Load("textures/doom-icon.bmp");
 	data->lib.editor.texture[0] = IMG_Load("textures/editor.bmp");
 	data->lib.editor.texture[1] = IMG_Load("textures/editor2.bmp");
-	data->lib.ennemy = IMG_Load("textures/ennemy.bmp");
+	get_texture(&data->lib.ennemy, 500 * 373 * 4,
+		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/ennemy.binary");
 	get_texture(&data->lib.hud_texture, 1920 * 1080 * 4,
 		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/hud2.binary");
 	load_binary_textures(data);

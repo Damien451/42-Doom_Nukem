@@ -6,7 +6,7 @@
 /*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:37:55 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/22 19:34:35 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 17:57:55 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,27 +118,18 @@ int		main(int ac, char **av)
 			i = strtol(buffer, &buffer, 10);
 			buffer++;
 			j = strtol(buffer, &buffer, 10);
-			buffer++;
-			k = strtol(buffer, &buffer, 10);
 			triangle->vertices[0] = vertices[i];
 			triangle->textures[0] = tex[j];
-			triangle->normals[0] = normals[k];
 			i = strtol(buffer, &buffer, 10);
 			buffer++;
 			j = strtol(buffer, &buffer, 10);
-			buffer++;
-			k = strtol(buffer, &buffer, 10);
 			triangle->vertices[1] = vertices[i];
 			triangle->textures[1] = tex[j];
-			triangle->normals[1] = normals[k];
 			i = strtol(buffer, &buffer, 10);
 			buffer++;
 			j = strtol(buffer, &buffer, 10);
-			buffer++;
-			k = strtol(buffer, &buffer, 10);
 			triangle->vertices[2] = vertices[i];
 			triangle->textures[2] = tex[j];
-			triangle->normals[2] = normals[k];
 			nbr_triangle++;
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/29 00:10:32 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 17:54:01 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,15 +211,18 @@ void		init_meshes(t_doom *data)
 void		init_triangle(t_doom *data)
 {
 	int		fd;
+	int		ret;
 
 	fd = open("first_obj.obj", O_RDONLY);
 	printf("fd = %d\n", fd);
 	data->tri = malloc(sizeof(t_tri) * 4224);
-	if (read(fd, data->tri, 2222222) == -1)
+	if ((ret = read(fd, data->tri, 2222222)) == -1)
 		printf("MERDE\n");
+	printf("ret = %d\n", ret);
+	close(fd);
 }
 
-int			init_program(t_doom *data)
+int init_program(t_doom *data)
 {
 	init_triangle(data);
 	data->oriented[0] = 1;

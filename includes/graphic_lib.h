@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/29 19:34:25 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:57:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ struct							s_editor
 struct							s_graphic_lib
 {
 	unsigned int				*character;
-	SDL_Surface					*ennemy;
+	unsigned int				*ennemy;
 	unsigned int				*menu_texture[NBR_TEXTURES_MENU];
 	SDL_Surface					*game_icon;
 	SDL_Surface					*skybox[6];
@@ -158,6 +158,6 @@ int								display_scores(t_doom *data,
 
 void							display_arrows(t_doom *data, t_button *button);
 
-void							choose_animation_ennemy(SDL_Surface *ennemy,
+void							choose_animation_ennemy(unsigned int *ennemy,
     unsigned int *image, int frame);
 #endif

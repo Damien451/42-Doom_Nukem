@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 18:07:13 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/29 20:28:21 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 17:07:16 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,29 @@
 #include "thread.h"
 #include <pthread.h>
 
-// frame 1 marche : 0 / 0 -> 43 / 60
-// frame 2 marche : 213 / 0 -> 253 / 60
-// frame 3 marche : 417 / 0 -> 457 / 60
+# define ENNEMY_WALK_1			0
+# define ENNEMY_WALK_2			213
+# define ENNEMY_WALK_3			418
 
-static int		create_ennemy_anim(SDL_Surface *ennemy, unsigned int *image,
-    int move)
+# define ENNEMY_WALK_P1			90
+# define ENNEMY_WALK_P2			304
+# define ENNEMY_WALK_P3			63 * 500
+
+static int		create_ennemy_anim(unsigned int *ennemy, unsigned int *image,
+    int frame, int move)
 {
 	int			i;
 	int			j;
 
 	i = 0;
-	while (i < 250)
+	while (i < 230)
 	{
 		j = 0;
-		while (j < 165)
+		while (j < 160)
 		{
-			if (((unsigned int *)ennemy->pixels)[(i >> 2) * 500 + move + (j >> 2)] > 0xfffffff)
+			if (ennemy[(i >> 2) * 500 + move + (j >> 2)] != 0xffffff)
 				image[i * WIDTH + j + 525 * WIDTH + (WIDTH - (WIDTH >> 3))] =
-					((unsigned int *)ennemy->pixels)[(i >> 2) * 500 + move + (j >> 2)];
+					ennemy[(i >> 2) * 500 + move + (j >> 2)];
 			j++;
 		}
 		i++;
@@ -41,7 +45,7 @@ static int		create_ennemy_anim(SDL_Surface *ennemy, unsigned int *image,
 	return (0);
 }
 
-void			choose_animation_ennemy(SDL_Surface *ennemy,
+void			choose_animation_ennemy(unsigned int *ennemy,
     unsigned int *image, int frame)
 {
 	static int	anim = 0;
@@ -54,9 +58,9 @@ void			choose_animation_ennemy(SDL_Surface *ennemy,
 	if (anim == 0)
 		way = 1;
 	if (anim == 0)
-		create_ennemy_anim(ennemy, image, 0);
+		create_ennemy_anim(ennemy, image, frame, ENNEMY_WALK_1);
 	else if (anim == 1)
-		create_ennemy_anim(ennemy, image, 213);
+		create_ennemy_anim(ennemy, image, frame, ENNEMY_WALK_2);
 	else
-		create_ennemy_anim(ennemy, image, 417);
+		create_ennemy_anim(ennemy, image, frame, ENNEMY_WALK_3);
 }
