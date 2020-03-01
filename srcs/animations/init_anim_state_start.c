@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 00:05:06 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/01 21:34:48 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:11:37 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			init_anim_state_start(t_doom *data)
 	tmp = NULL;
 	while (++i < WIDTH * HEIGHT)
 	{
-		if (surface[i] != UINT_MAX)
+		if (surface[i] != 0xFFFFFF)
 		{
 			if (!tmp)
 			{

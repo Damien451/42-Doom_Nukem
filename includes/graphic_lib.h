@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 21:26:38 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:00:10 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,28 +106,26 @@ struct							s_editor
 
 struct							s_graphic_lib
 {
-	unsigned int				*character;
-	unsigned int				*ennemy;
+	unsigned int				character[500 * 350];
+	unsigned int				ennemy[500 * 373];
 	unsigned int				*menu_texture[NBR_TEXTURES_MENU];
-	SDL_Surface					*game_icon;
-	SDL_Surface					*skybox[6];
-	SDL_Texture					*skybox_t[6];
-	char						texture_dic[NBR_TEXTURES_EDITOR][100];
-	unsigned int				*hud_texture;
-	SDL_Texture					*texture;
-	SDL_Window					*window;
-	SDL_Renderer				*renderer;
-	unsigned int				start_bg[1920 * 1080];
-	SDL_Surface					*surface;
-	SDL_Event					event;
-	t_editor					editor;
-	t_format					format;
-	t_text						text;
-	TTF_Font					*ptrfont[NBR_FONTS];
+	unsigned int				start_bg[1920 * 1200];
 	unsigned int				*image;
 	unsigned int				cam_keys;
 	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
+	unsigned int				hud_texture[1920 * 1080];
+	char						texture_dic[NBR_TEXTURES_EDITOR][100];
+	SDL_Surface					*game_icon;
+	SDL_Texture					*texture;
+	SDL_Window					*window;
+	SDL_Renderer				*renderer;
+	SDL_Surface					*surface;
+	SDL_Event					event;
+	TTF_Font					*ptrfont[NBR_FONTS];
+	t_editor					editor;
+	t_format					format;
+	t_text						text;
 };
 
 /*
@@ -147,7 +145,7 @@ void							put_string_with_shadow(t_doom *data,
 int								anim_main_menu(t_doom *data, int total_frame
 	, int frame);
 
-void	        				init_anim_state_start(t_doom *data);
+void							init_anim_state_start(t_doom *data);
 
 void							dictionnary_binary_tex(t_doom *data);
 
@@ -158,6 +156,6 @@ int								display_scores(t_doom *data,
 
 void							display_arrows(t_doom *data, t_button *button);
 
-void							choose_animation_ennemy(unsigned int *ennemy,
+void							choose_animation_ennemy(const unsigned int *ennemy,
     unsigned int *image, int frame);
 #endif

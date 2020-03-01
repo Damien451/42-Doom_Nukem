@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 18:07:13 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/01 17:07:16 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:03:41 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define ENNEMY_WALK_P2			304
 # define ENNEMY_WALK_P3			63 * 500
 
-static int		create_ennemy_anim(unsigned int *ennemy, unsigned int *image,
+static int		create_ennemy_anim(const unsigned int ennemy[500 * 373], unsigned int *image,
     int frame, int move)
 {
 	int			i;
@@ -45,7 +45,7 @@ static int		create_ennemy_anim(unsigned int *ennemy, unsigned int *image,
 	return (0);
 }
 
-void			choose_animation_ennemy(unsigned int *ennemy,
+void			choose_animation_ennemy(const unsigned int ennemy[500 * 373],
     unsigned int *image, int frame)
 {
 	static int	anim = 0;

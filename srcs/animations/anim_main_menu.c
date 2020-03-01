@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:39:10 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/29 19:20:36 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:03:45 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "thread.h"
 #include <pthread.h>
 
-static int	create_charac_anim(unsigned int *character, unsigned int *image, int move)
+static int	create_charac_anim(const unsigned int character[500 * 350], unsigned int *image, int move)
 {
 	int			i;
 	int			j;
@@ -36,7 +36,7 @@ static int	create_charac_anim(unsigned int *character, unsigned int *image, int 
 	return (0);
 }
 
-static void	choose_animation_part2(unsigned int *character,
+static void	choose_animation_part2(const unsigned int character[500 * 350],
 	unsigned int *image, int frame)
 {
 	int			ret;
@@ -58,7 +58,7 @@ static void	choose_animation_part2(unsigned int *character,
 		create_charac_anim(character, image, 250);
 }
 
-static void	choose_animation_part1(unsigned int *character,
+static void	choose_animation_part1(const unsigned int character[500 * 350],
 	unsigned int *image, int frame)
 {
 	int			ret;

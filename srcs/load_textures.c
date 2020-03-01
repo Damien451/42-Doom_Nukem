@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 21:21:23 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:01:00 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void		load_binary_textures(t_doom *data)
 static int		get_texture(unsigned int **dest, int size, char *path_text)
 {
 	int		fd;
-	
+
 	if (!(*dest = malloc(size)))
 		return (1);
 	fd = open(path_text, O_RDONLY);
@@ -76,8 +76,8 @@ static int		get_texture(unsigned int **dest, int size, char *path_text)
 
 int				load_textures(t_doom *data)
 {
-	get_texture(&data->lib.character, 500 * 350 * 4,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/character.binary");
+	int		fd;
+
 	get_texture(&data->lib.menu_texture[0], 256 * 128 * 4,
 		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/gstvine1.binary");
 	get_texture(&data->lib.menu_texture[1], 256 * 128 * 4,
@@ -93,10 +93,18 @@ int				load_textures(t_doom *data)
 	data->lib.game_icon = IMG_Load("textures/doom-icon.bmp");
 	data->lib.editor.texture[0] = IMG_Load("textures/editor.bmp");
 	data->lib.editor.texture[1] = IMG_Load("textures/editor2.bmp");
-	get_texture(&data->lib.ennemy, 500 * 373 * 4,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/ennemy.binary");
-	get_texture(&data->lib.hud_texture, 1920 * 1080 * 4,
-		"/sgoinfre/goinfre/Perso/dacuvill/textures_binary/hud2.binary");
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/character.binary", O_RDONLY);
+	if (read(fd, data->lib.character, 500 * 350 * 4) != 500 * 350 * 4)
+		return (1);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/ennemy.binary", O_RDONLY);
+	if (read(fd, data->lib.ennemy, 500 * 373 * 4) != 500 * 373 * 4)
+		return (1);
+	close(fd);
+	fd = open("/sgoinfre/goinfre/Perso/dacuvill/textures_binary/hud2.binary", O_RDONLY);
+	if (read(fd, data->lib.hud_texture, 1920 * 1080 * 4) != 1920 * 1080 * 4)
+		return (1);
+	close(fd);
 	load_binary_textures(data);
 	load_skybox(data);
 	return (0);
