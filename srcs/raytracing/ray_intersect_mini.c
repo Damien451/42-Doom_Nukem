@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 20:53:25 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:52:38 by roduquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,33 @@
 #include <math.h>
 #include <fcntl.h>
 #include <unistd.h>
+
+double		launch_ray_to_light_player_mini(t_ray ray, const t_light *light
+		, const t_doom *const data, t_ray *big_ray)
+{
+	int				i;
+	int				sorted[3];
+	double			power;
+
+	ray.direction = vec3d_unit(vec3d_sub(light->position, big_ray->origin));
+	big_ray->direction = ray.direction;
+	max_absolute_between_three(ray.direction, sorted);
+	i = 0;
+	while (i < 3)
+	{
+		ray.face = data->check_intersect[sorted[i]](&ray.intersect, ray.origin
+				, &ray, &ray.node);
+		if (ray.face == -1)
+			i++;
+		else if (ray.face == -3 && !(i = 0))
+			ray.origin = ray.intersect;
+		else if (ray.face >= 0)
+			return (0);
+		else
+			return (launch_ray_to_light_player(*big_ray, light, data));
+	}
+	return (0);
+}
 
 double		launch_ray_to_light_mini(t_ray ray, const t_light *light
 		, const t_doom *const data, t_ray *big_ray)
@@ -82,7 +109,7 @@ unsigned int		launch_rays_to_lights_mini(t_ray ray, const t_doom *const data, t_
 	}
 	big_ray->origin = position;
 	big_ray->intersect = position;
-	ray.length = launch_ray_to_light_mini(ray, &data->player_light, data, big_ray);
+	ray.length = launch_ray_to_light_player_mini(ray, &data->player_light, data, big_ray);
 	if (ray.length >= 0.75)
 		return (ray.color);
 	ray.length += launch_ray_to_light_mini(ray, &data->sun_light, data, big_ray);
