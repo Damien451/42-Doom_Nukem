@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/29 18:01:48 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/04 12:31:00 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "vec3.h"
 # include <math.h>
 # include <SDL.h>
+# include "gameplay.h"
 
 /*
 ** ====-* DEFINES *-====
@@ -34,8 +35,8 @@
 # define SQUAT				0x40l
 # define CRAWL				0x80l
 # define RIGHT_CLICK		0x100l
-# define LEFT_CLICK			0x1000l
-# define BEST_SAMPLING		0x200l
+# define LEFT_CLICK			0x200l
+# define BEST_SAMPLING		0x400l
 
 # define GRAVITY			1.0
 # define ACCELERATION		0.003333333333333
@@ -57,20 +58,14 @@ typedef struct s_camera			t_camera;
 typedef struct s_inventory		t_inventory;
 typedef struct s_doom			t_doom;
 typedef struct s_graphic_lib	t_graphic_lib;
-typedef struct s_hitbox			t_hitbox;
 typedef struct s_physics		t_physics;
 typedef struct s_octree			t_octree;
 typedef struct s_tabinputs		t_tabinputs;
+typedef struct s_hitbox			t_hitbox;
 
 /*
 ** ====-* STRUCTURES *-====
 */
-
-struct						s_hitbox
-{
-	t_vec3d					min;
-	t_vec3d					max;
-};
 
 struct						s_camera
 {
@@ -155,6 +150,6 @@ int							add_vertex_clipping_z_max(t_vec3d *acceleration
 void						add_clipping_for_each_point(t_doom *data
 	, t_player *player);
 
-long						get_time_levels(t_player *player);
+int							get_time_levels(void);
 
 #endif

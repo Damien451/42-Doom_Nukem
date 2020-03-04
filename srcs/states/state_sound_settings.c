@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:53 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/28 19:27:31 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:33:18 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int			state_sound_settings(t_doom *data)
 		HEIGHT_CENTER + (3 * DEF_BUTTON_H + 3 * BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LEAVING, "RESET");
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+	ft_memcpy(data->lib.image, data->lib.bg_menu[0],
 		(WIDTH * HEIGHT) << 2);
 	return (state_sound_settings_2(data, tab, buttons));
 }

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:02:44 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:31:12 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int				state_get_map_name(t_doom *data)
 		first = 1;
 	}
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+	ft_memcpy(data->lib.image, data->lib.bg_menu[0],
 		(WIDTH * HEIGHT) << 2);
 	check_inputs_map_name(data, map_name, &nbinputs, &first);
 	input_field = button(point(WIDTH_CENTER - (DEF_BUTTON_W * 3 / 2),

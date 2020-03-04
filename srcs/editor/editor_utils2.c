@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:24:50 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 00:25:01 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:07:58 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,23 @@ void		copy_step(t_doom *data, int step)
 	{
 		j = -1;
 		while (++j < SIZE_MAP)
-			data->map_to_save[i][step][j] = data->map_to_save[i][step - 1][j];
+			if (data->map_to_save[i][step][j] != 63)
+				data->map_to_save[i][step][j]
+					= data->map_to_save[i][step - 1][j];
 	}
+}
+
+static void	pick_ennemy(t_doom *data)
+{
+	if (data->lib.editor.pickmode == 0)
+		data->lib.editor.picked_texture = 62;
+	else if (data->lib.editor.pickmode == 1)
+		data->lib.editor.block1 = 62;
+	else if (data->lib.editor.pickmode == 2)
+		data->lib.editor.block2 = 62;
+	else
+		data->lib.editor.blocktoremove = 62;
+	data->lib.editor.pickmode = 0;
 }
 
 void		pick_element(t_doom *data, int x, int y)
@@ -92,6 +107,11 @@ void		pick_element(t_doom *data, int x, int y)
 	j = 1;
 	x -= 1052;
 	y -= 368;
+	if (data->lib.editor.mode == 1)
+	{
+		pick_ennemy(data);
+		return ;
+	}
 	while ((i + 1) * 85 < x && i < 10)
 		++i;
 	while (j * 83 < y && j < 2)
@@ -102,7 +122,7 @@ void		pick_element(t_doom *data, int x, int y)
 		data->lib.editor.block1 = 30 + 10 * j + i;
 	else if (data->lib.editor.pickmode == 2)
 		data->lib.editor.block2 = 30 + 10 * j + i;
-	else if (data->lib.editor.pickmode == 3)
+	else
 		data->lib.editor.blocktoremove = 30 + 10 * j + i;
 	data->lib.editor.pickmode = 0;
 }

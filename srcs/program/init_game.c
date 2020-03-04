@@ -6,14 +6,15 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 22:03:07 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/29 16:12:45 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:04:15 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "player.h"
+#include "gameplay.h"
 
-void		init_game(t_doom *data, t_player *player)
+int			init_game(t_doom *data, t_player *player)
 {
 	int		randmusic;
 
@@ -22,20 +23,18 @@ void		init_game(t_doom *data, t_player *player)
 	{
 		player->lifes = 3;
 		player->levels_left = 3;
+		get_time_levels();
 		select_next_level(data);
 	}
 	else
 		player->lifes = -1;
 	loop_music(data->mix.sounds[randmusic], randmusic);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	reset_game_values(data, &data->player);
 	set_player_spawn(data->map_to_save, &data->player.camera.origin);
 	//player->score = 1000000;
-	data->player.camera.x_angle = 0;
-	data->player.physics.camera.x_angle = 0;
-	player->camera.direction = vec3d(0, 0, 1);
-	player->camera.right = vec3d(1, 0, 0);
-	player->camera.up = vec3d(0, 1, 0);
-	player->acceleration.x = 0;
-	player->acceleration.y = 0;
-	player->acceleration.z = 0;
+	printf("INIT GAME !\n");
+	if (init_enemies(data, &data->enemies, data->map_to_save))
+		return (1);
+	return (0);
 }

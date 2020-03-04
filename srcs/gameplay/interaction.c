@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:04:23 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/02/29 16:09:03 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/04 15:26:59 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void			interaction(t_doom *data, unsigned int key)
 	ray.find_parent[2] = &find_parent_z;
 	ray.length = 0;
 	ray = ray_colision(ray, data);
+	printf("yo !\n");
 	if (ray.length > DISTANCE_MAX_BLOCK)
 		return ;
 	else if (!ray.node)

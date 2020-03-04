@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   load_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 20:09:57 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 00:18:37 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/03 15:42:47 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include "libft.h"
 #include <fcntl.h>
 #include <unistd.h>
 

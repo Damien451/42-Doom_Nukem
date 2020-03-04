@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_level_finished.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 14:23:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 16:20:05 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/04 12:37:04 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,32 @@ static int	check_if_new_highscore(t_scoreboard *scoreboard, t_player *player)
 	int		i;
 
 	i = -1;
-	while (++i < PLAYERS_SCOREBOARD)
-		if (scoreboard->scores[i] < player->score)
-			return (1);
+	if (player->levels_left == 0)
+	{
+		player->score += get_time_levels();
+		while (++i < PLAYERS_SCOREBOARD)
+			if (scoreboard->scores[i] < player->score)
+				return (1);
+	}
 	return (0);
 }
 
 int			state_level_finished(t_doom *data)
 {
 	static int	ok = 1;
-	int			newscore;
+	static int	newscore = 0;
 
-	newscore = 0;
 	if (ok == 1)
 	{
 		data->player.levels_left--;
 		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
+		newscore = check_if_new_highscore(&data->scoreboard, &data->player);
 		put_strings(data, &data->player);
 		SDL_RenderPresent(data->lib.renderer);
 		SDL_RenderClear(data->lib.renderer);
 		Mix_HaltChannel(-1);
 		ok--;
 	}
-	newscore = check_if_new_highscore(&data->scoreboard, &data->player);
 	check_inputs(data, data->player.gamemode, &ok, newscore);
 	return (0);
 }

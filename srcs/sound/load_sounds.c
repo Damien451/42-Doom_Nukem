@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   load_sounds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:49 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 22:16:02 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/03 15:40:15 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include <stdio.h>
+#include "libft.h"
 
 static int		load_sound(char *path, Mix_Chunk **sound)
 {

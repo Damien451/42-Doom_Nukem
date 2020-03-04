@@ -6,17 +6,17 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:10:09 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/01 21:06:44 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/02 23:19:09 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <fcntl.h>
 
-# define SIZE_X 64
-# define SIZE_Y 64
-# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/Imp-Doom-sprite.rgb"
-# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/blocks_binary/ennemy.binary"
+# define SIZE_X 500
+# define SIZE_Y 373
+# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/ennemy.rgb"
+# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures_binary/ennemy.binary"
 
 int		main(void)
 {

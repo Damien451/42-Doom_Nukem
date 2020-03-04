@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:32:04 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			state_play_edit_map(t_doom *data)
 	static char	map_name[LENGTH_MAPNAME];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+	ft_memcpy(data->lib.image, data->lib.bg_menu[0],
 		(WIDTH * HEIGHT) << 2);
 	if (!first)
 	{

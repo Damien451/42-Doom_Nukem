@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:05:19 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/28 19:27:43 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:33:02 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			state_settings_menu(t_doom *data)
 	t_button	buttons[3];
 
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+	ft_memcpy(data->lib.image, data->lib.bg_menu[0],
 		(WIDTH * HEIGHT) << 2);
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W, HEIGHT_CENTER
 			- (DEF_BUTTON_H + BUTTON_GAP_Y)), point(DEF_BUTTON_W << 1

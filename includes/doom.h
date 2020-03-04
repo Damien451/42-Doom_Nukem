@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 21:23:13 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:03:08 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 # include "menus.h"
 # include "mixer.h"
 # include "player.h"
-# include "entities.h"
 # include "vec3.h"
 # include "thread.h"
-# include <pthread.h>
 # include "gameplay.h"
+# include <pthread.h>
 
 /*
 ** ====-* DEFINES *-====
@@ -93,6 +92,7 @@ typedef struct s_light			t_light;
 typedef struct s_ray			t_ray;
 typedef struct s_scoreboard		t_scoreboard;
 typedef struct s_thread			t_thread;
+typedef struct s_enemies		t_enemies;
 
 /*
 ** ====-* STRUCTURES *-====
@@ -160,40 +160,42 @@ struct						s_doom
 	t_bubble				*lightning_list;
 	t_bubble				*lightning_list2;
 	t_scoreboard			scoreboard;
+	t_octree				*octree;
+	t_octree				*octree_obj[NBR_OBJ];
+	t_mixer					mix;
+	t_light					*light;
+	t_vec3d					sun;
+	t_light					sun_light;
+	t_light					player_light;
+	t_vec3d					normal[6];
+	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
+	t_thread				thread[NBR_THREAD];
+	pthread_mutex_t			mutex;
+	t_light					light_array[SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	t_enemies				enemies;
 	char					map_to_save[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					*map_name;
+	char					map_copy[SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	char					photo;
 	unsigned int			skybox[6][512*512];
 	long					button;
 	long					state;
 	int						running;
 	int						(*state_f[NBR_STATES])(t_doom *);
-	t_octree				*octree;
-	t_octree				*octree_obj[NBR_OBJ];
 	int						load_page[2];
 	double					sensitivity;
-	t_mixer					mix;
 	int						sampling;
 	int						map_to_show;
 	int						(*check_intersect[6])(t_vec3d *, t_vec3d, t_ray *
 								, t_octree **);
 	int						(*add_texture[6])(t_vec3d, const t_doom *const);
 	int						(*check_light_view[6])(t_vec3d, t_vec3d);
-	t_light					*light;
 	int						ball;
 	int						torch;
-	t_vec3d					sun;
-	t_light					sun_light;
-	t_light					player_light;
 	double					power[6];
-	char					photo;
 	int						actual_i;
 	int						actual_j;
 	int						samplingt[7][WIDTH * HEIGHT];
-	t_vec3d					normal[6];
-	t_octree				*(*find_parent[3])(t_vec3d, t_octree *, t_vec3d);
-	t_thread				thread[NBR_THREAD];
-	pthread_mutex_t			mutex;
-	t_light					light_array[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	unsigned int			object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					dic_obj[NBR_OBJ][100];
 	int						tmp;
@@ -208,7 +210,7 @@ struct						s_doom
 
 void						init_editor(t_editor *editor);
 int							init_program(t_doom *data);
-void						init_game(t_doom *data, t_player *player);
+int							init_game(t_doom *data, t_player *player);
 int							program(t_doom *data);
 int							leave_program(t_doom *data, int type);
 void						leave_game(t_doom *data, t_player *player);

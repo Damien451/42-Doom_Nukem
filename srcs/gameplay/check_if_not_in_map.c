@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_not_in_map.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 20:49:59 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/25 22:04:41 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/03 20:44:51 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "player.h"
+#include "gameplay.h"
 
 int		check_if_not_in_map(t_hitbox hitbox, char map[64][64][64])
 {
@@ -27,10 +28,9 @@ int		check_if_not_in_map(t_hitbox hitbox, char map[64][64][64])
 		{
 			z = (int)hitbox.min.z - 1;
 			while (++z <= (int)hitbox.max.z)
-			{
-				if (z > 64 || y > 64 || x > 64 || map[x][y][z])
+				if (z > 63 || y > 63 || x > 63 || z < 0 || y < 0
+					|| x < 0 || map[x][y][z] != 0)
 					return (1);
-			}
 		}
 	}
 	return (0);

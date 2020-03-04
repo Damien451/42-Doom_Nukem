@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   select_next_level.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 19:00:53 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 18:44:24 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/03 15:42:14 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include "libft.h"
 #include <time.h>
 
 int		randnumber_map(t_player *player)

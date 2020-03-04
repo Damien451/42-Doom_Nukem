@@ -61,12 +61,12 @@ LIBFT		= $(LIBDIR) -lft
 # **************************************************************************** #
 
 SRCS 		=		$(ANIM)/anim_main_menu.c				\
-					$(ANIM)/anim_ennemy.c					\
 					$(ANIM)/display_arrows.c				\
 					$(ANIM)/display_scores.c				\
 					$(ANIM)/init_anim_state_start.c			\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
+					$(CAMERA)/camera_keys.c					\
 					$(CAMERA)/clipping.c					\
 					$(CAMERA)/clipping2.c					\
 					$(CAMERA)/player_hitbox.c				\
@@ -82,9 +82,13 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/save_map_to_file.c			\
 					$(EDITOR)/show_selected_params.c		\
 					$(GAMEPLAY)/interaction.c				\
+					$(GAMEPLAY)/init_enemies.c				\
 					$(GAMEPLAY)/check_if_not_in_map.c		\
+					$(GAMEPLAY)/check_pos_player.c			\
 					$(GAMEPLAY)/get_time_levels.c			\
+					$(GAMEPLAY)/move_ennemies.c				\
 					$(GAMEPLAY)/move_hitbox.c				\
+					$(GAMEPLAY)/reset_game_values.c			\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
 					$(MATHS)/create_octree_model.c			\

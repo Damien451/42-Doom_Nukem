@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 22:00:10 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/02 23:21:04 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define BLOCK_SIZE_EDITOR		16
 # define TEXTURE_SIZE			83
 
-# define NBR_TEXTURES_EDITOR	62
+# define NBR_TEXTURES_EDITOR	63
 # define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_OBJECTS	20
 # define NBR_TEXTURES_MENU		6
@@ -92,7 +92,7 @@ struct							s_text
 
 struct							s_editor
 {
-	SDL_Surface					*texture[2];
+	unsigned int				texture[2][1920 * 1080];
 	unsigned int				picked_texture;
 	unsigned int				mouseinputs;
 	int							mode;
@@ -108,15 +108,17 @@ struct							s_graphic_lib
 {
 	unsigned int				character[500 * 350];
 	unsigned int				ennemy[500 * 373];
-	unsigned int				*menu_texture[NBR_TEXTURES_MENU];
+	unsigned int				bg_anim_menu[2][256 * 128];
+	unsigned int				arrows_menu[2][64 * 64];
+	unsigned int				bg_menu[2][1920 * 1080];
 	unsigned int				start_bg[1920 * 1200];
-	unsigned int				*image;
-	unsigned int				cam_keys;
+	unsigned int				hud_texture[1920 * 1080];
+	unsigned int				game_icon[400 * 400];
 	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
-	unsigned int				hud_texture[1920 * 1080];
+	unsigned int				*image;
+	unsigned int				cam_keys;
 	char						texture_dic[NBR_TEXTURES_EDITOR][100];
-	SDL_Surface					*game_icon;
 	SDL_Texture					*texture;
 	SDL_Window					*window;
 	SDL_Renderer				*renderer;
@@ -156,6 +158,5 @@ int								display_scores(t_doom *data,
 
 void							display_arrows(t_doom *data, t_button *button);
 
-void							choose_animation_ennemy(const unsigned int *ennemy,
-    unsigned int *image, int frame);
+void							choose_animation_ennemy(t_graphic_lib *lib, int frame);
 #endif

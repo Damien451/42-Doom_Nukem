@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 22:14:58 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/03 12:33:03 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,38 +61,46 @@ static void		load_binary_textures(t_doom *data)
 	}
 }
 
-static int		get_texture(unsigned int **dest, int size, char *path_text)
-{
-	int		fd;
-
-	if (!(*dest = malloc(size)))
-		return (1);
-	fd = open(path_text, O_RDONLY);
-	if (read(fd, *dest, size) != size)
-		return (1);
-	close(fd);
-	return (0);
-}
-
 int				load_textures(t_doom *data)
 {
 	int		fd;
 
-	get_texture(&data->lib.menu_texture[0], 256 * 128 * 4,
-		"textures/textures_binary/gstvine1.binary");
-	get_texture(&data->lib.menu_texture[1], 256 * 128 * 4,
-		"textures/textures_binary/gstvine2.binary");
-	get_texture(&data->lib.menu_texture[2], 1920 * 1080 * 4,
-		"textures/textures_binary/background_menu.binary");
-	get_texture(&data->lib.menu_texture[3], 1920 * 1080 * 4,
-		"textures/textures_binary/background_scoreboard.binary");
-	get_texture(&data->lib.menu_texture[4], 64 * 64 * 4,
-		"textures/textures_binary/arrow_left.binary");
-	get_texture(&data->lib.menu_texture[5], 64 * 64 * 4,
-		"textures/textures_binary/arrow_right.binary");
-	data->lib.game_icon = IMG_Load("textures/doom-icon.bmp");
-	data->lib.editor.texture[0] = IMG_Load("textures/editor.bmp");
-	data->lib.editor.texture[1] = IMG_Load("textures/editor2.bmp");
+	fd = open("textures/textures_binary/gstvine1.binary", O_RDONLY);
+	if (read(fd, data->lib.bg_anim_menu[0], 256 * 128 * 4) != 256 * 128 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/gstvine2.binary", O_RDONLY);
+	if (read(fd, data->lib.bg_anim_menu[1], 256 * 128 * 4) != 256 * 128 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/background_menu.binary", O_RDONLY);
+	if (read(fd, data->lib.bg_menu[0], 1920 * 1080 * 4) != 1920 * 1080 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/background_scoreboard.binary", O_RDONLY);
+	if (read(fd, data->lib.bg_menu[1], 1920 * 1080 * 4) != 1920 * 1080 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/arrow_left.binary", O_RDONLY);
+	if (read(fd, data->lib.arrows_menu[0], 64 * 64 * 4) != 64 * 64 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/arrow_right.binary", O_RDONLY);
+	if (read(fd, data->lib.arrows_menu[1], 64 * 64 * 4) != 64 * 64 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/editor.binary", O_RDONLY);
+	if (read(fd, data->lib.editor.texture[0], 1920 * 1080 * 4) != 1920 * 1080 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/editor2.binary", O_RDONLY);
+	if (read(fd, data->lib.editor.texture[1], 1920 * 1080 * 4) != 1920 * 1080 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/doom-icon.binary", O_RDONLY);
+	if (read(fd, data->lib.game_icon, 400 * 400 * 4) != 400 * 400 * 4)
+		return (1);
+	close(fd);
 	fd = open("textures/textures_binary/character.binary", O_RDONLY);
 	if (read(fd, data->lib.character, 500 * 350 * 4) != 500 * 350 * 4)
 		return (1);

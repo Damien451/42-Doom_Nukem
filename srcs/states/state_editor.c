@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_editor.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:09:25 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/21 19:02:13 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:50:12 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,8 @@ int					state_editor(t_doom *data)
 		first++;
 	}
 	loop_music(data->mix.sounds[2], 2);
-	ft_memcpy(data->lib.image,
-		data->lib.editor.texture[data->lib.editor.mode]->pixels,
-		WIDTH * HEIGHT * 4);
+	ft_memcpy(data->lib.image, data->lib.editor.texture[data->lib.editor.mode],
+		(WIDTH * HEIGHT) << 2);
 	set_quadrillage(data, step);
 	while (SDL_PollEvent(&data->lib.event))
 		editor_commands(data, data->map_name, &step, &first);

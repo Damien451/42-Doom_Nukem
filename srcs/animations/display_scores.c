@@ -6,13 +6,14 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 17:19:54 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/29 15:35:59 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/03 15:37:16 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "graphic_lib.h"
 #include "menus.h"
+#include "libft.h"
 
 static void	put_string_at_exact_pos(t_doom *data, t_point pos, t_label label
 	, TTF_Font *font)

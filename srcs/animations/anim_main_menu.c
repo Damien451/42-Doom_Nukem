@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:39:10 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/01 22:03:45 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/03 15:29:52 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,12 @@ void		*thread_main_anim(void *thread)
 		while (++j < (1 << 7))
 		{
 			data->lib.image[i + j * WIDTH + (1 << 9) * WIDTH] =
-			data->lib.menu_texture[((i + total_frame) >> 8) & 1]
+			data->lib.bg_anim_menu[((i + total_frame) >> 8) & 1]
 			[(i + total_frame) % 192 + j * 192];
 			if (j < (1 << 6))
 			{
 				data->lib.image[i + j * (WIDTH - 2) + 640 * WIDTH] =
-				data->lib.menu_texture[((i + total_frame) >> 8) & 1]
+				data->lib.bg_anim_menu[((i + total_frame) >> 8) & 1]
 				[((i + total_frame) >> 1) % 192 + j * 192 * 2] + 18;
 			}
 		}
@@ -138,6 +138,5 @@ int			anim_main_menu(t_doom *data, int total_frame, int frame)
 	while (i < NBR_THREAD)
 		pthread_join(thread[i++].thread, NULL);
 	choose_animation_part1(data->lib.character, data->lib.image, frame);
-	choose_animation_ennemy(data->lib.ennemy, data->lib.image, frame);
 	return (0);
 }

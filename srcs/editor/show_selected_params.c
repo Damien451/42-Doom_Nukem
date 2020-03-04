@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:21:04 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/27 23:21:56 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:47:03 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,13 @@ void				show_selected_params(t_doom *data)
 	if (y == 5)
 		y = 44;
 	y += 13 + (tmp * TEXTURE_SIZE);
-	draw_select_square(&data->lib, point((int)x, y), point(85, 85), 0xff0000);
+	if ((data->lib.editor.mode == 0 && data->lib.editor.picked_texture != 62)
+		|| (data->lib.editor.mode == 1 && data->lib.editor.picked_texture < 40))
+		draw_select_square(&data->lib, point((int)x, y),
+			point(85, 85), 0xff0000);
+	else if (data->lib.editor.mode == 1 && data->lib.editor.picked_texture == 62)
+		draw_select_square(&data->lib, point(1049, 364),
+			point(85, 85), 0xff0000);
 	if (data->lib.editor.mode == 0)
 		show_brush_selection_and_selected_blocks(data, data->lib.editor.block1,
 			data->lib.editor.block2, data->lib.editor.blocktoremove);

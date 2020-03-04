@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/28 19:28:14 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/03 23:35:18 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ static void	check_inputs_menu(t_doom *data, t_button *btab, int but)
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[0])
 				data->button = data->button == 0 ? but - 1 : data->button - 1;
-			if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
+			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
 				data->button = data->button == but - 1 ? 0 : data->button + 1;
-			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
+			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 				switch_state(data, MAIN_MENU, btab[data->button].state);
+			else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+				switch_state(data, MAIN_MENU, LEAVING);
 		}
 	}
 }
@@ -66,7 +68,7 @@ int			state_main_menu(t_doom *data)
 		time = SDL_GetTicks();
 	loop_music(data->mix.sounds[2], 2);
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[2],
+	ft_memcpy(data->lib.image, data->lib.bg_menu[0],
 		(WIDTH * HEIGHT) << 2);
 	anim_main_menu(data, total_frame++, frame);
 	buttons_main_menu(buttons);
