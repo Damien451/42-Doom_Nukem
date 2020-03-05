@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/02 13:19:20 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:20:32 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int			init_sdl(t_doom *data)
 		return (1);
 	}
 	tmp_surface = SDL_CreateRGBSurfaceFrom((void *)data->lib.game_icon, 400,
-		400, 8, 4 * 400, 0xff000000, 0x00ff0000, 0x0000ff00, 0);
+		400, 32, 4 * 400, 0, 0, 0, 0);
 	SDL_SetWindowIcon(data->lib.window, tmp_surface);
 	SDL_FreeSurface(tmp_surface);
 	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1,

@@ -6,13 +6,14 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 21:55:17 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/04 19:51:35 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:14:26 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "gameplay.h"
 #include "libft.h"
+#include "math.h"
 
 void				free_queue_ptr(t_queue *queue)
 {
@@ -80,15 +81,28 @@ static void			create_map_copy(t_doom *data)
 	}
 }
 
+static void			init_vecs(t_vec3d *vecs)
+{
+	vecs[0] = vec3d(0, -1, 0);
+	vecs[1] = vec3d(0, 1, 0);
+	vecs[2] = vec3d(0, 0, 1);
+	vecs[3] = vec3d(-1, 0, 0);
+	vecs[4] = vec3d(1, 0, 0);
+	vecs[5] = vec3d(0, 0, -1);
+}
+
 t_way				*breadth_first_search_player(t_doom *data,
 	t_vec3d playerpos, char map[64][64][64], t_enemy *enemy)
 {
 	t_queue		*queue[2];
 	t_path		*path;
-	t_vec3d		i;
-	t_vec3l		tmp;
+	int			i;
+	t_vec3d		vecs[6];
+	t_hitbox	tmp_hitbox;
 
+	printf("BFS\n");
 	create_map_copy(data);
+	init_vecs(vecs);
 	path = malloc(sizeof(t_path));
 	data->map_copy[(int)enemy->hitbox.min.x]
 		[(int)enemy->hitbox.min.y][(int)enemy->hitbox.min.z] = 2;
@@ -99,114 +113,95 @@ t_way				*breadth_first_search_player(t_doom *data,
 	while (queue[0])
 	{
 		playerpos = ((t_path *)queue[0]->ptr)->position;
-		i.x = -1;
-		while (i.x <= 1)
+		tmp_hitbox = hitbox(playerpos, vec3d(playerpos.x + 1, playerpos.y + 2, playerpos.z + 1));
+		i = -1;
+		while (++i < 6)
 		{
-			i.y = -1;
-			while (i.y <= 1)
+			if (playerpos.x + vecs[i].x >= 0 && playerpos.x + vecs[i].x <= 63 && playerpos.y + vecs[i].y >= 0 && playerpos.y + vecs[i].y <= 63 && playerpos.z + vecs[i].z >= 0 && playerpos.z + vecs[i].z <= 63)
 			{
-				i.z = -1;
-				while (i.z <= 1)
+				if (data->map_copy[(int)(playerpos.x + vecs[i].x)][(int)(playerpos.y + vecs[i].y)][(int)(playerpos.z + vecs[i].z)] == 0)
 				{
-					tmp.x = playerpos.x + i.x;
-					if (tmp.x >= 0 && tmp.x <= 63)
+					if (!move_hitbox(vecs[i], tmp_hitbox, map))
 					{
-						tmp.y = playerpos.y + i.y;
-						if (tmp.y >= 0 && tmp.y <= 63)
-						{
-							tmp.z = playerpos.z + i.z;
-							if (tmp.z >= 0 && tmp.z <= 63)
-							{
-								if (data->map_copy[tmp.x][tmp.y][tmp.z] == 0)
-								{
-									if (!move_hitbox(i, enemy->hitbox, map))
-									{
-										path = malloc(sizeof(t_path));
-										path->position.x = tmp.x;
-										path->position.y = tmp.y;
-										path->position.z = tmp.z;
-										path->prev = playerpos;
-										queue_add(&queue[1], path);
-										data->map_copy[tmp.x][tmp.y][tmp.z] = 1;
-									}
-								}
-								else if (data->map_copy[tmp.x][tmp.y][tmp.z] == 2)
-								{
-									path = malloc(sizeof(t_path));
-									path->position.x = tmp.x;
-									path->position.y = tmp.y;
-									path->position.z = tmp.z;
-									path->prev = playerpos;
-									queue_add(&queue[1], path);
-									return (transform_queue_to_path(queue[1]));
-								}
-							}
-						}
-						i.z += 2;
+						path = malloc(sizeof(t_path));
+						path->position.x = vecs[i].x;
+						path->position.y = vecs[i].y;
+						path->position.z = vecs[i].z;
+						path->prev = playerpos;
+						queue_add(&queue[1], queue_new(path));
+						data->map_copy[(int)(playerpos.x + vecs[i].x)][(int)(playerpos.y + vecs[i].y)][(int)(playerpos.z + vecs[i].z)] = 1;
 					}
-					i.y += 2;
 				}
-				i.x += 2;
+				else if (data->map_copy[(int)(playerpos.x + vecs[i].x)][(int)(playerpos.y + vecs[i].y)][(int)(playerpos.z + vecs[i].z)] == 2)
+				{
+					path = malloc(sizeof(t_path));
+					path->position.x = vecs[i].x;
+					path->position.y = vecs[i].y;
+					path->position.z = vecs[i].z;
+					path->prev = playerpos;
+					queue_add(&queue[1], queue_new(path));
+					return (transform_queue_to_path(queue[1]));
+				}
 			}
+			queue[0] = queue[0]->next;
+			printf("i = %d\n", i);
 		}
-		queue[0] = queue[0]->next;
 	}
 	free_queue_ptr(queue[1]);
 	return (NULL);
 }
 
-static int			position_check(t_player *player, t_enemy *enemy)
+static double position_check(t_player *player, t_enemy *enemy)
 {
-	double 		distance;
-
-	distance = vec3d_length2(vec3d_sub(player->camera.origin,
-		enemy->hitbox.min));
-	if (distance > 225 || distance <= 1)
-		return (0);
-	return (1);
+	return (vec3d_length2(vec3d_sub(player->camera.origin,
+		enemy->hitbox.min)));
 }
 
-static void			move_enemy(t_enemy *enemy, char map[64][64][64])
+static void move_enemy(t_enemy *enemy, char map[64][64][64])
 {
 	enemy->state = ALIVE;
 	if (!(move_hitbox(enemy->way->position, enemy->hitbox, map)))
 	{
-		enemy->hitbox.min.x += enemy->way->position.x - enemy->hitbox.min.x;
-		enemy->hitbox.min.y += enemy->way->position.y - enemy->hitbox.min.y;
-		enemy->hitbox.min.z += enemy->way->position.z - enemy->hitbox.min.z;
-		enemy->hitbox.max.x += enemy->way->position.x - enemy->hitbox.max.x;
-		enemy->hitbox.max.y += enemy->way->position.y - enemy->hitbox.max.y;
-		enemy->hitbox.max.z += enemy->way->position.z - enemy->hitbox.max.z;
+		enemy->hitbox.min.x = enemy->way->position.x;
+		enemy->hitbox.min.y = enemy->way->position.y;
+		enemy->hitbox.min.z = enemy->way->position.z;
+		enemy->hitbox.max.x = enemy->way->position.x + 1;
+		enemy->hitbox.max.y = enemy->way->position.y + 2;
+		enemy->hitbox.max.z = enemy->way->position.z + 1;
 	}
 }
 
-static void			attack_enemy(t_enemy *enemy, t_player *player)
+static void attack_enemy(t_enemy *enemy, t_player *player)
 {
 	enemy->state = ATTACK;
 	player->health = (player->health - 50 < 0 ? 0 : player->health - 50);
 }
 
-void				move_ennemies(t_doom *data, t_player *player,
-	t_enemies *enemies)
+void move_ennemies(t_doom *data, t_player *player,
+				   t_enemies *enemies)
 {
 	int			i;
+	static int	frame = 0;
 	double		distance;
 
 	i = -1;
 	while (++i < enemies->nb)
 	{
+		printf("yo !\n");
 		distance = position_check(player, &enemies->enemy[i]);
-		if (enemies->enemy[i].state == ALIVE
-			&& distance < 255 && distance > 1)
+		if (enemies->enemy[i].state == ALIVE && distance < 255 && distance > 1
+			&& frame % 20 == 0)
 			enemies->enemy[i].way = breadth_first_search_player(
 				data, player->camera.origin, data->map_to_save,
 				&enemies->enemy[i]);
 		if (enemies->enemy[i].way != NULL)
 			move_enemy(&enemies->enemy[i], data->map_to_save);
-		if (distance <= 1)
+		if (distance <= 1 && frame % 10 == 0)
 			attack_enemy(&enemies->enemy[i], player);
-		printf("distance == %f\n", distance);
-		//printf("enemy %d pos.x = %f, pos.y = %f, pos.z = %f\n",
-		//	i, enemies->enemy[i].hitbox.min.x, enemies->enemy[i].hitbox.min.y, enemies->enemy[i].hitbox.min.z);
+        //printf("distance == %f\n", distance);
+		//printf("playerpos x %f, y %f, z %f\n", player->camera.origin.x, player->camera.origin.y, player->camera.origin.z);
 	}
+	++frame;
+	if (frame == 120)
+		frame = 0;
 }

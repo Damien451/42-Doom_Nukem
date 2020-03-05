@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/04 16:36:01 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/05 16:11:46 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	add_hud(t_doom *data)
 		if (data->lib.hud_texture[i] != 7929855
 			&& data->lib.hud_texture[i] != 0xff00ffff)
 			data->lib.image[i] = (data->lib.hud_texture[i] & 0xff000000)
-			+ ((data->lib.hud_texture[i] & 0xff) << (16))
+			+ ((data->lib.hud_texture[i] & 0xff) << 16)
 			+ (data->lib.hud_texture[i] & 0xff00)
 			+ ((data->lib.hud_texture[i] & 0xff0000) >> 16);
 		i++;

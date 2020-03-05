@@ -6,15 +6,58 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/03 12:33:03 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 00:26:53 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "graphic_lib.h"
+#include "libft.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <SDL_image.h>
+
+static int		load_gun_textures(t_doom *data)
+{
+	int		i;
+	int		fd;
+	char	path[70];
+
+	i = 0;
+	while (++i <= NBR_TEXTURES_GUN)
+	{
+		ft_bzero(path, 70);
+		sprintf(path, "./textures/gun_binary/gun%d", i);
+		ft_strcat(path, ".binary");
+		fd = open(path, O_RDONLY);
+		if (!(read(fd, data->lib.gun_textures[i - 1], 4 * 350 * 100)))
+			return (1);
+		close(fd);
+		i++;
+	}
+	return (0);
+}
+
+static int		load_enemy_textures(t_doom *data)
+{
+	int		i;
+	int		fd;
+	char	path[70];
+
+	i = 0;
+	while (++i <= NBR_TEXTURES_ENEMY)
+	{
+		ft_bzero(path, 70);
+		sprintf(path, "./textures/enemy_binary/ennemy%d", i);
+		ft_strcat(path, ".binary");
+		fd = open(path, O_RDONLY);
+		if (!(read(fd, data->lib.enemy_textures[i - 1], 4 * 64 * 64)))
+			return (1);
+		close(fd);
+		i++;
+	}
+	return (0);
+}
 
 static void		load_skybox(t_doom *data)
 {
@@ -114,6 +157,10 @@ int				load_textures(t_doom *data)
 		return (1);
 	close(fd);
 	load_binary_textures(data);
+	if (load_enemy_textures(data))
+		return (1);
+	if (load_gun_textures(data))
+		return (1);
 	load_skybox(data);
 	return (0);
 }

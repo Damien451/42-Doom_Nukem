@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   state_death.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 19:03:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/26 00:16:43 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/05 11:52:31 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "mixer.h"
+#include "gameplay.h"
 
 static void	check_death_inputs(t_doom *data, int gamemode, int *ok)
 {
@@ -24,9 +25,10 @@ static void	check_death_inputs(t_doom *data, int gamemode, int *ok)
 				*ok = 1;
 				switch_state(data, DEATH, PLAY_MENU);
 			}
-			if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+			if (data->lib.event.key.keysym.sym == SDLK_RETURN)
 			{
 				*ok = 1;
+				reset_game_values(data, &data->player);
 				switch_state(data, DEATH, PLAYING);
 			}
 			else if (data->lib.event.key.keysym.sym == SDLK_q)

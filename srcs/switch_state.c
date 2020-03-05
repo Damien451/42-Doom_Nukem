@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 18:36:40 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/28 22:55:07 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/05 15:54:17 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void		switch_state(t_doom *data, long actual_state, long new_state)
 		&& actual_state != PAUSE && actual_state != DEATH
 		&& actual_state != FINISHED)
 	{
-		data->lib.cam_keys = 0;
 		free_octree(data->octree);
 		create_octree(data);
 		init_game(data, &data->player);

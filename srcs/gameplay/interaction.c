@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:04:23 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/03/04 15:26:59 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 00:31:59 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "doom.h"
 #include "octree.h"
 
-int				clipping_between_hitbox_and_voxels(t_vec3d voxel[2]
+static int		clipping_between_hitbox_and_voxels(t_vec3d voxel[2]
 	, t_vec3d hitbox[2])
 {
 	if (voxel[0].x <= hitbox[1].x && voxel[1].x >= hitbox[0].x)
@@ -24,7 +24,7 @@ int				clipping_between_hitbox_and_voxels(t_vec3d voxel[2]
 	return (0);
 }
 
-t_ray		ray_colision(t_ray ray, const t_doom *const data)
+static t_ray	ray_colision(t_ray ray, const t_doom *const data)
 {
 	int				sorted[3];
 	int				i;
@@ -69,10 +69,7 @@ void			interaction(t_doom *data, unsigned int key)
 	ray.find_parent[2] = &find_parent_z;
 	ray.length = 0;
 	ray = ray_colision(ray, data);
-	printf("yo !\n");
-	if (ray.length > DISTANCE_MAX_BLOCK)
-		return ;
-	else if (!ray.node)
+	if (ray.length > DISTANCE_MAX_BLOCK || !ray.node)
 		return ;
 	else if ((ray.face >= 0 || ray.node->leaf == BREAKABLE)
 		&& data->state == EDITION_MODE)
@@ -86,15 +83,22 @@ void			interaction(t_doom *data, unsigned int key)
 		block[0].x = floor(ray.intersect.x);
 		block[0].y = floor(ray.intersect.y);
 		block[0].z = floor(ray.intersect.z);
-		if (ray.node->leaf == BREAKABLE || (key & LEFT_CLICK))
+		if (ray.node->leaf == BREAKABLE)
 			return ;
+		if (key & LEFT_CLICK)
+		{
+			data->map_to_save[(int)block[0].x][(int)block[0].y][(int)block[0].z] = 0;
+			free_octree(data->octree);
+			create_octree(data);
+			return ;
+		}
 		if (ray.face == 0)
 			block[0].x -= 1;
 		else if (ray.face == 2)
 			block[0].y -= 1;
 		else if (ray.face == 4)
 			block[0].z -= 1;
-		if (ray.face == 1)
+		else if (ray.face == 1)
 			block[0].x -= 1;
 		else if (ray.face == 0)
 			block[0].x += 1;
@@ -111,7 +115,8 @@ void			interaction(t_doom *data, unsigned int key)
 		block[1].z = block[0].z + 1;
 		if (clipping_between_hitbox_and_voxels(block, player))
 			return ;
-		data->map_to_save[(int)block[0].x][(int)block[0].y][(int)block[0].z] = data->player.inventory.selected_block;
+		if (key & RIGHT_CLICK)
+			data->map_to_save[(int)block[0].x][(int)block[0].y][(int)block[0].z] = data->player.inventory.selected_block;
 		free_octree(data->octree);
 		create_octree(data);
 	}

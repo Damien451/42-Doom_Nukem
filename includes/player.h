@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/04 12:31:00 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:49:48 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@
 ** ====-* DEFINES *-====
 */
 
-# define CAMERA_TR_RIGHT	0x1l
-# define CAMERA_TR_LEFT		0x2l
-# define CAMERA_TR_FRONT	0x4l
-# define CAMERA_TR_BACK		0x8l
-# define COURSE				0x10l
-# define WATER				0x20l
-# define SQUAT				0x40l
-# define CRAWL				0x80l
-# define RIGHT_CLICK		0x100l
-# define LEFT_CLICK			0x200l
-# define BEST_SAMPLING		0x400l
+# define CAMERA_TR_RIGHT	1
+# define CAMERA_TR_LEFT		2
+# define CAMERA_TR_FRONT	4
+# define CAMERA_TR_BACK		8
+# define COURSE				16
+# define WATER				32
+# define SQUAT				64
+# define CRAWL				128
+# define RIGHT_CLICK		256
+# define LEFT_CLICK			512
+# define BEST_SAMPLING		1024
 
 # define GRAVITY			1.0
 # define ACCELERATION		0.003333333333333

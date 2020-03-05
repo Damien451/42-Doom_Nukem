@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/02 23:21:04 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 00:21:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define NBR_TEXTURES_EDITOR	63
 # define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_OBJECTS	20
+# define NBR_TEXTURES_ENEMY		21
+# define NBR_TEXTURES_GUN		16
 # define NBR_TEXTURES_MENU		6
 # define NBR_FONTS				5
 # define NB_IMG					2
@@ -114,6 +116,8 @@ struct							s_graphic_lib
 	unsigned int				start_bg[1920 * 1200];
 	unsigned int				hud_texture[1920 * 1080];
 	unsigned int				game_icon[400 * 400];
+	unsigned int				enemy_textures[NBR_TEXTURES_ENEMY][64 * 64];
+	unsigned int				gun_textures[NBR_TEXTURES_GUN][350 * 100];
 	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
 	unsigned int				*image;

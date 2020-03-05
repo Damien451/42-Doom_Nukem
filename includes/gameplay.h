@@ -88,6 +88,7 @@ void						check_pos_player(t_doom *data,
 	char map[64][64][64], t_vec3d pos);
 int							check_if_not_in_map(t_hitbox hitbox,
 	char map[64][64][64]);
+t_hitbox					hitbox(t_vec3d min, t_vec3d max);
 int							move_hitbox(t_vec3d direction,
 	t_hitbox hitbox, char map[64][64][64]);
 int         				init_enemies(t_doom *data,
