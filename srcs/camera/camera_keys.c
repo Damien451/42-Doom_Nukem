@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:47:38 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/04 15:18:14 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:03:55 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *da
 		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[6])
 			data->lib.cam_keys &= ~COURSE;
 		else if (event->key.keysym.sym == SDLK_LCTRL)
-			//&& !data->map_to_save[(int)data->player.camera.origin.x]
-			//[(int)data->player.camera.origin.y + 1][(int)data->player.camera.origin.z])
 		{
-			//printf("y = %d\n", (int)data->player.camera.origin.y);
 			data->lib.cam_keys |= SQUAT;
 			data->lib.cam_keys &= ~CRAWL;
 		}
@@ -48,21 +45,7 @@ static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *da
 static void camera_press_key3(SDL_Event *event, t_tabinputs *inputs,
 	t_doom *data)
 {
-	if (event->key.keysym.sym == SDLK_KP_PLUS)
-	{
-		if (data->player.inventory.selected_block < NBR_TEXTURES_EDITOR)
-			data->player.inventory.selected_block++;
-		else
-			data->player.inventory.selected_block = 1;
-	}
-	else if (event->key.keysym.sym == SDLK_KP_MINUS)
-	{
-		if (data->player.inventory.selected_block > 1)
-			data->player.inventory.selected_block--;
-		else
-			data->player.inventory.selected_block = NBR_TEXTURES_EDITOR;
-	}
-	else if (event->key.keysym.sym == SDLK_h)
+	if (event->key.keysym.sym == SDLK_h)
 		data->lib.cam_keys |= BEST_SAMPLING;
 	else if (event->key.keysym.sym == SDLK_RETURN && data->map_to_save[
 		(int)data->player.camera.origin.x]
@@ -80,7 +63,7 @@ static void camera_press_key2(SDL_Event *event, t_tabinputs *inputs,
 {
 	if ((unsigned int)event->key.keysym.sym == inputs->keycode[9])
 	{
-		if (data->player.acceleration.y == 0 && !(data->lib.cam_keys & WATER)
+		if (data->player.acceleration.y == 0 && !(data->lib.cam_keys & FLY)
 			&& !(data->lib.cam_keys & SQUAT) && !(data->lib.cam_keys & CRAWL))
 		{
 			Mix_PlayChannel(CHANNEL_PLAYER_SOUNDS, data->mix.sounds[10], 0);
@@ -88,16 +71,16 @@ static void camera_press_key2(SDL_Event *event, t_tabinputs *inputs,
 		}
 	}
 	else if (event->key.keysym.sym == SDLK_LCTRL
-		&& data->player.acceleration.y == 0 && !(data->lib.cam_keys & WATER))
+		&& data->player.acceleration.y == 0 && !(data->lib.cam_keys & FLY))
 		data->lib.cam_keys |= CRAWL;
 	else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
 		data->photo = 1;
 	else if (event->key.keysym.sym == SDLK_p)
 	{
-		if (WATER & data->lib.cam_keys)
-			data->lib.cam_keys &= ~WATER;
+		if (FLY & data->lib.cam_keys)
+			data->lib.cam_keys &= ~FLY;
 		else
-			data->lib.cam_keys |= WATER;
+			data->lib.cam_keys |= FLY;
 	}
 	else
 		camera_press_key3(event, inputs, data);

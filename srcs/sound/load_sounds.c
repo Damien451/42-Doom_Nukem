@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:49 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/03 15:40:15 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/07 00:49:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				load_sounds(t_doom *data)
 	{
 		ft_bzero(buf, 70);
 		sprintf(buf
-			, "textures/sounds/%d.wav", i);
+			, "ressources/sounds/%d.wav", i);
 		if (load_sound(buf, &(data->mix.sounds[i])))
 			return (1);
 	}

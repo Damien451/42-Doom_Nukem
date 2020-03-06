@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/05 16:11:46 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:44:48 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,6 @@ int			state_game(t_doom *data)
 	long			wait;
 	long			sleep;
 
-	/*static int			first = 0;
-	static t_hitbox		hitbox;
-
-	if (first == 0)
-	{
-		hitbox.min.x = 23;
-		hitbox.min.y = 61;
-		hitbox.min.z = 23;
-		hitbox.max.x = 24;
-		hitbox.max.y = 62;
-		hitbox.max.z = 24;
-		first = 1;
-	}
-	while (move_hitbox((t_vec3d){-1, -3, -1}, hitbox, data->map_to_save) == 1)
-	{
-		hitbox.min.x--;
-		hitbox.min.y -= 3;
-		hitbox.min.z--;
-		hitbox.max.x--;
-		hitbox.max.y -= 3;
-		hitbox.max.z--;
-		printf("distance = %f\n", sqrt(((data->player.camera.origin.x - hitbox.min.x)
-		* (data->player.camera.origin.x - hitbox.min.x))
-		+ ((data->player.camera.origin.y - hitbox.min.y)
-		* (data->player.camera.origin.y - hitbox.min.y))
-		+ ((data->player.camera.origin.z - hitbox.min.z)
-		* (data->player.camera.origin.z - hitbox.min.z))));
-		printf("hitbox.min.x == %f, hits.min.y == %f, hitbox.min.z == %f\n", hitbox.min.x, hitbox.min.y, hitbox.min.z);
-		printf("hitbox.max.x == %f, hitbox.max.y == %f, hitbox.max.z == %f\n", hitbox.max.x, hitbox.max.y, hitbox.max.z);
-	}*/
 	gettimeofday(&time, NULL);
 	wait = time.tv_sec * 1000000 + time.tv_usec;
 	raytracing(data);

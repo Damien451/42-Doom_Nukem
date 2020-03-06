@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 12:57:32 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/05 18:06:30 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 22:40:38 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	init_enemy(t_enemy *enemy, int i, int j, int k)
 	enemy->hitbox = hitbox(vec3d(i, j, k), vec3d(i + 1, j + 2, k + 1));
 	enemy->way = NULL;
 	enemy->state = ALIVE;
-	printf("enemy->hitbox.min.x = %f, enemy->hitbox.min.y = %f, enemy->hitbox.min.z = %f\n",
-		enemy->hitbox.min.x, enemy->hitbox.min.y, enemy->hitbox.min.z);
 }
 
 int         init_enemies(t_doom *data, t_enemies *enemies,
@@ -49,8 +47,6 @@ int         init_enemies(t_doom *data, t_enemies *enemies,
 			}
 		}
 	}
-	printf("INIT ENEMY\n");
-	printf("ENEMY NUMBERS = %d\n", nbenemies);
 	enemies->nb = nbenemies;
 	return (nbenemies < 20 ? 0 : 1);
 }

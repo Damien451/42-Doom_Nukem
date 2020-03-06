@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/05 18:49:48 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:09:12 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define CAMERA_TR_FRONT	4
 # define CAMERA_TR_BACK		8
 # define COURSE				16
-# define WATER				32
+# define FLY				32
 # define SQUAT				64
 # define CRAWL				128
 # define RIGHT_CLICK		256
@@ -92,8 +92,7 @@ struct						s_inventory
 	int						keys;
 	int						heal_pack;
 	int						blocks[40];
-	int						selected_block;
-	int						selected_thing;
+	int						selected;
 };
 
 struct						s_player

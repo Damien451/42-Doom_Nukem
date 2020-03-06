@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:10:09 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/06 00:02:52 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:40:38 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-# define SIZE_X 350
-# define SIZE_Y 100
-# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/ennemy"
-# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/textures_binary/ennemy"
+# define SIZE_X 128
+# define SIZE_Y 128
+# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/circle.rgb"
+# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/textures_binary/circle.binary"
 
 
 static void	set_magiclong(unsigned long *mlong, unsigned char c)
@@ -123,7 +123,7 @@ int		main(void)
 	static unsigned int		tabl[4 * SIZE_X * SIZE_Y];
 	int						fd;
 
-	char		origin[150];
+	/*char		origin[150];
 	char		destination[150];
 	char		orig[120] = "/sgoinfre/goinfre/Perso/dacuvill/textures_enemy_gun_rgb/gun";
 	char		dest[120] = "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/gun_binary/gun";
@@ -135,8 +135,8 @@ int		main(void)
 		ft_bzero(origin, 150);
 		ft_bzero(destination, 150);
 		ft_strcat(ft_strcat(ft_strcat(origin, orig), ft_itoa(k)), ".rgb");
-		ft_strcat(ft_strcat(ft_strcat(destination, dest), ft_itoa(k)), ".binary");
-		fd = open(origin, O_RDONLY);
+		ft_strcat(ft_strcat(ft_strcat(destination, dest), ft_itoa(k)), ".binary");*/
+		fd = open(ORIGIN_PATH, O_RDONLY);
 		read(fd, tabi, 3 * SIZE_X * SIZE_Y);
 		close(fd);
 		i = 0;
@@ -154,9 +154,9 @@ int		main(void)
 			}
 			i++;
 		}
-		i = open(destination, O_TRUNC | O_WRONLY | O_CREAT, 0777);
+		i = open(DESTINATION_PATH, O_TRUNC | O_WRONLY | O_CREAT, 0777);
 		write(i, tabl, SIZE_X * SIZE_Y * 4);
 		close(i);
-	}
+	//}
     return (0);
 }

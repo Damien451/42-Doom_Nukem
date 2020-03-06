@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/06 00:26:53 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:42:13 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,10 @@ int				load_textures(t_doom *data)
 	close(fd);
 	fd = open("textures/textures_binary/hud2.binary", O_RDONLY);
 	if (read(fd, data->lib.hud_texture, 1920 * 1080 * 4) != 1920 * 1080 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/textures_binary/circle.binary", O_RDONLY);
+	if (read(fd, data->lib.circle, 128 * 128 * 4) != 128 * 128 * 4)
 		return (1);
 	close(fd);
 	load_binary_textures(data);

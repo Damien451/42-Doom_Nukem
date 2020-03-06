@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/05 18:20:32 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:23:49 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static void	init_program2(t_doom *data)
 	data->map_to_show = 0;
 	data->map_name = "\0";
 	init_map_colors(&data->lib);
-	data->player.inventory.selected_block = 1;
 	init_camera(data);
 	pthread_mutex_init(&data->mutex, NULL);
 //	fd = open("test_new_subdivision.binary", O_RDONLY);

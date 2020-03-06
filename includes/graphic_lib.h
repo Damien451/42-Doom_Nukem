@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/06 00:21:50 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:37:12 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ struct							s_point
 	int							y;
 };
 
-
 struct							s_label
 {
 	char						*str;
@@ -120,6 +119,7 @@ struct							s_graphic_lib
 	unsigned int				gun_textures[NBR_TEXTURES_GUN][350 * 100];
 	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
+	unsigned int				circle[128 * 128];
 	unsigned int				*image;
 	unsigned int				cam_keys;
 	char						texture_dic[NBR_TEXTURES_EDITOR][100];
@@ -162,5 +162,4 @@ int								display_scores(t_doom *data,
 
 void							display_arrows(t_doom *data, t_button *button);
 
-void							choose_animation_ennemy(t_graphic_lib *lib, int frame);
 #endif

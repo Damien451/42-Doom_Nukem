@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 12:35:54 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/04 14:49:17 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:12:31 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		camera_event_translate(t_doom *data)
 		tmp = vec3d_sub(tmp, vec3d_scalar(data->player.camera.direction
 					, data->player.speed));
 	}
-	if (!(data->lib.cam_keys & WATER))
+	if (!(data->lib.cam_keys & FLY))
 		tmp.y = data->player.acceleration.y - 0.0450;
 	clamp_acceleration(&tmp, data->lib.cam_keys & COURSE ? 0.5 : 0);
 	data->player.acceleration = tmp;

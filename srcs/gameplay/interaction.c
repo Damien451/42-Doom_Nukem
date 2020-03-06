@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:04:23 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/03/06 00:31:59 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/07 00:17:35 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ void			interaction(t_doom *data, unsigned int key)
 	ray = ray_colision(ray, data);
 	if (ray.length > DISTANCE_MAX_BLOCK || !ray.node)
 		return ;
-	else if ((ray.face >= 0 || ray.node->leaf == BREAKABLE)
-		&& data->state == EDITION_MODE)
+	else if (ray.face >= 0 && data->state == EDITION_MODE)
 	{
 		player[0].x = data->player.camera.origin.x - 0.25;
 		player[1].x = data->player.camera.origin.x + 0.25;
@@ -83,8 +82,6 @@ void			interaction(t_doom *data, unsigned int key)
 		block[0].x = floor(ray.intersect.x);
 		block[0].y = floor(ray.intersect.y);
 		block[0].z = floor(ray.intersect.z);
-		if (ray.node->leaf == BREAKABLE)
-			return ;
 		if (key & LEFT_CLICK)
 		{
 			data->map_to_save[(int)block[0].x][(int)block[0].y][(int)block[0].z] = 0;
@@ -93,30 +90,24 @@ void			interaction(t_doom *data, unsigned int key)
 			return ;
 		}
 		if (ray.face == 0)
-			block[0].x -= 1;
-		else if (ray.face == 2)
-			block[0].y -= 1;
-		else if (ray.face == 4)
-			block[0].z -= 1;
+			block[0].x += 1;
 		else if (ray.face == 1)
 			block[0].x -= 1;
-		else if (ray.face == 0)
-			block[0].x += 1;
-		else if (ray.face == 3)
-			block[0].y -= 1;
 		else if (ray.face == 2)
 			block[0].y += 1;
+		else if (ray.face == 3)
+			block[0].y -= 1;
+		else if (ray.face == 4)
+			block[0].z += 1;
 		else if (ray.face == 5)
 			block[0].z -= 1;
-		else
-			block[0].z += 1;
 		block[1].x = block[0].x + 1;
 		block[1].y = block[0].y + 1;
 		block[1].z = block[0].z + 1;
 		if (clipping_between_hitbox_and_voxels(block, player))
 			return ;
 		if (key & RIGHT_CLICK)
-			data->map_to_save[(int)block[0].x][(int)block[0].y][(int)block[0].z] = data->player.inventory.selected_block;
+			data->map_to_save[(int)block[0].x][(int)block[0].y][(int)block[0].z] = data->player.inventory.selected + 1;
 		free_octree(data->octree);
 		create_octree(data);
 	}

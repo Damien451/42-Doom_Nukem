@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:08:35 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/04 16:03:08 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:48:15 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ struct						s_doom
 	char					*map_name;
 	char					map_copy[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					photo;
-	unsigned int			skybox[6][512*512];
+	unsigned int			skybox[6][512 * 512];
 	long					button;
 	long					state;
 	int						running;
@@ -186,8 +186,8 @@ struct						s_doom
 	double					sensitivity;
 	int						sampling;
 	int						map_to_show;
-	int						(*check_intersect[6])(t_vec3d *, t_vec3d, t_ray *
-								, t_octree **);
+	int						(*check_intersect[6])(t_vec3d *, t_vec3d, t_ray *,
+							t_octree **);
 	int						(*add_texture[6])(t_vec3d, const t_doom *const);
 	int						(*check_light_view[6])(t_vec3d, t_vec3d);
 	int						ball;
@@ -231,7 +231,8 @@ void						add_new_highscore(t_scoreboard *scoreboard,
 ** ====-* GRAPHICS *-====
 */
 
-void						bresenham(unsigned int *image, t_vec3l circle, int color);
+void						bresenham(unsigned int *image, t_vec3l circle,
+	int color);
 void						draw_block(t_doom *data, int x, int y, int step);
 void						erase_block(t_doom *data, int x, int y, int step);
 void						fill_step(t_doom *data, int step);
@@ -318,18 +319,25 @@ unsigned int				ray_intersect_mini(t_ray *ray
 	, const t_doom *const data, int sorted[3]);
 double						launch_ray_to_light2(t_ray ray, t_light *light
 		, const t_doom *const data);
+void						event_loop(t_doom *data, t_graphic_lib *lib);
 
 /*
 ** ====-* PHYSICS *-====
 */
 
 void						apply_motion(t_doom *data);
-void			check_y_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_y_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_x_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_x_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_z_max(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
-void			check_z_min(t_doom *data, t_vec3d *accel, t_vec3d hitbox[2], double y);
+void						check_y_max(t_doom *data, t_vec3d *accel,
+	t_vec3d hitbox[2], double y);
+void						check_y_min(t_doom *data, t_vec3d *accel,
+	t_vec3d hitbox[2], double y);
+void						check_x_max(t_doom *data, t_vec3d *accel,
+	t_vec3d hitbox[2], double y);
+void						check_x_min(t_doom *data, t_vec3d *accel,
+	t_vec3d hitbox[2], double y);
+void						check_z_max(t_doom *data, t_vec3d *accel,
+	t_vec3d hitbox[2], double y);
+void						check_z_min(t_doom *data, t_vec3d *accel,
+	t_vec3d hitbox[2], double y);
 
 /*
 ** ====-* COMMANDS *-====

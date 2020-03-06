@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 10:28:52 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/05 18:46:30 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:37:06 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,44 +70,6 @@ void				actualize_torch(t_doom *data)
 	data->power[TORCH] += value;
 }
 
-static void			event_loop(t_doom *data)
-{
-	data->player.physics.camera.direction = data->player.camera.direction;
-	data->player.physics.camera.right = data->player.camera.right;
-	data->player.physics.camera.up = data->player.camera.up;
-	while (SDL_PollEvent(&data->lib.event))
-	{
-		if (data->lib.event.type == SDL_KEYDOWN
-			&& data->lib.event.key.keysym.sym == SDLK_ESCAPE
-			&& data->state == PLAYING)
-			switch_state(data, PLAYING, PAUSE);
-		else if(data->lib.event.type == SDL_KEYDOWN
-			&& data->lib.event.key.keysym.sym == SDLK_ESCAPE)
-		{
-			leave_game(data, &data->player);
-			switch_state(data, EDITION_MODE, EDITOR);
-		}
-		else if (data->lib.event.type == SDL_MOUSEMOTION)
-			camera_mouse_motion(&data->player.physics.camera
-					, &data->lib.event.motion.xrel
-					, &data->lib.event.motion.yrel
-					, &data->player.sensitivity);
-		else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
-			&& data->lib.event.button.button == SDL_BUTTON_RIGHT)
-			data->lib.cam_keys |= RIGHT_CLICK;
-		else if (data->lib.event.type == SDL_MOUSEBUTTONUP
-			&& data->lib.event.button.button == SDL_BUTTON_RIGHT)
-				data->lib.cam_keys &= ~RIGHT_CLICK;
-		else if (data->lib.event.type == SDL_MOUSEBUTTONDOWN
-			&& data->lib.event.button.button == SDL_BUTTON_LEFT)
-			data->lib.cam_keys |= LEFT_CLICK;
-		else if (data->lib.event.type == SDL_MOUSEBUTTONUP
-			&& data->lib.event.button.button == SDL_BUTTON_LEFT)
-				data->lib.cam_keys &= ~LEFT_CLICK;
-		camera_press_key(&data->lib.event, &data->tabinputs, data);
-	}
-}
-
 int					raytracing(t_doom *data)
 {
 	t_octree		*position;
@@ -140,7 +102,7 @@ int					raytracing(t_doom *data)
 		data->sampling = 4;
 	if (init_thread_structure(data, position) == 1)
 		return (1);
-	event_loop(data);
+	event_loop(data, &data->lib);
 	add_clipping_for_each_point(data, &data->player);
 	actualize_torch(data);
 //	thread.data = data;
