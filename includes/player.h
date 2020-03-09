@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/06 17:09:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/09 21:51:45 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@
 # define FREEPLAY_MODE		1
 # define EDIT_MODE			2
 
+# define WEAPON_NEUTRAL		0
+# define WEAPON_SHOT		1
+# define WEAPON_RECOIL		2
+# define WEAPON_RELOAD		3
+
 /*
 ** ====-* TYPEDEFS *-====
 */
@@ -87,12 +92,14 @@ struct						s_physics
 
 struct						s_inventory
 {
-	int						weapon;
 	int						ammo;
+	int						ammo_stock;
 	int						keys;
 	int						heal_pack;
 	int						blocks[40];
 	int						selected;
+	int						weapon_state;
+	int						lag;
 };
 
 struct						s_player

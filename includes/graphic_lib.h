@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/06 20:37:12 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:59:51 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ struct							s_editor
 struct							s_graphic_lib
 {
 	unsigned int				character[500 * 350];
-	unsigned int				ennemy[500 * 373];
 	unsigned int				bg_anim_menu[2][256 * 128];
 	unsigned int				arrows_menu[2][64 * 64];
 	unsigned int				bg_menu[2][1920 * 1080];
@@ -150,6 +149,8 @@ void							put_string_with_shadow(t_doom *data,
 
 int								anim_main_menu(t_doom *data, int total_frame
 	, int frame);
+
+int								anim_weapon(int *typeanim);
 
 void							init_anim_state_start(t_doom *data);
 

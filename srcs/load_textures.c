@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/06 20:42:13 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/07 22:02:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <SDL_image.h>
+
+#include <SDL.h>
 
 static int		load_gun_textures(t_doom *data)
 {
@@ -30,10 +32,10 @@ static int		load_gun_textures(t_doom *data)
 		sprintf(path, "./textures/gun_binary/gun%d", i);
 		ft_strcat(path, ".binary");
 		fd = open(path, O_RDONLY);
-		if (!(read(fd, data->lib.gun_textures[i - 1], 4 * 350 * 100)))
+		ft_bzero(data->lib.gun_textures[i - 1], 350 * 100 * 4);
+		if (read(fd, data->lib.gun_textures[i - 1], 4 * 350 * 100) != 4 * 350 * 100)
 			return (1);
 		close(fd);
-		i++;
 	}
 	return (0);
 }
@@ -48,13 +50,12 @@ static int		load_enemy_textures(t_doom *data)
 	while (++i <= NBR_TEXTURES_ENEMY)
 	{
 		ft_bzero(path, 70);
-		sprintf(path, "./textures/enemy_binary/ennemy%d", i);
+		sprintf(path, "./textures/enemy_binary/enemy%d", i);
 		ft_strcat(path, ".binary");
 		fd = open(path, O_RDONLY);
-		if (!(read(fd, data->lib.enemy_textures[i - 1], 4 * 64 * 64)))
+		if (read(fd, data->lib.enemy_textures[i - 1], 4 * 64 * 64) != 4 * 64 * 64)
 			return (1);
 		close(fd);
-		i++;
 	}
 	return (0);
 }
@@ -146,10 +147,6 @@ int				load_textures(t_doom *data)
 	close(fd);
 	fd = open("textures/textures_binary/character.binary", O_RDONLY);
 	if (read(fd, data->lib.character, 500 * 350 * 4) != 500 * 350 * 4)
-		return (1);
-	close(fd);
-	fd = open("textures/textures_binary/ennemy.binary", O_RDONLY);
-	if (read(fd, data->lib.ennemy, 500 * 373 * 4) != 500 * 373 * 4)
 		return (1);
 	close(fd);
 	fd = open("textures/textures_binary/hud2.binary", O_RDONLY);

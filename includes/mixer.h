@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:19:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/06 17:43:59 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/09 21:32:12 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <SDL_mixer.h>
 
-# define NB_SOUND				11
+# define NB_SOUND				13
 # define NB_MUSIC				5
 
 # define NB_CHANNELS			5

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 21:55:17 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/05 18:14:26 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:59:03 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,8 @@ t_way				*breadth_first_search_player(t_doom *data,
 					return (transform_queue_to_path(queue[1]));
 				}
 			}
-			queue[0] = queue[0]->next;
-			printf("i = %d\n", i);
 		}
+		queue[0] = queue[0]->next;
 	}
 	free_queue_ptr(queue[1]);
 	return (NULL);
@@ -159,6 +158,7 @@ static double position_check(t_player *player, t_enemy *enemy)
 
 static void move_enemy(t_enemy *enemy, char map[64][64][64])
 {
+	printf("MOVE ENEMY\n");
 	enemy->state = ALIVE;
 	if (!(move_hitbox(enemy->way->position, enemy->hitbox, map)))
 	{
@@ -187,7 +187,6 @@ void move_ennemies(t_doom *data, t_player *player,
 	i = -1;
 	while (++i < enemies->nb)
 	{
-		printf("yo !\n");
 		distance = position_check(player, &enemies->enemy[i]);
 		if (enemies->enemy[i].state == ALIVE && distance < 255 && distance > 1
 			&& frame % 20 == 0)

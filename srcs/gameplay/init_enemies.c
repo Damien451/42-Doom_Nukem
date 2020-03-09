@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 12:57:32 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/06 22:40:38 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:57:38 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int         init_enemies(t_doom *data, t_enemies *enemies,
 				{
 					init_enemy(&enemies->enemy[nbenemies], i, j, k);
 					++nbenemies;
-					data->map_to_save[k][i][j] = 0;
+					data->map_to_save[i][j][k] = 0;
 				}
 			}
 		}

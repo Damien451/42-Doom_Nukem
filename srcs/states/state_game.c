@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/06 16:44:48 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/09 22:05:32 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,46 @@
 #include <fcntl.h>
 #include <sys/time.h>
 
-static void	add_hud(t_doom *data)
+static void	add_weapon(t_doom *data, t_player *player)
 {
-	int			i;
+	int				i;
+	int				j;
+	static int		recoil = 0;
+	int				texture;
+	unsigned int	pix;
 
-	i = 0;
-	while (i < WIDTH * HEIGHT)
+	j = -1;
+	texture = anim_weapon(&player->inventory.weapon_state);
+	if (texture == -1)
+	{
+		texture = 0;
+		recoil = 300;
+	}
+	while (++j < 100 * 5)
+	{
+		i = -1;
+		while (++i < 350 * 5)
+		{
+			pix = data->lib.gun_textures[texture][(j / 5 * 350) + i / 5];
+			if (pix != 0xff00ffff && pix != 0xff01ffff && pix != 0xff02ffff
+				&& pix != 0xff03ffff && pix != 0xff04ffff && pix != 0xff05ffff
+				&& pix != 0xff06ffff && pix != 0xff07ffff && pix != 0xff08ffff
+				&& pix != 0xff09ffff && (580 + j + recoil) < HEIGHT)
+				data->lib.image[(580 + j + recoil) * WIDTH + i] = pix;
+		}
+	}
+	if (recoil > 0)
+		recoil -= 30;
+}
+
+static void	add_hud_and_weapon(t_doom *data, t_player *player)
+{
+	int				i;
+
+	i = -1;
+	if (data->state == PLAYING)
+		add_weapon(data, player);
+	while (++i < WIDTH * HEIGHT)
 	{
 		if (data->lib.hud_texture[i] != 7929855
 			&& data->lib.hud_texture[i] != 0xff00ffff)
@@ -35,7 +69,6 @@ static void	add_hud(t_doom *data)
 			+ ((data->lib.hud_texture[i] & 0xff) << 16)
 			+ (data->lib.hud_texture[i] & 0xff00)
 			+ ((data->lib.hud_texture[i] & 0xff0000) >> 16);
-		i++;
 	}
 }
 
@@ -48,7 +81,7 @@ int			state_game(t_doom *data)
 	gettimeofday(&time, NULL);
 	wait = time.tv_sec * 1000000 + time.tv_usec;
 	raytracing(data);
-	add_hud(data);
+	add_hud_and_weapon(data, &data->player);
 	put_health_bar(data);
 	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
@@ -59,6 +92,8 @@ int			state_game(t_doom *data)
 		data->photo = 0;
 		convert_to_ppm(data->lib.image);
 	}
+	if (data->player.inventory.lag > 0)
+		data->player.inventory.lag--;
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	check_pos_player(data, data->map_to_save, data->player.camera.origin);
 	SDL_RenderPresent(data->lib.renderer);

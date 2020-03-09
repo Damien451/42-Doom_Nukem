@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:10:09 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/06 20:40:38 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/07 20:49:06 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-# define SIZE_X 128
-# define SIZE_Y 128
-# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/circle.rgb"
-# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/textures_binary/circle.binary"
-
+# define SIZE_X 350
+# define SIZE_Y 100
+# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/textures_enemy_gun_rgb/gun"
+# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/gun_binary/gun"
 
 static void	set_magiclong(unsigned long *mlong, unsigned char c)
 {
@@ -96,6 +96,7 @@ char	*ft_itoa(int n)
 		new_str[0] = '-';
 	return (new_str);
 }
+
 char	*ft_strcat(char *s1, const char *s2)
 {
 	unsigned int	i;
@@ -123,10 +124,8 @@ int		main(void)
 	static unsigned int		tabl[4 * SIZE_X * SIZE_Y];
 	int						fd;
 
-	/*char		origin[150];
+	char		origin[150];
 	char		destination[150];
-	char		orig[120] = "/sgoinfre/goinfre/Perso/dacuvill/textures_enemy_gun_rgb/gun";
-	char		dest[120] = "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/gun_binary/gun";
 	int			k;
 
 	k = 0;
@@ -134,9 +133,13 @@ int		main(void)
 	{
 		ft_bzero(origin, 150);
 		ft_bzero(destination, 150);
-		ft_strcat(ft_strcat(ft_strcat(origin, orig), ft_itoa(k)), ".rgb");
-		ft_strcat(ft_strcat(ft_strcat(destination, dest), ft_itoa(k)), ".binary");*/
-		fd = open(ORIGIN_PATH, O_RDONLY);
+		ft_bzero(tabi, 3 * SIZE_X * SIZE_Y);
+		ft_bzero(tabl, 4 * SIZE_X * SIZE_Y);
+		ft_strcat(ft_strcat(ft_strcat(origin, ORIGIN_PATH), ft_itoa(k)), ".rgb");
+		printf("origin = %s\n", origin);
+		ft_strcat(ft_strcat(ft_strcat(destination, DESTINATION_PATH), ft_itoa(k)), ".binary");
+		printf("dest = %s\n", destination);
+		fd = open(origin, O_RDONLY);
 		read(fd, tabi, 3 * SIZE_X * SIZE_Y);
 		close(fd);
 		i = 0;
@@ -148,15 +151,15 @@ int		main(void)
 				tab[0] = tabi[i * SIZE_Y * 3 + 3 * j + 2];
 				tab[1] = tabi[i * SIZE_Y * 3 + 3 * j + 1];
 				tab[2] = tabi[i * SIZE_Y * 3 + 3 * j];
-				tab[3] = 0;
+				tab[3] = 0xff;
 				tabl[i * SIZE_Y + j] = *((unsigned int *)&tab);
 				j++;
 			}
 			i++;
 		}
-		i = open(DESTINATION_PATH, O_TRUNC | O_WRONLY | O_CREAT, 0777);
+		i = open(destination, O_TRUNC | O_WRONLY | O_CREAT, 0777);
 		write(i, tabl, SIZE_X * SIZE_Y * 4);
 		close(i);
-	//}
+	}
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 22:03:07 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/07 00:21:52 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:26:20 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ int			init_game(t_doom *data, t_player *player)
 	//player->score = 1000000;
 	if (init_enemies(data, &data->enemies, data->map_to_save))
 		return (1);
+	if (data->state == EDITION_MODE)
+		data->lib.cam_keys |= FLY;
 	return (0);
 }

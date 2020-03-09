@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:47:38 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/06 18:03:55 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/09 22:14:37 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,21 @@ static void camera_press_key3(SDL_Event *event, t_tabinputs *inputs,
 {
 	if (event->key.keysym.sym == SDLK_h)
 		data->lib.cam_keys |= BEST_SAMPLING;
-	else if (event->key.keysym.sym == SDLK_RETURN && data->map_to_save[
-		(int)data->player.camera.origin.x]
+	if (event->key.keysym.sym == SDLK_RETURN &&
+		data->map_to_save[(int)data->player.camera.origin.x]
 		[(int)data->player.camera.origin.y - 2]
 		[(int)data->player.camera.origin.z] == ID_FINISH_BLOCK + 1 &&
 		data->state == PLAYING)
 	{
 		leave_game(data, &data->player);
 		switch_state(data, PLAYING, FINISHED);
+	}
+	if (event->key.keysym.sym == SDLK_r && !data->player.inventory.lag)
+	{
+		//call reload function.
+		data->player.inventory.weapon_state = WEAPON_RELOAD;
+		Mix_PlayChannel(CHANNEL_SOUNDS, data->mix.sounds[12], 0);
+		data->player.inventory.lag = 30;
 	}
 }
 
@@ -73,17 +80,9 @@ static void camera_press_key2(SDL_Event *event, t_tabinputs *inputs,
 	else if (event->key.keysym.sym == SDLK_LCTRL
 		&& data->player.acceleration.y == 0 && !(data->lib.cam_keys & FLY))
 		data->lib.cam_keys |= CRAWL;
-	else if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
+	if (event->key.keysym.sym == SDLK_k && !event->key.repeat)
 		data->photo = 1;
-	else if (event->key.keysym.sym == SDLK_p)
-	{
-		if (FLY & data->lib.cam_keys)
-			data->lib.cam_keys &= ~FLY;
-		else
-			data->lib.cam_keys |= FLY;
-	}
-	else
-		camera_press_key3(event, inputs, data);
+	camera_press_key3(event, inputs, data);
 }
 
 void		camera_press_key(SDL_Event *event, t_tabinputs *inputs,
@@ -97,14 +96,13 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs,
 			data->lib.cam_keys |= CAMERA_TR_LEFT;
 		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[3])
 			data->lib.cam_keys |= CAMERA_TR_RIGHT;
-		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[0])
+		if ((unsigned int)event->key.keysym.sym == inputs->keycode[0])
 			data->lib.cam_keys |= CAMERA_TR_FRONT;
 		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[2])
 			data->lib.cam_keys |= CAMERA_TR_BACK;
-		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[6])
+		if ((unsigned int)event->key.keysym.sym == inputs->keycode[6])
 			data->lib.cam_keys |= COURSE;
-		else
-            camera_press_key2(event, inputs, data);
+		camera_press_key2(event, inputs, data);
     }
 	camera_release_key(event, inputs, data);
 }
