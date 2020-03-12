@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:04:23 by smokhtar          #+#    #+#             */
-/*   Updated: 2020/03/09 22:02:29 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:52:44 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@ static t_ray	ray_colision(t_ray ray, const t_doom *const data)
 	return (ray);
 }
 
-static int		shot(t_doom *data, t_player *player)
+static void		shot(t_doom *data, t_player *player)
 {
-	if (!player->inventory.lag)
+	if (!player->inventory.lag && player->inventory.ammo)
 	{
 		data->player.inventory.weapon_state = WEAPON_SHOT;
 		Mix_PlayChannel(CHANNEL_SOUNDS2, data->mix.sounds[11], 0);
+		player->inventory.ammo--;
 		player->inventory.lag = 20;
 	}
 }
@@ -71,7 +72,6 @@ void			interaction(t_doom *data, unsigned int key)
 	t_vec3d		player[2];
 	t_vec3d		block[2];
 
-	printf("interaction\n");
 	ray.node = find_actual_position(&data->player.camera.origin, data->octree);
 	ray.direction = data->player.camera.direction;
 	ray.origin = data->player.camera.origin;

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 17:47:36 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/06 17:47:56 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:42:00 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,9 @@ int							reset_game_values(t_doom *data, t_player *player);
 
 void						move_ennemies(t_doom *data, t_player *player,
 	t_enemies *enemies);
+void						reload(t_player *player);
+
+void						get_item(t_doom *data, t_player *player,
+	char *map[64][64][64], t_vec3d posbloc);
+
 #endif

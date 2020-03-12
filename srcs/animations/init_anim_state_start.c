@@ -6,12 +6,13 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 00:05:06 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/01 22:15:33 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/10 15:53:34 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "graphic_lib.h"
+#include "libft.h"
 #include <SDL_image.h>
 #include <SDL.h>
 #include <fcntl.h>

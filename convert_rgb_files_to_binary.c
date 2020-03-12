@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:10:09 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/07 20:49:06 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:25:25 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-# define SIZE_X 350
-# define SIZE_Y 100
-# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/textures_enemy_gun_rgb/gun"
-# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/gun_binary/gun"
+# define SIZE_X 64
+# define SIZE_Y 64
+# define ORIGIN_PATH "/sgoinfre/goinfre/Perso/dacuvill/ennemy"
+# define DESTINATION_PATH "/sgoinfre/goinfre/Perso/dacuvill/Doom-Nukem/textures/enemy_binary/enemy"
 
 static void	set_magiclong(unsigned long *mlong, unsigned char c)
 {
@@ -129,7 +129,7 @@ int		main(void)
 	int			k;
 
 	k = 0;
-	while (++k < 17)
+	while (++k < 22)
 	{
 		ft_bzero(origin, 150);
 		ft_bzero(destination, 150);

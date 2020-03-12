@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 22:52:29 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/01 20:37:03 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:57:19 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			state_edition_mode(t_doom *data)
 	add_hud(data);
 	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
-	display_inventory(&data->lib, &data->player, EDITION_MODE);
+	display_inventory(data, &data->lib, &data->player, EDITION_MODE);
 	update_physics(data);
 	if (data->photo)
 	{

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:38:43 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/09 19:54:13 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:39:16 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	anim_weapon2(int *typeanim)
 	static int	texture = 2;
 	static int	frame = 27;
 
-	printf("reload = %d\n", *typeanim);
 	if (frame > 0)
 	{
 		if (frame % 2 == 0)
@@ -43,7 +42,7 @@ int			anim_weapon(int *typeanim)
 	frame = (frame > 0 ? frame - 1 : frame);
 	if (*typeanim == WEAPON_SHOT)
 	{
-		frame = 2;
+		frame = 1;
 		texture = 1;
 		*typeanim = WEAPON_RECOIL;
 	}

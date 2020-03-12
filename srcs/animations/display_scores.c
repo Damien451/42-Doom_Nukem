@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 17:19:54 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/03 15:37:16 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:30:54 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ static void	display_current_score(t_doom *data, t_scoreboard *scores,
 	}
 }
 
-static void	put_correct_string(t_doom *data, char player_rank[25], int i)
+static void	put_correct_string(t_doom *data, char player_rank[30], int i)
 {
 	int			spaces;
 
-	spaces = 25 - ft_strlen(player_rank);
+	spaces = 30 - ft_strlen(player_rank);
 	while (--spaces > 0)
 		ft_strcat(player_rank, "_");
 	put_string_at_exact_pos(data, point((WIDTH / 4.5) + 15,
@@ -75,7 +75,7 @@ static void	put_correct_string(t_doom *data, char player_rank[25], int i)
 int			display_scores(t_doom *data, t_scoreboard *scores, int frame,
 	int *curr_score)
 {
-	char		player_rank[25];
+	char		player_rank[30];
 	char		*rank;
 	int			i;
 
@@ -85,7 +85,7 @@ int			display_scores(t_doom *data, t_scoreboard *scores, int frame,
 	display_current_score(data, scores, curr_score, frame);
 	while (++i < PLAYERS_SCOREBOARD)
 	{
-		ft_bzero(player_rank, 25);
+		ft_bzero(player_rank, 30);
 		rank = ft_itoa(i + 1);
 		ft_strcpy(player_rank, rank);
 		(i + 1 == 10 ? ft_strcat(player_rank, ".__")

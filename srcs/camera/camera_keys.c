@@ -6,13 +6,14 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:47:38 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/09 22:14:37 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:47:11 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "player.h"
 #include "doom.h"
 #include "graphic_lib.h"
+#include "gameplay.h"
 #include "inputs.h"
 #include "vec3.h"
 #include <math.h>
@@ -56,9 +57,11 @@ static void camera_press_key3(SDL_Event *event, t_tabinputs *inputs,
 		leave_game(data, &data->player);
 		switch_state(data, PLAYING, FINISHED);
 	}
-	if (event->key.keysym.sym == SDLK_r && !data->player.inventory.lag)
+	if ((unsigned int)event->key.keysym.sym == inputs->keycode[5]
+		&& !data->player.inventory.lag && data->player.inventory.ammo < 8
+		&& data->player.inventory.ammo_stock)
 	{
-		//call reload function.
+		reload(&data->player);
 		data->player.inventory.weapon_state = WEAPON_RELOAD;
 		Mix_PlayChannel(CHANNEL_SOUNDS, data->mix.sounds[12], 0);
 		data->player.inventory.lag = 30;

@@ -86,9 +86,11 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(GAMEPLAY)/init_enemies.c				\
 					$(GAMEPLAY)/check_if_not_in_map.c		\
 					$(GAMEPLAY)/check_pos_player.c			\
+					$(GAMEPLAY)/get_item.c					\
 					$(GAMEPLAY)/get_time_levels.c			\
 					$(GAMEPLAY)/move_ennemies.c				\
 					$(GAMEPLAY)/move_hitbox.c				\
+					$(GAMEPLAY)/reload.c					\
 					$(GAMEPLAY)/reset_game_values.c			\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
@@ -165,6 +167,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(UI)/convert_to_ppm.c					\
 					$(UI)/create_buttons_inputs.c			\
 					$(UI)/display_inventory.c				\
+					$(UI)/display_inventory_strings.c		\
 					$(UI)/get_default_inputs.c				\
 					$(UI)/minimap.c							\
 					$(UI)/parse_input_file.c				\

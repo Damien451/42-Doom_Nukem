@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/08 20:59:51 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:05:50 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_editor			t_editor;
 typedef struct s_doom			t_doom;
 typedef struct s_format			t_format;
 typedef struct s_text			t_text;
+typedef struct s_sprites		t_sprites;
 typedef struct s_label			t_label;
 typedef struct s_point			t_point;
 typedef struct s_mixer			t_mixer;
@@ -105,6 +106,12 @@ struct							s_editor
 	unsigned int				blocktoremove;
 };
 
+struct							s_sprites
+{
+	unsigned int				circle[128 * 128];
+	unsigned int				ammo[15 * 32];
+};
+
 struct							s_graphic_lib
 {
 	unsigned int				character[500 * 350];
@@ -118,7 +125,6 @@ struct							s_graphic_lib
 	unsigned int				gun_textures[NBR_TEXTURES_GUN][350 * 100];
 	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
-	unsigned int				circle[128 * 128];
 	unsigned int				*image;
 	unsigned int				cam_keys;
 	char						texture_dic[NBR_TEXTURES_EDITOR][100];
@@ -128,6 +134,7 @@ struct							s_graphic_lib
 	SDL_Surface					*surface;
 	SDL_Event					event;
 	TTF_Font					*ptrfont[NBR_FONTS];
+	t_sprites					sprites;
 	t_editor					editor;
 	t_format					format;
 	t_text						text;

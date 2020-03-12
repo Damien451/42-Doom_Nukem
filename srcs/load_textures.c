@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/07 22:02:43 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/11 20:36:12 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,25 @@ static int		load_enemy_textures(t_doom *data)
 	return (0);
 }
 
-static void		load_skybox(t_doom *data)
+static int		load_sprites(t_doom *data)
 {
 	int		fd;
 
-	fd = 0;
+	fd = open("textures/sprites_binary/circle.binary", O_RDONLY);
+	if (read(fd, data->lib.sprites.circle, 128 * 128 * 4) != 128 * 128 * 4)
+		return (1);
+	close(fd);
+	fd = open("textures/sprites_binary/ammo.binary", O_RDONLY);
+	if (read(fd, data->lib.sprites.ammo, 15 * 32 * 4) != 15 * 32 * 4)
+		return (1);
+	close(fd);
+	return (0);
+}
+
+static int		load_skybox(t_doom *data)
+{
+	int		fd;
+
 	fd = open("textures/textures_binary/skybox1.binary", O_RDONLY);
 	read(fd, data->skybox[0], 512 * 512 * 4);
 	close(fd);
@@ -83,10 +97,10 @@ static void		load_skybox(t_doom *data)
 	fd = open("textures/textures_binary/skybox6.binary", O_RDONLY);
 	read(fd, data->skybox[5], 512 * 512 * 4);
 	close(fd);
+	return (0);
 }
 
-
-static void		load_binary_textures(t_doom *data)
+static int		load_binary_textures(t_doom *data)
 {
 	int		fd;
 	int		i;
@@ -97,12 +111,18 @@ static void		load_binary_textures(t_doom *data)
 	{
 		fd = open(data->lib.texture_dic[i], O_RDONLY);
 		if (i < 42)
-			read(fd, data->lib.textures[i], 128 * 128 * 4);
+		{
+			if (read(fd, data->lib.textures[i], 128 * 128 * 4)
+				!= 128 * 128 * 4)
+				return (1);
+		}
 		else
-			read(fd, data->lib.textures[i], 64 * 64 * 4);
+			if (read(fd, data->lib.textures[i], 64 * 64 * 4) != 64 * 64 * 4)
+				return (1);
 		close(fd);
 		i++;
 	}
+	return (0);
 }
 
 int				load_textures(t_doom *data)
@@ -153,11 +173,10 @@ int				load_textures(t_doom *data)
 	if (read(fd, data->lib.hud_texture, 1920 * 1080 * 4) != 1920 * 1080 * 4)
 		return (1);
 	close(fd);
-	fd = open("textures/textures_binary/circle.binary", O_RDONLY);
-	if (read(fd, data->lib.circle, 128 * 128 * 4) != 128 * 128 * 4)
+	if (load_sprites(data))
 		return (1);
-	close(fd);
-	load_binary_textures(data);
+	if (load_binary_textures(data))
+		return (1);
 	if (load_enemy_textures(data))
 		return (1);
 	if (load_gun_textures(data))

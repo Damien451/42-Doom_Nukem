@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/09 22:05:32 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/10 21:35:51 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,26 @@
 #include <fcntl.h>
 #include <sys/time.h>
 
-static void	add_weapon(t_doom *data, t_player *player)
+static inline void	add_weapon_pixel(t_doom *data, t_point coords, int recoil,
+	unsigned int pix)
+{
+	if (pix != 0xff00ffff && pix != 0xff01ffff && pix != 0xff02ffff
+		&& pix != 0xff03ffff && pix != 0xff04ffff && pix != 0xff05ffff
+		&& pix != 0xff06ffff && pix != 0xff07ffff && pix != 0xff08ffff
+		&& pix != 0xff09ffff && pix != 0xff280e27 && pix != 0xff2e132a
+		&& pix != 0xff260e24 && pix != 0xff3c1d30 && pix != 0xff291028
+		&& pix != 0xff2c1229 && pix != 0xff2a1229 && pix != 0xff290f26
+		&& pix != 0xff280f24
+		&& (580 + coords.y + recoil) < HEIGHT)
+		data->lib.image[(580 + coords.y + recoil) * WIDTH + coords.x] = pix;
+}
+
+static void			add_weapon(t_doom *data, t_player *player)
 {
 	int				i;
 	int				j;
-	static int		recoil = 0;
 	int				texture;
+	static int		recoil = 0;
 	unsigned int	pix;
 
 	j = -1;
@@ -43,15 +57,11 @@ static void	add_weapon(t_doom *data, t_player *player)
 		while (++i < 350 * 5)
 		{
 			pix = data->lib.gun_textures[texture][(j / 5 * 350) + i / 5];
-			if (pix != 0xff00ffff && pix != 0xff01ffff && pix != 0xff02ffff
-				&& pix != 0xff03ffff && pix != 0xff04ffff && pix != 0xff05ffff
-				&& pix != 0xff06ffff && pix != 0xff07ffff && pix != 0xff08ffff
-				&& pix != 0xff09ffff && (580 + j + recoil) < HEIGHT)
-				data->lib.image[(580 + j + recoil) * WIDTH + i] = pix;
+			add_weapon_pixel(data, point(i, j), recoil, pix);
 		}
 	}
 	if (recoil > 0)
-		recoil -= 30;
+		recoil -= 15;
 }
 
 static void	add_hud_and_weapon(t_doom *data, t_player *player)
@@ -85,7 +95,7 @@ int			state_game(t_doom *data)
 	put_health_bar(data);
 	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
-	display_inventory(&data->lib, &data->player, PLAYING);
+	display_inventory(data, &data->lib, &data->player, PLAYING);
 	move_ennemies(data, &data->player, &data->enemies);
 	if (data->photo)
 	{
@@ -96,6 +106,7 @@ int			state_game(t_doom *data)
 		data->player.inventory.lag--;
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	check_pos_player(data, data->map_to_save, data->player.camera.origin);
+	display_inventory_strings(data, &data->lib, &data->player, PLAYING);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
 	if (data->player.health <= 0)
