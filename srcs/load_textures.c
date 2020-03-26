@@ -15,8 +15,6 @@
 #include "libft.h"
 #include <fcntl.h>
 #include <unistd.h>
-#include <SDL_image.h>
-
 #include <SDL.h>
 
 static int		load_gun_textures(t_doom *data)
@@ -79,23 +77,8 @@ static int		load_skybox(t_doom *data)
 {
 	int		fd;
 
-	fd = open("textures/textures_binary/skybox1.binary", O_RDONLY);
-	read(fd, data->skybox[0], 512 * 512 * 4);
-	close(fd);
-	fd = open("textures/textures_binary/skybox2.binary", O_RDONLY);
-	read(fd, data->skybox[1], 512 * 512 * 4);
-	close(fd);
-	fd = open("textures/textures_binary/skybox3.binary", O_RDONLY);
-	read(fd, data->skybox[2], 512 * 512 * 4);
-	close(fd);
-	fd = open("textures/textures_binary/skybox4.binary", O_RDONLY);
-	read(fd, data->skybox[3], 512 * 512 * 4);
-	close(fd);
-	fd = open("textures/textures_binary/skybox5.binary", O_RDONLY);
-	read(fd, data->skybox[4], 512 * 512 * 4);
-	close(fd);
-	fd = open("textures/textures_binary/skybox6.binary", O_RDONLY);
-	read(fd, data->skybox[5], 512 * 512 * 4);
+	fd = open("textures/textures_binary/skybox.bin", O_RDONLY);
+	read(fd, data->skybox[0], 512 * 512 * 4 * 6);
 	close(fd);
 	return (0);
 }
@@ -103,25 +86,10 @@ static int		load_skybox(t_doom *data)
 static int		load_binary_textures(t_doom *data)
 {
 	int		fd;
-	int		i;
 
-	i = 0;
-	dictionnary_binary_tex(data);
-	while (i < NBR_TEXTURES_EDITOR)
-	{
-		fd = open(data->lib.texture_dic[i], O_RDONLY);
-		if (i < 42)
-		{
-			if (read(fd, data->lib.textures[i], 128 * 128 * 4)
-				!= 128 * 128 * 4)
-				return (1);
-		}
-		else
-			if (read(fd, data->lib.textures[i], 64 * 64 * 4) != 64 * 64 * 4)
-				return (1);
-		close(fd);
-		i++;
-	}
+	fd = open("textures/blocks_binary/editor.bin", O_RDONLY);
+	read(fd, data->lib.textures[0], NBR_TEXTURES_EDITOR * 128 * 128 * 4);
+	close(fd);
 	return (0);
 }
 

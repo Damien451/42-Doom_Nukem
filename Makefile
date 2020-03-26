@@ -52,7 +52,7 @@ O_STATDIR	= ./$(OBJDIR)/$(STATES)
 # **************************************************************************** #
 
 LIBSDL		= $(BREWDIR)/lib/ -lSDL2-2.0.0 -lSDL2_mixer-2.0.0 -lSDL2_ttf-2.0.0 \
-				-lSDL2_image-2.0.0 `sdl2-config --cflags --libs`
+				 `sdl2-config --cflags --libs`
 INCSDL		= $(BREWDIR)/include/SDL2
 LIBFT		= $(LIBDIR) -lft
 

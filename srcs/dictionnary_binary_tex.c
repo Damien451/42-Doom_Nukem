@@ -13,19 +13,6 @@
 #include "doom.h"
 #include <stdio.h>
 
-void			dictionnary_binary_tex(t_doom *data)
-{
-	int			i;
-
-	i = 0;
-	while (i < NBR_TEXTURES_EDITOR)
-	{
-		sprintf(data->lib.texture_dic[i]
-			, "textures/blocks_binary/%d.binary", i);
-		i++;
-	}
-}
-
 void			dictionnary_binary_models(t_doom *data)
 {
 	int			i;

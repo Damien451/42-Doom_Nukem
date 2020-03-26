@@ -69,8 +69,8 @@ static void	add_hud_and_weapon(t_doom *data, t_player *player)
 	int				i;
 
 	i = -1;
-	if (data->state == PLAYING)
-		add_weapon(data, player);
+//	if (data->state == PLAYING)
+//		add_weapon(data, player);
 	while (++i < WIDTH * HEIGHT)
 	{
 		if (data->lib.hud_texture[i] != 7929855
@@ -95,8 +95,8 @@ int			state_game(t_doom *data)
 	put_health_bar(data);
 	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
-	display_inventory(data, &data->lib, &data->player, PLAYING);
-	move_ennemies(data, &data->player, &data->enemies);
+//	display_inventory(data, &data->lib, &data->player, PLAYING);
+//	move_ennemies(data, &data->player, &data->enemies);
 	if (data->photo)
 	{
 		data->photo = 0;
@@ -106,7 +106,7 @@ int			state_game(t_doom *data)
 		data->player.inventory.lag--;
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	check_pos_player(data, data->map_to_save, data->player.camera.origin);
-	display_inventory_strings(data, &data->lib, &data->player, PLAYING);
+//	display_inventory_strings(data, &data->lib, &data->player, PLAYING);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
 	if (data->player.health <= 0)

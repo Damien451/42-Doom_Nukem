@@ -13,7 +13,6 @@
 #include "doom.h"
 #include "graphic_lib.h"
 #include "libft.h"
-#include <SDL_image.h>
 #include <SDL.h>
 #include <fcntl.h>
 #include <unistd.h>

@@ -15,7 +15,6 @@
 #include "inputs.h"
 #include "player.h"
 #include <time.h>
-#include <SDL_image.h>
 #include <SDL.h>
 #include <pthread.h>
 #include <fcntl.h>
@@ -171,7 +170,7 @@ int			init_sdl(t_doom *data)
 	}
 	if (!(data->lib.window = SDL_CreateWindow("DoomCraft",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH,
-		HEIGHT, SDL_WINDOW_SHOWN)))
+		HEIGHT, SDL_WINDOW_FULLSCREEN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"
 				, SDL_GetError());
