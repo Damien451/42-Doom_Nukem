@@ -26,7 +26,7 @@ static inline void	print_circle(t_graphic_lib *lib, int x, int y)
 	{
 		j = -1;
 		while (++j < 128)
-			if (lib->sprites.circle[i * 128 + j] > 0)
+			if (lib->circle[i * 128 + j] > 0)
 				lib->image[(int)((y + i) * WIDTH + j + x)] = 0xff2e392b;
 	}
 }
@@ -63,10 +63,10 @@ static void			display_ammo(t_doom *data, t_graphic_lib *lib,
 			x = -1;
 			while (++x < 15)
 			{
-				if (lib->sprites.ammo[y * 32 + x] != 0xffffff)
+				if (lib->ammo[y * 32 + x] != 0xffffff)
 					lib->image[(int)((y + HEIGHT / 3.4505) * WIDTH
 					+ (16 * ammo_left) + WIDTH / 1.155 + x)]
-					= lib->sprites.ammo[y * 32 + x];
+					= lib->ammo[y * 32 + x];
 			}
 		}
 		++ammo_left;

@@ -55,7 +55,6 @@ typedef struct s_editor			t_editor;
 typedef struct s_doom			t_doom;
 typedef struct s_format			t_format;
 typedef struct s_text			t_text;
-typedef struct s_sprites		t_sprites;
 typedef struct s_label			t_label;
 typedef struct s_point			t_point;
 typedef struct s_mixer			t_mixer;
@@ -94,7 +93,6 @@ struct							s_text
 
 struct							s_editor
 {
-	unsigned int				texture[2][1920 * 1080];
 	unsigned int				picked_texture;
 	unsigned int				mouseinputs;
 	int							mode;
@@ -106,14 +104,18 @@ struct							s_editor
 	unsigned int				blocktoremove;
 };
 
-struct							s_sprites
-{
-	unsigned int				circle[128 * 128];
-	unsigned int				ammo[15 * 32];
-};
+/*
+** DONT CHANGE THE ORDER, OR IT WILL BE FAIL
+*/
 
 struct							s_graphic_lib
 {
+	unsigned int				circle[128 * 128];
+	unsigned int				ammo[15 * 32];
+	unsigned int				skybox[6][512 * 512];
+	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
+	unsigned int				gun_textures[NBR_TEXTURES_GUN][350 * 100];
+	unsigned int				enemy_textures[NBR_TEXTURES_ENEMY][64 * 64];
 	unsigned int				character[500 * 350];
 	unsigned int				bg_anim_menu[2][256 * 128];
 	unsigned int				arrows_menu[2][64 * 64];
@@ -121,20 +123,16 @@ struct							s_graphic_lib
 	unsigned int				start_bg[1920 * 1200];
 	unsigned int				hud_texture[1920 * 1080];
 	unsigned int				game_icon[400 * 400];
-	unsigned int				enemy_textures[NBR_TEXTURES_ENEMY][64 * 64];
-	unsigned int				gun_textures[NBR_TEXTURES_GUN][350 * 100];
-	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
+	unsigned int				texture_editor[2][1920 * 1080];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
-	unsigned int				*image;
 	unsigned int				cam_keys;
-	char						texture_dic[NBR_TEXTURES_EDITOR][100];
+	unsigned int				*image;
 	SDL_Texture					*texture;
 	SDL_Window					*window;
 	SDL_Renderer				*renderer;
 	SDL_Surface					*surface;
 	SDL_Event					event;
 	TTF_Font					*ptrfont[NBR_FONTS];
-	t_sprites					sprites;
 	t_editor					editor;
 	t_format					format;
 	t_text						text;

@@ -17,81 +17,18 @@
 #include <unistd.h>
 #include <SDL.h>
 
-static int		load_gun_textures(t_doom *data)
-{
-	int		i;
-	int		fd;
-	char	path[70];
-
-	i = 0;
-	while (++i <= NBR_TEXTURES_GUN)
-	{
-		ft_bzero(path, 70);
-		sprintf(path, "./textures/gun_binary/gun%d", i);
-		ft_strcat(path, ".binary");
-		fd = open(path, O_RDONLY);
-		ft_bzero(data->lib.gun_textures[i - 1], 350 * 100 * 4);
-		if (read(fd, data->lib.gun_textures[i - 1], 4 * 350 * 100) != 4 * 350 * 100)
-			return (1);
-		close(fd);
-	}
-	return (0);
-}
-
-static int		load_enemy_textures(t_doom *data)
-{
-	int		i;
-	int		fd;
-	char	path[70];
-
-	i = 0;
-	while (++i <= NBR_TEXTURES_ENEMY)
-	{
-		ft_bzero(path, 70);
-		sprintf(path, "./textures/enemy_binary/enemy%d", i);
-		ft_strcat(path, ".binary");
-		fd = open(path, O_RDONLY);
-		if (read(fd, data->lib.enemy_textures[i - 1], 4 * 64 * 64) != 4 * 64 * 64)
-			return (1);
-		close(fd);
-	}
-	return (0);
-}
-
 static int		load_sprites(t_doom *data)
 {
 	int		fd;
+	unsigned long	total_size;
 
-	fd = open("textures/sprites_binary/circle.binary", O_RDONLY);
-	if (read(fd, data->lib.sprites.circle, 128 * 128 * 4) != 128 * 128 * 4)
-		return (1);
-	close(fd);
-	fd = open("textures/sprites_binary/ammo.binary", O_RDONLY);
-	if (read(fd, data->lib.sprites.ammo, 15 * 32 * 4) != 15 * 32 * 4)
-		return (1);
+	total_size = 128 * 128 * 4 + 15 * 32 * 4 + 512 * 512 * 4 * 6 + NBR_TEXTURES_EDITOR * 128 * 128 * 4 + NBR_TEXTURES_GUN * 350 * 100 * 4 + NBR_TEXTURES_ENEMY * 64 * 64 * 4;
+	fd = open("textures/all_img.bin", O_RDONLY);
+	printf("total = %d, read = %d\n", total_size, read(fd, &data->lib, total_size * 2));
 	close(fd);
 	return (0);
 }
 
-static int		load_skybox(t_doom *data)
-{
-	int		fd;
-
-	fd = open("textures/textures_binary/skybox.bin", O_RDONLY);
-	read(fd, data->skybox[0], 512 * 512 * 4 * 6);
-	close(fd);
-	return (0);
-}
-
-static int		load_binary_textures(t_doom *data)
-{
-	int		fd;
-
-	fd = open("textures/blocks_binary/editor.bin", O_RDONLY);
-	read(fd, data->lib.textures[0], NBR_TEXTURES_EDITOR * 128 * 128 * 4);
-	close(fd);
-	return (0);
-}
 
 int				load_textures(t_doom *data)
 {
@@ -122,11 +59,11 @@ int				load_textures(t_doom *data)
 		return (1);
 	close(fd);
 	fd = open("textures/textures_binary/editor.binary", O_RDONLY);
-	if (read(fd, data->lib.editor.texture[0], 1920 * 1080 * 4) != 1920 * 1080 * 4)
+	if (read(fd, data->lib.texture_editor[0], 1920 * 1080 * 4) != 1920 * 1080 * 4)
 		return (1);
 	close(fd);
 	fd = open("textures/textures_binary/editor2.binary", O_RDONLY);
-	if (read(fd, data->lib.editor.texture[1], 1920 * 1080 * 4) != 1920 * 1080 * 4)
+	if (read(fd, data->lib.texture_editor[1], 1920 * 1080 * 4) != 1920 * 1080 * 4)
 		return (1);
 	close(fd);
 	fd = open("textures/textures_binary/doom-icon.binary", O_RDONLY);
@@ -143,12 +80,5 @@ int				load_textures(t_doom *data)
 	close(fd);
 	if (load_sprites(data))
 		return (1);
-	if (load_binary_textures(data))
-		return (1);
-	if (load_enemy_textures(data))
-		return (1);
-	if (load_gun_textures(data))
-		return (1);
-	load_skybox(data);
 	return (0);
 }

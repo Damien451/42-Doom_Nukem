@@ -122,7 +122,7 @@ int					state_editor(t_doom *data)
 		first++;
 	}
 	loop_music(data->mix.sounds[2], 2);
-	ft_memcpy(data->lib.image, data->lib.editor.texture[data->lib.editor.mode],
+	ft_memcpy(data->lib.image, data->lib.texture_editor[data->lib.editor.mode],
 		(WIDTH * HEIGHT) << 2);
 	set_quadrillage(data, step);
 	while (SDL_PollEvent(&data->lib.event))

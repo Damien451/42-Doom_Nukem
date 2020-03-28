@@ -152,7 +152,7 @@ struct						s_thread
 
 struct						s_doom
 {
-	t_graphic_lib			lib;
+	t_graphic_lib				lib;
 	t_player				player;
 	t_tabinputs				tabinputs;
 	t_start					tab[NB_BUBBLE];
@@ -177,7 +177,6 @@ struct						s_doom
 	char					*map_name;
 	char					map_copy[SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	char					photo;
-	unsigned int			skybox[6][512 * 512];
 	long					button;
 	long					state;
 	int						running;

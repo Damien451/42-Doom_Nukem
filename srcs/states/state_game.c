@@ -69,8 +69,8 @@ static void	add_hud_and_weapon(t_doom *data, t_player *player)
 	int				i;
 
 	i = -1;
-//	if (data->state == PLAYING)
-//		add_weapon(data, player);
+	if (data->state == PLAYING)
+		add_weapon(data, player);
 	while (++i < WIDTH * HEIGHT)
 	{
 		if (data->lib.hud_texture[i] != 7929855
