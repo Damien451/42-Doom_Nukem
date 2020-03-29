@@ -132,6 +132,7 @@ struct							s_graphic_lib
 	unsigned int				credits[1920 * 1080];
 	unsigned int				lightning[1920 * 1440];
 	unsigned int				object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	int							sampling[6][WIDTH * HEIGHT + 1];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
 	unsigned int				cam_keys;
 	unsigned int				*image;

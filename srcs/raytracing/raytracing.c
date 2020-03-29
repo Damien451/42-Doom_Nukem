@@ -28,6 +28,7 @@ static void	update_physics(t_doom *data)
 	data->player.camera.direction = data->player.physics.camera.direction;
 	data->player.camera.up = data->player.physics.camera.up;
 	data->player.camera.right = data->player.physics.camera.right;
+	data->sampling = data->futur_sampling;
 }
 
 static inline int	init_thread_structure(t_doom *data, t_octree *position)
@@ -38,7 +39,7 @@ static inline int	init_thread_structure(t_doom *data, t_octree *position)
 	while (i < NBR_THREAD)
 	{
 		data->thread[i].data = data;
-		data->thread[i].frame = data->samplingt[data->sampling - 1][0] * 2 - 4;
+		data->thread[i].frame = data->lib.sampling[data->sampling - 1][0] * 2 - 4;
 		data->thread[i].mutex = &data->mutex;
 		data->thread[i].ray.node = position;
 		data->thread[i].ray.origin = data->player.camera.origin;
@@ -96,10 +97,6 @@ int					raytracing(t_doom *data)
 		data->oriented[1] *= -1;
 	data->actual_i = 2;
 	sun(data);
-	if (data->lib.cam_keys & BEST_SAMPLING)
-		data->sampling = 1;
-	else
-		data->sampling = 4;
 	if (init_thread_structure(data, position) == 1)
 		return (1);
 	event_loop(data, &data->lib);

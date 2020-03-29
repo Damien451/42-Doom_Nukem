@@ -183,6 +183,7 @@ struct						s_doom
 	int						load_page[2];
 	double					sensitivity;
 	int						sampling;
+	int						futur_sampling;
 	int						map_to_show;
 	int						(*check_intersect[6])(t_vec3d *, t_vec3d, t_ray *,
 							t_octree **);
@@ -193,7 +194,6 @@ struct						s_doom
 	double					power[6];
 	int						actual_i;
 	int						actual_j;
-	int						samplingt[7][WIDTH * HEIGHT];
 	int						tmp;
 	int						actual_obj;
 	t_vec3d					oriented_light;

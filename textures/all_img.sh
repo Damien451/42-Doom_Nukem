@@ -21,3 +21,9 @@ cat textures_binary/editor2.binary >> all_img.bin
 cat textures_binary/Credits.binary >> all_img.bin
 cat textures_binary/eclair.binary >> all_img.bin
 cat ../ressources/models/models.bin >> all_img.bin
+cat ../ressources/sampling/sampling1.binary >> all_img.bin
+cat ../ressources/sampling/sampling2.binary >> all_img.bin
+cat ../ressources/sampling/sampling3.binary >> all_img.bin
+cat ../ressources/sampling/sampling4.binary >> all_img.bin
+cat ../ressources/sampling/sampling5.binary >> all_img.bin
+cat ../ressources/sampling/sampling6.binary >> all_img.bin

@@ -62,3 +62,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Too big file
+all_img.bin

@@ -135,6 +135,8 @@ unsigned int		compute_lights2(t_ray ray, const t_doom *const data
 	ray.node = node;
 	ray.origin = ray.intersect;
 	big_ray->black = (ray.color & 0xFCFCFC) >> 2;
+	if (data->lib.cam_keys & BEST_SAMPLING)
+		return (big_ray->black);
 	ray.black = big_ray->black;
 	big_ray->normal = data->normal[ray.face];
 	ray.normal = data->normal[ray.face];

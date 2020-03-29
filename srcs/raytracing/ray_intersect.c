@@ -62,6 +62,8 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	ray.node = node;
 	ray.origin = ray.intersect;
 	ray.color = data->add_texture[ray.face](ray.origin, data);
+	if (data->lib.cam_keys & BEST_SAMPLING)
+		return ((ray.color & 0xFCFCFC) >> 2);
 	ray.black = (ray.color & 0xF8F8F8) >> 3;
 	ray.normal = data->normal[ray.face];
 	ray.length = launch_rays_to_lights(ray, data);

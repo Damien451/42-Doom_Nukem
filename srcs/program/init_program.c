@@ -30,6 +30,7 @@ void		init_camera(t_doom *data)
 	data->player.camera.origin.y = -1;
 	data->player.camera.origin.z = -1;
 	data->sampling = 4;
+	data->futur_sampling = 4;
 }
 
 static int	init_fonts(t_doom *data)
@@ -37,17 +38,17 @@ static int	init_fonts(t_doom *data)
 	if (TTF_Init() < 0)
 		return (1);
 	if (!(data->lib.ptrfont[0] = TTF_OpenFont(
-				"./font/coalition/Coalition_v2.ttf", 150)))
+					"./font/coalition/Coalition_v2.ttf", 150)))
 		return (1);
 	if (!(data->lib.ptrfont[1] = TTF_OpenFont(
-				"./font/CGF_Locust_Resistance.ttf", 150)))
+					"./font/CGF_Locust_Resistance.ttf", 150)))
 		return (1);
 	if (!(data->lib.ptrfont[2] = TTF_OpenFont("./font/8th_Cargo.ttf", 35)))
 		return (1);
 	if (!(data->lib.ptrfont[3] = TTF_OpenFont("./font/8th_Cargo.ttf", 45)))
 		return (1);
 	if (!(data->lib.ptrfont[4] = TTF_OpenFont(
-				"./font/xolonium/Xolonium-Regular.ttf", 25)))
+					"./font/xolonium/Xolonium-Regular.ttf", 25)))
 		return (1);
 	init_anim_state_start(data);
 	return (0);
@@ -92,32 +93,6 @@ static void	init_program2(t_doom *data)
 	pthread_mutex_init(&data->mutex, NULL);
 }
 
-int			load_sampling(t_doom *data)
-{
-	int		size;
-	int		fd;
-	char	sizec[4];
-
-	fd = open("ressources/sampling/sampling1.binary", O_RDONLY);
-	read(fd, sizec, 4);
-	size = *((int*)sizec);
-	data->samplingt[0][0] = size;
-	read(fd, &data->samplingt[0][1], size * 8);
-	close(fd);
-	fd = open("ressources/sampling/sampling4.binary", O_RDONLY);
-	read(fd, sizec, 4);
-	size = *((int*)sizec);
-	data->samplingt[3][0] = size;
-	read(fd, &data->samplingt[3][1], size * 8);
-	close(fd);
-	fd = open("hud.binary", O_RDONLY);
-	read(fd, sizec, 4);
-	size = *((int*)sizec);
-	data->samplingt[6][0] = size;
-	read(fd, &data->samplingt[6][1], size * 8);
-	close(fd);
-	return (0);
-}
 
 void		init_normals(t_doom *data)
 {
@@ -145,23 +120,23 @@ int			init_sdl(t_doom *data)
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-		"Couldn't initialize SDL: %s", SDL_GetError());
+				"Couldn't initialize SDL: %s", SDL_GetError());
 		return (1);
 	}
 	if (!(data->lib.window = SDL_CreateWindow("DoomCraft",
-		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH,
-		HEIGHT, SDL_WINDOW_FULLSCREEN)))
+					SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH,
+					HEIGHT, SDL_WINDOW_FULLSCREEN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"
 				, SDL_GetError());
 		return (1);
 	}
 	tmp_surface = SDL_CreateRGBSurfaceFrom((void *)data->lib.game_icon, 400,
-		400, 32, 4 * 400, 0, 0, 0, 0);
+			400, 32, 4 * 400, 0, 0, 0, 0);
 	SDL_SetWindowIcon(data->lib.window, tmp_surface);
 	SDL_FreeSurface(tmp_surface);
 	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1,
-		SDL_RENDERER_PRESENTVSYNC)))
+					SDL_RENDERER_PRESENTVSYNC)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION
 				, "Couldn't create renderer: %s", SDL_GetError());
@@ -181,7 +156,6 @@ int init_program(t_doom *data)
 	data->actual_obj = -1;
 	while (++data->actual_obj < NBR_OBJ)
 		create_octree_model(data);
-	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);
 	if (init_sdl(data))
