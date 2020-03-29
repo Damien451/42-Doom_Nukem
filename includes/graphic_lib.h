@@ -40,6 +40,7 @@
 # define NBR_TEXTURES_MENU		6
 # define NBR_FONTS				5
 # define NB_IMG					2
+# define NBR_OBJ			20
 # define ID_START_BLOCK			30
 # define ID_FINISH_BLOCK		31
 
@@ -108,6 +109,10 @@ struct							s_editor
 ** DONT CHANGE THE ORDER, OR IT WILL BE FAIL
 */
 
+#define TEXTURES_SIZE	65394656
+#define CREDIT_SIZE	1920 * 1080 * 4 + 1920 * 1440 * 4
+#define OBJ_SIZE	1048576 * NBR_OBJ
+
 struct							s_graphic_lib
 {
 	unsigned int				circle[128 * 128];
@@ -116,14 +121,17 @@ struct							s_graphic_lib
 	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
 	unsigned int				gun_textures[NBR_TEXTURES_GUN][350 * 100];
 	unsigned int				enemy_textures[NBR_TEXTURES_ENEMY][64 * 64];
+	unsigned int				bg_menu[2][1920 * 1080];
 	unsigned int				character[500 * 350];
 	unsigned int				bg_anim_menu[2][256 * 128];
 	unsigned int				arrows_menu[2][64 * 64];
-	unsigned int				bg_menu[2][1920 * 1080];
 	unsigned int				start_bg[1920 * 1200];
 	unsigned int				hud_texture[1920 * 1080];
 	unsigned int				game_icon[400 * 400];
 	unsigned int				texture_editor[2][1920 * 1080];
+	unsigned int				credits[1920 * 1080];
+	unsigned int				lightning[1920 * 1440];
+	unsigned int				object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
 	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
 	unsigned int				cam_keys;
 	unsigned int				*image;

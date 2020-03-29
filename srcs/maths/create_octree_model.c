@@ -39,7 +39,7 @@ static inline int		inside_loop(t_doom *data, t_octree *node, int *nbr_node
 		{
 			while (++count.z < node->size >> 1)
 			{
-				c = data->object[data->actual_obj][tester.x + count.x][tester.y + count.y]
+				c = data->lib.object[data->actual_obj][tester.x + count.x][tester.y + count.y]
 					[tester.z + count.z];
 				if (c)
 					(*nbr_node)++;

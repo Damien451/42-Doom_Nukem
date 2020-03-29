@@ -217,7 +217,7 @@ unsigned int		ray_intersect_mini2(t_ray *ray, const t_doom *const data
 		}
 		else if (rayon.face >= 0)
 		{
-			rayon.color = data->object[ray->mini][rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1];
+			rayon.color = data->lib.object[ray->mini][rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1];
 			return (1);
 		}
 		else
@@ -283,7 +283,7 @@ unsigned int		ray_intersect_mini(t_ray *ray, const t_doom *const data
 		}
 		else if (rayon.face >= 0)
 		{
-			rayon.color = data->object[ray->mini][rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1];
+			rayon.color = data->lib.object[ray->mini][rayon.node->center.x >> 1][rayon.node->center.y >> 1][rayon.node->center.z >> 1];
 			return (compute_lights2(rayon, data, tmp, ray));
 		}
 		else

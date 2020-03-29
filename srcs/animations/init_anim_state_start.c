@@ -18,21 +18,6 @@
 #include <unistd.h>
 #include <limits.h>
 
-static int		get_texture(unsigned int **dest, int size, char *path_text)
-{
-	int		fd;
-
-	fd = 0;
-	if (!(*dest = malloc(size)))
-		return (1);
-	if (!(fd = open(path_text, O_RDONLY)))
-		return (1);
-	if (read(fd, *dest, size) != size)
-		return (1);
-	close(fd);
-	return (0);
-}
-
 static void		init_bubbles(t_doom *data)
 {
 	int			i;
@@ -56,23 +41,15 @@ static void		init_bubbles(t_doom *data)
 void			init_anim_state_start(t_doom *data)
 {
 	int				i;
-	unsigned int	*surface;
 	t_bubble		*tmp;
 	t_bubble		*tmp2;
-	int				fd;
 
 	init_bubbles(data);
-	get_texture(&surface, 4 * 1920 * 1080,
-		"textures/textures_binary/Credits.binary");
-	if (!(fd = open("textures/textures_binary/start_bg.binary", O_RDONLY)))
-		return ;
-	if (read(fd, data->lib.start_bg, 1920 * 1200 * 4) != 1920 * 1200 * 4)
-		return ;
 	i = -1;
 	tmp = NULL;
 	while (++i < WIDTH * HEIGHT)
 	{
-		if (surface[i] != 0xFFFFFF)
+		if (data->lib.credits[i] != 0xFFFFFF)
 		{
 			if (!tmp)
 			{
@@ -91,14 +68,11 @@ void			init_anim_state_start(t_doom *data)
 		}
 	}
 	tmp = NULL;
-	free(surface);
-	get_texture(&surface, 4 * 1920 * 1440,
-		"textures/textures_binary/eclair.binary");
 	i = -1;
 	tmp2 = NULL;
 	while (++i < WIDTH * HEIGHT)
 	{
-		if (surface[i] != UINT_MAX && (surface[i] % 0x1000000 <= 0x888888))
+		if (data->lib.lightning[i] != UINT_MAX && (data->lib.lightning[i] % 0x1000000 <= 0x888888))
 		{
 			if (!tmp)
 			{
@@ -115,7 +89,7 @@ void			init_anim_state_start(t_doom *data)
 				tmp = tmp->next;
 			}
 		}
-		else if (surface[i] != UINT_MAX && (surface[i] % 0x1000000 <= 0x999999))
+		else if (data->lib.lightning[i] != UINT_MAX && (data->lib.lightning[i] % 0x1000000 <= 0x999999))
 		{
 			if (!tmp2)
 			{
@@ -133,5 +107,4 @@ void			init_anim_state_start(t_doom *data)
 			}
 		}
 	}
-	free(surface);
 }

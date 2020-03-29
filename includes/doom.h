@@ -78,7 +78,6 @@
 
 # define LENGTH_MAPNAME		20
 # define NBR_CLASSIC_MAPS	12
-# define NBR_OBJ			20
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -195,8 +194,6 @@ struct						s_doom
 	int						actual_i;
 	int						actual_j;
 	int						samplingt[7][WIDTH * HEIGHT];
-	unsigned int			object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
-	char					dic_obj[NBR_OBJ][100];
 	int						tmp;
 	int						actual_obj;
 	t_vec3d					oriented_light;

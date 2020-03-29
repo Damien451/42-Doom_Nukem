@@ -90,26 +90,6 @@ static void	init_program2(t_doom *data)
 	init_map_colors(&data->lib);
 	init_camera(data);
 	pthread_mutex_init(&data->mutex, NULL);
-//	fd = open("test_new_subdivision.binary", O_RDONLY);
-//	read(fd, data->fire_model, 1048576);
-//	close(fd);
-}
-
-static int	init_objects(t_doom *data)
-{
-	int		fd;
-
-	dictionnary_binary_models(data);
-	data->actual_obj = 0;
-	while (data->actual_obj < NBR_OBJ)
-	{
-		fd = open(data->dic_obj[data->actual_obj], O_RDONLY);
-		read(fd, data->object[data->actual_obj], 1048576);
-		close(fd);
-		create_octree_model(data);
-		data->actual_obj++;
-	}
-	return (0);
 }
 
 int			load_sampling(t_doom *data)
@@ -192,15 +172,18 @@ int			init_sdl(t_doom *data)
 
 int init_program(t_doom *data)
 {
+	int		i;
 	data->oriented[0] = 1;
 	data->oriented[1] = 1;
 	data->oriented[2] = 0;
 	data->oriented[3] = 0;
+	load_textures(data);
+	data->actual_obj = -1;
+	while (++data->actual_obj < NBR_OBJ)
+		create_octree_model(data);
 	load_sampling(data);
 	init_program2(data);
 	init_func_pointer(data);
-	init_objects(data);
-	load_textures(data);
 	if (init_sdl(data))
 		return (1);
 	if (init_mixer(data))
