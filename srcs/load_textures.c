@@ -33,13 +33,58 @@ int			load_sampling(int fd, t_doom *data)
 	return (0);
 }
 
+void			create_sound_size(int sound[13])
+{
+	sound[0] = 7545742;
+	sound[1] = 466326;
+	sound[2] = 7089956;
+	sound[3] = 76079182;
+	sound[4] = 49147214;
+	sound[5] = 42369238;
+	sound[6] = 79254910;
+	sound[7] = 31363150;
+	sound[8] = 89904;
+	sound[9] = 89904;
+	sound[10] = 58012;
+	sound[11] = 112510;
+	sound[12] = 41338;
+;
+}
+
+int				create_sound(int fd)
+{
+	char	*buffer;
+	char	name[25];
+	int		fd_new;
+	int		i;
+	int		sound_size[13];
+
+	create_sound_size(sound_size);
+	buffer = malloc(sound_size[6]);
+	i = 0;
+	while (i < 13)
+	{
+		sprintf(name, "ressources/sounds/%d.wav", i);
+		fd_new = open(name, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+		read(fd, buffer, sound_size[i]);
+		write(fd_new, buffer, sound_size[i]);
+		close(fd_new);
+		i++;
+	}
+	free(buffer);
+	return (0);
+}
+
 int				load_textures(t_doom *data)
 {
 	int		fd;
 
 	fd = open("textures/all_img.bin", O_RDONLY);
-	printf("ret = %d, total = %d\n", read(fd, &data->lib, TEXTURES_SIZE + CREDIT_SIZE + OBJ_SIZE), TEXTURES_SIZE + CREDIT_SIZE + OBJ_SIZE);
+	read(fd, &data->lib, TEXTURES_SIZE + CREDIT_SIZE + OBJ_SIZE);
 	load_sampling(fd, data);
+	create_sound(fd);
+	if (init_mixer(data))
+		return (1);
 	close(fd);
 	return (0);
 }

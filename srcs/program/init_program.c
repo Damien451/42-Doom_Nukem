@@ -160,8 +160,6 @@ int init_program(t_doom *data)
 	init_func_pointer(data);
 	if (init_sdl(data))
 		return (1);
-	if (init_mixer(data))
-		return (1);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	data->running = 1;
 	init_normals(data);

@@ -27,3 +27,16 @@ cat ../ressources/sampling/sampling3.binary >> all_img.bin
 cat ../ressources/sampling/sampling4.binary >> all_img.bin
 cat ../ressources/sampling/sampling5.binary >> all_img.bin
 cat ../ressources/sampling/sampling6.binary >> all_img.bin
+cat ../ressources/sounds/old/0.wav >> all_img.bin
+cat ../ressources/sounds/old/1.wav >> all_img.bin
+cat ../ressources/sounds/old/2.wav >> all_img.bin
+cat ../ressources/sounds/old/3.wav >> all_img.bin
+cat ../ressources/sounds/old/4.wav >> all_img.bin
+cat ../ressources/sounds/old/5.wav >> all_img.bin
+cat ../ressources/sounds/old/6.wav >> all_img.bin
+cat ../ressources/sounds/old/7.wav >> all_img.bin
+cat ../ressources/sounds/old/8.wav >> all_img.bin
+cat ../ressources/sounds/old/9.wav >> all_img.bin
+cat ../ressources/sounds/old/10.wav >> all_img.bin
+cat ../ressources/sounds/old/11.wav >> all_img.bin
+cat ../ressources/sounds/old/12.wav >> all_img.bin
