@@ -109,10 +109,10 @@ struct							s_editor
 ** DONT CHANGE THE ORDER, OR IT WILL BE FAIL
 */
 
-#define TEXTURES_SIZE	65394656
-#define CREDIT_SIZE	1920 * 1080 * 4 + 1920 * 1440 * 4
-#define OBJ_SIZE	1048576 * NBR_OBJ
-#define SAMPLING_SIZE	2662315
+# define TEXTURES_SIZE	65394656
+# define CREDIT_SIZE	1920 * 1080 * 4 + 1920 * 1440 * 4
+# define OBJ_SIZE	1048576 * NBR_OBJ
+# define SAMPLING_SIZE	2662315
 
 struct							s_graphic_lib
 {

@@ -124,7 +124,7 @@ int			init_sdl(t_doom *data)
 		return (1);
 	}
 	if (!(data->lib.window = SDL_CreateWindow("DoomCraft",
-					SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH,
+					0, 0, WIDTH,
 					HEIGHT, SDL_WINDOW_FULLSCREEN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"

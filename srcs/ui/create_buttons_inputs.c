@@ -27,14 +27,14 @@ static void	init_desc(t_doom *data,
 	ft_strcpy(titles[1], "Move left - ");
 	ft_strcpy(titles[2], "Move backward - ");
 	ft_strcpy(titles[3], "Move right - ");
-	ft_strcpy(titles[4], "Pick obj - ");
-	ft_strcpy(titles[5], "Reload - ");
-	ft_strcpy(titles[6], "Sprint - ");
-	ft_strcpy(titles[7], "Zoom - ");
-	ft_strcpy(titles[8], "Couch - ");
-	ft_strcpy(titles[9], "Jump - ");
-	ft_strcpy(titles[10], "Inventory - ");
-	ft_strcpy(titles[11], "Screenshot - ");
+	ft_strcpy(titles[4], "Reload - ");
+	ft_strcpy(titles[5], "Sprint - ");
+	ft_strcpy(titles[6], "Couch - ");
+	ft_strcpy(titles[7], "Jump - ");
+	ft_strcpy(titles[8], "Screenshot - ");
+	ft_strcpy(titles[9], "Sampling - ");
+	ft_strcpy(titles[10], "Lights - ");
+	ft_strcpy(titles[11], "Idontknow - ");
 	i = -1;
 	while (++i < NB_MODIF_INPUTS)
 		ft_strcat(titles[i], SDL_GetKeyName(data->tabinputs.keycode[i]));
