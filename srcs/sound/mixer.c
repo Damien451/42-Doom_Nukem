@@ -14,11 +14,6 @@
 
 int		init_mixer(t_doom *data)
 {
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
-	{
-		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
-		return (1);
-	}
 	data->mix.rate = 44100;
 	get_default_sounds(data);
 	data->mix.format = AUDIO_S16SYS;

@@ -136,7 +136,7 @@ int			init_sdl(t_doom *data)
 	SDL_SetWindowIcon(data->lib.window, tmp_surface);
 	SDL_FreeSurface(tmp_surface);
 	if (!(data->lib.renderer = SDL_CreateRenderer(data->lib.window, -1,
-					SDL_RENDERER_PRESENTVSYNC)))
+					SDL_RENDERER_ACCELERATED)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION
 				, "Couldn't create renderer: %s", SDL_GetError());

@@ -26,6 +26,7 @@ OBJDIR		= .objs
 INCDIR		= includes
 LIBDIR		= libft
 BREWDIR		= /Users/$(LOGIN)/.brew
+SDLDIR		= SDL2-2.0.12
 
 ANIM		= animations
 CAMERA		= camera
@@ -51,10 +52,8 @@ O_STATDIR	= ./$(OBJDIR)/$(STATES)
 #                                 INCLUDES                                     #
 # **************************************************************************** #
 
-LIBSDL		= $(BREWDIR)/lib/ -lSDL2-2.0.0 -lSDL2_mixer-2.0.0 -lSDL2_ttf-2.0.0 \
-				 `sdl2-config --cflags --libs`
-INCSDL		= $(BREWDIR)/include/SDL2
-LIBFT		= $(LIBDIR) -lft
+LIBSDL		= $(SDLDIR)/lib/libSDL2.a SDL_text/ttf_build/lib/libSDL2_ttf.a SDL2_mixer-2.0.4/lib/libSDL2_mixer.a SDL_text/freetype_build/lib/libfreetype.a
+INCSDL		= -I $(SDLDIR)/include -I SDL_text/ttf_build/include/SDL2 -I SDL2_mixer-2.0.4/include/SDL2
 
 # **************************************************************************** #
 #                                  SOURCES                                     #
@@ -181,7 +180,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					add_points.c							\
 					load_textures.c							\
 					switch_state.c							\
-					utils.c									
+					utils.c
 
 
 # **************************************************************************** #
@@ -196,22 +195,46 @@ DPDCS		= $(OBJS:.o=.d)
 #                                   RULES                                      #
 # **************************************************************************** #
 
-all				:
+all				: $(SDLDIR) SDL_text/ttf_build SDL2_mixer-2.0.4
 	@make $(NAME)
 
 $(NAME)			: $(OBJS)
 
 	@make -C $(LIBDIR)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -L $(LIBFT) -L $(LIBSDL) -o $@ $^
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lm -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
 	@echo "\n\033[36mCreation :\033[0m \033[35;4m$(NAME)\033[0m\n"
 
 -include $(DPDCS)
 
 $(OBJDIR)/%.o	: $(SRCDIR)/%.c | $(OBJDIR)
 
-	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -I $(INCDIR) -I $(INCSDL) \
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -I $(INCDIR) $(INCSDL) \
 		-I $(LIBDIR) -MMD -o $@ -c $<
 	@echo "\033[36mCompilation :\033[0m \033[32m$*\033[0m"
+
+$(SDLDIR)		:
+	sudo apt-get install libasound2-dev libpulse-dev libsdl2-dev
+	curl https://www.libsdl.org/release/SDL2-2.0.12.zip --output sdl.zip
+	unzip sdl.zip
+	rm -rf sdl.zip
+	cd $(SDLDIR) && ./configure --prefix $(shell pwd)/$(SDLDIR) && make install
+
+SDL_text/ttf_build	:
+	cd SDL_text && tar -xf freetype-2.8.tar.gz
+	cd SDL_text && mkdir freetype_build
+	cd SDL_text/freetype-2.8 && ./configure --prefix=$(shell pwd)/SDL_text/freetype_build
+	make -C SDL_text/freetype-2.8 install
+	cd SDL_text && unzip SDL2_ttf-2.0.15.zip
+	mkdir SDL_text/ttf_build
+	cd SDL_text/SDL2_ttf-2.0.15 && FT2_CONFIG="$(shell pwd)/SDL_text/freetype_build/bin/freetype-config" SDL2_CONFIG="$(shell pwd)/$(SDLDIR)/bin/sdl2-config" && export SDL2_CONFIG && PKG_CONFIG_PATH="$(shell pwd)/SDL_text/freetype_build/lib/pkgconfig/:$(shell pwd)/$(SDLDIR)/lib/pkgconfig/" ./configure --prefix="$(shell pwd)/SDL_text/ttf_build"
+	make -C SDL_text/SDL2_ttf-2.0.15 install
+
+SDL_mixer-2.0.4	:
+	curl https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.4.zip --output sdl_mixer.zip
+	unzip sdl_mixer.zip
+	rm -rf sdl_mixer.zip
+	cd SDL2_mixer-2.0.4 SDL2_CONFIG="$(shell pwd)/$(SDLDIR)/bin/sdl2-config" && export SDL2_CONFIG && PKG_CONFIG_PATH="$(shell pwd)/SDL_text/freetype_build/lib/pkgconfig/:$(shell pwd)/$(SDLDIR)/lib/pkgconfig/" && ./configure --prefix $(shell pwd)/SDL2_mixer-2.0.4
+	make -C SDL2_mixer-2.0.4 install
 
 $(OBJDIR)		:
 
@@ -227,6 +250,7 @@ $(OBJDIR)		:
 	@mkdir -p $@/$(SOUND)		2> /dev/null || true
 	@mkdir -p $@/$(STATES)		2> /dev/null || true
 	@mkdir -p $@/$(UI)			2> /dev/null || true
+	@mkdir -p $(SDLDIR)			2>
 
 clean			:
 
@@ -238,10 +262,13 @@ fclean			: clean
 
 	@rm -rf $(NAME)
 	@echo "\033[36mDeletion :\033[0m \033[35;4m$(NAME)\033[0m\n"
+	@rm -rf SDL2-2.0.12 SDL2_mixer-2.0.4 sdl_mixer.zip sdl.zip SDL_text/freetype-2.8 SDL_text/freetype_build SDL_text/SDL2_ttf-2.0.15 SDL_text/ttf_build
 	@make -C libft fclean
 
-cm				: clean all
+cm				: clean
+	@make all
 
-re				: fclean all
-
+re				:
+	@make fclean
+	@make all
 .PHONY			: all clean fclean cm re

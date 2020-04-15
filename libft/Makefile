@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Ofast -flto
+CC = clang
+CFLAGS = -Wall -Wextra -Werror -Ofast
 NAME = libft.a
 SRCDIR = ./
 INCLDIR = ./
@@ -98,7 +98,8 @@ all :
 
 $(NAME) : $(SRCS)
 	@make objects
-	@ar sucr $(NAME) $(OBJS)
+	@ar scr $(NAME) $(OBJS)
+	@ranlib $(NAME)
 	@echo "\n\033[36mCreation :\033[0m \033[35;3;4m$(NAME)\033[0m\n"
 
 objects : $(OBJS)
