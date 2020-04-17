@@ -38,13 +38,11 @@ static void		init_bubbles(t_doom *data)
 	}
 }
 
-void			init_anim_state_start(t_doom *data)
+static void		init_credit(t_doom *data)
 {
-	int				i;
-	t_bubble		*tmp;
-	t_bubble		*tmp2;
+	t_bubble	*tmp;
+	int			i;
 
-	init_bubbles(data);
 	i = -1;
 	tmp = NULL;
 	while (++i < WIDTH * HEIGHT)
@@ -67,44 +65,62 @@ void			init_anim_state_start(t_doom *data)
 			}
 		}
 	}
+}
+
+static void		fill_tmp(t_bubble **tmp, int i, t_doom *data)
+{
+	if (!*tmp)
+	{
+		*tmp = malloc(sizeof(t_bubble));
+		(*tmp)->pos = i;
+		(*tmp)->next = NULL;
+		data->lightning_list = *tmp;
+	}
+	else
+	{
+		(*tmp)->next = malloc(sizeof(t_bubble));
+		(*tmp)->next->pos = i;
+		(*tmp)->next->next = NULL;
+		*tmp = (*tmp)->next;
+	}
+}
+
+static void		fill_tmp2(t_bubble **tmp, int i, t_doom *data)
+{
+	if (!*tmp)
+	{
+		*tmp = malloc(sizeof(t_bubble));
+		(*tmp)->pos = i;
+		(*tmp)->next = NULL;
+		data->lightning_list2 = *tmp;
+	}
+	else
+	{
+		(*tmp)->next = malloc(sizeof(t_bubble));
+		(*tmp)->next->pos = i;
+		(*tmp)->next->next = NULL;
+		*tmp = (*tmp)->next;
+	}
+}
+
+void			init_anim_state_start(t_doom *data)
+{
+	int				i;
+	t_bubble		*tmp;
+	t_bubble		*tmp2;
+
+	init_bubbles(data);
+	init_credit(data);
 	tmp = NULL;
 	i = -1;
 	tmp2 = NULL;
 	while (++i < WIDTH * HEIGHT)
 	{
-		if (data->lib.lightning[i] != UINT_MAX && (data->lib.lightning[i] % 0x1000000 <= 0x888888))
-		{
-			if (!tmp)
-			{
-				tmp = malloc(sizeof(t_bubble));
-				tmp->pos = i;
-				tmp->next = NULL;
-				data->lightning_list = tmp;
-			}
-			else
-			{
-				tmp->next = malloc(sizeof(t_bubble));
-				tmp->next->pos = i;
-				tmp->next->next = NULL;
-				tmp = tmp->next;
-			}
-		}
-		else if (data->lib.lightning[i] != UINT_MAX && (data->lib.lightning[i] % 0x1000000 <= 0x999999))
-		{
-			if (!tmp2)
-			{
-				tmp2 = malloc(sizeof(t_bubble));
-				tmp2->pos = i;
-				tmp2->next = NULL;
-				data->lightning_list2 = tmp2;
-			}
-			else
-			{
-				tmp2->next = malloc(sizeof(t_bubble));
-				tmp2->next->pos = i;
-				tmp2->next->next = NULL;
-				tmp2 = tmp2->next;
-			}
-		}
+		if (data->lib.lightning[i] != UINT_MAX && (data->lib.lightning[i]
+			% 0x1000000 <= 0x888888))
+			fill_tmp(&tmp, i, data);
+		else if (data->lib.lightning[i] != UINT_MAX && (data->lib.lightning[i]
+			% 0x1000000 <= 0x999999))
+			fill_tmp2(&tmp, i, data);
 	}
 }

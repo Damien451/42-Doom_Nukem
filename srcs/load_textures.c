@@ -17,10 +17,10 @@
 #include <unistd.h>
 #include <SDL.h>
 
-int			load_sampling(int fd, t_doom *data)
+int				load_sampling(int fd, t_doom *data)
 {
 	char	sizec[4];
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < 6)
@@ -48,7 +48,6 @@ void			create_sound_size(int sound[13])
 	sound[10] = 58012;
 	sound[11] = 112510;
 	sound[12] = 41338;
-;
 }
 
 int				create_sound(int fd)

@@ -15,7 +15,8 @@
 #include "thread.h"
 #include <pthread.h>
 
-static int	create_charac_anim(const unsigned int character[500 * 350], unsigned int *image, int move)
+static int	create_charac_anim(const unsigned int character[500 * 350]
+	, unsigned int *image, int move)
 {
 	int			i;
 	int			j;
