@@ -14,48 +14,57 @@
 #include "vec3.h"
 #include "octree.h"
 
+static int		initialize_cylinder(t_ray *ray, const t_doom *const data
+	, t_quad *quad, double value[2])
+{
+	quad->node = vec3d(ray->node->center.x / 2.0, ray->node->center.y / 2.0
+		, ray->node->center.z / 2.0);
+	quad->position = vec3d_sub(data->player.camera.origin, quad->node);
+	value[0] = vec3d_dot(ray->direction, vec3d(0, 1, 0));
+	value[1] = vec3d_dot(quad->position, vec3d(0, 1, 0));
+	quad->quad.x = vec3d_dot(ray->direction, ray->direction) - value[0]
+		* value[0];
+	quad->quad.y = 2 * (vec3d_dot(ray->direction, quad->position) - value[1]
+		* value[0]);
+	quad->quad.z = vec3d_dot(quad->position, quad->position) - value[1]
+		* value[1] - 0.1;
+	quad->delta = (quad->quad.y * quad->quad.y) - 4 * quad->quad.x
+		* quad->quad.z;
+	if (quad->delta < 0)
+		return (1);
+	ray->color = 0xefefef;
+	quad->quad.x *= 2.0;
+	quad->delta = sqrt(quad->delta);
+	quad->quad.z = (-quad->quad.y - quad->delta) / quad->quad.x;
+	quad->delta = (-quad->quad.y + quad->delta) / quad->quad.x;
+	return (0);
+}
+
 double			hit_cylinder(t_ray *ray, const t_doom *const data)
 {
-	t_vec3d		quad;
-	double		delta;
-	t_vec3d		position;
-	t_vec3d		node;
+	t_quad		quad;
 	double		value[2];
 
-	node = vec3d(ray->node->center.x / 2.0, ray->node->center.y / 2.0, ray->node->center.z / 2.0);
-	position = vec3d_sub(data->player.camera.origin, node);
-	value[0] = vec3d_dot(ray->direction, vec3d(0, 1, 0));
-	value[1] = vec3d_dot(position, vec3d(0, 1, 0));
-	quad.x = vec3d_dot(ray->direction, ray->direction) - value[0] * value[0];
-	quad.y = 2 * (vec3d_dot(ray->direction, position) - value[1] * value[0]);
-	quad.z = vec3d_dot(position, position) - value[1] * value[1] - 0.1;
-	delta = (quad.y * quad.y) - 4 * quad.x * quad.z;
-	if (delta < 0)
+	if (initialize_cylinder(ray, data, &quad, value))
 		return (200);
-	ray->color = 0xefefef;
-	quad.x *= 2.0;
-	delta = sqrt(delta);
-	quad.z = (-quad.y - delta) / quad.x;
-	delta = (-quad.y + delta) / quad.x;
-	if (quad.z < 0)
+	value[0] = data->player.camera.origin.y + quad.delta * ray->direction.y;
+	if (quad.quad.z < 0)
 	{
-		if (delta < 0)
+		if (quad.delta < 0)
 			return (200);
-		value[0] = data->player.camera.origin.y + delta * ray->direction.y;
-		if ((int)node.y == (int)value[0])
-			return (delta);
+		if ((int)quad.node.y == (int)value[0])
+			return (quad.delta);
 		return (200);
 	}
-	if (delta >= 0 && delta < quad.z)
+	if (quad.delta >= 0 && quad.delta < quad.quad.z)
 	{
-		value[0] = data->player.camera.origin.y + delta * ray->direction.y;
-		if ((int)node.y == (int)value[0])
-			return (delta);
+		if ((int)quad.node.y == (int)value[0])
+			return (quad.delta);
 		return (200);
 	}
-	delta = quad.z;
-	value[0] = data->player.camera.origin.y + delta * ray->direction.y;
-	if ((int)node.y == (int)value[0])
-		return (delta);
+	quad.delta = quad.quad.z;
+	value[0] = data->player.camera.origin.y + quad.delta * ray->direction.y;
+	if ((int)quad.node.y == (int)value[0])
+		return (quad.delta);
 	return (200);
 }

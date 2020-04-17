@@ -25,7 +25,7 @@ static int	check_before_switch(t_doom *data, long actual_state, long new_state)
 	}
 	if (new_state != EDITOR && new_state != SETTINGS_SOUND)
 	{
-		SDL_SetRelativeMouseMode(SDL_TRUE);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
 		SDL_ShowCursor(SDL_FALSE);
 	}
 	else

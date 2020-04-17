@@ -18,10 +18,8 @@
 #include "gameplay.h"
 #include <pthread.h>
 #include <math.h>
-#include <sys/time.h>
 
-
-static void	update_physics(t_doom *data)
+static void			update_physics(t_doom *data)
 {
 	data->player.acceleration = data->player.physics.acceleration;
 	data->player.camera.origin = data->player.physics.origin;
@@ -39,7 +37,8 @@ static inline int	init_thread_structure(t_doom *data, t_octree *position)
 	while (i < NBR_THREAD)
 	{
 		data->thread[i].data = data;
-		data->thread[i].frame = data->lib.sampling[data->sampling - 1][0] * 2 - 4;
+		data->thread[i].frame = data->lib.sampling[data->sampling - 1][0]
+			* 2 - 4;
 		data->thread[i].mutex = &data->mutex;
 		data->thread[i].ray.node = position;
 		data->thread[i].ray.origin = data->player.camera.origin;
@@ -71,24 +70,19 @@ void				actualize_torch(t_doom *data)
 	data->power[TORCH] += value;
 }
 
-int					raytracing(t_doom *data)
+static void			init_raytracing(t_doom *data, t_octree **position)
 {
-	t_octree		*position;
-	t_thread		thread;
-	struct timeval	time;
-	long			wait;
-	int				i;
-	static long		max = 0;
-	double			tmp;
+	double	tmp;
 
-//	gettimeofday(&time, NULL);
-//	wait = time.tv_sec * 1000000 + time.tv_usec;
-	position = find_actual_position(&data->player.camera.origin, data->octree);
+	*position = find_actual_position(&data->player.camera.origin, data->octree);
 	data->player_light.position = data->player.camera.origin;
 	data->player_light.position.y -= 0.375;
-	data->player_light.position = vec3d_add(data->player_light.position, vec3d_scalar(data->player.camera.right, 0.2));
+	data->player_light.position = vec3d_add(data->player_light.position
+		, vec3d_scalar(data->player.camera.right, 0.2));
 	tmp = vec3d_length2(data->player.acceleration);
-	data->oriented_light = vec3d_add(data->player.camera.direction, vec3d_add(vec3d_scalar(data->player.camera.up, data->oriented[2] - 0.125), vec3d_scalar(data->player.camera.right, data->oriented[3])));
+	data->oriented_light = vec3d_add(data->player.camera.direction
+		, vec3d_add(vec3d_scalar(data->player.camera.up, data->oriented[2]
+		- 0.125), vec3d_scalar(data->player.camera.right, data->oriented[3])));
 	data->oriented[2] += (data->oriented[0] * tmp / 30);
 	if (data->oriented[2] > 0.05 || data->oriented[2] < -0.05)
 		data->oriented[0] *= -1;
@@ -96,28 +90,20 @@ int					raytracing(t_doom *data)
 	if (data->oriented[3] > 0.05 || data->oriented[3] < -0.05)
 		data->oriented[1] *= -1;
 	data->actual_i = 2;
+}
+
+int					raytracing(t_doom *data)
+{
+	t_octree		*position;
+	int				i;
+
+	init_raytracing(data, &position);
 	sun(data);
 	if (init_thread_structure(data, position) == 1)
 		return (1);
 	event_loop(data, &data->lib);
 	add_clipping_for_each_point(data, &data->player);
 	actualize_torch(data);
-//	thread.data = data;
-//	thread.frame = data->samplingt[data->sampling - 1][0] * 2 - 4;
-//	thread.mutex = &data->mutex;
-//	thread.ray.node = position;
-//	thread.ray.origin = data->player.camera.origin;
-//	thread.ray.find_parent[0] = &find_parent_x;
-///	thread.ray.find_parent[1] = &find_parent_y;
-//	thread.ray.find_parent[2] = &find_parent_z;
-//	launch_rays2(&thread);
-//	gettimeofday(&time, NULL);
-//	wait = time.tv_sec * 1000000 + time.tv_usec - wait;
-//	if (wait > max)
-//	{
-//		printf("time to compute everything = %ld microseconds\n", wait);
-//		max = wait;
-//	}
 	i = 0;
 	while (i < NBR_THREAD)
 		pthread_join(data->thread[i++].thread, NULL);

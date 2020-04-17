@@ -92,10 +92,19 @@ typedef struct s_ray			t_ray;
 typedef struct s_scoreboard		t_scoreboard;
 typedef struct s_thread			t_thread;
 typedef struct s_enemies		t_enemies;
+typedef struct s_quad			t_quad;
 
 /*
 ** ====-* STRUCTURES *-====
 */
+
+struct						s_quad
+{
+	t_vec3d					quad;
+	double					delta;
+	t_vec3d					position;
+	t_vec3d					node;
+};
 
 struct						s_bubble
 {
@@ -409,5 +418,19 @@ unsigned int				ray_intersect_mini2(t_ray *ray,
 
 double						launch_ray_to_light_player(t_ray ray,
 	const t_light *light, const t_doom *const data);
+
+t_octree					*initialize_ray_mini(t_ray *ray, t_ray *rayon
+	, const t_doom *const data);
+
+void						initialize_rays_and_position(t_ray *big_ray
+	, t_ray *ray, t_vec3d *position);
+
+double						compute_normal(t_vec3d direction, t_vec3d normal);
+
+int							compute_next_octant(t_ray *ray
+	, const t_doom *const data, int sorted[3]);
+
+int							shadow_mini(t_ray *ray, const t_doom *const data
+	, int sorted[3]);
 
 #endif

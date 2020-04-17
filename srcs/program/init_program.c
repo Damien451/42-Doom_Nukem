@@ -80,7 +80,7 @@ static void	init_program2(t_doom *data)
 	data->load_page[0] = 0;
 	data->load_page[1] = 0;
 	data->player.health = 1000;
-	data->sensitivity = 100;
+	data->sensitivity = 10;
 	data->player.speed = 0;
 	parse_input_file(data, "./files/inputs");
 	data->lib.cam_keys = 0;
@@ -124,8 +124,8 @@ int			init_sdl(t_doom *data)
 		return (1);
 	}
 	if (!(data->lib.window = SDL_CreateWindow("DoomCraft",
-					0, 0, WIDTH,
-					HEIGHT, SDL_WINDOW_FULLSCREEN)))
+					0, 0, 960,
+					540, SDL_WINDOW_SHOWN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"
 				, SDL_GetError());

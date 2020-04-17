@@ -14,8 +14,8 @@ CC 			= clang
 CFLAGS		= -Wall -Wextra #-Werror
 
 FSAN		= #-fsanitize=address
-DEBUG		= -g3
-OPTI		= -Ofast
+DEBUG		= #-g3
+OPTI		= -O2
 
 # **************************************************************************** #
 #                                 DIRECTORIES                                  #
@@ -124,11 +124,14 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(RT)/check_which_face_is_touched_neg.c	\
 					$(RT)/check_which_face_is_touched_pos.c	\
 					$(RT)/compute_lights.c					\
+					$(RT)/compute_lights_mini.c				\
 					$(RT)/cylinder.c						\
 					$(RT)/event_loop.c						\
+					$(RT)/initialize_ray_mini.c				\
 					$(RT)/launch_rays.c						\
+					$(RT)/launch_rays_to_light_player.c		\
+					$(RT)/light_utils.c						\
 					$(RT)/locate_in_octree.c				\
-					$(RT)/plane.c							\
 					$(RT)/print_octree.c					\
 					$(RT)/ray_intersect.c					\
 					$(RT)/ray_intersect_mini.c				\
@@ -229,11 +232,11 @@ SDL_text/ttf_build	:
 	cd SDL_text/SDL2_ttf-2.0.15 && FT2_CONFIG="$(shell pwd)/SDL_text/freetype_build/bin/freetype-config" SDL2_CONFIG="$(shell pwd)/$(SDLDIR)/bin/sdl2-config" && export SDL2_CONFIG && PKG_CONFIG_PATH="$(shell pwd)/SDL_text/freetype_build/lib/pkgconfig/:$(shell pwd)/$(SDLDIR)/lib/pkgconfig/" ./configure --prefix="$(shell pwd)/SDL_text/ttf_build"
 	make -C SDL_text/SDL2_ttf-2.0.15 install
 
-SDL_mixer-2.0.4	:
+SDL2_mixer-2.0.4	:
 	curl https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.4.zip --output sdl_mixer.zip
 	unzip sdl_mixer.zip
 	rm -rf sdl_mixer.zip
-	cd SDL2_mixer-2.0.4 SDL2_CONFIG="$(shell pwd)/$(SDLDIR)/bin/sdl2-config" && export SDL2_CONFIG && PKG_CONFIG_PATH="$(shell pwd)/SDL_text/freetype_build/lib/pkgconfig/:$(shell pwd)/$(SDLDIR)/lib/pkgconfig/" && ./configure --prefix $(shell pwd)/SDL2_mixer-2.0.4
+	cd SDL2_mixer-2.0.4 && SDL2_CONFIG="$(shell pwd)/$(SDLDIR)/bin/sdl2-config" && export SDL2_CONFIG && PKG_CONFIG_PATH="$(shell pwd)/SDL_text/freetype_build/lib/pkgconfig/:$(shell pwd)/$(SDLDIR)/lib/pkgconfig/" && ./configure --prefix $(shell pwd)/SDL2_mixer-2.0.4
 	make -C SDL2_mixer-2.0.4 install
 
 $(OBJDIR)		:
