@@ -16,45 +16,6 @@
 #include <math.h>
 #include "libft.h"
 
-static inline void		init_all(t_vec3l *tester, t_doom *data, int *nbr_node
-		, t_octree *node)
-{
-	data->tmp = 0;
-	*nbr_node = 0;
-	tester->x = (node->center.x >> 1) - (node->size >> 2);
-	tester->y = (node->center.y >> 1) - (node->size >> 2);
-	tester->z = (node->center.z >> 1) - (node->size >> 2);
-}
-
-static inline int		inside_loop(t_doom *data, t_octree *node, int *nbr_node
-	, t_vec3l tester)
-{
-	t_vec3l		count;
-	char		c;
-
-	count.x = -1;
-	while (++count.x < node->size >> 1 && (count.y = -1))
-	{
-		while (++count.y < node->size >> 1 && (count.z = -1))
-		{
-			while (++count.z < node->size >> 1)
-			{
-				if (((c = data->map_to_save[tester.x + count.x][tester.y +
-					count.y][tester.z + count.z]) >= 41) && node->size >> 1 > 1)
-					return (-1);
-				else if (c >= 41)
-					return (-2);
-				else if (c)
-					(*nbr_node)++;
-				else if (*nbr_node)
-					return (-1);
-				data->tmp++;
-			}
-		}
-	}
-	return (0);
-}
-
 static inline int		verify_inside_node(t_doom *data, t_octree *node)
 {
 	t_vec3l		tester;
@@ -62,7 +23,7 @@ static inline int		verify_inside_node(t_doom *data, t_octree *node)
 	int			nbr_node;
 
 	init_all(&tester, data, &nbr_node, node);
-	ret = inside_loop(data, node, &nbr_node, tester);
+	ret = inside_loopb(data, node, &nbr_node, tester);
 	if (ret)
 		return (ret);
 	if (nbr_node != 0 && data->tmp != nbr_node)

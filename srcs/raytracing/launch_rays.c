@@ -69,35 +69,6 @@ static inline int		catch_next_pixel_to_compute(t_doom *data, void *ptr)
 	return (i);
 }
 
-void					*launch_rays2(void *ptr)
-{
-	t_doom			*data;
-	int				i;
-	int				j;
-
-	data = ((t_thread*)ptr)->data;
-	i = catch_next_pixel_to_compute(data, ptr);
-	while (i < ((t_thread*)ptr)->frame)
-	{
-		j = 0;
-		while (i + j < ((t_thread*)ptr)->frame && j < 32)
-		{
-			((t_thread*)ptr)->ray.pos[0] = data->lib.sampling
-				[data->sampling - 1][i + j];
-			((t_thread*)ptr)->ray.pos[1] = data->lib.sampling
-				[data->sampling - 1][i + 1 + j];
-			ray_create(((t_thread*)ptr)->ray.pos, data->player.camera
-				, &((t_thread*)ptr)->ray);
-			apply_sampling(data->lib.image, ray_intersect((
-					(t_thread*)ptr)->ray
-				, data), data->sampling, ((t_thread*)ptr)->ray.pos[1]
-					+ ((t_thread*)ptr)->ray.pos[0] * WIDTH);
-			j += 2;
-		}
-		i = catch_next_pixel_to_compute(data, ptr);
-	}
-}
-
 void					*launch_rays(void *ptr)
 {
 	t_doom			*data;

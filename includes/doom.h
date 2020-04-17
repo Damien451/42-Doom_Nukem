@@ -433,4 +433,18 @@ int							compute_next_octant(t_ray *ray
 int							shadow_mini(t_ray *ray, const t_doom *const data
 	, int sorted[3]);
 
+void						init_all(t_vec3l *tester, t_doom *data
+	, int *nbr_node, t_octree *node);
+
+int							verify_inside_node_model(t_doom *data
+	, t_octree *node);
+
+unsigned int				compute_lights2(t_ray ray, const t_doom *const data
+		, t_octree *node, t_ray *big_ray);
+
+void						check_if_child_isleaf(t_doom *data, t_octree *node);
+
+int							inside_loopb(t_doom *data, t_octree *node
+	, int *nbr_node, t_vec3l tester);
+
 #endif

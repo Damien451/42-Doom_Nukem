@@ -93,8 +93,9 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(GAMEPLAY)/reset_game_values.c			\
 					$(MATHS)/create_light_array.c			\
 					$(MATHS)/create_octree.c				\
+					$(MATHS)/create_octree_utils.c			\
 					$(MATHS)/create_octree_model.c			\
-					$(MATHS)/matrix.c						\
+					$(MATHS)/create_octree_model_utils.c	\
 					$(MATHS)/max_absolute_between_three.c	\
 					$(MATHS)/octree_memory_management.c		\
 					$(MATHS)/quaternion.c					\
