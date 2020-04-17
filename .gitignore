@@ -65,3 +65,10 @@ dkms.conf
 
 # Too big file
 all_img.bin
+
+SDL2-2.0.12/
+SDL2_mixer-2.0.4/
+SDL_text/SDL2_ttf-2.0.15/
+SDL_text/freetype-2.8/
+SDL_text/freetype_build/
+SDL_text/ttf_build/
