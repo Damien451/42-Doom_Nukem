@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:49:10 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/03 18:44:28 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/17 19:09:42 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline void	place_block(t_doom *data, int step, int tmpx, int tmpy)
 		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10)
 		/ BLOCK_SIZE_EDITOR] = 47;
 	else if (data->lib.editor.picked_texture == 28)
-		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10) 
+		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10)
 		/ BLOCK_SIZE_EDITOR] = 48;
 	else if (data->lib.editor.picked_texture == 62)
 		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10)

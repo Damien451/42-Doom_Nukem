@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:48:26 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/06 17:23:49 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/17 19:57:48 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,8 @@ int			init_sdl(t_doom *data)
 				"Couldn't initialize SDL: %s", SDL_GetError());
 		return (1);
 	}
-	if (!(data->lib.window = SDL_CreateWindow("DoomCraft",
-					0, 0, 960,
-					540, SDL_WINDOW_SHOWN)))
+	if (!(data->lib.window = SDL_CreateWindow("DoomCraft", 0, 0, 960,
+		540, SDL_WINDOW_SHOWN)))
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s"
 				, SDL_GetError());

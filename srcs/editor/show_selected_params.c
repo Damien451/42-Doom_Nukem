@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:21:04 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/03 18:47:03 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/17 19:15:02 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,20 +128,17 @@ void				show_selected_params(t_doom *data)
 		+ (data->lib.editor.picked_texture % 10) * 3.5;
 	y = data->lib.editor.picked_texture / 10;
 	tmp = y;
-	if (y == 0)
-		y = -2;
-	if (y == 3)
-		y = 6;
-	if (y == 4)
-		y = 20;
-	if (y == 5)
-		y = 44;
+	y = (y == 0 ? -2 : y);
+	y = (y == 3 ? 6 : y);
+	y = (y == 4 ? 20 : y);
+	y = (y == 5 ? 44 : y);
 	y += 13 + (tmp * TEXTURE_SIZE);
 	if ((data->lib.editor.mode == 0 && data->lib.editor.picked_texture != 62)
 		|| (data->lib.editor.mode == 1 && data->lib.editor.picked_texture < 40))
 		draw_select_square(&data->lib, point((int)x, y),
 			point(85, 85), 0xff0000);
-	else if (data->lib.editor.mode == 1 && data->lib.editor.picked_texture == 62)
+	else if (data->lib.editor.mode == 1
+		&& data->lib.editor.picked_texture == 62)
 		draw_select_square(&data->lib, point(1049, 364),
 			point(85, 85), 0xff0000);
 	if (data->lib.editor.mode == 0)

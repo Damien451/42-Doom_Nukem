@@ -78,6 +78,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/editor_utils2.c				\
 					$(EDITOR)/keydown_editor_commands.c		\
 					$(EDITOR)/mouse_editor_commands.c		\
+					$(EDITOR)/pick_element.c			\
 					$(EDITOR)/save_map_to_file.c			\
 					$(EDITOR)/show_selected_params.c		\
 					$(GAMEPLAY)/interaction.c				\
@@ -172,7 +173,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(UI)/get_default_inputs.c				\
 					$(UI)/minimap.c							\
 					$(UI)/parse_input_file.c				\
-					$(UI)/parse_scores_file.c				\
+					$(UI)/manage_scores_file.c				\
 					$(UI)/put_buttons_names.c				\
 					$(UI)/put_buttons_on_img.c				\
 					$(UI)/put_string_on_renderer.c			\
@@ -203,7 +204,7 @@ all				: $(SDLDIR) SDL_text/ttf_build SDL2_mixer-2.0.4
 $(NAME)			: $(OBJS)
 
 	@make -C $(LIBDIR)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lm -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lm -lpng -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
 	@echo "\n\033[36mCreation :\033[0m \033[35;4m$(NAME)\033[0m\n"
 
 -include $(DPDCS)
