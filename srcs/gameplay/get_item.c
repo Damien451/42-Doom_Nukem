@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 17:13:08 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/11 21:41:23 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/18 16:53:53 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static void			get_item3(t_doom *data, t_player *player,
 	}
 	else if (bloc == 55)
 	{
-		remove_item_from_map(data,map, posbloc);
-		return ;//add item heal
+		remove_item_from_map(data, map, posbloc);
+		return ;
 	}
 	else if (bloc == 56)
 	{
@@ -72,7 +72,7 @@ static void			get_item3(t_doom *data, t_player *player,
 		player->score = (player->score + 2500 > 2000000000
 			? 2000000000 : player->score + 2500);
 	}
-	get_item4(data, player, map, posbloc);	
+	get_item4(data, player, map, posbloc);
 }
 
 static void			get_item2(t_doom *data, t_player *player,
@@ -100,9 +100,9 @@ static void			get_item2(t_doom *data, t_player *player,
 				+ ammobonus > 99 ? 99
 				: player->inventory.ammo_stock + ammobonus);
 		else
-			return ;//add item heal
+			return ;
 	}
-	get_item3(data, player, map, posbloc);	
+	get_item3(data, player, map, posbloc);
 }
 
 void				get_item(t_doom *data, t_player *player,
@@ -121,13 +121,13 @@ void				get_item(t_doom *data, t_player *player,
 	{
 		remove_item_from_map(data, map, posbloc);
 		player->score = (player->score + 5000 > 2000000000
-			? 2000000000 : player->score + 5000); 
+			? 2000000000 : player->score + 5000);
 	}
 	else if (bloc == 49)
 	{
 		remove_item_from_map(data, map, posbloc);
 		player->score = (player->score + 4000 > 2000000000
-			? 2000000000 : player->score + 4000); 
+			? 2000000000 : player->score + 4000);
 	}
 	get_item2(data, player, map, posbloc);
 }
