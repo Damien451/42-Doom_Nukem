@@ -93,9 +93,8 @@ int				state_get_map_name(t_doom *data)
 	ft_memcpy(data->lib.image, data->lib.bg_menu[0],
 		(WIDTH * HEIGHT) << 2);
 	check_inputs_map_name(data, map_name, &nbinputs, &first);
-	input_field = button(point(WIDTH_CENTER - (DEF_BUTTON_W * 3 / 2),
-		HEIGHT_CENTER),
-		point(DEF_BUTTON_W * 3, DEF_BUTTON_H), EDITOR,
+	input_field = button(point(960 - (274 * 3 / 2), 540),
+		point(274 * 3, 90), EDITOR,
 		(map_name[0] == '\0' ? "Enter new map name" : map_name));
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, &input_field, 1);
