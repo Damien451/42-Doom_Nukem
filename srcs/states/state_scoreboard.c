@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:25:37 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/02 12:32:49 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/18 21:36:50 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int			state_scoreboard(t_doom *data)
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
 		label("SCOREBOARD", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
-	display_scores(data, &data->scoreboard, frame, &curr_score);
+	if (display_scores(data, &data->scoreboard, frame, &curr_score))
+		switch_state(data, data->state, LEAVING);
 	check_inputs(data, &curr_score);
 	if ((wait = (SDL_GetTicks() - time)) < 17)
 		usleep(17000 - (wait * 1000));

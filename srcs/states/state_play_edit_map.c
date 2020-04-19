@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 02:12:24 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/02 12:32:04 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/19 19:07:10 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@
 
 static void	check_inputs2(t_doom *data, int nbmaps, int *first)
 {
-	if ((data->lib.event.key.keysym.sym == SDLK_LEFT ||
+	if (data->lib.event.key.keysym.sym == SDLK_RETURN)
+	{
+		if (load_map(data, data->map_name) == 0)
+			switch_state(data, PLAY_EDIT_MAP, PLAYING);
+	}
+	else if ((data->lib.event.key.keysym.sym == SDLK_LEFT ||
 		(unsigned int)data->lib.event.key.keysym.sym ==
 		data->tabinputs.keycode[1]) && data->button == 0)
 	{
@@ -54,17 +59,13 @@ static void	check_inputs(t_doom *data, t_button *btab, int *first,
 			else if (data->lib.event.key.keysym.sym == SDLK_DOWN ||
 				(unsigned int)data->lib.event.key.keysym.sym ==
 				data->tabinputs.keycode[2])
-				data->button = data->button == tab[0] - 1 ? 0 : data->button + 1;
+				data->button = data->button == tab[0] - 1
+					? 0 : data->button + 1;
 			else if (data->lib.event.key.keysym.sym == SDLK_RETURN
 				&& data->button == 1)
 				switch_state(data, PLAY_EDIT_MAP, btab[data->button].state);
 			else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
 				switch_state(data, PLAY_EDIT_MAP, PLAY_MENU);
-			else if (data->lib.event.key.keysym.sym == SDLK_RETURN)
-			{
-				if (load_map(data, data->map_name) == 0)
-					switch_state(data, PLAY_EDIT_MAP, PLAYING);
-			}
 			else
 				check_inputs2(data, tab[1], first);
 		}
@@ -73,12 +74,12 @@ static void	check_inputs(t_doom *data, t_button *btab, int *first,
 
 static void	buttons_play_edit_map(t_button buttons[2], char map_name[25])
 {
-	buttons[0] = button(point(WIDTH_CENTER - (DEF_BUTTON_W * 3 / 2),
+	buttons[0] = button(point(WIDTH_CENTER - (274 * 3 / 2),
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
-		point(DEF_BUTTON_W * 3, DEF_BUTTON_H), PLAYING, map_name);
+		point(274 * 3, DEF_BUTTON_H), PLAYING, map_name);
 	buttons[1] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER),
-		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), PLAY_MENU, "RETURN");
+		point(274 * 2, DEF_BUTTON_H), PLAY_MENU, "RETURN");
 }
 
 int			state_play_edit_map(t_doom *data)

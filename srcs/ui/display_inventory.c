@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 23:43:06 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/10 21:36:40 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/19 20:17:09 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static inline void	print_circle(t_graphic_lib *lib, int x, int y)
 	int		j;
 
 	i = -1;
-	while(++i < 128)
+	while (++i < 128)
 	{
 		j = -1;
 		while (++j < 128)
 			if (lib->circle[i * 128 + j] > 0)
-				lib->image[(int)((y + i) * WIDTH + j + x)] = 0xff2e392b;
+				lib->image[(int)((y + i) * 1920 + j + x)] = 0xff2e392b;
 	}
 }
 
@@ -64,9 +64,9 @@ static void			display_ammo(t_doom *data, t_graphic_lib *lib,
 			while (++x < 15)
 			{
 				if (lib->ammo[y * 32 + x] != 0xffffff)
-					lib->image[(int)((y + HEIGHT / 3.4505) * WIDTH
-					+ (16 * ammo_left) + WIDTH / 1.155 + x)]
-					= lib->ammo[y * 32 + x];
+					lib->image[(int)((y + 1080 / 3.4505)
+					* 1920 + (16 * ammo_left)
+					+ 1920 / 1.155 + x) = lib->ammo[y * 32 + x];
 			}
 		}
 		++ammo_left;
@@ -87,9 +87,9 @@ static void			display_selected_block(t_graphic_lib *lib,
 		j = -1;
 		while (++j < INV_BLOCK_SIZE)
 		{
-			lib->image[(BLOCK_POS_Y + i) * WIDTH + j + BLOCK_POS_X] =
+			lib->image[(960 + i) * 1920 + j + 270] =
 			lib->textures[player->inventory.selected]
-			[i * (aff / INV_BLOCK_SIZE) * aff + j * (aff / INV_BLOCK_SIZE)];
+			[i * (aff / 48) * aff + j * (aff / 48)];
 		}
 	}
 }

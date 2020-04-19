@@ -6,7 +6,7 @@
 /*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:47:02 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/25 22:47:05 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/18 21:45:05 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_map_name(int map_to_show, char *dir_path)
 	directory = NULL;
 	maps = NULL;
 	if (!(directory = opendir(dir_path)))
-		return ("Error opening directory");
+		return (NULL);
 	while ((maps = readdir(directory)))
 	{
 		if (map_to_show == 0 && maps->d_name[0] != '.')
@@ -36,7 +36,7 @@ char	*get_map_name(int map_to_show, char *dir_path)
 			--map_to_show;
 	}
 	closedir(directory);
-	return ("No map in directory");
+	return (NULL);
 }
 
 int		count_maps(int *first, char *dir_path)

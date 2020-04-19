@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:22:33 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/02 12:31:47 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/19 18:33:56 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ int				state_new_highscore(t_doom *data)
 	ft_memcpy(data->lib.image, data->lib.bg_menu[1],
 		(WIDTH * HEIGHT) << 2);
 	check_inputs_new_highscore(data, nametag, &nbinputs, &first);
-	input_field = button(point(WIDTH_CENTER - (DEF_BUTTON_W * 3 / 2),
-		HEIGHT_CENTER),
-		point(DEF_BUTTON_W * 3, DEF_BUTTON_H), NEW_HIGHSCORE,
+	input_field = button(point(WIDTH_CENTER - (274 * 3 / 2), 540),
+		point(274 * 3 / 2, DEF_BUTTON_H), NEW_HIGHSCORE,
 		(nametag[0] == '\0' ? "Enter your nametag" : nametag));
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, &input_field, 1);
 	put_string_with_shadow(data, point(WIDTH / 2, HEIGHT / 6),
-		label("NEW HIGHSCORE", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[1]);
+		label("NEW HIGHSCORE", (SDL_Color){255, 0, 0, 0}),
+		data->lib.ptrfont[1]);
 	put_buttons_names(data, &input_field, (SDL_Color){255, 0, 0, 0}, 1);
 	SDL_RenderPresent(data->lib.renderer);
 	return (0);

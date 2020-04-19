@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 18:36:40 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/05 15:54:17 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/18 22:03:01 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void		switch_state(t_doom *data, long actual_state, long new_state)
 	{
 		free_octree(data->octree);
 		create_octree(data);
-		init_game(data, &data->player);
+		if (init_game(data, &data->player))
+			data->running = 0;
 	}
 }

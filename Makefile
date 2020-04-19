@@ -211,7 +211,7 @@ all				: $(SDLDIR) SDL_text/ttf_build SDL2_mixer-2.0.4
 $(NAME)			: $(OBJS)
 
 	@make -C $(LIBDIR)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lm -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lpng -lm -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
 	@echo "\n\033[36mCreation :\033[0m \033[35;4m$(NAME)\033[0m\n"
 
 -include $(DPDCS)

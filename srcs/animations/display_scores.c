@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 17:19:54 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/11 18:30:54 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/18 19:54:38 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int			display_scores(t_doom *data, t_scoreboard *scores, int frame,
 	while (++i < PLAYERS_SCOREBOARD)
 	{
 		ft_bzero(player_rank, 30);
-		rank = ft_itoa(i + 1);
+		if ((rank = ft_itoa(i + 1)))
+			return (1);
 		ft_strcpy(player_rank, rank);
 		(i + 1 == 10 ? ft_strcat(player_rank, ".__")
 			: ft_strcat(player_rank, ".___"));

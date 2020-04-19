@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/12 16:33:18 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/19 19:09:24 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	check_inputs_menu(t_doom *data, t_button *btab, int but)
 	}
 }
 
-static void	buttons_main_menu(t_button buttons[5])
+static void	buttons_main_menu(t_doom *data, t_button buttons[5])
 {
 	buttons[0] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER - (DEF_BUTTON_H + BUTTON_GAP_Y)),
@@ -54,6 +54,11 @@ static void	buttons_main_menu(t_button buttons[5])
 	buttons[4] = button(point(WIDTH_CENTER - DEF_BUTTON_W,
 		HEIGHT_CENTER + (3 * DEF_BUTTON_H + 3 * BUTTON_GAP_Y)),
 		point(DEF_BUTTON_W * 2, DEF_BUTTON_H), LEAVING, "QUIT GAME");
+	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
+	put_buttons_on_img(data, buttons, 5);
+	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 6),
+		label("DOOMCRAFT", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
+	put_buttons_names(data, buttons, (SDL_Color){255, 0, 0, 0}, 5);
 }
 
 int			state_main_menu(t_doom *data)
@@ -70,13 +75,9 @@ int			state_main_menu(t_doom *data)
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
 	ft_memcpy(data->lib.image, data->lib.bg_menu[0],
 		(WIDTH * HEIGHT) << 2);
-	anim_main_menu(data, total_frame++, frame);
+	if (anim_main_menu(data, total_frame++, frame))
+		return (1);
 	buttons_main_menu(buttons);
-	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
-	put_buttons_on_img(data, buttons, 5);
-	put_string_on_renderer(data, point(WIDTH / 2, HEIGHT / 6),
-		label("DOOMCRAFT", (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[0]);
-	put_buttons_names(data, buttons, (SDL_Color){255, 0, 0, 0}, 5);
 	check_inputs_menu(data, buttons, 5);
 	if ((wait = (SDL_GetTicks() - time)) < 17)
 		usleep(17000 - (wait * 1000));

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/10 21:35:51 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/19 16:25:35 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int			state_game(t_doom *data)
 	put_health_bar(data);
 	game_sounds(data, &data->player);
 	minimap(data->map_to_save, &data->player, &data->lib);
-//	display_inventory(data, &data->lib, &data->player, PLAYING);
+	display_inventory(data, &data->lib, &data->player, PLAYING);
 //	move_ennemies(data, &data->player, &data->enemies);
 	if (data->photo)
 	{
@@ -106,7 +106,7 @@ int			state_game(t_doom *data)
 		data->player.inventory.lag--;
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	check_pos_player(data, data->map_to_save, data->player.camera.origin);
-//	display_inventory_strings(data, &data->lib, &data->player, PLAYING);
+	display_inventory_strings(data, &data->lib, &data->player, PLAYING);
 	SDL_RenderPresent(data->lib.renderer);
 	SDL_RenderClear(data->lib.renderer);
 	if (data->player.health <= 0)
