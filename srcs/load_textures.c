@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/04/17 20:05:32 by damien           ###   ########.fr       */
+/*   Updated: 2020/04/17 22:39:03 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,19 @@
 
 static int		check_sampling(t_doom *data, int i)
 {
-	int	x;
-	int	y;
+	int	j;
 	int	value;
 
 	value = (i > 0 ? i + 1 : 0);
-	y = -1;
-	while (++y < HEIGHT)
+	j = 1;
+	while (++j < data->lib.sampling[i][1])
 	{
-		if (data->lib.sampling[i][(y * HEIGHT) + 1] < value / 2
-			|| data->lib.sampling[i][(y * HEIGHT) + 1] > 1920 - (value / 2))
+		if (j % 2 == 0 && (data->lib.sampling[i][j] < value / 2
+			|| data->lib.sampling[i][j] > WIDTH - (value / 2)))
 			return (1);
-		x = -1;
-		while (++x < WIDTH)
-			if (data->lib.sampling[i][(y * HEIGHT) + x + 1] < value / 2
-				|| data->lib.sampling[i][(y * HEIGHT) + x + 1] > 1080 - (value / 2))
-				return (1);
+		else if (j % 2 == 1 && (data->lib.sampling[i][j] < value / 2
+			|| data->lib.sampling[i][j] > HEIGHT - (value / 2)))
+			return (1);
 	}
 	return (0);
 }
@@ -50,8 +47,8 @@ int			load_sampling(int fd, t_doom *data)
 		read(fd, sizec, 4);
 		data->lib.sampling[i][0] = *((int*)sizec);
 		read(fd, &data->lib.sampling[i][1], data->lib.sampling[i][0] * 8);
-		//if (check_sampling(data, i))
-		//	return (1);
+		if (check_sampling(data, i))
+			return (1);
 		i++;
 	}
 	return (0);
