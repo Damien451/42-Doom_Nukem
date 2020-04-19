@@ -455,4 +455,6 @@ int								init_icon(t_doom *data);
 
 int								init_sdl(t_doom *data);
 
+int								free_light_map(t_doom *data);
+
 #endif

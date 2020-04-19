@@ -44,9 +44,35 @@ void		free_octree(t_octree *node)
 	}
 }
 
+static void	free_bubbles(t_doom *data)
+{
+	t_bubble	*tmp;
+
+	while (data->bubble_list)
+	{
+		tmp = data->bubble_list->next;
+		free(data->bubble_list);
+		data->bubble_list = tmp;
+	}
+	while (data->lightning_list)
+	{
+		tmp = data->lightning_list->next;
+		free(data->lightning_list);
+		data->lightning_list = tmp;
+	}
+	while (data->lightning_list2)
+	{
+		tmp = data->lightning_list2->next;
+		free(data->lightning_list2);
+		data->lightning_list2 = tmp;
+	}
+}
+
 int			leave_program(t_doom *data, int type)
 {
 	free_octree(data->octree);
+	free_light_map(data);
+	free_bubbles(data);
 	if (data->lib.texture)
 		SDL_DestroyTexture(data->lib.texture);
 	if (data->lib.renderer)
@@ -56,5 +82,6 @@ int			leave_program(t_doom *data, int type)
 	close_fonts(data);
 	Mix_CloseAudio();
 	SDL_Quit();
+	free(data);
 	return (type);
 }
