@@ -67,7 +67,12 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/camera_keys.c					\
-					$(CAMERA)/clipping2.c					\
+					$(CAMERA)/check_x_max.c					\
+					$(CAMERA)/check_y_max.c					\
+					$(CAMERA)/check_z_max.c					\
+					$(CAMERA)/check_x_min.c					\
+					$(CAMERA)/check_y_min.c					\
+					$(CAMERA)/check_z_min.c					\
 					$(CAMERA)/player_hitbox.c				\
 					$(EDITOR)/check_map_validity.c			\
 					$(EDITOR)/color_rectangle.c				\
@@ -111,6 +116,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(PROG)/init_map_colors.c				\
 					$(PROG)/init_game.c						\
 					$(PROG)/init_program.c					\
+					$(PROG)/init_program2.c					\
 					$(PROG)/leave_program.c					\
 					$(PROG)/leave_game.c					\
 					$(PROG)/load_map.c						\
@@ -205,7 +211,7 @@ all				: $(SDLDIR) SDL_text/ttf_build SDL2_mixer-2.0.4
 $(NAME)			: $(OBJS)
 
 	@make -C $(LIBDIR)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lm -lpng -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lm -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
 	@echo "\n\033[36mCreation :\033[0m \033[35;4m$(NAME)\033[0m\n"
 
 -include $(DPDCS)

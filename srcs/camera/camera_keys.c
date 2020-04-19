@@ -19,7 +19,8 @@
 #include <math.h>
 #include "mixer.h"
 
-static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *data)
+static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs
+	, t_doom *data)
 {
 	if (event->key.type == SDL_KEYUP)
 	{
@@ -41,7 +42,7 @@ static void	camera_release_key(SDL_Event *event, t_tabinputs *inputs, t_doom *da
 	}
 }
 
-static void camera_press_key3(SDL_Event *event, t_tabinputs *inputs,
+static void	camera_press_key3(SDL_Event *event, t_tabinputs *inputs,
 	t_doom *data)
 {
 	if ((unsigned int)event->key.keysym.sym == inputs->keycode[9])
@@ -49,13 +50,6 @@ static void camera_press_key3(SDL_Event *event, t_tabinputs *inputs,
 		data->futur_sampling++;
 		if (data->futur_sampling > 6)
 			data->futur_sampling = 2;
-	}
-	else if ((unsigned int)event->key.keysym.sym == inputs->keycode[10])
-	{
-		if (!(data->lib.cam_keys & BEST_SAMPLING))
-			data->lib.cam_keys |= BEST_SAMPLING;
-		else
-			data->lib.cam_keys &= ~BEST_SAMPLING;
 	}
 	else if (event->key.keysym.sym == SDLK_RETURN &&
 		data->map_to_save[(int)data->player.camera.origin.x]
@@ -77,7 +71,7 @@ static void camera_press_key3(SDL_Event *event, t_tabinputs *inputs,
 	}
 }
 
-static void camera_press_key2(SDL_Event *event, t_tabinputs *inputs,
+static void	camera_press_key2(SDL_Event *event, t_tabinputs *inputs,
 	t_doom *data)
 {
 	if ((unsigned int)event->key.keysym.sym == inputs->keycode[7])
@@ -95,6 +89,13 @@ static void camera_press_key2(SDL_Event *event, t_tabinputs *inputs,
 	else if ((unsigned int)event->key.keysym.sym == inputs->keycode[8]
 		&& !event->key.repeat)
 		data->photo = 1;
+	else if ((unsigned int)event->key.keysym.sym == inputs->keycode[10])
+	{
+		if (!(data->lib.cam_keys & BEST_SAMPLING))
+			data->lib.cam_keys |= BEST_SAMPLING;
+		else
+			data->lib.cam_keys &= ~BEST_SAMPLING;
+	}
 	camera_press_key3(event, inputs, data);
 }
 
@@ -116,6 +117,6 @@ void		camera_press_key(SDL_Event *event, t_tabinputs *inputs,
 		else if ((unsigned int)event->key.keysym.sym == inputs->keycode[5])
 			data->lib.cam_keys |= COURSE;
 		camera_press_key2(event, inputs, data);
-    }
+	}
 	camera_release_key(event, inputs, data);
 }

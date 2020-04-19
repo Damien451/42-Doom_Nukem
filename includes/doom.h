@@ -447,4 +447,12 @@ void						check_if_child_isleaf(t_doom *data, t_octree *node);
 int							inside_loopb(t_doom *data, t_octree *node
 	, int *nbr_node, t_vec3l tester);
 
+void							init_normals(t_doom *data);
+
+void							init_lights(t_doom *data);
+
+int								init_icon(t_doom *data);
+
+int								init_sdl(t_doom *data);
+
 #endif

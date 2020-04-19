@@ -30,7 +30,6 @@ int			init_game(t_doom *data, t_player *player)
 		player->lifes = -1;
 	loop_music(data->mix.sounds[randmusic], randmusic);
 	reset_game_values(data, &data->player);
-	//player->score = 1000000;
 	player->inventory.ammo = 8;
 	player->inventory.ammo_stock = 16;
 	if (init_enemies(data, &data->enemies, data->map_to_save))

@@ -18,7 +18,7 @@
 #include <math.h>
 #include "mixer.h"
 
-void			camera_mouse_motion(t_camera *camera, int *x, int *y
+void		camera_mouse_motion(t_camera *camera, int *x, int *y
 		, double *sensitivity)
 {
 	double	x_angle;
@@ -58,25 +58,17 @@ void		camera_event_translate(t_doom *data)
 
 	tmp = vec3d_scalar(data->player.acceleration, 0.7);
 	if (data->lib.cam_keys & CAMERA_TR_LEFT)
-	{
 		tmp = vec3d_sub(tmp, vec3d_scalar(data->player.camera.right
 					, data->player.speed));
-	}
 	if (data->lib.cam_keys & CAMERA_TR_RIGHT)
-	{
 		tmp = vec3d_add(tmp, vec3d_scalar(data->player.camera.right
 					, data->player.speed));
-	}
 	if (data->lib.cam_keys & CAMERA_TR_FRONT)
-	{
 		tmp = vec3d_add(tmp, vec3d_scalar(data->player.camera.direction
 					, data->player.speed));
-	}
 	if (data->lib.cam_keys & CAMERA_TR_BACK)
-	{
 		tmp = vec3d_sub(tmp, vec3d_scalar(data->player.camera.direction
 					, data->player.speed));
-	}
 	if (!(data->lib.cam_keys & FLY))
 		tmp.y = data->player.acceleration.y - 0.0450;
 	clamp_acceleration(&tmp, data->lib.cam_keys & COURSE ? 0.5 : 0);
