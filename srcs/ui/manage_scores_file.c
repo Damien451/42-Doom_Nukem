@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 16:39:15 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/04/17 16:14:25 by damien           ###   ########.fr       */
+/*   Updated: 2020/04/20 01:11:00 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void			write_scores_file(t_doom *data)
 	int			fd;
 	char		*score;
 
-	if ((fd = open("./files/scores_test", O_CREAT | O_WRONLY | O_TRUNC, 0777)) < 1)
+	i = -1;
+	if ((fd = open("./files/scores_test",
+		O_CREAT | O_WRONLY | O_TRUNC, 0777)) < 1)
 		return ;
 	while (++i < PLAYERS_SCOREBOARD)
 	{
@@ -55,10 +57,10 @@ void			write_scores_file(t_doom *data)
 			return ;
 		write(fd, score, ft_strlen(score));
 		write(fd, " ", 1);
-		write(fd, data->scoreboard.playertags[i], ft_strlen(data->scoreboard.playertags[i]));
+		write(fd, data->scoreboard.playertags[i],
+			ft_strlen(data->scoreboard.playertags[i]));
 		write(fd, "\n", 1);
 		ft_strdel(&score);
 	}
 	close(fd);
 }
-

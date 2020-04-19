@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:59:18 by roduquen          #+#    #+#             */
-/*   Updated: 2020/04/17 22:39:03 by damien           ###   ########.fr       */
+/*   Updated: 2020/04/20 01:15:08 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 static int		check_sampling(t_doom *data, int i)
 {
-	int	j;
-	int	value;
+	int		j;
+	int		value;
 
 	value = (i > 0 ? i + 1 : 0);
 	j = 1;
@@ -97,7 +97,7 @@ int				create_sound(int fd)
 
 int				load_textures(t_doom *data)
 {
-	int		fd;
+	int	fd;
 
 	fd = open("textures/all_img.bin", O_RDONLY);
 	read(fd, &data->lib, TEXTURES_SIZE + CREDIT_SIZE + OBJ_SIZE);

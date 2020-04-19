@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:44:59 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/28 17:20:53 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/20 00:27:27 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ static void	put_sound_bars_strings(t_doom *data, int coordy, int nbsoundbar)
 		ft_strcat(string, "Music volume");
 	else if (nbsoundbar == 2)
 		ft_strcat(string, "Sound effects volume");
-	put_string_on_renderer(data, point(WIDTH_CENTER * 1.005,
-		coordy - BUTTON_GAP_Y * 1.5),
+	put_string_on_renderer(data, point(960 * 1.005, coordy - 30 * 1.5),
 		label(string, (SDL_Color){255, 0, 0, 0}), data->lib.ptrfont[2]);
-	put_string_on_renderer(data, point(WIDTH_CENTER,
-		coordy - BUTTON_GAP_Y * 1.5),
+	put_string_on_renderer(data, point(960, coordy - 30 * 1.5),
 		label(string, (SDL_Color){255, 255, 255, 0}), data->lib.ptrfont[2]);
 }
 

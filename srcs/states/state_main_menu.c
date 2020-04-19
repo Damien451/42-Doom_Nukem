@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:21:38 by roduquen          #+#    #+#             */
-/*   Updated: 2020/04/19 19:09:24 by damien           ###   ########.fr       */
+/*   Updated: 2020/04/20 00:28:43 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			state_main_menu(t_doom *data)
 		(WIDTH * HEIGHT) << 2);
 	if (anim_main_menu(data, total_frame++, frame))
 		return (1);
-	buttons_main_menu(buttons);
+	buttons_main_menu(data, buttons);
 	check_inputs_menu(data, buttons, 5);
 	if ((wait = (SDL_GetTicks() - time)) < 17)
 		usleep(17000 - (wait * 1000));

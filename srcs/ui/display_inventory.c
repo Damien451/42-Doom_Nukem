@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 23:43:06 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/04/19 20:17:09 by damien           ###   ########.fr       */
+/*   Updated: 2020/04/20 01:12:00 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void			display_select_circle(t_graphic_lib *lib, t_player *player)
 		print_circle(lib, 1763, 771);
 }
 
-static void			display_ammo(t_doom *data, t_graphic_lib *lib,
+static void			display_ammo(t_graphic_lib *lib,
 	t_player *player)
 {
 	int			x;
@@ -65,8 +65,9 @@ static void			display_ammo(t_doom *data, t_graphic_lib *lib,
 			{
 				if (lib->ammo[y * 32 + x] != 0xffffff)
 					lib->image[(int)((y + 1080 / 3.4505)
-					* 1920 + (16 * ammo_left)
-					+ 1920 / 1.155 + x) = lib->ammo[y * 32 + x];
+						* 1920 + (16 * ammo_left)
+						+ 1920 / 1.155 + x)] =
+						lib->ammo[y * 32 + x];
 			}
 		}
 		++ammo_left;
@@ -94,7 +95,7 @@ static void			display_selected_block(t_graphic_lib *lib,
 	}
 }
 
-void				display_inventory(t_doom *data, t_graphic_lib *lib,
+void				display_inventory(t_graphic_lib *lib,
 	t_player *player, long state)
 {
 	if (state == EDITION_MODE)
@@ -102,6 +103,6 @@ void				display_inventory(t_doom *data, t_graphic_lib *lib,
 	else
 	{
 		display_select_circle(lib, player);
-		display_ammo(data, lib, player);
+		display_ammo(lib, player);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/10 21:20:36 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/20 01:08:05 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,11 @@ struct						s_player
 	t_physics				physics;
 };
 
-void						display_inventory(t_doom *data, t_graphic_lib *lib,
+void						display_inventory(t_graphic_lib *lib,
 	t_player *player, long state);
 
 void						display_inventory_strings(t_doom *data,
-	t_graphic_lib *lib, t_player *player, long state);
+	t_player *player, long state);
 
 void						rotate_camera(t_camera *camera, t_vec3d rot_vec
 	, double angle);

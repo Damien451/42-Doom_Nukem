@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:20:52 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/03/10 22:02:26 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/20 01:07:22 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 #include "player.h"
 #include "libft.h"
 
-static void			display_ammo_stock(t_doom *data, t_graphic_lib *lib,
-	t_player *player)
+static void			display_ammo_stock(t_doom *data, t_player *player)
 {
 	static char	ammo_stock[7];
 	char		*left;
@@ -31,8 +30,8 @@ static void			display_ammo_stock(t_doom *data, t_graphic_lib *lib,
 }
 
 void				display_inventory_strings(t_doom *data,
-	t_graphic_lib *lib, t_player *player, long state)
+	t_player *player, long state)
 {
-    if (state == PLAYING)
-        display_ammo_stock(data, lib, player);
+	if (state == PLAYING)
+		display_ammo_stock(data, player);
 }
