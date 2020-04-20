@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 16:39:15 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/04/20 01:11:00 by damien           ###   ########.fr       */
+/*   Updated: 2020/04/20 16:12:52 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int			parse_scores_file(t_doom *data, int *first)
+int				parse_scores_file(t_doom *data, int *first)
 {
 	int			i;
 	int			fd;
