@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 12:57:32 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/04/18 17:03:00 by damien           ###   ########.fr       */
+/*   Updated: 2020/04/20 16:33:31 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	init_enemy(t_enemies *enemies, int *nbenemies, t_vec3d c)
 	*nbenemies += 1;
 }
 
-int		init_enemies(t_doom *data, t_enemies *enemies,
+int			init_enemies(t_doom *data, t_enemies *enemies,
 	char map[64][64][64])
 {
 	int	i;
