@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:44:31 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/04/20 01:09:42 by damien           ###   ########.fr       */
+/*   Updated: 2020/04/21 16:24:55 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <fcntl.h>
 #include <sys/time.h>
 
-static inline void	add_weapon_pixel(t_doom *data, t_point coords, int recoil,
+static void		add_weapon_pixel(t_doom *data, t_point coords, int recoil,
 	unsigned int pix)
 {
 	if (pix != 0xff00ffff && pix != 0xff01ffff && pix != 0xff02ffff
@@ -36,7 +36,7 @@ static inline void	add_weapon_pixel(t_doom *data, t_point coords, int recoil,
 		data->lib.image[(580 + coords.y + recoil) * WIDTH + coords.x] = pix;
 }
 
-static void			add_weapon(t_doom *data, t_player *player)
+static void		add_weapon(t_doom *data, t_player *player)
 {
 	int				i;
 	int				j;
@@ -64,7 +64,7 @@ static void			add_weapon(t_doom *data, t_player *player)
 		recoil -= 15;
 }
 
-static void	add_hud_and_weapon(t_doom *data, t_player *player)
+static void		add_hud_and_weapon(t_doom *data, t_player *player)
 {
 	int				i;
 
@@ -82,7 +82,18 @@ static void	add_hud_and_weapon(t_doom *data, t_player *player)
 	}
 }
 
-int			state_game(t_doom *data)
+static void		display_game(t_doom *data)
+{
+	raytracing(data);
+//	move_ennemies(data, &data->player, &data->enemies);
+	add_hud_and_weapon(data, &data->player);
+	put_health_bar(data);
+	game_sounds(data, &data->player);
+	minimap(data->map_to_save, &data->player, &data->lib);
+	display_inventory(&data->lib, &data->player, PLAYING);
+}
+
+int				state_game(t_doom *data)
 {
 	struct timeval	time;
 	long			wait;
@@ -90,13 +101,7 @@ int			state_game(t_doom *data)
 
 	gettimeofday(&time, NULL);
 	wait = time.tv_sec * 1000000 + time.tv_usec;
-	raytracing(data);
-	add_hud_and_weapon(data, &data->player);
-	put_health_bar(data);
-	game_sounds(data, &data->player);
-	minimap(data->map_to_save, &data->player, &data->lib);
-	display_inventory(&data->lib, &data->player, PLAYING);
-//	move_ennemies(data, &data->player, &data->enemies);
+	display_game(data);
 	if (data->photo)
 	{
 		data->photo = 0;

@@ -6,7 +6,7 @@
 /*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/03/10 19:05:50 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/21 16:11:30 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ int								anim_weapon(int *typeanim);
 void							init_anim_state_start(t_doom *data);
 
 void							dictionnary_binary_tex(t_doom *data);
+
+void							draw_start_texture(t_doom *data, unsigned int *image);
 
 void							init_map_colors(t_graphic_lib *lib);
 

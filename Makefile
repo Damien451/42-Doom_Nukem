@@ -64,6 +64,7 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(ANIM)/display_arrows.c				\
 					$(ANIM)/display_scores.c				\
 					$(ANIM)/init_anim_state_start.c			\
+					$(ANIM)/draw_start_texture.c				\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/camera_keys.c					\
