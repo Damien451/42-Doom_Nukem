@@ -85,7 +85,6 @@ static void		add_hud_and_weapon(t_doom *data, t_player *player)
 static void		display_game(t_doom *data)
 {
 	raytracing(data);
-//	move_ennemies(data, &data->player, &data->enemies);
 	add_hud_and_weapon(data, &data->player);
 	put_health_bar(data);
 	game_sounds(data, &data->player);

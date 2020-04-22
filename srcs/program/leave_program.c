@@ -19,13 +19,16 @@
 #include "octree.h"
 #include "mixer.h"
 
-static void	close_fonts(t_doom *data)
+static void	close_fonts_and_sounds(t_doom *data)
 {
 	int i;
 
-	i = 0;
-	while (++i <= NBR_FONTS)
-		TTF_CloseFont(data->lib.ptrfont[NBR_FONTS - i]);
+	i = -1;
+	while (++i < NBR_FONTS)
+		TTF_CloseFont(data->lib.ptrfont[i]);
+	i = -1;
+	while (++i < NB_SOUND)
+		Mix_FreeChunk(data->mix.sounds[i]);
 	if (TTF_WasInit() == 1)
 		TTF_Quit();
 }
@@ -41,6 +44,18 @@ void		free_octree(t_octree *node)
 			free_octree(node->child[i++]);
 		free(node);
 		node = NULL;
+	}
+}
+
+static void	free_octree_model(t_octree *node[NBR_OBJ])
+{
+	int		i;
+
+	i = 0;
+	while (i < NBR_OBJ)
+	{
+		free_octree(node[i]);
+		i++;
 	}
 }
 
@@ -71,16 +86,17 @@ static void	free_bubbles(t_doom *data)
 int			leave_program(t_doom *data, int type)
 {
 	free_octree(data->octree);
+	free_octree_model(data->octree_obj);
 	free_light_map(data);
 	free_bubbles(data);
+	close_fonts_and_sounds(data);
+	Mix_CloseAudio();
 	if (data->lib.texture)
 		SDL_DestroyTexture(data->lib.texture);
 	if (data->lib.renderer)
 		SDL_DestroyRenderer(data->lib.renderer);
 	if (data->lib.window)
 		SDL_DestroyWindow(data->lib.window);
-	close_fonts(data);
-	Mix_CloseAudio();
 	SDL_Quit();
 	free(data);
 	return (type);

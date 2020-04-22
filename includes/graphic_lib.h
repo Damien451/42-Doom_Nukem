@@ -46,6 +46,10 @@
 
 # define L_INPUT_EDITOR			1
 # define R_INPUT_EDITOR			2
+# define TEXTURES_SIZE	65394656
+# define CREDIT_SIZE	19353600
+# define OBJ_SIZE		20971520
+# define SAMPLING_SIZE	2662315
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -109,11 +113,6 @@ struct							s_editor
 ** DONT CHANGE THE ORDER, OR IT WILL BE FAIL
 */
 
-# define TEXTURES_SIZE	65394656
-# define CREDIT_SIZE	1920 * 1080 * 4 + 1920 * 1440 * 4
-# define OBJ_SIZE	1048576 * NBR_OBJ
-# define SAMPLING_SIZE	2662315
-
 struct							s_graphic_lib
 {
 	unsigned int				circle[128 * 128];
@@ -171,7 +170,8 @@ void							init_anim_state_start(t_doom *data);
 
 void							dictionnary_binary_tex(t_doom *data);
 
-void							draw_start_texture(t_doom *data, unsigned int *image);
+void							draw_start_texture(t_doom *data
+	, unsigned int *image);
 
 void							init_map_colors(t_graphic_lib *lib);
 

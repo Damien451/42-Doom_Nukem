@@ -160,7 +160,7 @@ struct						s_thread
 
 struct						s_doom
 {
-	t_graphic_lib				lib;
+	t_graphic_lib			lib;
 	t_player				player;
 	t_tabinputs				tabinputs;
 	t_start					tab[NB_BUBBLE];
@@ -447,14 +447,24 @@ void						check_if_child_isleaf(t_doom *data, t_octree *node);
 int							inside_loopb(t_doom *data, t_octree *node
 	, int *nbr_node, t_vec3l tester);
 
-void							init_normals(t_doom *data);
+void						init_normals(t_doom *data);
 
-void							init_lights(t_doom *data);
+void						init_lights(t_doom *data);
 
-int								init_icon(t_doom *data);
+int							init_icon(t_doom *data);
 
-int								init_sdl(t_doom *data);
+int							init_sdl(t_doom *data);
 
-int								free_light_map(t_doom *data);
+int							free_light_map(t_doom *data);
+
+int							update_map_and_octree(t_doom *data
+	, t_vec3d block[2]);
+
+void						update_block(t_vec3d block[2], t_ray ray);
+
+void						init_player_and_block(t_doom *data
+	, t_vec3d player[2], t_vec3d block[2], t_ray ray);
+
+void						init_interaction(t_doom *data, t_ray *ray);
 
 #endif

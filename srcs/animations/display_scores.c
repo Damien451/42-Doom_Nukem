@@ -86,7 +86,7 @@ int			display_scores(t_doom *data, t_scoreboard *scores, int frame,
 	while (++i < PLAYERS_SCOREBOARD)
 	{
 		ft_bzero(player_rank, 30);
-		if ((rank = ft_itoa(i + 1)))
+		if (!(rank = ft_itoa(i + 1)))
 			return (1);
 		ft_strcpy(player_rank, rank);
 		(i + 1 == 10 ? ft_strcat(player_rank, ".__")

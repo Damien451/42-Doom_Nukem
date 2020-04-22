@@ -84,16 +84,16 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(EDITOR)/editor_utils2.c				\
 					$(EDITOR)/keydown_editor_commands.c		\
 					$(EDITOR)/mouse_editor_commands.c		\
-					$(EDITOR)/pick_element.c			\
+					$(EDITOR)/pick_element.c				\
 					$(EDITOR)/save_map_to_file.c			\
 					$(EDITOR)/show_selected_params.c		\
 					$(GAMEPLAY)/interaction.c				\
+					$(GAMEPLAY)/interaction2.c				\
 					$(GAMEPLAY)/init_enemies.c				\
 					$(GAMEPLAY)/check_if_not_in_map.c		\
 					$(GAMEPLAY)/check_pos_player.c			\
 					$(GAMEPLAY)/get_item.c					\
 					$(GAMEPLAY)/get_time_levels.c			\
-					$(GAMEPLAY)/move_ennemies.c				\
 					$(GAMEPLAY)/move_hitbox.c				\
 					$(GAMEPLAY)/reload.c					\
 					$(GAMEPLAY)/reset_game_values.c			\

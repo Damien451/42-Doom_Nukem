@@ -83,7 +83,7 @@ struct						s_enemies
 ** ====-* PROTOTYPES *-====
 */
 
-void						interaction(t_doom *data, unsigned int key);
+int							interaction(t_doom *data, unsigned int key);
 void						check_pos_player(t_doom *data,
 	char map[64][64][64], t_vec3d pos);
 int							check_if_not_in_map(t_hitbox hitbox,
