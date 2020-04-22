@@ -63,8 +63,8 @@ SRCS 		=		$(ANIM)/anim_main_menu.c				\
 					$(ANIM)/anim_weapon.c					\
 					$(ANIM)/display_arrows.c				\
 					$(ANIM)/display_scores.c				\
+					$(ANIM)/draw_start_texture.c			\
 					$(ANIM)/init_anim_state_start.c			\
-					$(ANIM)/draw_start_texture.c				\
 					$(CAMERA)/camera.c						\
 					$(CAMERA)/camera_commands.c				\
 					$(CAMERA)/camera_keys.c					\
@@ -212,7 +212,7 @@ all				: $(SDLDIR) SDL_text/ttf_build SDL2_mixer-2.0.4
 $(NAME)			: $(OBJS)
 
 	@make -C $(LIBDIR)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lpng -lm -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
+	@$(CC) $(CFLAGS) $(DEBUG) $(OPTI) $(FSAN) -lpthread -lm -ldl -lz -o $@ $^ $(LIBDIR)/libft.a $(LIBSDL)
 	@echo "\n\033[36mCreation :\033[0m \033[35;4m$(NAME)\033[0m\n"
 
 -include $(DPDCS)
