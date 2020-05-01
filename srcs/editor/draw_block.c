@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_block.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:49:10 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/05 23:39:30 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/17 19:09:42 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,20 @@
 static inline void	place_block(t_doom *data, int step, int tmpx, int tmpy)
 {
 	if (data->lib.editor.picked_texture == 27)
-		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
-		step][(tmpx - 10) / BLOCK_SIZE_EDITOR] = 47;
+		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10)
+		/ BLOCK_SIZE_EDITOR] = 47;
 	else if (data->lib.editor.picked_texture == 28)
-		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
-		step][(tmpx - 10) / BLOCK_SIZE_EDITOR] = 48;
+		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10)
+		/ BLOCK_SIZE_EDITOR] = 48;
+	else if (data->lib.editor.picked_texture == 62)
+		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10)
+		/ BLOCK_SIZE_EDITOR] = data->lib.editor.picked_texture + 1;
 	else if (data->lib.editor.picked_texture > 45)
-		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
-		step][(tmpx - 10)
+		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10)
 		/ BLOCK_SIZE_EDITOR] = data->lib.editor.picked_texture + 3;
 	else
-	{
-		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][
-		step][(tmpx - 10)
+		data->map_to_save[(tmpy - 10) / BLOCK_SIZE_EDITOR][step][(tmpx - 10)
 		/ BLOCK_SIZE_EDITOR] = data->lib.editor.picked_texture + 1;
-	}
 }
 
 void				draw_block(t_doom *data, int x, int y, int step)

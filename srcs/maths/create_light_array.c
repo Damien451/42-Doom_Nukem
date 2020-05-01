@@ -14,33 +14,28 @@
 
 int		free_light_map(t_doom *data)
 {
-	int		cnt[3];
+	int		c[3];
 	t_light	*tmp;
 
-	cnt[0] = 0;
-	while (cnt[0] < SIZE_MAP)
+	c[0] = -1;
+	while (++c[0] < SIZE_MAP && (c[1] = -1))
 	{
-		cnt[1] = 0;
-		while (cnt[1] < SIZE_MAP)
+		while (++c[1] < SIZE_MAP && (c[2] = -1))
 		{
-			cnt[2] = 0;
-			while (cnt[2] < SIZE_MAP)
+			while (++c[2] < SIZE_MAP)
 			{
-				if (data->light_array[cnt[0]][cnt[1]][cnt[2]].type)
+				if (data->light_array[c[0]][c[1]][c[2]].type)
 				{
-					data->light_array[cnt[0]][cnt[1]][cnt[2]].type = 0;
-					while (data->light_array[cnt[0]][cnt[1]][cnt[2]].next)
+					data->light_array[c[0]][c[1]][c[2]].type = 0;
+					while (data->light_array[c[0]][c[1]][c[2]].next)
 					{
-						tmp = data->light_array[cnt[0]][cnt[1]][cnt[2]].next->next;
-						free(data->light_array[cnt[0]][cnt[1]][cnt[2]].next);
-						data->light_array[cnt[0]][cnt[1]][cnt[2]].next = tmp;
+						tmp = data->light_array[c[0]][c[1]][c[2]].next->next;
+						free(data->light_array[c[0]][c[1]][c[2]].next);
+						data->light_array[c[0]][c[1]][c[2]].next = tmp;
 					}
 				}
-				cnt[2]++;
 			}
-			cnt[1]++;
 		}
-		cnt[0]++;
 	}
 	return (0);
 }

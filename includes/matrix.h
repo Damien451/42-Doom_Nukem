@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 15:44:00 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/05 11:37:31 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:46:59 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	TYPEDEFS
 */
 
-#include "vec3.h"
+# include "vec3.h"
 
 int		matrix44_multiply(const double a[4][4], const double b[4][4]
 	, double result[4][4]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:26:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/08 20:29:21 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/04/20 01:08:05 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,23 @@
 # include "vec3.h"
 # include <math.h>
 # include <SDL.h>
+# include "gameplay.h"
 
 /*
 ** ====-* DEFINES *-====
 */
 
-# define CAMERA_TR_RIGHT	0x1l
-# define CAMERA_TR_LEFT		0x2l
-# define CAMERA_TR_FRONT	0x4l
-# define CAMERA_TR_BACK		0x8l
-# define COURSE				0x10l
-# define WATER				0x20l
-# define SQUAT				0x40l
-# define CRAWL				0x80l
-# define DESTROY			0x100l
-# define BEST_SAMPLING		0x200l
+# define CAMERA_TR_RIGHT	1
+# define CAMERA_TR_LEFT		2
+# define CAMERA_TR_FRONT	4
+# define CAMERA_TR_BACK		8
+# define COURSE				16
+# define FLY				32
+# define SQUAT				64
+# define CRAWL				128
+# define RIGHT_CLICK		256
+# define LEFT_CLICK			512
+# define BEST_SAMPLING		1024
 
 # define GRAVITY			1.0
 # define ACCELERATION		0.003333333333333
@@ -47,6 +49,11 @@
 # define FREEPLAY_MODE		1
 # define EDIT_MODE			2
 
+# define WEAPON_NEUTRAL		0
+# define WEAPON_SHOT		1
+# define WEAPON_RECOIL		2
+# define WEAPON_RELOAD		3
+
 /*
 ** ====-* TYPEDEFS *-====
 */
@@ -56,19 +63,14 @@ typedef struct s_camera			t_camera;
 typedef struct s_inventory		t_inventory;
 typedef struct s_doom			t_doom;
 typedef struct s_graphic_lib	t_graphic_lib;
-typedef struct s_hitbox			t_hitbox;
 typedef struct s_physics		t_physics;
 typedef struct s_octree			t_octree;
 typedef struct s_tabinputs		t_tabinputs;
+typedef struct s_hitbox			t_hitbox;
 
 /*
 ** ====-* STRUCTURES *-====
 */
-
-struct						s_hitbox
-{
-	t_vec3d					vertex;
-};
 
 struct						s_camera
 {
@@ -90,11 +92,14 @@ struct						s_physics
 
 struct						s_inventory
 {
-	int						weapons;
+	int						ammo;
+	int						ammo_stock;
 	int						keys;
+	int						heal_pack;
 	int						blocks[40];
-	int						selected_block;
-	int						selected_weapon;
+	int						selected;
+	int						weapon_state;
+	int						lag;
 };
 
 struct						s_player
@@ -111,6 +116,8 @@ struct						s_player
 	int						lifes;
 	int						gamemode;
 	int						levels_left;
+	int						firstlevel;
+	int						secondlevel;
 	t_vec3d					position;
 	t_vec3d					acceleration;
 	t_hitbox				hitbox[12];
@@ -119,7 +126,10 @@ struct						s_player
 };
 
 void						display_inventory(t_graphic_lib *lib,
-	t_player *player);
+	t_player *player, long state);
+
+void						display_inventory_strings(t_doom *data,
+	t_player *player, long state);
 
 void						rotate_camera(t_camera *camera, t_vec3d rot_vec
 	, double angle);
@@ -148,5 +158,7 @@ int							add_vertex_clipping_z_max(t_vec3d *acceleration
 
 void						add_clipping_for_each_point(t_doom *data
 	, t_player *player);
+
+int							get_time_levels(void);
 
 #endif

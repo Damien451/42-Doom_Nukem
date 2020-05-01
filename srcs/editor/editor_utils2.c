@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   editor_utils2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/26 00:24:50 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/04/17 19:08:37 by damien           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 #include "graphic_lib.h"
 
@@ -67,30 +79,8 @@ void		copy_step(t_doom *data, int step)
 	{
 		j = -1;
 		while (++j < SIZE_MAP)
-			data->map_to_save[i][step][j] = data->map_to_save[i][step - 1][j];
+			if (data->map_to_save[i][step][j] != 63)
+				data->map_to_save[i][step][j] =
+					data->map_to_save[i][step - 1][j];
 	}
-}
-
-void		pick_element(t_doom *data, int x, int y)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 1;
-	x -= 1052;
-	y -= 368;
-	while ((i + 1) * 85 < x && i < 10)
-		++i;
-	while (j * 83 < y && j < 2)
-		++j;
-	if (data->lib.editor.pickmode == 0)
-		data->lib.editor.picked_texture = 30 + 10 * j + i;
-	else if (data->lib.editor.pickmode == 1)
-		data->lib.editor.block1 = 30 + 10 * j + i;
-	else if (data->lib.editor.pickmode == 2)
-		data->lib.editor.block2 = 30 + 10 * j + i;
-	else if (data->lib.editor.pickmode == 3)
-		data->lib.editor.blocktoremove = 30 + 10 * j + i;
-	data->lib.editor.pickmode = 0;
 }

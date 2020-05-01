@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_rectangle.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 18:30:34 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/02/06 18:30:37 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/27 23:35:43 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,9 @@ void				color_rectangle(t_doom *data, t_vec3l rectangle,
 		j = -1;
 		while (++j < BLOCK_SIZE_EDITOR)
 		{
-			color = ((unsigned int*)data->lib.textures[(int)data->map_to_save
-				[rectangle.x][step][rectangle.y] - 1]->pixels)
-				[i * (64 / BLOCK_SIZE_EDITOR) * 64 + j *
-				(64 / BLOCK_SIZE_EDITOR)];
+			color = data->lib.textures[(int)data->map_to_save
+				[rectangle.x][step][rectangle.y] - 1]
+				[(i * (64 >> 4) << 6) + j * (64 >> 4)];
 			color_rectangle2(data, &color, (int[4]){i, j,
 				coord_x, coord_y}, alpha);
 			if (data->map_to_save[rectangle.x][step][rectangle.y] > 0)

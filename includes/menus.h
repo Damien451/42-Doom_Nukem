@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menus.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 13:19:42 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/06 19:43:40 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:12:08 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_doom				t_doom;
 typedef struct s_point				t_point;
 typedef struct s_player				t_player;
 typedef struct s_button				t_button;
-typedef struct s_img				t_img;
 typedef struct s_start				t_start;
 
 /*
@@ -76,12 +75,6 @@ struct								s_start
 	int								color;
 };
 
-struct								s_point
-{
-	int								x;
-	int								y;
-};
-
 struct								s_button
 {
 	t_point							pos;
@@ -89,13 +82,6 @@ struct								s_button
 	char							*title;
 	long							state;
 	long							select;
-};
-
-struct								s_img
-{
-	int								width;
-	int								height;
-	__uint32_t						*pixels;
 };
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_intersect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:42:40 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/09 16:56:40 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:17:01 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,14 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-unsigned int		compute_color(t_ray ray)
-{
-	ray.c_color[2] = ((ray.color >> 16) & 255) * ray.length;
-	ray.c_color[1] = ((ray.color >> 8) & 255) * ray.length;
-	ray.c_color[0] = ((ray.color) & 255) * ray.length;
-	return (ray.black + *((unsigned int*)&ray.c_color));
-}
-
-double		launch_rays_to_lights(t_ray ray, const t_doom *const data)
+double			launch_rays_to_lights(t_ray ray, const t_doom *const data)
 {
 	t_light	*light;
 
-	ray.length = launch_ray_to_light_player(ray, data->player_light, data);
+	ray.length = launch_ray_to_light_player(ray, &data->player_light, data);
 	if (ray.length >= 0.875)
 		return (1);
-	ray.length += launch_ray_to_light(ray, data->sun_light, data);
+	ray.length += launch_ray_to_light(ray, &data->sun_light, data);
 	if (ray.length >= 0.875)
 		return (1);
 	if (data->light_array[(int)ray.origin.x][(int)ray.origin.y]
@@ -56,12 +48,14 @@ double		launch_rays_to_lights(t_ray ray, const t_doom *const data)
 	return (ray.length);
 }
 
-unsigned int		compute_lights(t_ray ray, const t_doom *const data
+unsigned int	compute_lights(t_ray ray, const t_doom *const data
 	, t_octree *node)
 {
 	ray.node = node;
 	ray.origin = ray.intersect;
 	ray.color = data->add_texture[ray.face](ray.origin, data);
+	if (data->lib.cam_keys & BEST_SAMPLING)
+		return ((ray.color & 0xFCFCFC) >> 2);
 	ray.black = (ray.color & 0xF8F8F8) >> 3;
 	ray.normal = data->normal[ray.face];
 	ray.length = launch_rays_to_lights(ray, data);
@@ -70,12 +64,43 @@ unsigned int		compute_lights(t_ray ray, const t_doom *const data
 	return (compute_color(ray));
 }
 
-unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
+static int		cylinder_and_sphere_color(t_ray *ray)
+{
+	ray->color |= (ray->color << 16) | (ray->color << 8);
+	return (1);
+}
+
+static int		compute_next_octant_intersect(t_ray *ray
+	, const t_doom *const data, int sorted[3], t_octree **tmp)
+{
+	*tmp = ray->node;
+	ray->origin = ray->intersect;
+	if (ray->node->leaf == BREAKABLE)
+	{
+		if (data->map_to_save[ray->node->center.x >> 1]
+			[ray->node->center.y >> 1][ray->node->center.z >> 1] == 41)
+			if (hit_sphere(ray, data) != 200)
+				return (cylinder_and_sphere_color(ray));
+		if (data->map_to_save[ray->node->center.x >> 1]
+			[ray->node->center.y >> 1][ray->node->center.z >> 1] == 42)
+			if (hit_cylinder(ray, data) != 200)
+				return (cylinder_and_sphere_color(ray));
+		if ((ray->mini = data->map_to_save[ray->node->center.x >> 1]
+			[ray->node->center.y >> 1][ray->node->center.z >> 1]) > 42)
+		{
+			ray->mini -= 43;
+			if ((ray->color = ray_intersect_mini(ray, data, sorted)))
+				return (1);
+		}
+	}
+	return (0);
+}
+
+unsigned int	ray_intersect(t_ray ray, const t_doom *const data)
 {
 	int				sorted[3];
 	int				i;
 	t_octree		*tmp;
-	double			length;
 
 	max_absolute_between_three(ray.direction, sorted);
 	tmp = ray.node;
@@ -86,33 +111,13 @@ unsigned int		ray_intersect(t_ray ray, const t_doom *const data)
 				, &ray, &ray.node);
 		if (ray.face == -1)
 			i++;
-		else if (ray.face == -3)
-		{
-			tmp = ray.node;
-			ray.origin = ray.intersect;
-			if (ray.node->leaf == BREAKABLE)
-			{
-				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 41)
-					if ((length = hit_sphere(&ray, data)) != 200)
-						return ((ray.color << 16) | (ray.color << 8) | ray.color);
-				if (data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1] == 42)
-					if ((length = hit_cylinder(&ray, data)) != 200)
-						return ((ray.color << 16) | (ray.color << 8) | ray.color);
-				if ((ray.mini = data->map_to_save[ray.node->center.x >> 1][ray.node->center.y >> 1][ray.node->center.z >> 1]) > 42)
-				{
-					ray.mini -= 43;
-					if ((ray.color = ray_intersect_mini(&ray, data, sorted)))
-						return (ray.color);
-				//		if ((length = hit_cylinder(&ray, data)) != 200)
-				//			return ((ray.color << 16) | (ray.color << 8) | ray.color);
-				}
-			}
-			i = 0;
-		}
+		else if (ray.face == -3 && !(i = 0)
+			&& compute_next_octant_intersect(&ray, data, sorted, &tmp))
+			return (ray.color);
 		else if (ray.face >= 0)
 			return (compute_lights(ray, data, tmp));
-		else
-			return (add_skybox(ray.intersect, data->skybox));
+		else if (ray.face != -3)
+			return (add_skybox(ray.intersect, data));
 	}
 	return (0);
 }

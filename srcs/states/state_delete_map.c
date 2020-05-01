@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_delete_map.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:08:27 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/26 19:11:13 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:29:26 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static void	check_inputs_delmap(t_doom *data, int nbmaps, int *first)
 				*first = 0;
 				switch_state(data, DELETE_MAP, EDITOR_MENU);
 			}
+			else if (data->lib.event.key.keysym.sym == SDLK_ESCAPE)
+				switch_state(data, DELETE_MAP, EDITOR_MENU);
 			else
 				check_inputs_delmap2(data, nbmaps, first);
 		}
@@ -103,13 +105,13 @@ int			state_delete_map(t_doom *data)
 		ft_strcpy(map_name, get_map_name(data->map_to_show, "maps"));
 	}
 	ft_memset(data->lib.image, 0, WIDTH * HEIGHT * 4);
-	ft_memcpy(data->lib.image, data->lib.menu_texture[4]->pixels
-		, (WIDTH * HEIGHT) << 2);
+	ft_memcpy(data->lib.image, data->lib.bg_menu[0],
+		(WIDTH * HEIGHT) << 2);
 	buttons_delmap(buttons, map_name);
 	SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
 	put_buttons_on_img(data, buttons, 2);
 	put_delmap_strings(data);
-	put_buttons_names(data, buttons, (SDL_Color){0, 0, 0, 0}, 2);
+	put_buttons_names(data, buttons, (SDL_Color){255, 0, 0, 0}, 2);
 	data->map_name = map_name;
 	check_inputs_delmap(data, nbmaps, &first);
 	SDL_RenderPresent(data->lib.renderer);

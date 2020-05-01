@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   state_level_finished.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 14:23:39 by dacuvill          #+#    #+#             */
-/*   Updated: 2020/01/30 19:26:48 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/03/04 12:37:04 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-/*
-**	Faire un check du score au préalable pour l'ajouter si besoin au tableau des highscores
-*/
-
-static void	check_inputs(t_doom *data, int gamemode, int *ok)
+static void	check_inputs(t_doom *data, int gamemode, int *ok, int newscore)
 {
 	while (SDL_PollEvent(&data->lib.event))
 	{
@@ -27,7 +23,8 @@ static void	check_inputs(t_doom *data, int gamemode, int *ok)
 			{
 				*ok = 1;
 				leave_game(data, &data->player);
-				switch_state(data, FINISHED, PLAY_MENU);
+				switch_state(data, FINISHED,
+					(newscore == 1 ? NEW_HIGHSCORE : PLAY_MENU));
 			}
 			else
 			{
@@ -62,19 +59,37 @@ static void	put_strings(t_doom *data, t_player *player)
 	}
 }
 
+static int	check_if_new_highscore(t_scoreboard *scoreboard, t_player *player)
+{
+	int		i;
+
+	i = -1;
+	if (player->levels_left == 0)
+	{
+		player->score += get_time_levels();
+		while (++i < PLAYERS_SCOREBOARD)
+			if (scoreboard->scores[i] < player->score)
+				return (1);
+	}
+	return (0);
+}
+
 int			state_level_finished(t_doom *data)
 {
 	static int	ok = 1;
+	static int	newscore = 0;
 
 	if (ok == 1)
 	{
 		data->player.levels_left--;
 		SDL_RenderCopy(data->lib.renderer, data->lib.texture, NULL, NULL);
+		newscore = check_if_new_highscore(&data->scoreboard, &data->player);
 		put_strings(data, &data->player);
 		SDL_RenderPresent(data->lib.renderer);
 		SDL_RenderClear(data->lib.renderer);
+		Mix_HaltChannel(-1);
 		ok--;
 	}
-	check_inputs(data, data->player.gamemode, &ok);
+	check_inputs(data, data->player.gamemode, &ok, newscore);
 	return (0);
 }

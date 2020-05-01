@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_string_on_renderer.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:41:11 by roduquen          #+#    #+#             */
-/*   Updated: 2020/01/28 18:15:06 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:38:37 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	put_string_on_renderer(t_doom *data, t_point pos, t_label label
 	src.x = 0;
 	src.y = 0;
 	dest = src;
-	dest.x = pos.x - src.w / 2;
-	dest.y = pos.y - src.h / 2;
+	dest.x = pos.x - (src.w >> 1);
+	dest.y = pos.y - (src.h >> 1);
 	SDL_RenderCopy(data->lib.renderer, text, &src, &dest);
 	SDL_DestroyTexture(text);
 }

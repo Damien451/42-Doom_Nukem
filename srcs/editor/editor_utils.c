@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   editor_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/26 00:23:28 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/02/26 00:23:58 by dacuvill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 void	pick_texture(t_doom *data, int x, int y)
@@ -16,7 +28,7 @@ void	pick_texture(t_doom *data, int x, int y)
 	if (data->lib.editor.pickmode == 0)
 		data->lib.editor.picked_texture = j * 10 + i;
 	else if (data->lib.editor.pickmode == 1)
-		data->lib.editor.block1 = j * 10 + i;	
+		data->lib.editor.block1 = j * 10 + i;
 	else if (data->lib.editor.pickmode == 2)
 		data->lib.editor.block2 = j * 10 + i;
 	else if (data->lib.editor.pickmode == 3)

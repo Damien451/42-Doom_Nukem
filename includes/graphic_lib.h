@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphic_lib.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:55:58 by roduquen          #+#    #+#             */
-/*   Updated: 2020/02/05 20:28:26 by dacuvill         ###   ########.fr       */
+/*   Updated: 2020/04/21 16:11:30 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,24 @@
 # define BLOCK_SIZE_EDITOR		16
 # define TEXTURE_SIZE			83
 
-# define NBR_TEXTURES_EDITOR	62
+# define NBR_TEXTURES_EDITOR	63
 # define NBR_TEXTURES_BLOCKS	40
 # define NBR_TEXTURES_OBJECTS	20
-# define NBR_TEXTURES_MENU		7
+# define NBR_TEXTURES_ENEMY		21
+# define NBR_TEXTURES_GUN		16
+# define NBR_TEXTURES_MENU		6
 # define NBR_FONTS				5
 # define NB_IMG					2
+# define NBR_OBJ			20
 # define ID_START_BLOCK			30
 # define ID_FINISH_BLOCK		31
 
 # define L_INPUT_EDITOR			1
 # define R_INPUT_EDITOR			2
+# define TEXTURES_SIZE	65394656
+# define CREDIT_SIZE	19353600
+# define OBJ_SIZE		20971520
+# define SAMPLING_SIZE	2662315
 
 /*
 ** ====-* TYPEDEFS *-====
@@ -57,10 +64,17 @@ typedef struct s_label			t_label;
 typedef struct s_point			t_point;
 typedef struct s_mixer			t_mixer;
 typedef struct s_scoreboard		t_scoreboard;
+typedef struct s_button			t_button;
 
 /*
 ** ====-* STRUCTURES *-====
 */
+
+struct							s_point
+{
+	int							x;
+	int							y;
+};
 
 struct							s_label
 {
@@ -84,7 +98,6 @@ struct							s_text
 
 struct							s_editor
 {
-	SDL_Surface					*texture[2];
 	unsigned int				picked_texture;
 	unsigned int				mouseinputs;
 	int							mode;
@@ -96,31 +109,42 @@ struct							s_editor
 	unsigned int				blocktoremove;
 };
 
+/*
+** DONT CHANGE THE ORDER, OR IT WILL BE FAIL
+*/
+
 struct							s_graphic_lib
 {
-	SDL_Surface					*character;
-	SDL_Surface					*menu_texture[NBR_TEXTURES_MENU];
-	SDL_Surface					*skybox[6];
-	SDL_Texture					*skybox_t[6];
-	SDL_Surface					*textures[NBR_TEXTURES_EDITOR];
-	char						texture_dic[NBR_TEXTURES_BLOCKS][100];
-	SDL_Surface					*hud_texture;
+	unsigned int				circle[128 * 128];
+	unsigned int				ammo[15 * 32];
+	unsigned int				skybox[6][512 * 512];
+	unsigned int				textures[NBR_TEXTURES_EDITOR][128 * 128];
+	unsigned int				gun_textures[NBR_TEXTURES_GUN][350 * 100];
+	unsigned int				enemy_textures[NBR_TEXTURES_ENEMY][64 * 64];
+	unsigned int				bg_menu[2][1920 * 1080];
+	unsigned int				character[500 * 350];
+	unsigned int				bg_anim_menu[2][256 * 128];
+	unsigned int				arrows_menu[2][64 * 64];
+	unsigned int				start_bg[1920 * 1200];
+	unsigned int				hud_texture[1920 * 1080];
+	unsigned int				game_icon[400 * 400];
+	unsigned int				texture_editor[2][1920 * 1080];
+	unsigned int				credits[1920 * 1080];
+	unsigned int				lightning[1920 * 1440];
+	unsigned int				object[NBR_OBJ][SIZE_MAP][SIZE_MAP][SIZE_MAP];
+	int							sampling[6][WIDTH * HEIGHT + 1];
+	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
+	unsigned int				cam_keys;
+	unsigned int				*image;
 	SDL_Texture					*texture;
 	SDL_Window					*window;
 	SDL_Renderer				*renderer;
-	SDL_Surface					*start_bg;
 	SDL_Surface					*surface;
-	SDL_Surface					*surfaces[NB_IMG];
-	char						*texture_path[NB_IMG];
 	SDL_Event					event;
+	TTF_Font					*ptrfont[NBR_FONTS];
 	t_editor					editor;
 	t_format					format;
 	t_text						text;
-	TTF_Font					*ptrfont[NBR_FONTS];
-	unsigned int				*image;
-	unsigned int				cam_keys;
-	unsigned int				*textures_block[NBR_TEXTURES_BLOCKS];
-	unsigned int				map_colors[NBR_TEXTURES_EDITOR];
 };
 
 /*
@@ -129,7 +153,7 @@ struct							s_graphic_lib
 
 t_label							label(char *str, SDL_Color color);
 
-void							load_textures(t_doom *data);
+int								load_textures(t_doom *data);
 
 void							put_string_on_renderer(t_doom *data,
 	t_point pos, t_label label, TTF_Font *font);
@@ -140,11 +164,20 @@ void							put_string_with_shadow(t_doom *data,
 int								anim_main_menu(t_doom *data, int total_frame
 	, int frame);
 
+int								anim_weapon(int *typeanim);
+
+void							init_anim_state_start(t_doom *data);
+
 void							dictionnary_binary_tex(t_doom *data);
+
+void							draw_start_texture(t_doom *data
+	, unsigned int *image);
 
 void							init_map_colors(t_graphic_lib *lib);
 
 int								display_scores(t_doom *data,
 	t_scoreboard *scores, int frame, int *curr_score);
+
+void							display_arrows(t_doom *data, t_button *button);
 
 #endif

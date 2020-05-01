@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_get_input.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:05:03 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 15:05:04 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:38:51 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int				state_get_input(t_doom *data)
 	{
 		if (data->lib.event.type == SDL_KEYDOWN)
 		{
-			if (check_input(data, data->lib.event.key.keysym.sym) == 1)
-				printf("invalid input\n");
-			else
+			if (check_input(data, data->lib.event.key.keysym.sym) != 1)
 				data->tabinputs.keycode[(data->button > 8 ?
 					data->button - 1 : data->button)] =
 					data->lib.event.key.keysym.sym;

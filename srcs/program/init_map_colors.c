@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_map_colors.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dacuvill <dacuvill@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/26 00:20:15 by dacuvill          #+#    #+#             */
+/*   Updated: 2020/03/02 23:21:52 by dacuvill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "graphic_lib.h"
 
 static inline void	init_map_colors3(t_graphic_lib *lib)
@@ -23,6 +35,7 @@ static inline void	init_map_colors3(t_graphic_lib *lib)
 	lib->map_colors[59] = 0xcccccc;
 	lib->map_colors[60] = 0;
 	lib->map_colors[61] = 0xffddcc;
+	lib->map_colors[62] = 0xff0000;
 }
 
 static inline void	init_map_colors2(t_graphic_lib *lib)

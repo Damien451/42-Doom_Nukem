@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mixer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roduquen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dacuvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:37:55 by roduquen          #+#    #+#             */
-/*   Updated: 2019/12/15 16:37:56 by roduquen         ###   ########.fr       */
+/*   Updated: 2020/02/15 18:23:45 by dacuvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int		change_volume(t_mixer *mix)
 {
 	if ((Mix_Volume(-1, (int)(mix->v_master
 		* mix->v_sound_effects * 128)) == -1) ||
-	(Mix_Volume(1, (int)(mix->v_master * mix->v_music * 128)) == -1))
+		(Mix_Volume(CHANNEL_MUSIC,
+		(int)(mix->v_master * mix->v_music * 128)) == -1))
 		return (-1);
 	return (0);
 }
