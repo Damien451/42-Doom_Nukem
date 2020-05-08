@@ -1,3 +1,3 @@
 # 42-Doom_Nukem
 
-https://ibb.co/HzNqFSy
+![](https://ibb.co/HzNqFSy)
