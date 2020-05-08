@@ -1,3 +1,3 @@
 # 42-Doom_Nukem
 
-![](https://i.ibb.co/HzNqFSy/Doom-Craft1.gif)
+![](https://i.ibb.co/jMVD6NY/Doom-Craft1.gif)
