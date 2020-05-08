@@ -11,7 +11,7 @@ NAME		= doom-nukem
 # **************************************************************************** #
 
 CC 			= clang
-CFLAGS		= -Wall -Wextra #-Werror
+CFLAGS		= -Wall -Wextra -Werror
 
 DEBUG		= #-g3
 OPTI		= -O2
