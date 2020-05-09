@@ -1,12 +1,12 @@
 # 42-Doom_Nukem
-This project is a voxel raytracer in real time on CPU, I did it during my studies in 42.
+#### This project is a voxel raytracer in real time on CPU, I did it during my studies in 42. ####
 I used as data structure an octree to capture the map.
 
-### Graphic Visual ###
+## Graphic Visual ##
 ![](ressources/Doom-Craft1.gif)
 
-### Update live ###
+## Update live ##
 ![](ressources/Doom-Craft_InGame_edition.gif)
 
-### Sun Animation ###
+## Sun Animation ##
 ![](ressources/Doom-Craft_Sun.gif)
