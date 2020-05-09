@@ -7,3 +7,6 @@ I used as data structure an octree to capture the map.
 
 ### Update live ###
 ![](ressources/Doom-Craft_InGame_edition.gif)
+
+### Sun Animation ###
+![](ressources/Doom-Craft_Sun.gif)
